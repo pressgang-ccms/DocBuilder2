@@ -6,18 +6,46 @@ var moment = require('moment');
 var exec = require('child_process').exec;
 
 /**
- * The REST server that the DocBuilder will connect to
+ * The REST server that the DocBuilder will connect to.
  * @type {string}
  */
 var REST_SERVER = "http://topicindex-dev.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest";
+/**
+ * The file that holds the lat time a complete rebuild was completed.
+ * @type {string}
+ */
 //var LAST_RUN_FILE = "/home/pressgang/.docbuilder/docbuilder2_lastrun";
 var LAST_RUN_FILE = "/home/matthew/.docbuilder/docbuilder2_lastrun";
+/**
+ * The format of the date to be supplied to the REST query.
+ * @type {string}
+ */
 var DATE_FORMAT = "YYYY-MM-ddThh:mm:ss.000Z";
+/**
+ * Thje maximum number of child processes to run at any given time.
+ * @type {number}
+ */
 var MAX_PROCESSES = 16;
 
+/**
+ * true when the modified topics have been processed.
+ * @type {boolean}
+ */
 var topicsProcessed = false;
+/**
+ * true when the modified specs have been processed
+ * @type {boolean}
+ */
 var specsProcessed = false;
+/**
+ * The count of the number of child processes
+ * @type {number}
+ */
 var childCount = 0;
+/**
+ * The string to be saved in the marker file when a rebuild is completed.
+ * @type {string}
+ */
 var thisBuildTime = null;
 
 /**
