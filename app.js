@@ -26,6 +26,24 @@ var DATE_FORMAT = "YYYY-MM-ddThh:mm:ss.000Z";
  * @type {number}
  */
 var MAX_PROCESSES = 16;
+/**
+ * The index file for the DocBuilder
+ * @type {string}
+ */
+var INDEX_HTML = "/var/www/html/index.html";
+/**
+ * The web root dir.
+ * @type {string}
+ */
+var APACHE_HTML_DIR="/var/www/html";
+/**
+ * The directory that holds the Publican ZIP files
+ */
+var PUBLICAN_BOOK_ZIPS= "/books";
+/**
+ *	The complete directory that holds the Publican ZIP files
+ */
+var PUBLICAN_BOOK_ZIPS_COMPLETE=APACHE_HTML_DIR + PUBLICAN_BOOK_ZIPS;
 
 /**
  * true when the modified topics have been processed.
@@ -134,21 +152,20 @@ function buildBooks(updatedSpecs) {
 							var data = [";
 
 		for (var processIndex = 0, processCount = updatedSpecs.length; processIndex < processCount; ++processIndex) {
-			var specId = updatedSpecs.get(processIndex);
+			var specDetails = updatedSpecs.get(processIndex);
 
 			indexHtml += "{\
-				idRaw: " + specId + ",\
-				id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specId + "\" target=\"_top\">${CS_ID}</a>',\
+				idRaw: " + specDetails.id + ",\
+				id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specDetails.id + "\" target=\"_top\">" + specDetails.id + "</a>',\
 					versionRaw: '${VERSION}', \
-					version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\" target=\"_top\">${VERSION}</a>',\
-					productRaw: '${PRODUCT}',\
-					product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\" target=\"_top\">${PRODUCT}</a>',\
-					titleRaw: '${TITLE}', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\"  target=\"_top\">${TITLE}</a>', \
-					remarks: '<a href=\"" + specId + "/remarks\"><button>With Remarks</button></a>',\
-					buildlog: '<a href=\"" + specId + "/build.log\"><button>Build Log</button></a>' ,\
-					publicanbook: '<a href=\"${PUBLICAN_BOOK_ZIPS}/${ESCAPED_PUBLICAN_BOOK_URL}\"><button>Publican ZIP</button></a>',\
-					publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>',\
-					lastcompile: '${LAST_COMPILE}'\
+					version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + specDetails.version + "</a>',\
+					productRaw: '" + specDetails.product + "',\
+					product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + specDetails.product + "</a>',\
+					titleRaw: '${TITLE}', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\"  target=\"_top\">" + specDetails.title + "</a>', \
+					remarks: '<a href=\"" + specDetails.id + "/remarks\"><button>With Remarks</button></a>',\
+					buildlog: '<a href=\"" + specDetails.id + "/build.log\"><button>Build Log</button></a>' ,\
+					publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + ESCAPED_PUBLICAN_BOOK_URL + "\"><button>Publican ZIP</button></a>',\
+					publicanlog: '<a href=\"" + specDetails.id + "/publican.log\"><button>Publican Log</button></a>'\
 			},";
 		}
 
@@ -241,7 +258,7 @@ function getModifiedTopics(lastRun, updatedSpecs) {
 					if (topic.contentSpecs_OTM) {
 						for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
 							var spec = topic.contentSpecs_OTM.items[specIndex].item;
-							updatedSpecs.add(spec.id);
+							updatedSpecs.add({id: spec.id, product: spec.product, title: spec.title});
 						}
 					} else {
 						console.log("topic.contentSpecs_OTM was not expected to be null");
@@ -261,20 +278,20 @@ function getModifiedTopics(lastRun, updatedSpecs) {
  * @param lastRun The time DocBuilder was last run
  */
 function getModifiedSpecs(lastRun, updatedSpecs) {
-	var topicQuery = REST_SERVER + "/1/contentspecs/get/json/query;";
+	var specQuery = REST_SERVER + "/1/contentspecs/get/json+text/query;";
 
 	// If we have some last run info, use that to limit the search
 	if (lastRun != null) {
-		topicQuery += "startEditDate=" + encodeURIComponent(encodeURIComponent(lastRun));
+		specQuery += "startEditDate=" + encodeURIComponent(encodeURIComponent(lastRun));
 	}
-	topicQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%7D%5D%7D";
+	specQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%7D%5D%7D";
 
-	$.getJSON(topicQuery,
+	$.getJSON(specQuery,
 		function(data) {
 			if (data.items) {
 				for (var specIndex = 0, specCount = data.items.length; specIndex < specCount; ++specIndex) {
 					var spec = data.items[specIndex].item;
-					updatedSpecs.add(spec.id);
+					updatedSpecs.add({id: spec.id, product: spec.product, title: spec.title});
 				}
 			} else {
 				console.log("data.items was not expected to be null");
