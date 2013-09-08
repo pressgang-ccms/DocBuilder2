@@ -66,7 +66,7 @@ var childCount = 0;
  */
 var thisBuildTime = null;
 
-var indexHtml = "";
+var indexHtml = null;
 
 /**
  * Called when the modified topics and specs have been found. Once both
@@ -242,8 +242,7 @@ function buildBooks(updatedSpecs) {
 			}
 		}
 
-
-
+		processSpecDetails(0);
 	}
 }
 
