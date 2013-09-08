@@ -48,6 +48,8 @@ var childCount = 0;
  */
 var thisBuildTime = null;
 
+var indexHtml = "";
+
 /**
  * Called when the modified topics and specs have been found. Once both
  * functions have called this function, the process of actually building the
@@ -55,6 +57,141 @@ var thisBuildTime = null;
  */
 function buildBooks(updatedSpecs) {
 	if (specsProcessed && topicsProcessed) {
+
+		indexHtml = "<html>\
+			<head>\
+				<title>Docbuilder Index</title>\
+				<link rel=\"stylesheet\" href=\"index.css\"/>\
+				<script src=\"http://yui.yahooapis.com/3.10.0/build/yui/yui-min.js\"></script>\
+				<script src=\"functions-1.1.js\" ></script>\
+			</head>\
+			<body onload=\"setLangSelectLanguage()\">\
+				<div class=\"container\">\
+					<div class=\"langBar\">Language:\
+						<select id=\"lang\" class=\"langSelect\" onchange=\"changeLang(this)\">\
+							<option selected value=\"\">English</option>\
+							<option value=\"zh-Hans\">Chinese</option>\
+							<option value=\"fr\">French</option>\
+							<option value=\"de\">German</option>\
+							<option value=\"ja\">Japanese</option>\
+							<option value=\"pt-BR\">Portuguese</option>\
+							<option value=\"es\">Spanish</option>\
+						</select>\
+					</div>\
+					<div class=\"content\">\
+						<div>\
+							<img height=\"87\" src=\"pg.png\" width=\"879\">\
+						</div>\
+						<div style=\"margin-top:1em\">\
+							<p>DocBuilder is a service that automatically rebuilds content specifications as they are created or edited.</p>\
+							<p>Each content spec has three links: a link to the compiled book itself, a link to the build log, and a link to the publican log.</p>\
+							<p>If a book could not be built, first check the build log. This log contains information that may indicate syntax errors in the content specification. You can also view this log to see when the document was last built.</p>\
+							<p>If the build log has no errors, check the publican log. This may indicate some syntax errors in the XML.</p>\
+							<p>The topics in each document include a \"Edit this topic\" link, which will take you to the topic in the CCMS.</p>\
+							<p>To view the latest changes to a document, simply refresh the page.</p><p>Estimated Rebuild Time: ${REBUILD_TIME}</p>\
+						</div>\
+						<div></div>\
+						<div>\
+							<table>\
+								<tr>\
+									<td>\
+										ID Filter\
+									</td>\
+									<td>\
+										<input type=\"text\" id=\"idFilter\" onkeyup=\"save_filter()\">\
+									</td>\
+									<td>\
+										Product Filter\
+									</td>\
+									<td>\
+										<input type=\"text\" id=\"productFilter\" onkeyup=\"save_filter()\">\
+									</td>\
+									<td rowspan=\"2\">\
+										<button onclick=\"reset_filter()\">Reset</button>\
+									</td>\
+								</tr>\
+								<tr>\
+									<td>\
+										Version Filter\
+									</td>\
+									<td>\
+										<input type=\"text\" id=\"versionFilter\" onkeyup=\"save_filter()\">\
+									</td>\
+									<td>\
+										Title Filter\
+									</td>\
+									<td>\
+										<input type=\"text\" id=\"titleFilter\" onkeyup=\"save_filter()\">\
+									</td>\
+								</tr>\
+							</table> \
+							</div>\
+							<div></div>\
+						</div>\
+						</div>\
+						<script>\
+							// build the array that holds the details of the books \
+							var data = [";
+
+		for (var processIndex = 0, processCount = updatedSpecs.length; processIndex < processCount; ++processIndex) {
+			var specId = updatedSpecs.get(processIndex);
+
+			indexHtml += "{\
+				idRaw: " + specId + ",\
+				id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specId + "\" target=\"_top\">${CS_ID}</a>',\
+					versionRaw: '${VERSION}', \
+					version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\" target=\"_top\">${VERSION}</a>',\
+					productRaw: '${PRODUCT}',\
+					product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\" target=\"_top\">${PRODUCT}</a>',\
+					titleRaw: '${TITLE}', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\"  target=\"_top\">${TITLE}</a>', \
+					remarks: '<a href=\"" + specId + "/remarks\"><button>With Remarks</button></a>',\
+					buildlog: '<a href=\"" + specId + "/build.log\"><button>Build Log</button></a>' ,\
+					publicanbook: '<a href=\"${PUBLICAN_BOOK_ZIPS}/${ESCAPED_PUBLICAN_BOOK_URL}\"><button>Publican ZIP</button></a>',\
+					publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>',\
+					lastcompile: '${LAST_COMPILE}'\
+			},";
+		}
+
+		indexHtml += " ];\
+					rebuildTimeout = null;\
+					productFilter.value = localStorage[\"productFilter\"] || \"\"; \
+					titleFilter.value = localStorage[\"titleFilter\"] || \"\"; \
+					versionFilter.value = localStorage[\"versionFilter\"] || \"\"; \
+					idFilter.value = localStorage[\"idFilter\"] || \"\"; \
+					save_filter = function() {\
+						localStorage[\"productFilter\"] = productFilter.value;\
+						localStorage[\"titleFilter\"] = titleFilter.value;\
+						localStorage[\"versionFilter\"] = versionFilter.value;\
+						localStorage[\"idFilter\"] = idFilter.value;\
+						if (rebuildTimeout) {\
+							window.clearTimeout(rebuildTimeout);\
+							rebuildTimeout = null;\
+						}\
+						rebuildTimeout = setTimeout(function(){\
+							build_table(data);\
+							rebuildTimeout = null;\
+						},1000);\
+					}\
+					reset_filter = function() {\
+						localStorage[\"productFilter\"] = \"\";\
+						localStorage[\"titleFilter\"] = \"\";\
+						localStorage[\"versionFilter\"] = \"\";\
+						localStorage[\"idFilter\"] = \"\";\
+						productFilter.value = \"\";\
+						titleFilter.value = \"\";\
+						versionFilter.value = \"\";\
+						idFilter.value = \"\";\
+						if (rebuildTimeout) {\
+							window.clearTimeout(rebuildTimeout);\
+							rebuildTimeout = null;\
+						}\
+						build_table(data);\
+					}\
+					build_table(data);\
+				</script>\
+			</body>\
+		</html>";
+
 
 		for (var processIndex = 0, processCount = updatedSpecs.length < MAX_PROCESSES ? updatedSpecs.length : MAX_PROCESSES; processIndex < processCount; ++processIndex) {
 			var specId = updatedSpecs.pop();
@@ -153,21 +290,26 @@ function getModifiedSpecs(lastRun, updatedSpecs) {
  * finds the modified specs and topics.
  */
 function getListOfSpecsToBuild() {
-	if (thisBuildTime != null) {
-		fs.writeFileSync(LAST_RUN_FILE, thisBuildTime);
-		thisBuildTime = moment().format(DATE_FORMAT);
-	}
-
 	var lastRun = null;
 
-	// See if the last run file exists
-	try {
-		stats = fs.lstatSync(LAST_RUN_FILE);
-		if (stats.isFile()) {
-			lastRun = fs.readFileSync(LAST_RUN_FILE).toString().replace(/\n/g, "");
+	if (thisBuildTime != null) {
+		fs.writeFileSync(LAST_RUN_FILE, thisBuildTime);
+
+		var now = moment();
+		var diff = now.subtract(thisBuildTime).minutes();
+
+		lastRun =  thisBuildTime;
+		thisBuildTime = now.format(DATE_FORMAT);
+	} else {
+		// See if the last run file exists
+		try {
+			stats = fs.lstatSync(LAST_RUN_FILE);
+			if (stats.isFile()) {
+				lastRun = fs.readFileSync(LAST_RUN_FILE).toString().replace(/\n/g, "");
+			}
+		} catch (ex) {
+			// the file or directory doesn't exist. leave lastRun as null.
 		}
-	} catch (ex) {
-		// the file or directory doesn't exist. leave lastRun as null.
 	}
 
 	/*
