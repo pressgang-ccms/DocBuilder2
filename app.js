@@ -151,87 +151,98 @@ function buildBooks(updatedSpecs) {
 							// build the array that holds the details of the books \
 							var data = [";
 
-		for (var processIndex = 0, processCount = updatedSpecs.length; processIndex < processCount; ++processIndex) {
-			var specDetails = updatedSpecs.get(processIndex);
-
-			indexHtml += "{\
-				idRaw: " + specDetails.id + ",\
-				id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specDetails.id + "\" target=\"_top\">" + specDetails.id + "</a>',\
-					versionRaw: '${VERSION}', \
-					version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + specDetails.version + "</a>',\
-					productRaw: '" + specDetails.product + "',\
-					product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + specDetails.product + "</a>',\
-					titleRaw: '${TITLE}', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\"  target=\"_top\">" + specDetails.title + "</a>', \
-					remarks: '<a href=\"" + specDetails.id + "/remarks\"><button>With Remarks</button></a>',\
-					buildlog: '<a href=\"" + specDetails.id + "/build.log\"><button>Build Log</button></a>' ,\
-					publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + ESCAPED_PUBLICAN_BOOK_URL + "\"><button>Publican ZIP</button></a>',\
-					publicanlog: '<a href=\"" + specDetails.id + "/publican.log\"><button>Publican Log</button></a>'\
-			},";
-		}
-
-		indexHtml += " ];\
-					rebuildTimeout = null;\
-					productFilter.value = localStorage[\"productFilter\"] || \"\"; \
-					titleFilter.value = localStorage[\"titleFilter\"] || \"\"; \
-					versionFilter.value = localStorage[\"versionFilter\"] || \"\"; \
-					idFilter.value = localStorage[\"idFilter\"] || \"\"; \
-					save_filter = function() {\
-						localStorage[\"productFilter\"] = productFilter.value;\
-						localStorage[\"titleFilter\"] = titleFilter.value;\
-						localStorage[\"versionFilter\"] = versionFilter.value;\
-						localStorage[\"idFilter\"] = idFilter.value;\
-						if (rebuildTimeout) {\
-							window.clearTimeout(rebuildTimeout);\
-							rebuildTimeout = null;\
+		finishProcessing = function() {
+			indexHtml += " ];\
+						rebuildTimeout = null;\
+						productFilter.value = localStorage[\"productFilter\"] || \"\"; \
+						titleFilter.value = localStorage[\"titleFilter\"] || \"\"; \
+						versionFilter.value = localStorage[\"versionFilter\"] || \"\"; \
+						idFilter.value = localStorage[\"idFilter\"] || \"\"; \
+						save_filter = function() {\
+							localStorage[\"productFilter\"] = productFilter.value;\
+							localStorage[\"titleFilter\"] = titleFilter.value;\
+							localStorage[\"versionFilter\"] = versionFilter.value;\
+							localStorage[\"idFilter\"] = idFilter.value;\
+							if (rebuildTimeout) {\
+								window.clearTimeout(rebuildTimeout);\
+								rebuildTimeout = null;\
+							}\
+							rebuildTimeout = setTimeout(function(){\
+								build_table(data);\
+								rebuildTimeout = null;\
+							},1000);\
 						}\
-						rebuildTimeout = setTimeout(function(){\
+						reset_filter = function() {\
+							localStorage[\"productFilter\"] = \"\";\
+							localStorage[\"titleFilter\"] = \"\";\
+							localStorage[\"versionFilter\"] = \"\";\
+							localStorage[\"idFilter\"] = \"\";\
+							productFilter.value = \"\";\
+							titleFilter.value = \"\";\
+							versionFilter.value = \"\";\
+							idFilter.value = \"\";\
+							if (rebuildTimeout) {\
+								window.clearTimeout(rebuildTimeout);\
+								rebuildTimeout = null;\
+							}\
 							build_table(data);\
-							rebuildTimeout = null;\
-						},1000);\
-					}\
-					reset_filter = function() {\
-						localStorage[\"productFilter\"] = \"\";\
-						localStorage[\"titleFilter\"] = \"\";\
-						localStorage[\"versionFilter\"] = \"\";\
-						localStorage[\"idFilter\"] = \"\";\
-						productFilter.value = \"\";\
-						titleFilter.value = \"\";\
-						versionFilter.value = \"\";\
-						idFilter.value = \"\";\
-						if (rebuildTimeout) {\
-							window.clearTimeout(rebuildTimeout);\
-							rebuildTimeout = null;\
 						}\
 						build_table(data);\
-					}\
-					build_table(data);\
-				</script>\
-			</body>\
-		</html>";
+					</script>\
+				</body>\
+			</html>";
 
+			for (var processIndex = 0, processCount = updatedSpecs.length < MAX_PROCESSES ? updatedSpecs.length : MAX_PROCESSES; processIndex < processCount; ++processIndex) {
+				var specId = updatedSpecs.pop();
+				++childCount;
+				exec("echo " + specId, function(error, stdout, stderr) {
+					--childCount;
+					if (childCount < MAX_PROCESSES) {
 
-		for (var processIndex = 0, processCount = updatedSpecs.length < MAX_PROCESSES ? updatedSpecs.length : MAX_PROCESSES; processIndex < processCount; ++processIndex) {
-			var specId = updatedSpecs.pop();
-			++childCount;
-			exec("echo " + specId, function(error, stdout, stderr) {
-				--childCount;
-				if (childCount < MAX_PROCESSES) {
-
-					if (updatedSpecs.length != 0) {
-						/*
-						 	If there are still specs to be processed, then process them
-						 */
-						buildBooks(updatedSpecs);
-					} else if (childCount == 0) {
-						/*
-						  	Otherwise, wait until the last child process has finished, and
-						  	restart the build.
-						 */
-						getListOfSpecsToBuild();
+						if (updatedSpecs.length != 0) {
+							/*
+							 If there are still specs to be processed, then process them
+							 */
+							buildBooks(updatedSpecs);
+						} else if (childCount == 0) {
+							/*
+							 Otherwise, wait until the last child process has finished, and
+							 restart the build.
+							 */
+							getListOfSpecsToBuild();
+						}
 					}
-				}
-			});
+				});
+			}
 		}
+
+		processSpecDetails = function(processIndex) {
+			if (index >= updatedSpecs.length) {
+				finishProcessing();
+			} else {
+				var specDetails = updatedSpecs.get(processIndex);
+
+				getLatestFile(PUBLICAN_BOOK_ZIPS_COMPLETE, specDetails.id + ".*?.zip", function(latest, latestFile) {
+					indexHtml += "{\
+						idRaw: " + specDetails.id + ",\
+						id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specDetails.id + "\" target=\"_top\">" + specDetails.id + "</a>',\
+						versionRaw: '${VERSION}', \
+						version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + specDetails.version + "</a>',\
+						productRaw: '" + specDetails.product + "',\
+						product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + specDetails.product + "</a>',\
+						titleRaw: '${TITLE}', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\"  target=\"_top\">" + specDetails.title + "</a>', \
+						remarks: '<a href=\"" + specDetails.id + "/remarks\"><button>With Remarks</button></a>',\
+						buildlog: '<a href=\"" + specDetails.id + "/build.log\"><button>Build Log</button></a>' ,\
+						publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + encodeURIComponent(latestFile) + "\"><button>Publican ZIP</button></a>',\
+						publicanlog: '<a href=\"" + specDetails.id + "/publican.log\"><button>Publican Log</button></a>'\
+					},";
+
+					processSpecDetails(++processIndex);
+				});
+			}
+		}
+
+
 
 	}
 }
@@ -309,6 +320,15 @@ function getModifiedSpecs(lastRun, updatedSpecs) {
 function getListOfSpecsToBuild() {
 	var lastRun = null;
 
+	if (indexHtml != null) {
+		/*
+		 	Save the index.html file
+		 */
+		fs.writeFileSync(INDEX_HTML, indexHtml);
+
+		indexHtml = null;
+	}
+
 	if (thisBuildTime != null) {
 		fs.writeFileSync(LAST_RUN_FILE, thisBuildTime);
 
@@ -339,6 +359,49 @@ function getListOfSpecsToBuild() {
 	getModifiedTopics(lastRun, updatedSpecs);
 	getModifiedSpecs(lastRun, updatedSpecs);
 }
+
+function getLatestFile (dir, filter, done) {
+	fs.readdir(dir, function (error, list) {
+		if (error) {
+			return done(error);
+		}
+
+		var i = 0;
+
+		(function next (latest, latestFile) {
+			var file = list[i++];
+
+			if (!file) {
+				return done(null, latest, latestFile);
+			}
+
+			if (file.matches(filter)) {
+
+				var fullFile = dir + '/' + file;
+
+				fs.stat(fullFile, function (error, stat) {
+
+					if (stat && stat.isDirectory()) {
+						walk(file, function (error) {
+							next();
+						});
+					} else {
+
+						var lastModified = moment(stat.mtime);
+						if (!latest || lastModified.isAfter(latest)) {
+							latest = lastModified;
+							latestFile = file;
+						}
+
+						next(latest, latestFile);
+					}
+				});
+			} else {
+				next(latest, latestFile);
+			}
+		})();
+	});
+};
 
 getListOfSpecsToBuild();
 
