@@ -3,6 +3,7 @@ var set = require('collections/sorted-set.js');
 var iterator = require("collections/iterator");
 var $ = require("jquery");
 var moment = require('moment');
+var exec = require('child_process').exec;
 
 /**
  * The REST server that the DocBuilder will connect to
@@ -12,19 +13,53 @@ var REST_SERVER = "http://topicindex-dev.ecs.eng.bne.redhat.com:8080/pressgang-c
 //var LAST_RUN_FILE = "/home/pressgang/.docbuilder/docbuilder2_lastrun";
 var LAST_RUN_FILE = "/home/matthew/.docbuilder/docbuilder2_lastrun";
 var DATE_FORMAT = "YYYY-MM-ddThh:mm:ss.000Z";
+var MAX_PROCESSES = 16;
 
 var topicsProcessed = false;
 var specsProcessed = false;
-var updatedSpecs = new set([]);
+var childCount = 0;
+var thisBuildTime = null;
 
-function buildBooks() {
+/**
+ * Called when the modified topics and specs have been found. Once both
+ * functions have called this function, the process of actually building the
+ * books will start.
+ */
+function buildBooks(updatedSpecs) {
 	if (specsProcessed && topicsProcessed) {
-		console.log(updatedSpecs.toArray());
-		fs.readFileSync(LAST_RUN_FILE, moment().format(DATE_FORMAT));
+
+		for (var processIndex = 0, processCount = updatedSpecs.length < MAX_PROCESSES ? updatedSpecs.length : MAX_PROCESSES; processIndex < processCount; ++processIndex) {
+			var specId = updatedSpecs.pop();
+			++childCount;
+			exec("echo " + specId, function(error, stdout, stderr) {
+				--childCount;
+				if (childCount < MAX_PROCESSES) {
+
+					if (updatedSpecs.length != 0) {
+						/*
+						 	If there are still specs to be processed, then process them
+						 */
+						buildBooks(updatedSpecs);
+					} else if (childCount == 0) {
+						/*
+						  	Otherwise, wait until the last child process has finished, and
+						  	restart the build.
+						 */
+						getListOfSpecsToBuild();
+					}
+				}
+			});
+		}
+
 	}
 }
 
-function getModifiedTopics(lastRun) {
+
+/**
+ * Query the server for all topics that have been modified since the specified time
+ * @param lastRun The time DocBuilder was last run
+ */
+function getModifiedTopics(lastRun, updatedSpecs) {
 	var topicQuery = REST_SERVER + "/1/topics/get/json/query;";
 
 	// If we have some last run info, use that to limit the search
@@ -52,11 +87,15 @@ function getModifiedTopics(lastRun) {
 			}
 
 			topicsProcessed = true;
-			buildBooks();
+			buildBooks(updatedSpecs);
 		});
 }
 
-function getModifiedSpecs(lastRun) {
+/**
+ * Query the server for all specs that have been modified since the specified time
+ * @param lastRun The time DocBuilder was last run
+ */
+function getModifiedSpecs(lastRun, updatedSpecs) {
 	var topicQuery = REST_SERVER + "/1/contentspecs/get/json/query;";
 
 	// If we have some last run info, use that to limit the search
@@ -77,11 +116,20 @@ function getModifiedSpecs(lastRun) {
 			}
 
 			specsProcessed = true;
-			buildBooks();
+			buildBooks(updatedSpecs);
 		});
 }
 
+/**
+ * Reads a file that holds the time DocBuilder last did a build, and then
+ * finds the modified specs and topics.
+ */
 function getListOfSpecsToBuild() {
+	if (thisBuildTime != null) {
+		fs.writeFileSync(LAST_RUN_FILE, thisBuildTime);
+		thisBuildTime = moment().format(DATE_FORMAT);
+	}
+
 	var lastRun = null;
 
 	// See if the last run file exists
@@ -94,8 +142,15 @@ function getListOfSpecsToBuild() {
 		// the file or directory doesn't exist. leave lastRun as null.
 	}
 
-	getModifiedTopics(lastRun);
-	getModifiedSpecs(lastRun);
+	/*
+		Reset the variables for this run.
+	 */
+	topicsProcessed = false;
+	specsProcessed = false;
+	var updatedSpecs = new set([]);
+
+	getModifiedTopics(lastRun, updatedSpecs);
+	getModifiedSpecs(lastRun, updatedSpecs);
 }
 
 getListOfSpecsToBuild();
