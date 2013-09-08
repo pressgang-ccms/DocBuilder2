@@ -217,7 +217,7 @@ function buildBooks(updatedSpecs) {
 		}
 
 		processSpecDetails = function(processIndex) {
-			if (index >= updatedSpecs.length) {
+			if (processIndex >= updatedSpecs.length) {
 				finishProcessing();
 			} else {
 				var specDetails = updatedSpecs.get(processIndex);
@@ -353,7 +353,28 @@ function getListOfSpecsToBuild() {
 	 */
 	topicsProcessed = false;
 	specsProcessed = false;
-	var updatedSpecs = new set([]);
+	var updatedSpecs = new set([], null, function(a, b) {
+		if (!a && !b) {
+			return 0;
+		}
+		if (!a) {
+			return 1;
+		}
+		if (!b) {
+			return -1;
+		}
+		if (!a.id && !b.id) {
+			return 0;
+		}
+		if (!a.id) {
+			return 1;
+		}
+		if (!b.id) {
+			return -1;
+		}
+
+		return a.id < b.id;
+	});
 
 	getModifiedTopics(lastRun, updatedSpecs);
 	getModifiedSpecs(lastRun, updatedSpecs);
