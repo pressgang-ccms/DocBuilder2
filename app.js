@@ -9,7 +9,8 @@ var exec = require('child_process').exec;
  * The REST server that the DocBuilder will connect to.
  * @type {string}
  */
-var REST_SERVER = "http://topicindex-dev.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest";
+//var REST_SERVER = "http://topicindex-dev.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest";
+var REST_SERVER = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest";
 /**
  * The file that holds the lat time a complete rebuild was completed.
  * @type {string}
@@ -192,50 +193,32 @@ function buildBooks(updatedSpecs) {
 				</body>\
 			</html>";
 
-			for (var processIndex = 0, processCount = updatedSpecs.length < MAX_PROCESSES ? updatedSpecs.length : MAX_PROCESSES; processIndex < processCount; ++processIndex) {
-				var specId = updatedSpecs.pop();
-				++childCount;
-				exec("echo " + specId, function(error, stdout, stderr) {
-					--childCount;
-					if (childCount < MAX_PROCESSES) {
-
-						if (updatedSpecs.length != 0) {
-							/*
-							 If there are still specs to be processed, then process them
-							 */
-							buildBooks(updatedSpecs);
-						} else if (childCount == 0) {
-							/*
-							 Otherwise, wait until the last child process has finished, and
-							 restart the build.
-							 */
-							getListOfSpecsToBuild();
-						}
-					}
-				});
-			}
+			processSpecs(updatedSpecs);
 		}
 
 		processSpecDetails = function(processIndex) {
-			if (processIndex >= updatedSpecs.length) {
+			if (processIndex >= allSpecs.length) {
 				finishProcessing();
 			} else {
-				var specDetails = updatedSpecs.get(processIndex);
+				var specDetails = allSpecs.get(processIndex);
 
 				getLatestFile(PUBLICAN_BOOK_ZIPS_COMPLETE, specDetails.id + ".*?.zip", function(latest, latestFile) {
-					indexHtml += "{\
-						idRaw: " + specDetails.id + ",\
-						id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specDetails.id + "\" target=\"_top\">" + specDetails.id + "</a>',\
-						versionRaw: '${VERSION}', \
-						version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + specDetails.version + "</a>',\
-						productRaw: '" + specDetails.product + "',\
-						product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + specDetails.product + "</a>',\
-						titleRaw: '${TITLE}', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\"  target=\"_top\">" + specDetails.title + "</a>', \
-						remarks: '<a href=\"" + specDetails.id + "/remarks\"><button>With Remarks</button></a>',\
-						buildlog: '<a href=\"" + specDetails.id + "/build.log\"><button>Build Log</button></a>' ,\
-						publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + encodeURIComponent(latestFile) + "\"><button>Publican ZIP</button></a>',\
-						publicanlog: '<a href=\"" + specDetails.id + "/publican.log\"><button>Publican Log</button></a>'\
-					},";
+
+					var latestFileFixed = latestFile == null ? "" :encodeURIComponent(latestFile);
+
+					indexHtml += "{\n\
+						idRaw: " + specDetails.id + ",\n\
+						id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specDetails.id + "\" target=\"_top\">" + specDetails.id + "</a>',\n\
+						versionRaw: '" + specDetails.version + "',\n\
+						version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + specDetails.version + "</a>',\n\
+						productRaw: '" + specDetails.product + "',\n\
+						product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + specDetails.product + "</a>',\n\
+						titleRaw: '${TITLE}', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\"  target=\"_top\">" + specDetails.title + "</a>',\n\
+						remarks: '<a href=\"" + specDetails.id + "/remarks\"><button>With Remarks</button></a>',\n\
+						buildlog: '<a href=\"" + specDetails.id + "/build.log\"><button>Build Log</button></a>',\n\
+						publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + latestFileFixed + "\"><button>Publican ZIP</button></a>',\n\
+						publicanlog: '<a href=\"" + specDetails.id + "/publican.log\"><button>Publican Log</button></a>'\n\
+					},\n";
 
 					processSpecDetails(++processIndex);
 				});
@@ -246,12 +229,37 @@ function buildBooks(updatedSpecs) {
 	}
 }
 
+function processSpecs(updatedSpecs) {
+	for (var processIndex = 0, processCount = updatedSpecs.length < MAX_PROCESSES ? updatedSpecs.length : MAX_PROCESSES; processIndex < processCount; ++processIndex) {
+		var specId = updatedSpecs.pop();
+		++childCount;
+		exec("echo " + specId, function(error, stdout, stderr) {
+			--childCount;
+			if (childCount < MAX_PROCESSES) {
+
+				if (updatedSpecs.length != 0) {
+					/*
+					 If there are still specs to be processed, then process them
+					 */
+					processSpecs(updatedSpecs);
+				} else if (childCount == 0) {
+					/*
+					 Otherwise, wait until the last child process has finished, and
+					 restart the build.
+					 */
+					getListOfSpecsToBuild();
+				}
+			}
+		});
+	}
+}
+
 
 /**
  * Query the server for all topics that have been modified since the specified time
  * @param lastRun The time DocBuilder was last run
  */
-function getModifiedTopics(lastRun, updatedSpecs) {
+function getModifiedTopics(lastRun, updatedSpecs, allSpecs) {
 	var topicQuery = REST_SERVER + "/1/topics/get/json/query;";
 
 	// If we have some last run info, use that to limit the search
@@ -260,9 +268,14 @@ function getModifiedTopics(lastRun, updatedSpecs) {
 	}
 	topicQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs_OTM%22%7D%7D%5D%7D%5D%7D%0A%0A";
 
+	console.log("Getting modified topics from URL " + topicQuery);
+
 	$.getJSON(topicQuery,
 		function(data) {
 			if (data.items) {
+
+				console.log("Found " + data.items.length + " modified topics.");
+
 				for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
 					var topic = data.items[topicIndex].item;
 					if (topic.contentSpecs_OTM) {
@@ -279,7 +292,11 @@ function getModifiedTopics(lastRun, updatedSpecs) {
 			}
 
 			topicsProcessed = true;
-			buildBooks(updatedSpecs);
+			buildBooks(updatedSpecs, allSpecs);
+		}).error(function(jqXHR, textStatus, errorThrown) {
+			console.log("Call to " + topicQuery + " failed!");
+			console.log(errorThrown);
+			restartAfterFailure();
 		});
 }
 
@@ -287,29 +304,48 @@ function getModifiedTopics(lastRun, updatedSpecs) {
  * Query the server for all specs that have been modified since the specified time
  * @param lastRun The time DocBuilder was last run
  */
-function getModifiedSpecs(lastRun, updatedSpecs) {
+function getSpecs(lastRun, updatedSpecs, allSpecs) {
 	var specQuery = REST_SERVER + "/1/contentspecs/get/json+text/query;";
 
-	// If we have some last run info, use that to limit the search
-	if (lastRun != null) {
-		specQuery += "startEditDate=" + encodeURIComponent(encodeURIComponent(lastRun));
-	}
 	specQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%7D%5D%7D";
+
+	console.log("Getting specs from URL " + specQuery);
 
 	$.getJSON(specQuery,
 		function(data) {
 			if (data.items) {
+
+				console.log("Found " + data.items.length + " content specs");
+
 				for (var specIndex = 0, specCount = data.items.length; specIndex < specCount; ++specIndex) {
 					var spec = data.items[specIndex].item;
-					updatedSpecs.add({id: spec.id, product: spec.product, title: spec.title});
+					var specDetails = {id: spec.id, product: spec.product, title: spec.title};
+					allSpecs.add(specDetails);
+
+					var lastEdited = moment(spec.lastModified);
+					if (!lastRun || lastEdited.isAfter(lastRun)) {
+						updatedSpecs.add(specDetails);
+					}
 				}
+
+				console.log("Found " + updatedSpecs.length + " modified content specs");
 			} else {
 				console.log("data.items was not expected to be null");
 			}
 
 			specsProcessed = true;
 			buildBooks(updatedSpecs);
+		}).error(function(jqXHR, textStatus, errorThrown) {
+			console.log("Call to " + specQuery + " failed!");
+			console.log(errorThrown);
+			restartAfterFailure();
 		});
+}
+
+function restartAfterFailure() {
+	indexHtml = null;
+	thisBuildTime = null;
+	getListOfSpecsToBuild();
 }
 
 /**
@@ -353,31 +389,57 @@ function getListOfSpecsToBuild() {
 	 */
 	topicsProcessed = false;
 	specsProcessed = false;
-	var updatedSpecs = new set([], null, function(a, b) {
-		if (!a && !b) {
-			return 0;
-		}
-		if (!a) {
-			return 1;
-		}
-		if (!b) {
-			return -1;
-		}
-		if (!a.id && !b.id) {
-			return 0;
-		}
-		if (!a.id) {
-			return 1;
-		}
-		if (!b.id) {
-			return -1;
-		}
+	var updatedSpecs = new set([], compareContentSpecs, sortContentSpecs);
+	var allSpecs = new set([], compareContentSpecs, sortContentSpecs);
 
-		return a.id < b.id;
-	});
+	getModifiedTopics(lastRun, updatedSpecs, allSpecs);
+	getSpecs(lastRun, updatedSpecs, allSpecs);
+}
 
-	getModifiedTopics(lastRun, updatedSpecs);
-	getModifiedSpecs(lastRun, updatedSpecs);
+function sortContentSpecs(a, b) {
+	if (!a && !b) {
+		return 0;
+	}
+	if (!a) {
+		return 1;
+	}
+	if (!b) {
+		return -1;
+	}
+	if (!a.id && !b.id) {
+		return 0;
+	}
+	if (!a.id) {
+		return 1;
+	}
+	if (!b.id) {
+		return -1;
+	}
+
+	return a.id < b.id;
+}
+
+function compareContentSpecs(a, b) {
+	if (!a && !b) {
+		return true;
+	}
+	if (!a) {
+		return false;
+	}
+	if (!b) {
+		return false;
+	}
+	if (!a.id && !b.id) {
+		return true;
+	}
+	if (!a.id) {
+		return false;
+	}
+	if (!b.id) {
+		return false;
+	}
+
+	return a.id === b.id;
 }
 
 function getLatestFile (dir, filter, done) {
@@ -395,7 +457,7 @@ function getLatestFile (dir, filter, done) {
 				return done(null, latest, latestFile);
 			}
 
-			if (file.matches(filter)) {
+			if (file.toString().match(filter)) {
 
 				var fullFile = dir + '/' + file;
 
