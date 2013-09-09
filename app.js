@@ -274,27 +274,31 @@ function buildBooks(updatedSpecs, allSpecsArray) {
  */
 function processSpecs(updatedSpecs) {
 	var existingChildren = childCount;
-	for (var processIndex = existingChildren, processCount = updatedSpecs.length < MAX_PROCESSES ? updatedSpecs.length : MAX_PROCESSES; processIndex < processCount; ++processIndex) {
-		var specId = updatedSpecs.pop();
-		++childCount;
-		exec("echo " + specId, function(error, stdout, stderr) {
-			--childCount;
-			if (childCount < MAX_PROCESSES) {
+	if (updatedSpecs.length == 0) {
+		getListOfSpecsToBuild();
+	} else {
+		for (var processIndex = existingChildren, processCount = updatedSpecs.length < MAX_PROCESSES ? updatedSpecs.length : MAX_PROCESSES; processIndex < processCount; ++processIndex) {
+			var specId = updatedSpecs.pop();
+			++childCount;
+			exec("echo " + specId, function(error, stdout, stderr) {
+				--childCount;
+				if (childCount < MAX_PROCESSES) {
 
-				if (updatedSpecs.length != 0) {
-					/*
-					 If there are still specs to be processed, then process them
-					 */
-					processSpecs(updatedSpecs);
-				} else if (childCount == 0) {
-					/*
-					 Otherwise, wait until the last child process has finished, and
-					 restart the build.
-					 */
-					getListOfSpecsToBuild();
+					if (updatedSpecs.length != 0) {
+						/*
+						 If there are still specs to be processed, then process them
+						 */
+						processSpecs(updatedSpecs);
+					} else if (childCount == 0) {
+						/*
+						 Otherwise, wait until the last child process has finished, and
+						 restart the build.
+						 */
+						getListOfSpecsToBuild();
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 }
 
@@ -312,8 +316,8 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
 	}
 	topicQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs_OTM%22%7D%7D%5D%7D%5D%7D%0A%0A";
 
-	console.log("Getting modified topics from URL " + topicQuery);
-	//console.log("Finding modified topics");
+	//console.log("Getting modified topics from URL " + topicQuery);
+	console.log("Finding modified topics");
 
 	$.getJSON(topicQuery,
 		function(data) {
