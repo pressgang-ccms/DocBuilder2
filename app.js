@@ -32,8 +32,8 @@ var REST_SERVER = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest
  * The file that holds the lat time a complete rebuild was completed.
  * @type {string}
  */
-var LAST_RUN_FILE = "/home/pressgang/.docbuilder/docbuilder2_lastrun";
-//var LAST_RUN_FILE = "/home/matthew/.docbuilder/docbuilder2_lastrun";
+//var LAST_RUN_FILE = "/home/pressgang/.docbuilder/docbuilder2_lastrun";
+var LAST_RUN_FILE = "/home/matthew/.docbuilder/docbuilder2_lastrun";
 /**
  * The format of the date to be supplied to the REST query.
  * @type {string}
@@ -361,7 +361,7 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
 
 	// If we have some last run info, use that to limit the search
 	if (lastRun != null) {
-		topicQuery += "startEditDate=" + encodeURIComponent(encodeURIComponent(lastRun));
+		topicQuery += "startEditDate=" + encodeURIComponent(encodeURIComponent(lastRun.format(DATE_FORMAT)));
 	}
 	topicQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs_OTM%22%7D%7D%5D%7D%5D%7D%0A%0A";
 
