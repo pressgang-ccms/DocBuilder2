@@ -197,7 +197,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 		}
 
 		processSpecDetails = function(processIndex) {
-			if (processIndex >= allSpecs.length) {
+			if (processIndex >= allSpecsArray.length) {
 				finishProcessing();
 			} else {
 				var specDetails = allSpecsArray[processIndex];
