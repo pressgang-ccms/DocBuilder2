@@ -487,9 +487,9 @@ function getListOfSpecsToBuild() {
 			console.log("Could not save " + LAST_RUN_FILE);
 		}
 
-		var diff = now.subtract(thisBuildTime).minutes();
+		diff = moment().subtract(thisBuildTime).minutes();
 
-		lastRun =  thisBuildTime.format(DATE_FORMAT);
+		lastRun = thisBuildTime.format(DATE_FORMAT);
 	} else {
 		// See if the last run file exists
 		try {
@@ -511,7 +511,7 @@ function getListOfSpecsToBuild() {
 	var allSpecs = [];
 
 	/*
-	 Make a note of when we started this run.
+		Make a note of when we started this run.
 	 */
 	thisBuildTime = now;
 
