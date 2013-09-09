@@ -481,15 +481,15 @@ function getListOfSpecsToBuild() {
 	var now = moment();
 
 	if (thisBuildTime != null) {
+		lastRun = thisBuildTime.format(DATE_FORMAT);
+
 		try {
-			fs.writeFileSync(LAST_RUN_FILE, thisBuildTime.format(DATE_FORMAT));
+			fs.writeFileSync(LAST_RUN_FILE, lastRun);
 		} catch (ex) {
 			console.log("Could not save " + LAST_RUN_FILE);
 		}
 
 		diff = moment().subtract(thisBuildTime).minutes();
-
-		lastRun = thisBuildTime.format(DATE_FORMAT);
 	} else {
 		// See if the last run file exists
 		try {
