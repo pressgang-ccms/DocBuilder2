@@ -91,7 +91,7 @@ var specsProcessed = false;
 var childCount = 0;
 /**
  * The string to be saved in the marker file when a rebuild is completed.
- * @type {string}
+ * @type {moment}
  */
 var thisBuildTime = null;
 /**
@@ -544,7 +544,7 @@ function getListOfSpecsToBuild() {
 			console.log("Could not save " + LAST_RUN_FILE);
 		}
 
-		diff = moment().subtract(thisBuildTime).seconds();
+		diff = moment().unix() - thisBuildTime.unix();
 	} else {
 		// See if the last run file exists
 		try {
