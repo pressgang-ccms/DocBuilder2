@@ -5,6 +5,18 @@ var $ = require("jquery");
 var moment = require('moment');
 var exec = require('child_process').exec;
 
+/*
+	This application is designed to be asynchronous. It performs the following steps:
+	1. Get all the topics and specs that have been modified since the supplied date
+	2. Rebuild each spec
+	3. Generate the index.html page
+
+	In the background we are also pulling down the details of specs that are new or modified
+	 since the last run (so for the first run all specs will be new). This may mean that the
+	 index.html page has some undefined info for the title, product and version, but the benefit
+	 is that we are not waiting for this info before rebuilding the new specs.
+ */
+
 /**
  * The REST server that the DocBuilder will connect to.
  * @type {string}
