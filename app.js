@@ -66,8 +66,27 @@ var childCount = 0;
  * @type {string}
  */
 var thisBuildTime = null;
-
+/**
+ * The index.html file build up with each run.
+ * @type {string}
+ */
 var indexHtml = null;
+/**
+ * Keeps a copy of the version, title and product for each spec, and
+ * updates the info as the specs are updated.
+ * @type {object}
+ */
+var specDetailsCache = {};
+/**
+ * Keeps a list of the specs whose details have to be updated.
+ * @type {Array}
+ */
+var pendingSpecCacheUpdates = new set([]);
+/**
+ * true if the pendingSpecCacheUpdates is being processed, and false otherwise.
+ * @type {boolean}
+ */
+var processingPendingCacheUpdates = false;
 
 /**
  * Called when the modified topics and specs have been found. Once both
@@ -153,44 +172,44 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 							var data = [\n";
 
 		finishProcessing = function() {
-			indexHtml += " ];\
-						rebuildTimeout = null;\
-						productFilter.value = localStorage[\"productFilter\"] || \"\"; \
-						titleFilter.value = localStorage[\"titleFilter\"] || \"\"; \
-						versionFilter.value = localStorage[\"versionFilter\"] || \"\"; \
-						idFilter.value = localStorage[\"idFilter\"] || \"\"; \
-						save_filter = function() {\
-							localStorage[\"productFilter\"] = productFilter.value;\
-							localStorage[\"titleFilter\"] = titleFilter.value;\
-							localStorage[\"versionFilter\"] = versionFilter.value;\
-							localStorage[\"idFilter\"] = idFilter.value;\
-							if (rebuildTimeout) {\
-								window.clearTimeout(rebuildTimeout);\
-								rebuildTimeout = null;\
-							}\
-							rebuildTimeout = setTimeout(function(){\
-								build_table(data);\
-								rebuildTimeout = null;\
-							},1000);\
-						}\
-						reset_filter = function() {\
-							localStorage[\"productFilter\"] = \"\";\
-							localStorage[\"titleFilter\"] = \"\";\
-							localStorage[\"versionFilter\"] = \"\";\
-							localStorage[\"idFilter\"] = \"\";\
-							productFilter.value = \"\";\
-							titleFilter.value = \"\";\
-							versionFilter.value = \"\";\
-							idFilter.value = \"\";\
-							if (rebuildTimeout) {\
-								window.clearTimeout(rebuildTimeout);\
-								rebuildTimeout = null;\
-							}\
-							build_table(data);\
-						}\
-						build_table(data);\
-					</script>\
-				</body>\
+			indexHtml += " ];\n\
+						rebuildTimeout = null;\n\
+						productFilter.value = localStorage[\"productFilter\"] || \"\"; \n\
+						titleFilter.value = localStorage[\"titleFilter\"] || \"\"; \n\
+						versionFilter.value = localStorage[\"versionFilter\"] || \"\"; \n\
+						idFilter.value = localStorage[\"idFilter\"] || \"\"; \n\
+						save_filter = function() {\n\
+							localStorage[\"productFilter\"] = productFilter.value;\n\
+							localStorage[\"titleFilter\"] = titleFilter.value;\n\
+							localStorage[\"versionFilter\"] = versionFilter.value;\n\
+							localStorage[\"idFilter\"] = idFilter.value;\n\
+							if (rebuildTimeout) {\n\
+								window.clearTimeout(rebuildTimeout);\n\
+								rebuildTimeout = null;\n\
+							}\n\
+							rebuildTimeout = setTimeout(function(){\n\
+								build_table(data);\n\
+								rebuildTimeout = null;\n\
+							},1000);\n\
+						}\n\
+						reset_filter = function() {\n\
+							localStorage[\"productFilter\"] = \"\";\n\
+							localStorage[\"titleFilter\"] = \"\";\n\
+							localStorage[\"versionFilter\"] = \"\";\n\
+							localStorage[\"idFilter\"] = \"\";\n\
+							productFilter.value = \"\";\n\
+							titleFilter.value = \"\";\n\
+							versionFilter.value = \"\";\n\
+							idFilter.value = \"\";\n\
+							if (rebuildTimeout) {\n\
+								window.clearTimeout(rebuildTimeout);\n\
+								rebuildTimeout = null;\n\
+							}\n\
+							build_table(data);\n\
+						}\n\
+						build_table(data);\n\
+					</script>\n\
+				</body>\n\
 			</html>";
 
 			processSpecs(updatedSpecs);
@@ -207,17 +226,17 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 					var latestFileFixed = latestFile == null ? "" :encodeURIComponent(latestFile);
 
 					indexHtml += "{\n\
-						idRaw: " + specDetails.id + ",\n\
-						id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specDetails.id + "\" target=\"_top\">" + specDetails.id + "</a>',\n\
-						versionRaw: '" + specDetails.version + "',\n\
-						version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + specDetails.version + "</a>',\n\
-						productRaw: '" + specDetails.product + "',\n\
-						product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + specDetails.product + "</a>',\n\
-						titleRaw: '${TITLE}', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\"  target=\"_top\">" + specDetails.title + "</a>',\n\
-						remarks: '<a href=\"" + specDetails.id + "/remarks\"><button>With Remarks</button></a>',\n\
-						buildlog: '<a href=\"" + specDetails.id + "/build.log\"><button>Build Log</button></a>',\n\
+						idRaw: " + specDetails + ",\n\
+						id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specDetails + "\" target=\"_top\">" + specDetails + "</a>',\n\
+						versionRaw: '" + specDetailsCache[specDetails].version + "',\n\
+						version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + specDetailsCache[specDetails].version + "</a>',\n\
+						productRaw: '" + specDetailsCache[specDetails].product + "',\n\
+						product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + specDetailsCache[specDetails].product + "</a>',\n\
+						titleRaw: '" + specDetailsCache[specDetails].title + "', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails + "\"  target=\"_top\">" + specDetailsCache[specDetails].title + "</a>',\n\
+						remarks: '<a href=\"" + specDetails + "/remarks\"><button>With Remarks</button></a>',\n\
+						buildlog: '<a href=\"" + specDetails + "/build.log\"><button>Build Log</button></a>',\n\
 						publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + latestFileFixed + "\"><button>Publican ZIP</button></a>',\n\
-						publicanlog: '<a href=\"" + specDetails.id + "/publican.log\"><button>Publican Log</button></a>'\n\
+						publicanlog: '<a href=\"" + specDetails + "/publican.log\"><button>Publican Log</button></a>'\n\
 					},\n";
 
 					processSpecDetails(++processIndex);
@@ -306,6 +325,54 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
 		});
 }
 
+function addSpecToListOfPendingUpdates(id) {
+	pendingSpecCacheUpdates.add(id);
+	if (!processingPendingCacheUpdates) {
+		processPendingSpecUpdates();
+	}
+}
+
+function processPendingSpecUpdates() {
+	processingPendingCacheUpdates = true;
+
+	if (pendingSpecCacheUpdates.length != 0) {
+		var specId = pendingSpecCacheUpdates.pop();
+
+		var specDetailsQuery = REST_SERVER + "/1/contentspecnodes/get/json/query;csNodeType=7;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
+
+		if (!specDetailsCache[specId]) {
+			specDetailsCache[specId] = {};
+		}
+
+		console.log("Getting spec details from " + specDetailsQuery);
+
+		$.getJSON(specDetailsQuery,
+			function(data) {
+				if (data.items) {
+				 	for (var i = 0, count = data.items.length; i < count; ++i) {
+						var item = data.items[i].item;
+
+						if (item.title == "Title") {
+							specDetailsCache[specId].title = item.additionalText;
+						} else if (item.title == "Version") {
+							specDetailsCache[specId].version = item.additionalText;
+						} else if (item.title == "Product") {
+							specDetailsCache[specId].product = item.additionalText;
+						}
+					}
+				}
+
+				processPendingSpecUpdates();
+			}).error(function(jqXHR, textStatus, errorThrown) {
+				console.log("Call to " + specDetailsQuery + " failed!");
+				console.log(errorThrown);
+				processPendingSpecUpdates();
+			});
+	} else {
+		processingPendingCacheUpdates = false;
+	}
+}
+
 /**
  * Query the server for all specs that have been modified since the specified time
  * @param lastRun The time DocBuilder was last run
@@ -325,12 +392,18 @@ function getSpecs(lastRun, updatedSpecs, allSpecsArray) {
 
 				for (var specIndex = 0, specCount = data.items.length; specIndex < specCount; ++specIndex) {
 					var spec = data.items[specIndex].item;
-					var specDetails = {id: spec.id, product: spec.product, title: spec.title};
-					allSpecsArray.push(specDetails);
+
+					/*
+						We haven't processed this spec yet
+					 */
+					if (!specDetailsCache[spec.id]) {
+						addSpecToListOfPendingUpdates(spec.id);
+					}
 
 					var lastEdited = moment(spec.lastModified);
 					if (!lastRun || lastEdited.isAfter(lastRun)) {
 						updatedSpecs.add(spec.id);
+						addSpecToListOfPendingUpdates(spec.id);
 					}
 				}
 
@@ -348,6 +421,10 @@ function getSpecs(lastRun, updatedSpecs, allSpecsArray) {
 		});
 }
 
+/**
+ * If there was a failure with a rest call, this function will be called, which
+ * will start again as if this was the first run.
+ */
 function restartAfterFailure() {
 	indexHtml = null;
 	thisBuildTime = null;
