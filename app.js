@@ -237,14 +237,16 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 
 					var latestFileFixed = latestFile == null ? "" :encodeURIComponent(latestFile);
 
+					var fixedSpecDetails = fixedSpecDetails ? fixedSpecDetails : {title: "To Be Synced", version: "To Be Synced", product: "To Be Synced"}
+					
 					indexHtml += "{\n\
 						idRaw: " + specDetails + ",\n\
 						id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specDetails + "\" target=\"_top\">" + specDetails + "</a>',\n\
-						versionRaw: '" + specDetailsCache[specDetails].version + "',\n\
-						version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + specDetailsCache[specDetails].version + "</a>',\n\
-						productRaw: '" + specDetailsCache[specDetails].product + "',\n\
-						product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + specDetailsCache[specDetails].product + "</a>',\n\
-						titleRaw: '" + specDetailsCache[specDetails].title + "', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails + "\"  target=\"_top\">" + specDetailsCache[specDetails].title + "</a>',\n\
+						versionRaw: '" + fixedSpecDetails.version + "',\n\
+						version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + fixedSpecDetails.version + "</a>',\n\
+						productRaw: '" + fixedSpecDetails.product + "',\n\
+						product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + fixedSpecDetails.product + "</a>',\n\
+						titleRaw: '" + fixedSpecDetails.title + "', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails + "\"  target=\"_top\">" + fixedSpecDetails.title + "</a>',\n\
 						remarks: '<a href=\"" + specDetails + "/remarks\"><button>With Remarks</button></a>',\n\
 						buildlog: '<a href=\"" + specDetails + "/build.log\"><button>Build Log</button></a>',\n\
 						publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + latestFileFixed + "\"><button>Publican ZIP</button></a>',\n\
@@ -411,6 +413,8 @@ function getSpecs(lastRun, updatedSpecs, allSpecsArray) {
 					if (!specDetailsCache[spec.id]) {
 						addSpecToListOfPendingUpdates(spec.id);
 					}
+
+					allSpecsArray.push(spec.id);
 
 					var lastEdited = moment(spec.lastModified);
 					if (!lastRun || lastEdited.isAfter(lastRun)) {
