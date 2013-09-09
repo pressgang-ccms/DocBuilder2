@@ -472,6 +472,8 @@ function getListOfSpecsToBuild() {
 		indexHtml = null;
 	}
 
+	var now = moment();
+
 	if (thisBuildTime != null) {
 		try {
 			fs.writeFileSync(LAST_RUN_FILE, thisBuildTime);
@@ -479,7 +481,6 @@ function getListOfSpecsToBuild() {
 			console.log("Could not save " + LAST_RUN_FILE);
 		}
 
-		var now = moment();
 		var diff = now.subtract(thisBuildTime).minutes();
 
 		lastRun =  thisBuildTime;
@@ -504,9 +505,11 @@ function getListOfSpecsToBuild() {
 	var allSpecs = [];
 
 	/*
-		Make a note of when we started this run.
+	 Make a note of when we started this run.
 	 */
 	thisBuildTime = now.format(DATE_FORMAT);
+
+
 
 	getModifiedTopics(lastRun, updatedSpecs, allSpecs);
 	getSpecs(lastRun, updatedSpecs, allSpecs);
