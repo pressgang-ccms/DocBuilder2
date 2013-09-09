@@ -483,7 +483,6 @@ function getListOfSpecsToBuild() {
 		var diff = now.subtract(thisBuildTime).minutes();
 
 		lastRun =  thisBuildTime;
-		thisBuildTime = now.format(DATE_FORMAT);
 	} else {
 		// See if the last run file exists
 		try {
@@ -503,6 +502,11 @@ function getListOfSpecsToBuild() {
 	specsProcessed = false;
 	var updatedSpecs = new set([]);
 	var allSpecs = [];
+
+	/*
+		Make a note of when we started this run.
+	 */
+	thisBuildTime = now.format(DATE_FORMAT);
 
 	getModifiedTopics(lastRun, updatedSpecs, allSpecs);
 	getSpecs(lastRun, updatedSpecs, allSpecs);
