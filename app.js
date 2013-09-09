@@ -257,11 +257,11 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 					indexHtml += "{\n\
 						idRaw: " + specId + ",\n\
 						id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specId + "\" target=\"_top\">" + specId + "</a>',\n\
-						versionRaw: '" + fixedSpecDetails.version + "',\n\
-						version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\" target=\"_top\">" + fixedSpecDetails.version + "</a>',\n\
-						productRaw: '" + fixedSpecDetails.product + "',\n\
-						product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\" target=\"_top\">" + fixedSpecDetails.product + "</a>',\n\
-						titleRaw: '" + fixedSpecDetails.title + "', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\"  target=\"_top\">" + fixedSpecDetails.title + "</a>',\n\
+						versionRaw: '" + fixedSpecDetails.version.replace(/'/g, "\\'") + "',\n\
+						version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\" target=\"_top\">" + fixedSpecDetails.version.replace(/'/g, "\\'") + "</a>',\n\
+						productRaw: '" + fixedSpecDetails.product.replace(/'/g, "\\'") + "',\n\
+						product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\" target=\"_top\">" + fixedSpecDetails.product.replace(/'/g, "\\'") + "</a>',\n\
+						titleRaw: '" + fixedSpecDetails.title.replace(/'/g, "\\'") + "', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\"  target=\"_top\">" + fixedSpecDetails.title.replace(/'/g, "\\'") + "</a>',\n\
 						remarks: '<a href=\"" + specId + "/remarks\"><button>With Remarks</button></a>',\n\
 						buildlog: '<a href=\"" + specId + "/build.log\"><button>Build Log</button></a>',\n\
 						publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + latestFileFixed + "\"><button>Publican ZIP</button></a>',\n\
