@@ -12,9 +12,9 @@ var exec = require('child_process').exec;
 	3. Generate the index.html page
 
 	In the background we are also pulling down the details of specs that are new or modified
-	 since the last run (so for the first run all specs will be new). This may mean that the
-	 index.html page has some undefined info for the title, product and version, but the benefit
-	 is that we are not waiting for this info before rebuilding the new specs.
+	since the last run (so for the first run all specs will be new). This may mean that the
+	index.html page has some "To be synced" info for the title, product and version, but the benefit
+	is that we are not waiting for this info before rebuilding the new specs.
  */
 
 /**
@@ -298,13 +298,13 @@ function processSpecs(updatedSpecs) {
 
 						if (updatedSpecs.length != 0) {
 							/*
-							 If there are still specs to be processed, then process them
+							 	If there are still specs to be processed, then process them
 							 */
 							processSpecs(updatedSpecs);
 						} else if (childCount == 0) {
 							/*
-							 Otherwise, wait until the last child process has finished, and
-							 restart the build.
+							 	Otherwise, wait until the last child process has finished, and
+							 	restart the build.
 							 */
 							getListOfSpecsToBuild();
 						}
