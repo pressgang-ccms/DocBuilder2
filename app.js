@@ -289,7 +289,7 @@ function processSpecs(updatedSpecs) {
 			var specId = updatedSpecs.pop();
 			++childCount;
 
-			console.log("Starting build of modified book " + specId + " (" + updatedSpecs.pop() + " specs remain)");
+			console.log("Starting build of modified book " + specId + " (" + updatedSpecs.length + " specs remain)");
 
 			exec(BUILD_BOOK_SCRIPT + " " + specId + " " + specId, function(id) {
 				return function(error, stdout, stderr) {
