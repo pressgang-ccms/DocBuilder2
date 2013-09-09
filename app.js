@@ -74,7 +74,7 @@ var indexHtml = null;
  * functions have called this function, the process of actually building the
  * books will start.
  */
-function buildBooks(updatedSpecs) {
+function buildBooks(updatedSpecs, allSpecsArray) {
 	if (specsProcessed && topicsProcessed) {
 
 		indexHtml = "<html>\
@@ -200,7 +200,7 @@ function buildBooks(updatedSpecs) {
 			if (processIndex >= allSpecs.length) {
 				finishProcessing();
 			} else {
-				var specDetails = allSpecs.get(processIndex);
+				var specDetails = allSpecsArray[processIndex];
 
 				getLatestFile(PUBLICAN_BOOK_ZIPS_COMPLETE, specDetails.id + ".*?.zip", function(latest, latestFile) {
 
@@ -229,8 +229,14 @@ function buildBooks(updatedSpecs) {
 	}
 }
 
+/**
+ * Start MAX_PROCESSES (or updatedSpecs.length if that is less) processes, with each recursive call
+ * starting another process until all the specs have been built.
+ * @param updatedSpecs
+ */
 function processSpecs(updatedSpecs) {
-	for (var processIndex = 0, processCount = updatedSpecs.length < MAX_PROCESSES ? updatedSpecs.length : MAX_PROCESSES; processIndex < processCount; ++processIndex) {
+	var existingChildren = childCount;
+	for (var processIndex = existingChildren, processCount = updatedSpecs.length < MAX_PROCESSES ? updatedSpecs.length : MAX_PROCESSES; processIndex < processCount; ++processIndex) {
 		var specId = updatedSpecs.pop();
 		++childCount;
 		exec("echo " + specId, function(error, stdout, stderr) {
@@ -259,7 +265,7 @@ function processSpecs(updatedSpecs) {
  * Query the server for all topics that have been modified since the specified time
  * @param lastRun The time DocBuilder was last run
  */
-function getModifiedTopics(lastRun, updatedSpecs, allSpecs) {
+function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
 	var topicQuery = REST_SERVER + "/1/topics/get/json/query;";
 
 	// If we have some last run info, use that to limit the search
@@ -292,7 +298,7 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecs) {
 			}
 
 			topicsProcessed = true;
-			buildBooks(updatedSpecs, allSpecs);
+			buildBooks(updatedSpecs, allSpecsArray);
 		}).error(function(jqXHR, textStatus, errorThrown) {
 			console.log("Call to " + topicQuery + " failed!");
 			console.log(errorThrown);
@@ -304,7 +310,7 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecs) {
  * Query the server for all specs that have been modified since the specified time
  * @param lastRun The time DocBuilder was last run
  */
-function getSpecs(lastRun, updatedSpecs, allSpecs) {
+function getSpecs(lastRun, updatedSpecs, allSpecsArray) {
 	var specQuery = REST_SERVER + "/1/contentspecs/get/json/query;";
 
 	specQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%7D%5D%7D";
@@ -320,7 +326,7 @@ function getSpecs(lastRun, updatedSpecs, allSpecs) {
 				for (var specIndex = 0, specCount = data.items.length; specIndex < specCount; ++specIndex) {
 					var spec = data.items[specIndex].item;
 					var specDetails = {id: spec.id, product: spec.product, title: spec.title};
-					allSpecs.add(specDetails);
+					allSpecsArray.push(specDetails);
 
 					var lastEdited = moment(spec.lastModified);
 					if (!lastRun || lastEdited.isAfter(lastRun)) {
@@ -334,7 +340,7 @@ function getSpecs(lastRun, updatedSpecs, allSpecs) {
 			}
 
 			specsProcessed = true;
-			buildBooks(updatedSpecs, allSpecs);
+			buildBooks(updatedSpecs, allSpecsArray);
 		}).error(function(jqXHR, textStatus, errorThrown) {
 			console.log("Call to " + specQuery + " failed!");
 			console.log(errorThrown);
@@ -390,7 +396,7 @@ function getListOfSpecsToBuild() {
 	topicsProcessed = false;
 	specsProcessed = false;
 	var updatedSpecs = new set([]);
-	var allSpecs = new set([], compareContentSpecs, sortContentSpecs);
+	var allSpecs = [];
 
 	getModifiedTopics(lastRun, updatedSpecs, allSpecs);
 	getSpecs(lastRun, updatedSpecs, allSpecs);
