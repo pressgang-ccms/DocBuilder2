@@ -290,7 +290,7 @@ function processSpecs(updatedSpecs) {
 		 */
 		getListOfSpecsToBuild();
 	} else {
-		for (var processIndex = existingChildren, processCount = updatedSpecs.length < MAX_PROCESSES ? updatedSpecs.length : MAX_PROCESSES; processIndex < processCount; ++processIndex) {
+		for (var processIndex = 0, processCount = updatedSpecs.length < (MAX_PROCESSES - existingChildren) ? updatedSpecs.length : (MAX_PROCESSES - existingChildren); processIndex < processCount; ++processIndex) {
 			var specId = updatedSpecs.pop();
 			++childCount;
 
