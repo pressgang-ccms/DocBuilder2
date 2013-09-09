@@ -535,8 +535,6 @@ function getListOfSpecsToBuild() {
 		indexHtml = null;
 	}
 
-	var now = moment();
-
 	if (thisBuildTime != null) {
 		lastRun = thisBuildTime;
 
@@ -570,7 +568,7 @@ function getListOfSpecsToBuild() {
 	/*
 		Make a note of when we started this run.
 	 */
-	thisBuildTime = now;
+	thisBuildTime = moment();
 
 	getModifiedTopics(lastRun, updatedSpecs, allSpecs);
 	getSpecs(lastRun, updatedSpecs, allSpecs);
