@@ -289,7 +289,7 @@ function processSpecs(updatedSpecs) {
 			var specId = updatedSpecs.pop();
 			++childCount;
 
-			console.log("Starting build of modified book " + specId);
+			console.log("Starting build of modified book " + specId + " (" + updatedSpecs.pop() + " specs remain)");
 
 			exec(BUILD_BOOK_SCRIPT + " " + specId + " " + specId, function(id) {
 				return function(error, stdout, stderr) {
@@ -323,6 +323,10 @@ function processSpecs(updatedSpecs) {
  * @param lastRun The time DocBuilder was last run
  */
 function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
+	if (!lastRun) {
+		return;
+	}
+
 	var topicQuery = REST_SERVER + "/1/topics/get/json/query;";
 
 	// If we have some last run info, use that to limit the search
