@@ -323,7 +323,14 @@ function processSpecs(updatedSpecs) {
  * @param lastRun The time DocBuilder was last run
  */
 function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
+	/**
+	 * If there is no lastRun then we know that all specs have to be rebuilt. This is accounted
+	 * for in the getSpecs() function. There is no need to get all the topics, so we just
+	 * call buildBooks() directly and exit.
+	 */
 	if (!lastRun) {
+		topicsProcessed = true;
+		buildBooks(updatedSpecs, allSpecsArray);
 		return;
 	}
 
