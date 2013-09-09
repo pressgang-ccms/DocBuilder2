@@ -159,7 +159,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 							<p>If a book could not be built, first check the build log. This log contains information that may indicate syntax errors in the content specification. You can also view this log to see when the document was last built.</p>\n\
 							<p>If the build log has no errors, check the publican log. This may indicate some syntax errors in the XML.</p>\n\
 							<p>The topics in each document include a \"Edit this topic\" link, which will take you to the topic in the CCMS.</p>\n\
-							<p>To view the latest changes to a document, simply refresh the page.</p><p>Estimated Rebuild Time: " + (diff == null ? "Unknown" : diff) + " seconds</p>\n\
+							<p>To view the latest changes to a document, simply refresh the page.</p><p>Estimated Rebuild Time: " + (diff == null ? "Unknown" : (diff/60).toFixed(1)) + " minutes</p>\n\
 						</div>\n\
 						<div></div>\n\
 						<div>\n\
