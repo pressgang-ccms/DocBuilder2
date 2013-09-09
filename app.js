@@ -15,6 +15,9 @@ var exec = require('child_process').exec;
 	since the last run (so for the first run all specs will be new). This may mean that the
 	index.html page has some "To be synced" info for the title, product and version, but the benefit
 	is that we are not waiting for this info before rebuilding the new specs.
+
+	And once the first run through is done, it is unlikely that the product, version or title will change,
+	so there is little downside to having this information being slightly out of sync.
  */
 
 /**
