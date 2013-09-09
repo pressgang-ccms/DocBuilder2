@@ -67,6 +67,12 @@ var PUBLICAN_BOOK_ZIPS_COMPLETE=APACHE_HTML_DIR + PUBLICAN_BOOK_ZIPS;
  * @type {string}
  */
 var BUILD_BOOK_SCRIPT = "/home/pressgang/DocBuilder/build_original_books.sh";
+/**
+ * The amount of time to wait, in milliseconds, before querying the server when no
+ * updates were found.
+ * @type {number}
+ */
+var DELAY_WHEN_NO_UPDATES = 15000;
 
 /**
  * true when the modified topics have been processed.
@@ -296,11 +302,11 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 function processSpecs(updatedSpecs) {
 	if (updatedSpecs.length == 0) {
 		/*
-			There were no specs to build, so start again.
+			There were no specs to build, so start again after a short delay.
 		 */
 		setTimeout((function() {
 			getListOfSpecsToBuild();
-		}), 15000);
+		}), DELAY_WHEN_NO_UPDATES);
 	} else {
 		for (var processIndex = 0, processCount = updatedSpecs.length < (MAX_PROCESSES - childCount) ? updatedSpecs.length : (MAX_PROCESSES - childCount); processIndex < processCount; ++processIndex) {
 			var specId = updatedSpecs.pop();
