@@ -1,0 +1,61 @@
+body {
+  font-family: sans-serif;	
+}
+
+button {
+  line-height: 1em;
+  border-radius: 5px;
+  -webkit-border-radius: 5px
+  -moz-border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 5px;
+  background: -moz-linear-gradient( center top, rgba(255, 255, 255, .1) 0%, rgba(0, 0, 0, .1) 100% );
+  background: -webkit-gradient( linear, center bottom, center top, from(rgba(0, 0, 0, .1)), to(rgba(255, 255, 255, .1)) );
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  border-bottom: rgba(0, 0, 0, .4) 1px solid;
+  border: rgba(0, 0, 0, .2) 1px solid;
+}
+
+button:hover, button.hover {
+  background: -moz-linear-gradient(
+    center top,
+    rgba(255, 255, 255, .2) 0%,
+    rgba(255, 255, 255, .1) 100%
+  );
+  background: -webkit-gradient(
+    linear,
+    center bottom,
+    center top,
+    from(rgba(255, 255, 255, .1)),
+    to(rgba(255, 255, 255, .2))
+  );
+}
+
+button:active, button.active {
+  top:1px;
+}
+
+.container {
+  height: auto;
+  overflow: hidden;
+}
+
+.content {
+  width: auto;
+}
+ 
+.langBar {
+  height: 30px;
+  float: right;
+}
+
+.langSelect {
+  border: 1px solid gray;
+  background-color: #EEE;
+  padding: 2px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px
+  -moz-border-radius: 5px;
+}

@@ -1,0 +1,275 @@
+#!/bin/bash
+
+# This script runs once. It performs the following:
+# 1. Lookup each locale file
+# 2. Loop over the content spec IDS in the locale file
+# 4. Rebuild the content spec
+# 5. Build up an index page of all the content specs
+#
+# The script will only initiate as many concurrent rebuilds as the local PC has CPU cores.
+
+# The location where info about last build times is stored
+DOCBUILDER_DATA_DIR=/home/pressgang/.docbuilder
+# The script to call to actually build the books
+BOOK_BUILD_SCRIPT=/home/pressgang/DocBuilder/build_books.sh
+# The index file that is built up with each locale
+INDEX_TMP_FILE=/tmp/index-translation.html
+# Locale build information directory
+LANG_DATA_DIR=/home/pressgang/translations/
+# Languages to build in
+LANGS=("ja=ja-JP" "fr=fr-FR" "pt-BR=pt-BR" "de=de-DE" "es=es-ES" "zh-Hans=zh-CN")
+# Get the number of cores
+CORE_COUNT=`grep -c ^processor /proc/cpuinfo`
+
+# Perform a check to make sure that the build script is executable
+if [[ ! -x "$BOOK_BUILD_SCRIPT" ]]
+then
+    echo "Build script '$BOOK_BUILD_SCRIPT' is not executable or doesn't exist"
+    exit 1
+fi
+
+# Loop over each locale and build the books for that locale
+for LOCALE in "${LANGS[@]}"
+do
+  IFS='=' read -ra ADDR <<< "$LOCALE"
+
+  # Extract the language and Publican language
+	BUILD_LANG=${ADDR[0]}
+	PUBLICAN_LANG=${ADDR[1]}
+
+  # Check that the build file exists
+  BUILD_LANG_FILE="${LANG_DATA_DIR}${BUILD_LANG}.txt"
+  if [[ ! -f "$BUILD_LANG_FILE" ]]
+  then
+    echo "Unable to find '${BUILD_LANG_FILE}', skipping ${BUILD_LANG}."
+    continue
+  fi
+
+  echo "Starting to build ${BUILD_LANG} books."
+
+	# Dump the HTML header boilderplate	
+	echo "<html>
+    <head>
+        <title>Docbuilder ${BUILD_LANG} Index</title>
+        <link rel=\"stylesheet\" href=\"../index.css\"/>
+        <script src=\"http://yui.yahooapis.com/3.10.0/build/yui/yui-min.js\"></script>
+        <script src=\"../functions-1.0.js\" ></script>
+    </head>
+    <body onload=\"setLangSelectLanguage()\">
+        <div class=\"container\">
+            <div class=\"langBar\">Language:
+                <select id=\"lang\" class=\"langSelect\" onchange=\"changeLang(this)\">
+                    <option selected value=\"\">English</option>
+                    <option value=\"zh-Hans\">Chinese</option>
+                    <option value=\"fr\">French</option>
+                    <option value=\"de\">German</option>
+                    <option value=\"ja\">Japanese</option>
+                    <option value=\"pt-BR\">Portuguese</option>
+                    <option value=\"es\">Spanish</option>
+                </select>
+            </div>
+            <div class=\"content\">
+                <div>
+                    <img height=\"87\" src=\"../pg.png\" width=\"879\">
+                </div>
+                <div style=\"margin-top:1em\">
+                    <p>DocBuilder is a service that automatically rebuilds content specifications as they are created or edited.</p>
+                    <p>Each content spec has three links: a link to the compiled book itself, a link to the build log, and a link to the publican log.</p>
+                    <p>If a book could not be built, first check the build log. This log contains information that may indicate syntax errors in the content specification. You can also view this log to see when the document was last built.</p>
+                    <p>If the build log has no errors, check the publican log. This may indicate some syntax errors in the XML.</p><p>The topics in each document include a \"Edit this topic\" link, which will take you to the topic in Zanata.</p>
+                    <p>To view the latest changes to a document, simply refresh the page.</p>
+                </div>
+                <div></div>
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                ID Filter
+                            </td>
+                            <td>
+                                <input type=\"text\" id=\"idFilter\" onkeyup=\"save_filter()\">
+                            </td>
+                            <td>
+                                Product Filter
+                            </td>
+                            <td>
+                                <input type=\"text\" id=\"productFilter\" onkeyup=\"save_filter()\">
+                            </td>
+                            <td rowspan=\"2\">
+                                <button onclick=\"reset_filter()\">Reset</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Version Filter
+                            </td>
+                            <td>
+                                <input type=\"text\" id=\"versionFilter\" onkeyup=\"save_filter()\">
+                            </td>
+                            <td>
+                                Title Filter
+                            </td>
+                            <td>
+                                <input type=\"text\" id=\"titleFilter\" onkeyup=\"save_filter()\">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div></div>
+            </div>
+        </div>
+        <script>
+            var data = [" > ${INDEX_TMP_FILE}
+
+  # Read in each line of the build language file to get the Content Spec IDs to build
+  while read CS_ID
+  do
+    # Check that the line isn't empty or a comment
+    if [[ "$CS_ID" =~ ^#.*$ ]] || [ -z "$CS_ID" ]
+    then
+      continue
+    fi
+
+    #echo ${CS_ID}
+	  CONTENT_SPEC=$(curl --silent http://skynet.usersys.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/${CS_ID})
+	
+	  TITLE=$(echo ${CONTENT_SPEC} | grep -Po '(?<="title":").*?(?=",)')
+	  PRODUCT=$(echo ${CONTENT_SPEC} | sed -n "s/^.*\\\nProduct\\s*=\\s*\([0-9A-Za-z_.][0-9A-Za-z_. -]*\)\(\\\\r\)\?\\\\n.*$/\1/p")
+	  VERSION=$(echo ${CONTENT_SPEC} | sed -n "s/^.*\\\nVersion\\s*=\\s*\([0-9A-Za-z_. -]*\)\(\\\\r\)\?\\\\n.*$/\1/p")
+	
+	  PRODUCT=${PRODUCT//\'/\\\'}
+	  ESCAPED_PRODUCT=${PRODUCT// /_}
+	  ESCAPED_PRODUCT=${ESCAPED_PRODUCT//[^A-Za-z0-9_.-]/}
+	  TITLE=${TITLE//\'/\\\'}
+	  ESCAPED_TITLE=${TITLE// /_}
+	  ESCAPED_TITLE=${ESCAPED_TITLE//[^A-Za-z0-9_.-]/}
+
+	  # Sleep until a core is free for another publican build
+	  PUBLICAN_COUNT=$(ps -ef | grep -v grep | grep publican | wc -l)
+	  CSPROCESSOR_COUNT=$(ps -ef | grep -v grep | grep csprocessor.jar | wc -l)
+	  echo ${PUBLICAN_COUNT} instances of publican running.
+	  echo ${CSPROCESSOR_COUNT} instances of csprocessor running. 
+	
+	  while [ $((${PUBLICAN_COUNT} + ${CSPROCESSOR_COUNT})) -ge ${CORE_COUNT} ]
+	  do
+		  echo "Sleeping until publican and csprocessor finish"
+		  sleep 20;
+		
+		  PUBLICAN_COUNT=$(ps -ef | grep -v grep | grep publican | wc -l)
+		  CSPROCESSOR_COUNT=$(ps -ef | grep -v grep | grep csprocessor.jar | wc -l)
+		  echo ${PUBLICAN_COUNT} instances of publican running.
+		  echo ${CSPROCESSOR_COUNT} instances of csprocessor running. 
+	  done
+	
+	  CS_FILENAME=${DOCBUILDER_DATA_DIR}/${BUILD_LANG}/${CS_ID}
+	  #echo $CS_FILENAME
+	
+	  # Create the data directory if it does not exist
+	  if [ ! -d "${DOCBUILDER_DATA_DIR}/${BUILD_LANG}" ]
+	  then
+		  echo Data directory was not present, and was created.
+		  mkdir -p ${DOCBUILDER_DATA_DIR}/${BUILD_LANG}
+	  fi
+	
+	  # Check for the last time we recompiled the content spec
+	  if [ -f ${CS_FILENAME} ]
+	  then
+		  echo "Last compile data was found for ${CS_ID}."
+	
+			date '+%Y-%m-%dT%k:%M:%S.000%z' > ${CS_FILENAME}
+	  else
+		  echo "Last compile data was not found for ${CS_ID} and was set to now."
+	
+		  date '+%Y-%m-%dT%k:%M:%S.000%z' > ${CS_FILENAME}
+	  fi
+	
+	  LAST_COMPILE=$(head -n 1 ${CS_FILENAME})
+	
+	  # Add an entry to the index page
+	  echo "{ idRaw: ${CS_ID}, id: '<a href=\"${CS_ID}\" target=\"_top\">${CS_ID}</a>', versionRaw: '${VERSION}', version: '<a href=\"${CS_ID}\"  target=\"_top\">${VERSION}</a>', productRaw: '${PRODUCT}', product: '<a href=\"${CS_ID}\" target=\"_top\">${PRODUCT}</a>', titleRaw: '${TITLE}', title: '<a href=\"${CS_ID}\"  target=\"_top\">${TITLE}</a>', pdfLink: '<a href=\"${CS_ID}/${ESCAPED_PRODUCT}-${VERSION}-${ESCAPED_TITLE}-${PUBLICAN_LANG}.pdf\">PDF</a>', buildlog: '<a href=\"${CS_ID}/build.log\"><button>Build Log</button></a>' , publicanlog: '<a href=\"${CS_ID}/publican.log\"><button>Publican Log</button></a>', lastcompile: '${LAST_COMPILE}'}," >> ${INDEX_TMP_FILE}
+	
+	  # Build the book
+	  echo Recompiling ${CS_ID}
+
+	  ${BOOK_BUILD_SCRIPT} ${BUILD_LANG}${CS_ID} "${BUILD_LANG}=${PUBLICAN_LANG}=${CS_ID}" > /dev/null 2>&1 &	
+	
+	  #break
+
+  done < $BUILD_LANG_FILE
+	
+  # Finish the index page, and copy to the www dir
+  echo " ];
+            rebuildTimeout = null;
+
+            productFilter.value = localStorage[\"productFilter\"] || \"\";
+            titleFilter.value = localStorage[\"titleFilter\"] || \"\";
+            versionFilter.value = localStorage[\"versionFilter\"] || \"\";
+            idFilter.value = localStorage[\"idFilter\"] || \"\";
+
+            save_filter = function() {
+                localStorage[\"productFilter\"] = productFilter.value;
+                localStorage[\"titleFilter\"] = titleFilter.value;
+                localStorage[\"versionFilter\"] = versionFilter.value;
+                localStorage[\"idFilter\"] = idFilter.value;
+
+                if (rebuildTimeout) {
+                    window.clearTimeout(rebuildTimeout);
+                    rebuildTimeout = null;
+                }
+
+                rebuildTimeout = setTimeout(function(){
+                    build_table_with_pdfs(data);
+                    rebuildTimeout = null;
+                    },1000);
+            }
+
+            reset_filter = function() {
+                localStorage[\"productFilter\"] = \"\";
+                localStorage[\"titleFilter\"] = \"\";
+                localStorage[\"versionFilter\"] = \"\";
+                localStorage[\"idFilter\"] = \"\";
+
+                productFilter.value = \"\";
+                titleFilter.value = \"\";
+                versionFilter.value = \"\";
+                idFilter.value = \"\";
+
+                if (rebuildTimeout) {
+                    window.clearTimeout(rebuildTimeout);
+                    rebuildTimeout = null;
+                }
+
+                build_table_with_pdfs(data);
+            }
+
+            build_table_with_pdfs(data)
+        </script>
+    </body>
+</html>" >> ${INDEX_TMP_FILE}
+
+  # Create the html language directory if it does not exist
+  if [ ! -d /var/www/html/${BUILD_LANG} ]
+  then
+	  echo "${BUILD_LANG} HTML directory was not present, and was created."
+	  mkdir -p /var/www/html/${BUILD_LANG}
+  fi
+
+  rm -f /var/www/html/${BUILD_LANG}/index.html.old
+  mv /var/www/html/${BUILD_LANG}/index.html /var/www/html/${BUILD_LANG}/index.html.old
+  cp  ${INDEX_TMP_FILE} /var/www/html/${BUILD_LANG}/index.html
+done
+
+# Sleep until the builds have finished
+PUBLICAN_COUNT=$(ps -ef | grep -v grep | grep publican | wc -l)
+CSPROCESSOR_COUNT=$(ps -ef | grep -v grep | grep csprocessor.jar | wc -l)
+
+WAIT_COUNT=0
+while [ $((${PUBLICAN_COUNT} + ${CSPROCESSOR_COUNT})) -ge 1 ] && [ ${WAIT_COUNT} -le 5 ]
+do
+  echo "Waiting for builds to finish"
+  sleep 20;
+
+  PUBLICAN_COUNT=$(ps -ef | grep -v grep | grep publican | wc -l)
+  CSPROCESSOR_COUNT=$(ps -ef | grep -v grep | grep csprocessor.jar | wc -l)
+  WAIT_COUNT=$((${WAIT_COUNT} + 1))
+done
