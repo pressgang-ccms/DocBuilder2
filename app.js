@@ -8,7 +8,7 @@ var exec = require('child_process').exec;
 /*
 	This application is designed to be asynchronous. It performs the following steps:
 	1. Get all the topics and specs that have been modified since the supplied date
-	2. Rebuild each spec
+	2. Rebuild each spec (through an external script, but this may be merged into this code in future)
 	3. Generate the index.html page
 
 	In the background we are also pulling down the details of specs that are new or modified
@@ -35,10 +35,10 @@ var LAST_RUN_FILE = "/home/pressgang/.docbuilder/docbuilder2_lastrun";
  */
 var DATE_FORMAT = "YYYY-MM-DDTHH:mm:ss.000Z";
 /**
- * Thje maximum number of child processes to run at any given time.
+ * The maximum number of child processes to run at any given time.
  * @type {number}
  */
-var MAX_PROCESSES = 16;
+var MAX_PROCESSES = 12;
 /**
  * The index file for the DocBuilder
  * @type {string}
@@ -315,7 +315,6 @@ function processSpecs(updatedSpecs) {
 	}
 }
 
-
 /**
  * Query the server for all topics that have been modified since the specified time
  * @param lastRun The time DocBuilder was last run
@@ -362,6 +361,11 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
 		});
 }
 
+/**
+ * Add the spec ID to the list of specs that we need to pull down the latest
+ * product, title and version info for.
+ * @param id The id of the spec whose details need to be refreshed
+ */
 function addSpecToListOfPendingUpdates(id) {
 	pendingSpecCacheUpdates.add(id);
 	if (!processingPendingCacheUpdates) {
@@ -369,6 +373,9 @@ function addSpecToListOfPendingUpdates(id) {
 	}
 }
 
+/**
+ * This function will be called recursively until the details for the specs are updated.
+ */
 function processPendingSpecUpdates() {
 	processingPendingCacheUpdates = true;
 
@@ -534,52 +541,12 @@ function getListOfSpecsToBuild() {
 	getSpecs(lastRun, updatedSpecs, allSpecs);
 }
 
-function sortContentSpecs(a, b) {
-	if (!a && !b) {
-		return 0;
-	}
-	if (!a) {
-		return 1;
-	}
-	if (!b) {
-		return -1;
-	}
-	if (!a.id && !b.id) {
-		return 0;
-	}
-	if (!a.id) {
-		return 1;
-	}
-	if (!b.id) {
-		return -1;
-	}
-
-	return a.id < b.id;
-}
-
-function compareContentSpecs(a, b) {
-	if (!a && !b) {
-		return true;
-	}
-	if (!a) {
-		return false;
-	}
-	if (!b) {
-		return false;
-	}
-	if (!a.id && !b.id) {
-		return true;
-	}
-	if (!a.id) {
-		return false;
-	}
-	if (!b.id) {
-		return false;
-	}
-
-	return a.id === b.id;
-}
-
+/**
+ * Calls the done function with the filename and last modified date of the file that was most recently modified
+ * @param dir The directory to search
+ * @param filter The format that the file names have to match to be considered
+ * @param done a function to call when the latest file is found
+ */
 function getLatestFile (dir, filter, done) {
 	fs.readdir(dir, function (error, list) {
 		if (error) {
