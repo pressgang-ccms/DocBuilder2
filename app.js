@@ -32,8 +32,8 @@ var REST_SERVER = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest
  * The file that holds the lat time a complete rebuild was completed.
  * @type {string}
  */
-//var LAST_RUN_FILE = "/home/pressgang/.docbuilder/docbuilder2_lastrun";
-var LAST_RUN_FILE = "/home/matthew/.docbuilder/docbuilder2_lastrun";
+var LAST_RUN_FILE = "/home/pressgang/.docbuilder/docbuilder2_lastrun";
+//var LAST_RUN_FILE = "/home/matthew/.docbuilder/docbuilder2_lastrun";
 /**
  * The format of the date to be supplied to the REST query.
  * @type {string}
