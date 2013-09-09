@@ -285,6 +285,9 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 function processSpecs(updatedSpecs) {
 	var existingChildren = childCount;
 	if (updatedSpecs.length == 0) {
+		/*
+			There were no specs to build, so start again.
+		 */
 		getListOfSpecsToBuild();
 	} else {
 		for (var processIndex = existingChildren, processCount = updatedSpecs.length < MAX_PROCESSES ? updatedSpecs.length : MAX_PROCESSES; processIndex < processCount; ++processIndex) {
