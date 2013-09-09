@@ -548,7 +548,7 @@ function getListOfSpecsToBuild() {
 	} else {
 		// See if the last run file exists
 		try {
-			stats = fs.lstatSync(LAST_RUN_FILE);
+			var stats = fs.lstatSync(LAST_RUN_FILE);
 			if (stats.isFile()) {
 				lastRun = moment(fs.readFileSync(LAST_RUN_FILE).toString().replace(/\n/g, ""));
 			}
