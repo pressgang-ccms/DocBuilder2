@@ -99,6 +99,11 @@ var pendingSpecCacheUpdates = new set([]);
  * @type {boolean}
  */
 var processingPendingCacheUpdates = false;
+/**
+ * The time it took to do a rebuild.
+ * @type {number}
+ */
+var diff = null;
 
 /**
  * Called when the modified topics and specs have been found. Once both
@@ -138,7 +143,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 							<p>If a book could not be built, first check the build log. This log contains information that may indicate syntax errors in the content specification. You can also view this log to see when the document was last built.</p>\n\
 							<p>If the build log has no errors, check the publican log. This may indicate some syntax errors in the XML.</p>\n\
 							<p>The topics in each document include a \"Edit this topic\" link, which will take you to the topic in the CCMS.</p>\n\
-							<p>To view the latest changes to a document, simply refresh the page.</p><p>Estimated Rebuild Time: ${REBUILD_TIME}</p>\n\
+							<p>To view the latest changes to a document, simply refresh the page.</p><p>Estimated Rebuild Time: " + (diff == null ? "Unknown" : diff) + "</p>\n\
 						</div>\n\
 						<div></div>\n\
 						<div>\n\
@@ -237,7 +242,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 
 					var latestFileFixed = latestFile == null ? "" :encodeURIComponent(latestFile);
 
-					var fixedSpecDetails = fixedSpecDetails ? fixedSpecDetails : {title: "To Be Synced", version: "To Be Synced", product: "To Be Synced"}
+					var fixedSpecDetails = specDetailsCache[specId] ? specDetailsCache[specId] : {title: "To Be Synced", version: "To Be Synced", product: "To Be Synced"}
 					
 					indexHtml += "{\n\
 						idRaw: " + specId + ",\n\
