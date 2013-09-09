@@ -27,8 +27,8 @@ var REST_SERVER = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest
  * The file that holds the lat time a complete rebuild was completed.
  * @type {string}
  */
-//var LAST_RUN_FILE = "/home/pressgang/.docbuilder/docbuilder2_lastrun";
-var LAST_RUN_FILE = "/home/matthew/.docbuilder/docbuilder2_lastrun";
+var LAST_RUN_FILE = "/home/pressgang/.docbuilder/docbuilder2_lastrun";
+//var LAST_RUN_FILE = "/home/matthew/.docbuilder/docbuilder2_lastrun";
 /**
  * The format of the date to be supplied to the REST query.
  * @type {string}
@@ -57,6 +57,11 @@ var PUBLICAN_BOOK_ZIPS= "/books";
  *	The complete directory that holds the Publican ZIP files
  */
 var PUBLICAN_BOOK_ZIPS_COMPLETE=APACHE_HTML_DIR + PUBLICAN_BOOK_ZIPS;
+/**
+ * The script used to build the book
+ * @type {string}
+ */
+var BUILD_BOOK_SCRIPT = "/home/pressgang/DocBuilder/build_original_books.sh";
 
 /**
  * true when the modified topics have been processed.
@@ -143,7 +148,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 							<p>If a book could not be built, first check the build log. This log contains information that may indicate syntax errors in the content specification. You can also view this log to see when the document was last built.</p>\n\
 							<p>If the build log has no errors, check the publican log. This may indicate some syntax errors in the XML.</p>\n\
 							<p>The topics in each document include a \"Edit this topic\" link, which will take you to the topic in the CCMS.</p>\n\
-							<p>To view the latest changes to a document, simply refresh the page.</p><p>Estimated Rebuild Time: " + (diff == null ? "Unknown" : diff) + "</p>\n\
+							<p>To view the latest changes to a document, simply refresh the page.</p><p>Estimated Rebuild Time: " + (diff == null ? "Unknown" : diff) + " seconds</p>\n\
 						</div>\n\
 						<div></div>\n\
 						<div>\n\
@@ -280,7 +285,7 @@ function processSpecs(updatedSpecs) {
 		for (var processIndex = existingChildren, processCount = updatedSpecs.length < MAX_PROCESSES ? updatedSpecs.length : MAX_PROCESSES; processIndex < processCount; ++processIndex) {
 			var specId = updatedSpecs.pop();
 			++childCount;
-			exec("echo " + specId, function(error, stdout, stderr) {
+			exec(BUILD_BOOK_SCRIPT + " " + specId + " " + specId, function(error, stdout, stderr) {
 				--childCount;
 				if (childCount < MAX_PROCESSES) {
 
@@ -489,7 +494,7 @@ function getListOfSpecsToBuild() {
 			console.log("Could not save " + LAST_RUN_FILE);
 		}
 
-		diff = moment().subtract(thisBuildTime).minutes();
+		diff = moment().subtract(thisBuildTime).seconds();
 	} else {
 		// See if the last run file exists
 		try {
