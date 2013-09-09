@@ -7,9 +7,11 @@ var exec = require('child_process').exec;
 
 /*
 	This application is designed to be asynchronous. It performs the following steps:
-	1. Get all the topics and specs that have been modified since the supplied date
-	2. Rebuild each spec (through an external script, but this may be merged into this code in future)
-	3. Generate the index.html page
+	1.  Get all the topics and specs that have been modified since the supplied date. This involves two asynchronous
+		REST calls.
+	2. 	Rebuild each spec (through an external script, but this may be merged into this code in future). We will launch
+ 		MAX_PROCESSES asynchronous scripts to run csprocessor/publican to build the spec.
+	3. 	Save the index.html page and start again.
 
 	In the background we are also pulling down the details of specs that are new or modified
 	since the last run (so for the first run all specs will be new). This may mean that the
