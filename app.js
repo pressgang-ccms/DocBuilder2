@@ -285,24 +285,32 @@ function processSpecs(updatedSpecs) {
 		for (var processIndex = existingChildren, processCount = updatedSpecs.length < MAX_PROCESSES ? updatedSpecs.length : MAX_PROCESSES; processIndex < processCount; ++processIndex) {
 			var specId = updatedSpecs.pop();
 			++childCount;
-			exec(BUILD_BOOK_SCRIPT + " " + specId + " " + specId, function(error, stdout, stderr) {
-				--childCount;
-				if (childCount < MAX_PROCESSES) {
 
-					if (updatedSpecs.length != 0) {
-						/*
-						 If there are still specs to be processed, then process them
-						 */
-						processSpecs(updatedSpecs);
-					} else if (childCount == 0) {
-						/*
-						 Otherwise, wait until the last child process has finished, and
-						 restart the build.
-						 */
-						getListOfSpecsToBuild();
+			console.log("Starting build of modified book " + specId);
+
+			exec(BUILD_BOOK_SCRIPT + " " + specId + " " + specId, function(id) {
+				return function(error, stdout, stderr) {
+					--childCount;
+
+					console.log("Finished build of modified book " + id);
+
+					if (childCount < MAX_PROCESSES) {
+
+						if (updatedSpecs.length != 0) {
+							/*
+							 If there are still specs to be processed, then process them
+							 */
+							processSpecs(updatedSpecs);
+						} else if (childCount == 0) {
+							/*
+							 Otherwise, wait until the last child process has finished, and
+							 restart the build.
+							 */
+							getListOfSpecsToBuild();
+						}
 					}
-				}
-			});
+				};
+			}(specId));
 		}
 	}
 }
