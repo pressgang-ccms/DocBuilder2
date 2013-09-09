@@ -33,7 +33,7 @@ var LAST_RUN_FILE = "/home/matthew/.docbuilder/docbuilder2_lastrun";
  * The format of the date to be supplied to the REST query.
  * @type {string}
  */
-var DATE_FORMAT = "YYYY-MM-ddThh:mm:ss.000Z";
+var DATE_FORMAT = "YYYY-MM-DDThh:mm:ss.000Z";
 /**
  * Thje maximum number of child processes to run at any given time.
  * @type {number}
@@ -313,6 +313,7 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
 	topicQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs_OTM%22%7D%7D%5D%7D%5D%7D%0A%0A";
 
 	//console.log("Getting modified topics from URL " + topicQuery);
+	console.log("Finding modified topics");
 
 	$.getJSON(topicQuery,
 		function(data) {
@@ -402,6 +403,7 @@ function getSpecs(lastRun, updatedSpecs, allSpecsArray) {
 	specQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%7D%5D%7D";
 
 	//console.log("Getting specs from URL " + specQuery);
+	console.log("Finding content specs");
 
 	$.getJSON(specQuery,
 		function(data) {
