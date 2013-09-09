@@ -538,10 +538,10 @@ function getListOfSpecsToBuild() {
 	var now = moment();
 
 	if (thisBuildTime != null) {
-		lastRun = thisBuildTime.format(DATE_FORMAT);
+		lastRun = thisBuildTime;
 
 		try {
-			fs.writeFileSync(LAST_RUN_FILE, lastRun);
+			fs.writeFileSync(LAST_RUN_FILE, lastRun.format(DATE_FORMAT));
 		} catch (ex) {
 			console.log("Could not save " + LAST_RUN_FILE);
 		}
@@ -552,7 +552,7 @@ function getListOfSpecsToBuild() {
 		try {
 			stats = fs.lstatSync(LAST_RUN_FILE);
 			if (stats.isFile()) {
-				lastRun = fs.readFileSync(LAST_RUN_FILE).toString().replace(/\n/g, "");
+				lastRun = moment(fs.readFileSync(LAST_RUN_FILE).toString().replace(/\n/g, ""));
 			}
 		} catch (ex) {
 			// the file or directory doesn't exist. leave lastRun as null.
@@ -571,8 +571,6 @@ function getListOfSpecsToBuild() {
 		Make a note of when we started this run.
 	 */
 	thisBuildTime = now;
-
-
 
 	getModifiedTopics(lastRun, updatedSpecs, allSpecs);
 	getSpecs(lastRun, updatedSpecs, allSpecs);
