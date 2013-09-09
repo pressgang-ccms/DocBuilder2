@@ -231,26 +231,26 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 			if (processIndex >= allSpecsArray.length) {
 				finishProcessing();
 			} else {
-				var specDetails = allSpecsArray[processIndex];
+				var specId = allSpecsArray[processIndex];
 
-				getLatestFile(PUBLICAN_BOOK_ZIPS_COMPLETE, specDetails.id + ".*?.zip", function(latest, latestFile) {
+				getLatestFile(PUBLICAN_BOOK_ZIPS_COMPLETE, specId.id + ".*?.zip", function(latest, latestFile) {
 
 					var latestFileFixed = latestFile == null ? "" :encodeURIComponent(latestFile);
 
 					var fixedSpecDetails = fixedSpecDetails ? fixedSpecDetails : {title: "To Be Synced", version: "To Be Synced", product: "To Be Synced"}
 					
 					indexHtml += "{\n\
-						idRaw: " + specDetails + ",\n\
-						id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specDetails + "\" target=\"_top\">" + specDetails + "</a>',\n\
+						idRaw: " + specId + ",\n\
+						id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specId + "\" target=\"_top\">" + specId + "</a>',\n\
 						versionRaw: '" + fixedSpecDetails.version + "',\n\
-						version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + fixedSpecDetails.version + "</a>',\n\
+						version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\" target=\"_top\">" + fixedSpecDetails.version + "</a>',\n\
 						productRaw: '" + fixedSpecDetails.product + "',\n\
-						product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails.id + "\" target=\"_top\">" + fixedSpecDetails.product + "</a>',\n\
-						titleRaw: '" + fixedSpecDetails.title + "', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specDetails + "\"  target=\"_top\">" + fixedSpecDetails.title + "</a>',\n\
-						remarks: '<a href=\"" + specDetails + "/remarks\"><button>With Remarks</button></a>',\n\
-						buildlog: '<a href=\"" + specDetails + "/build.log\"><button>Build Log</button></a>',\n\
+						product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\" target=\"_top\">" + fixedSpecDetails.product + "</a>',\n\
+						titleRaw: '" + fixedSpecDetails.title + "', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\"  target=\"_top\">" + fixedSpecDetails.title + "</a>',\n\
+						remarks: '<a href=\"" + specId + "/remarks\"><button>With Remarks</button></a>',\n\
+						buildlog: '<a href=\"" + specId + "/build.log\"><button>Build Log</button></a>',\n\
 						publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + latestFileFixed + "\"><button>Publican ZIP</button></a>',\n\
-						publicanlog: '<a href=\"" + specDetails + "/publican.log\"><button>Publican Log</button></a>'\n\
+						publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>'\n\
 					},\n";
 
 					processSpecDetails(++processIndex);
