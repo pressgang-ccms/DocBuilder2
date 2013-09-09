@@ -283,14 +283,13 @@ function buildBooks(updatedSpecs, allSpecsArray) {
  * @param updatedSpecs
  */
 function processSpecs(updatedSpecs) {
-	var existingChildren = childCount;
 	if (updatedSpecs.length == 0) {
 		/*
 			There were no specs to build, so start again.
 		 */
 		getListOfSpecsToBuild();
 	} else {
-		for (var processIndex = 0, processCount = updatedSpecs.length < (MAX_PROCESSES - existingChildren) ? updatedSpecs.length : (MAX_PROCESSES - existingChildren); processIndex < processCount; ++processIndex) {
+		for (var processIndex = 0, processCount = updatedSpecs.length < (MAX_PROCESSES - childCount) ? updatedSpecs.length : (MAX_PROCESSES - childCount); processIndex < processCount; ++processIndex) {
 			var specId = updatedSpecs.pop();
 			++childCount;
 
