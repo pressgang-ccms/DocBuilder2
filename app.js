@@ -287,7 +287,9 @@ function processSpecs(updatedSpecs) {
 		/*
 			There were no specs to build, so start again.
 		 */
-		getListOfSpecsToBuild();
+		setTimeout((function() {
+			getListOfSpecsToBuild();
+		}), 15000);
 	} else {
 		for (var processIndex = 0, processCount = updatedSpecs.length < (MAX_PROCESSES - childCount) ? updatedSpecs.length : (MAX_PROCESSES - childCount); processIndex < processCount; ++processIndex) {
 			var specId = updatedSpecs.pop();
