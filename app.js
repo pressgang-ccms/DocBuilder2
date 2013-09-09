@@ -72,7 +72,7 @@ var BUILD_BOOK_SCRIPT = "/home/pressgang/DocBuilder/build_original_books.sh";
  * updates were found.
  * @type {number}
  */
-var DELAY_WHEN_NO_UPDATES = 15000;
+var DELAY_WHEN_NO_UPDATES = 30000;
 
 /**
  * true when the modified topics have been processed.
