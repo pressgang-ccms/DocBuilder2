@@ -281,7 +281,7 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecs) {
 					if (topic.contentSpecs_OTM) {
 						for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
 							var spec = topic.contentSpecs_OTM.items[specIndex].item;
-							updatedSpecs.add({id: spec.id, product: spec.product, title: spec.title});
+							updatedSpecs.add(spec.id);
 						}
 					} else {
 						console.log("topic.contentSpecs_OTM was not expected to be null");
@@ -305,7 +305,7 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecs) {
  * @param lastRun The time DocBuilder was last run
  */
 function getSpecs(lastRun, updatedSpecs, allSpecs) {
-	var specQuery = REST_SERVER + "/1/contentspecs/get/json+text/query;";
+	var specQuery = REST_SERVER + "/1/contentspecs/get/json/query;";
 
 	specQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%7D%5D%7D";
 
@@ -324,7 +324,7 @@ function getSpecs(lastRun, updatedSpecs, allSpecs) {
 
 					var lastEdited = moment(spec.lastModified);
 					if (!lastRun || lastEdited.isAfter(lastRun)) {
-						updatedSpecs.add(specDetails);
+						updatedSpecs.add(spec.id);
 					}
 				}
 
@@ -334,7 +334,7 @@ function getSpecs(lastRun, updatedSpecs, allSpecs) {
 			}
 
 			specsProcessed = true;
-			buildBooks(updatedSpecs);
+			buildBooks(updatedSpecs, allSpecs);
 		}).error(function(jqXHR, textStatus, errorThrown) {
 			console.log("Call to " + specQuery + " failed!");
 			console.log(errorThrown);
@@ -389,7 +389,7 @@ function getListOfSpecsToBuild() {
 	 */
 	topicsProcessed = false;
 	specsProcessed = false;
-	var updatedSpecs = new set([], compareContentSpecs, sortContentSpecs);
+	var updatedSpecs = new set([]);
 	var allSpecs = new set([], compareContentSpecs, sortContentSpecs);
 
 	getModifiedTopics(lastRun, updatedSpecs, allSpecs);
