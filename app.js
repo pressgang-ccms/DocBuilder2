@@ -33,7 +33,7 @@ var LAST_RUN_FILE = "/home/matthew/.docbuilder/docbuilder2_lastrun";
  * The format of the date to be supplied to the REST query.
  * @type {string}
  */
-var DATE_FORMAT = "YYYY-MM-DDThh:mm:ss.000Z";
+var DATE_FORMAT = "YYYY-MM-DDTHH:mm:ss.000Z";
 /**
  * Thje maximum number of child processes to run at any given time.
  * @type {number}
@@ -312,8 +312,8 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
 	}
 	topicQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs_OTM%22%7D%7D%5D%7D%5D%7D%0A%0A";
 
-	//console.log("Getting modified topics from URL " + topicQuery);
-	console.log("Finding modified topics");
+	console.log("Getting modified topics from URL " + topicQuery);
+	//console.log("Finding modified topics");
 
 	$.getJSON(topicQuery,
 		function(data) {
@@ -478,14 +478,14 @@ function getListOfSpecsToBuild() {
 
 	if (thisBuildTime != null) {
 		try {
-			fs.writeFileSync(LAST_RUN_FILE, thisBuildTime);
+			fs.writeFileSync(LAST_RUN_FILE, thisBuildTime.format(DATE_FORMAT));
 		} catch (ex) {
 			console.log("Could not save " + LAST_RUN_FILE);
 		}
 
 		var diff = now.subtract(thisBuildTime).minutes();
 
-		lastRun =  thisBuildTime;
+		lastRun =  thisBuildTime.format(DATE_FORMAT);
 	} else {
 		// See if the last run file exists
 		try {
@@ -509,7 +509,7 @@ function getListOfSpecsToBuild() {
 	/*
 	 Make a note of when we started this run.
 	 */
-	thisBuildTime = now.format(DATE_FORMAT);
+	thisBuildTime = now;
 
 
 
