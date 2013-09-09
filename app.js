@@ -365,13 +365,21 @@ function getListOfSpecsToBuild() {
 		/*
 		 	Save the index.html file
 		 */
-		fs.writeFileSync(INDEX_HTML, indexHtml);
+		try {
+			fs.writeFileSync(INDEX_HTML, indexHtml);
+		} catch (ex) {
+			console.log("Could not save " + INDEX_HTML);
+		}
 
 		indexHtml = null;
 	}
 
 	if (thisBuildTime != null) {
-		fs.writeFileSync(LAST_RUN_FILE, thisBuildTime);
+		try {
+			fs.writeFileSync(LAST_RUN_FILE, thisBuildTime);
+		} catch (ex) {
+			console.log("Could not save " + LAST_RUN_FILE);
+		}
 
 		var now = moment();
 		var diff = now.subtract(thisBuildTime).minutes();
