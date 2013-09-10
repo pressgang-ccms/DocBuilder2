@@ -254,7 +254,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 			} else {
 				var specId = allSpecsArray[processIndex];
 
-				getLatestFile(PUBLICAN_BOOK_ZIPS_COMPLETE, specId.id + ".*?.zip", function(latest, latestFile) {
+				getLatestFile(PUBLICAN_BOOK_ZIPS_COMPLETE, specId + ".*?\\.zip", function(latest, latestFile) {
 
 					var latestFileFixed = latestFile == null ? "" :encodeURIComponent(latestFile);
 
@@ -472,7 +472,8 @@ function getSpecs(lastRun, updatedSpecs, allSpecsArray) {
 
 				console.log("Found " + data.items.length + " content specs");
 
-				for (var specIndex = 0, specCount = data.items.length; specIndex < specCount; ++specIndex) {
+				//for (var specIndex = 0, specCount = data.items.length; specIndex < specCount; ++specIndex) {
+				for (var specIndex = 0, specCount = 1; specIndex < specCount; ++specIndex) {
 					var spec = data.items[specIndex].item;
 
 					/*
