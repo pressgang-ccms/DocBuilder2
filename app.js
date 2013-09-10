@@ -254,7 +254,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 			} else {
 				var specId = allSpecsArray[processIndex];
 
-				getLatestFile(PUBLICAN_BOOK_ZIPS_COMPLETE, specId + ".*?\\.zip", function(latest, latestFile) {
+				getLatestFile(PUBLICAN_BOOK_ZIPS_COMPLETE, specId + ".*?\\.zip", function(error, latest, latestFile) {
 
 					var latestFileFixed = latestFile == null ? "" :encodeURIComponent(latestFile);
 
