@@ -333,6 +333,22 @@ function processSpecs(updatedSpecs) {
 							 	restart the build.
 							 */
 							getListOfSpecsToBuild();
+
+							if (lastRun) {
+
+								var runTimeSeconds = moment().unix() - lastRun.unix();
+								var delay = (DELAY_WHEN_NO_UPDATES / 1000) - runTimeSeconds;
+
+								if (delay <= 0) {
+									getListOfSpecsToBuild();
+								} else {
+									setTimeout((function() {
+										getListOfSpecsToBuild();
+									}), delay * 1000);
+								}
+							} else {
+								getListOfSpecsToBuild();
+							}
 						}
 					}
 				};
