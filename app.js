@@ -304,6 +304,7 @@ function processSpecs(updatedSpecs) {
 		/*
 			There were no specs to build, so start again after a short delay.
 		 */
+		console.log("Delaying for " + DELAY_WHEN_NO_UPDATES + " seconds");
 		setTimeout((function() {
 			getListOfSpecsToBuild();
 		}), DELAY_WHEN_NO_UPDATES);
@@ -342,6 +343,9 @@ function processSpecs(updatedSpecs) {
 								if (delay <= 0) {
 									getListOfSpecsToBuild();
 								} else {
+
+									console.log("Delaying for " + delay + " seconds");
+
 									setTimeout((function() {
 										getListOfSpecsToBuild();
 									}), delay * 1000);
