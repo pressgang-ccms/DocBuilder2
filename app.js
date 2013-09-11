@@ -334,9 +334,9 @@ function processSpecs(updatedSpecs) {
 							 */
 							getListOfSpecsToBuild();
 
-							if (lastRun) {
+							if (thisBuildTime) {
 
-								var runTimeSeconds = moment().unix() - lastRun.unix();
+								var runTimeSeconds = moment().unix() - thisBuildTime.unix();
 								var delay = (DELAY_WHEN_NO_UPDATES / 1000) - runTimeSeconds;
 
 								if (delay <= 0) {
