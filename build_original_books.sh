@@ -58,7 +58,7 @@ do
 		date > build.log
 
 		echo "csprocessor build --flatten --show-report --editor-links  --output ${BOOKNAME}.zip ${CSPID} >> build.log"
-		csprocessor build --flatten --flatten-topics --editor-links --output ${BOOKNAME}.zip ${CSPID} >> build.log
+		csprocessor build --flatten --editor-links --output ${BOOKNAME}.zip ${CSPID} >> build.log
 		
 		CSP_STATUS=$? 
 		
@@ -156,7 +156,7 @@ do
 					  DATE_MARKER=$(date '+%Y-%m-%dT%k:%M:%S.000%z')
 					  BOOK_FILE_NAME="${PUBLICAN_BOOK_ZIPS_COMPLETE}/${CSPID} ${DATE_MARKER}.zip"
 					  
-					  if [ -f ${BOOK_FILE_NAME} ]
+					  if [ -f "${BOOK_FILE_NAME}" ]
 						then
 									rm -rf "${BOOK_FILE_NAME}"
 						fi
