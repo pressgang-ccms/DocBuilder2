@@ -57,7 +57,7 @@ do
 		# Build the book as HTML-SINGLE with no overrides
 		date > build.log
 
-		echo "csprocessor build --flatten --flatten-topics --show-report --editor-links  --output ${BOOKNAME}.zip ${CSPID} >> build.log"
+		echo "csprocessor build --flatten --show-report --editor-links  --output ${BOOKNAME}.zip ${CSPID} >> build.log"
 		csprocessor build --flatten --flatten-topics --editor-links --output ${BOOKNAME}.zip ${CSPID} >> build.log
 		
 		CSP_STATUS=$? 
