@@ -271,7 +271,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 						product: "To Be Synced"
 					};
 					
-					indexHtml += "{\n\
+					/*indexHtml += "{\n\
 						idRaw: " + specId + ",\n\
 						id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specId + "\" target=\"_top\">" + specId + "</a>',\n\
 						versionRaw: '" + fixedSpecDetails.version + "',\n\
@@ -279,6 +279,21 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 						productRaw: '" + fixedSpecDetails.product + "',\n\
 						product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\" target=\"_top\">" + fixedSpecDetails.product + "</a>',\n\
 						titleRaw: '" + fixedSpecDetails.title + "', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\"  target=\"_top\">" + fixedSpecDetails.title + "</a>',\n\
+						remarks: '<a href=\"" + specId + "/remarks\"><button>With Remarks</button></a>',\n\
+						buildlog: '<a href=\"" + specId + "/build.log\"><button>Build Log</button></a>',\n\
+						publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + latestFileFixed + "\"><button>Publican ZIP</button></a>',\n\
+						publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>'\n\
+					},\n";*/
+
+					indexHtml += "{\n\
+						idRaw: " + specId + ",\n\
+						id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specId + "\" target=\"_top\">" + specId + "</a>',\n\
+						versionRaw: '" + fixedSpecDetails.version + "',\n\
+						version: '<a href=\"" + specId + "\" target=\"_top\">" + fixedSpecDetails.version + "</a>',\n\
+						productRaw: '" + fixedSpecDetails.product + "',\n\
+						product: '<a href=\"" + specId + "\" target=\"_top\">" + fixedSpecDetails.product + "</a>',\n\
+						titleRaw: '" + fixedSpecDetails.title + "', \n\
+						title: '<a href=\"" + specId + "\"  target=\"_top\">" + fixedSpecDetails.title + "</a>',\n\
 						remarks: '<a href=\"" + specId + "/remarks\"><button>With Remarks</button></a>',\n\
 						buildlog: '<a href=\"" + specId + "/build.log\"><button>Build Log</button></a>',\n\
 						publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + latestFileFixed + "\"><button>Publican ZIP</button></a>',\n\
