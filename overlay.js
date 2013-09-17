@@ -3,6 +3,7 @@
 // @namespace     https://skynet.usersys.redhat.com
 // @include       http://docbuilder.usersys.redhat.com/*
 // @require       http://code.jquery.com/jquery-2.0.3.min.js
+// @require       https://rawgithub.com/moment/moment/2.2.1/min/moment.min.js
 // ==/UserScript==
 
 var MATCH_PREFIX = "cf_build_id=";
@@ -35,6 +36,8 @@ function createSpecsPopover(topicId, parent) {
         popover.style.top= (linkDiv.offsetTop - 300) + 'px';
         popover.style.display = '';
 
+        popover.popoverContent.innerHTML = 'Loading...';
+
         $.getJSON( SERVER + "/contentspecnodes/get/json/query;csNodeType=0%2C9%2C10;csNodeEntityId=" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22nodes%22%7D%2C+%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22inheritedCondition%22%7D%7D%2C+%7B%22trunk%22%3A%7B%22name%22%3A+%22contentSpec%22%7D%2C+%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22children_OTM%22%7D%7D%5D%7D%5D%7D%5D%7D",
             function(popover) {
                 return function( data ) {
@@ -60,7 +63,7 @@ function createSpecsPopover(topicId, parent) {
 
                     for (spec in specs) {
                         var link = document.createElement("div");
-                        link.innerText = specs[spec].title + " " + specs[spec].product + " " + specs[spec].version
+                        link.innerText = spec + " " + specs[spec].title + " " + specs[spec].product + " " + specs[spec].version
                         popover.popoverContent.appendChild(link);
                     }
                 }
@@ -83,7 +86,9 @@ function createHistoryPopover(topicId, parent) {
         popover.style.top= (linkDiv.offsetTop - 300) + 'px';
         popover.style.display = '';
 
-        $.getJSON( SERVER + "/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%2C%20%22start%22%3A0%2C%20%22end%22%3A15%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22logDetails%22%7D%7D%5D%7D%5D%7D",
+        popover.popoverContent.innerHTML = 'Loading...';
+
+        $.getJSON( SERVER + "/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%2C%20%22start%22%3A0%2C%20%22end%22%3A13%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22logDetails%22%7D%7D%5D%7D%5D%7D",
             function(popover) {
                 return function( data ) {
                     popover.popoverContent.innerHTML = '';
@@ -93,8 +98,9 @@ function createHistoryPopover(topicId, parent) {
                         var link = document.createElement("div");
 
                         var message = revision.logDetails.message == null || revision.logDetails.message.length == 0 ? "[No Message]" : revision.logDetails.message;
+                        var date = moment(revision.lastModified);
 
-                        link.innerText = revision.revision + " - " + new Date(revision.lastModified).toDateString() + " - " + message;
+                        link.innerText = revision.revision + " - " + date.format('lll') + " - " + message;
                         popover.popoverContent.appendChild(link);
                     }
                 }
@@ -116,6 +122,8 @@ function createDescriptionPopover(topicId, parent) {
         popover.style.left= linkDiv.parentNode.offsetLeft + 'px';
         popover.style.top= (linkDiv.offsetTop - 300) + 'px';
         popover.style.display = '';
+
+        popover.popoverContent.innerHTML = 'Loading...';
 
         $.getJSON( SERVER + "/topic/get/json/" + topicId, function(popover) {
             return function( data ) {
