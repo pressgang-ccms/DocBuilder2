@@ -296,7 +296,7 @@ function createPopover(title, topicId) {
     popover.setAttribute("id", topicId + "title");
     popover.style.position="absolute";
     popover.style.height='300px';
-    popover.style.width='450px';
+    popover.style.width='750px';
     popover.style.display = 'none';
     popover.style.backgroundColor = 'white';
     popover.style.borderColor = 'blue';
@@ -304,7 +304,7 @@ function createPopover(title, topicId) {
     popover.style.borderStyle = 'solid';
 
     var popoverTitle = document.createElement("div");
-    popoverTitle.style.width = "442px";
+    popoverTitle.style.width = "742px";
     popoverTitle.style.height = "30px";
     popoverTitle.style.paddingLeft = "8px";
     popoverTitle.style.color = "white";
