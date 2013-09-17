@@ -264,6 +264,7 @@ function setupEvents(linkDiv, popover) {
  * Finds all the topic ids in a document and adds the topic id to the bottom of the title.
  */
 function findTopicIds() {
+    var foundTopics = {};
     var elements = document.getElementsByTagName("div");
     for (var i = 0; i < elements.length; ++i) {
         var element = elements[i];
@@ -273,13 +274,21 @@ function findTopicIds() {
                 if (startPos != -1) {
                     var temp = element.innerHTML.substring(startPos + MATCH_PREFIX.length);
                     var endPos = temp.search("(?![0-9]+).*");
-                    addOverlayIcons(temp.substring(0, endPos), element);
-                } else {
-                    var startPos2 = element.innerHTML.search(MATCH_BUILD_ID2);
-                    if (startPos2 != -1) {
-                        var temp2 = element.innerHTML.substring(startPos2 + MATCH_PREFIX2.length);
-                        var endPos2 = temp2.search("(?![0-9]+).*");
-                        addOverlayIcons(temp2.substring(0, endPos2), element);
+                    var id = temp.substring(0, endPos);
+                    if (!foundTopics[id]) {
+                        addOverlayIcons(id, element);
+                        foundTopics[id] = true;
+                    }
+                }
+            } else if (element.innerHTML.match(".*Edit this topic.*")) {
+                var startPos = element.innerHTML.search(MATCH_BUILD_ID2);
+                if (startPos != -1) {
+                    var temp = element.innerHTML.substring(startPos + MATCH_PREFIX2.length);
+                    var endPos = temp.search("(?![0-9]+).*");
+                    var id = temp.substring(0, endPos);
+                    if (!foundTopics[id]) {
+                        addOverlayIcons(id, element);
+                        foundTopics[id] = true;
                     }
                 }
             }
