@@ -69,7 +69,7 @@ function createSpecsPopover(topicId, parent) {
                         var link = document.createElement("a");
                         container.appendChild(link);
 
-                        link.innerText = spec + ":  " + specs[spec].title + ", " + specs[spec].product + " " + specs[spec].version
+                        $(link).text(spec + ":  " + specs[spec].title + ", " + specs[spec].product + " " + specs[spec].version);
                         link.setAttribute("href", "/" + spec);
                         popover.popoverContent.appendChild(container);
                     }
@@ -100,11 +100,11 @@ function createTagsPopover(topicId, parent) {
                             var tag = data.tags.items[tagIndex].item;
                             var link = document.createElement("div");
 
-                            link.innerText = tag.name;
+                            $(link).text(tag.name);
                             popover.popoverContent.appendChild(link);
                         }
                     } else {
-                        popover.popoverContent.innerHTML = '[No Tags]';
+						$(popover.popoverContent).text('[No Tags]');
                     }
                 }
             }(popover));
@@ -134,14 +134,14 @@ function createUrlsPopover(topicId, parent) {
                             var container = document.createElement("div");
                             var link = document.createElement("a");
 
-                            link.innerText = url.title == null || url.title.length == 0 ? url.url : url.title;
+                            $(link).text(url.title == null || url.title.length == 0 ? url.url : url.title);
                             link.setAttribute("href", url.url);
 
                             container.appendChild(link);
                             popover.popoverContent.appendChild(container);
                         }
                     } else {
-                        popover.popoverContent.innerHTML = '[No Source URLs]';
+						$(popover.popoverContent).text('[No Source URLs]');
                     }
                 }
             }(popover));
@@ -173,7 +173,7 @@ function createHistoryPopover(topicId, parent) {
                         var message = revision.logDetails.message == null || revision.logDetails.message.length == 0 ? "[No Message]" : revision.logDetails.message;
                         var date = moment(revision.lastModified);
 
-                        link.innerText = revision.revision + " - " + date.format('lll') + " - " + message;
+                        $(link).text(revision.revision + " - " + date.format('lll') + " - " + message);
                         popover.popoverContent.appendChild(link);
                     }
                 }
@@ -218,7 +218,7 @@ function openPopover(popover, linkDiv) {
     popover.style.top= (linkDiv.offsetTop - 300) + 'px';
     popover.style.display = '';
 
-    popover.popoverContent.innerHTML = 'Loading...';
+    $(popover.popoverContent).text('Loading...');
 }
 
 function setupEvents(linkDiv, popover) {
@@ -303,7 +303,7 @@ function createIcon(img, topicId) {
     linkDiv.style.backgroundImage = "url(/images/" + img + ".png)";
     linkDiv.style.width = "26px";
     linkDiv.style.height = "26px";
-    linkDiv.style.float = "left";
+    linkDiv.style.cssFloat = "left";
     linkDiv.style.backgroundRepeat = "no-repeat";
     linkDiv.style.margin = "8px";
     return linkDiv;
@@ -330,7 +330,7 @@ function createPopover(title, topicId) {
     popoverTitle.style.fontWeight = "bold";
     popoverTitle.style.display = "table-cell";
     popoverTitle.style.verticalAlign = "middle";
-    popoverTitle.innerText = title;
+    $(popoverTitle).text(title);
 
     popover.appendChild(popoverTitle);
 
