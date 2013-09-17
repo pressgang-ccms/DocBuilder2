@@ -11,7 +11,7 @@ var MATCH_BUILD_ID = MATCH_PREFIX + "[0-9]+";
 var SERVER = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1";
 //var SERVER = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1";
 
-findTopicIds();
+$(document).ready(findTopicIds);
 
 function addOverlayIcons(topicId, RoleCreatePara) {
     if (topicId != null && topicId.length > 0) {
