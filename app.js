@@ -358,12 +358,6 @@ function processSpecs(updatedSpecs) {
 							 */
 							processSpecs(updatedSpecs);
 						} else if (childCount == 0) {
-							/*
-							 	Otherwise, wait until the last child process has finished, and
-							 	restart the build.
-							 */
-							getListOfSpecsToBuild();
-
 							if (thisBuildTime) {
 
 								var runTimeSeconds = moment().unix() - thisBuildTime.unix();
