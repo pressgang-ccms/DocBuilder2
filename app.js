@@ -338,14 +338,14 @@ function processSpecs(updatedSpecs) {
 
                     // Append the custom javascript files to the index.html
                     try {
-                        var contents = fs.readFileSync(APACHE_HTML_DIR + "/" + specId + "/index.html").toString();
+                        var contents = fs.readFileSync(APACHE_HTML_DIR + "/" + id + "/index.html").toString();
                         contents = contents.replace(
                             "<head>",
                             "<head>\n\
                                 <script type='application/javascript' src='/javascript/jquery-2.0.3.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/moment.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/overlay.js'></script>\n");
-                        fs.writeFileSync(APACHE_HTML_DIR + "/" + specId + "/index.html", contents);
+                        fs.writeFileSync(APACHE_HTML_DIR + "/" + id + "/index.html", contents);
                     } catch (ex) {
                         console.log("Could not edit and save HTML file");
                     }
