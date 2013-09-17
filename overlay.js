@@ -32,6 +32,12 @@ function createSpecsPopover(topicId, parent) {
     document.body.appendChild(popover);
 
     linkDiv.onmouseover=function(){
+
+        if (popover.timeout) {
+            clearTimeout(popover.timeout);
+            popover.timeout = null;
+        }
+
         popover.style.left= linkDiv.parentNode.offsetLeft + 'px';
         popover.style.top= (linkDiv.offsetTop - 300) + 'px';
         popover.style.display = '';
@@ -69,9 +75,8 @@ function createSpecsPopover(topicId, parent) {
                 }
         }(popover));
     };
-    linkDiv.onmouseout=function(){
-        popover.style.display = 'none';
-    };
+
+    setupEvents(linkDiv, popover);
 }
 
 function createHistoryPopover(topicId, parent) {
@@ -82,6 +87,12 @@ function createHistoryPopover(topicId, parent) {
     document.body.appendChild(popover);
 
     linkDiv.onmouseover=function(){
+
+        if (popover.timeout) {
+            clearTimeout(popover.timeout);
+            popover.timeout = null;
+        }
+
         popover.style.left= linkDiv.parentNode.offsetLeft + 'px';
         popover.style.top= (linkDiv.offsetTop - 300) + 'px';
         popover.style.display = '';
@@ -106,9 +117,8 @@ function createHistoryPopover(topicId, parent) {
                 }
             }(popover));
     };
-    linkDiv.onmouseout=function(){
-        popover.style.display = 'none';
-    };
+
+    setupEvents(linkDiv, popover);
 }
 
 function createDescriptionPopover(topicId, parent) {
@@ -119,6 +129,12 @@ function createDescriptionPopover(topicId, parent) {
     document.body.appendChild(popover);
 
     linkDiv.onmouseover=function(){
+
+        if (popover.timeout) {
+            clearTimeout(popover.timeout);
+            popover.timeout = null;
+        }
+
         popover.style.left= linkDiv.parentNode.offsetLeft + 'px';
         popover.style.top= (linkDiv.offsetTop - 300) + 'px';
         popover.style.display = '';
@@ -135,9 +151,47 @@ function createDescriptionPopover(topicId, parent) {
             }
         }(popover));
     };
-    linkDiv.onmouseout=function(){
-        popover.style.display = 'none';
-    };
+
+    setupEvents(linkDiv, popover);
+}
+
+function setupEvents(linkDiv, popover) {
+    linkDiv.onmouseout=function(popover) {
+        return function(){
+
+            if (popover.timeout) {
+                clearTimeout(popover.timeout);
+                popover.timeout = null;
+            }
+
+            popover.timeout = setTimeout(function() {
+                popover.style.display = 'none';
+            }, 200);
+        }
+    }(popover);
+
+    popover.onmouseover = function(popover) {
+        return function() {
+            if (popover.timeout) {
+                clearTimeout(popover.timeout);
+                popover.timeout = null;
+            }
+        }
+    }(popover);
+
+    popover.onmouseout = function(popover) {
+        return function() {
+
+            if (popover.timeout) {
+                clearTimeout(popover.timeout);
+                popover.timeout = null;
+            }
+
+            popover.timeout = setTimeout(function() {
+                popover.style.display = 'none';
+            }, 200);
+        }
+    }(popover);
 }
 
 /*
