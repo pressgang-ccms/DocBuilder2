@@ -45,6 +45,9 @@ var MATCH_BUILD_ID2 = MATCH_PREFIX2 + "[0-9]+";
 var SERVER = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1";
 //var SERVER = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1";
 
+/*
+	When the page is loaded, start looking for the links that indicate the topics.
+ */
 $(document).ready(findTopicIds);
 
 /**
