@@ -6,6 +6,9 @@
 // @require       https://rawgithub.com/moment/moment/2.2.1/min/moment.min.js
 // ==/UserScript==
 
+//http://blog.mattheworiordan.com/post/13174566389/url-regular-expression-for-links-with-or-without-the
+var URL_RE = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g;
+var COMMENT_RE = /<!--([\S\s]*?)-->/g;
 var MATCH_PREFIX = "cf_build_id=";
 var MATCH_BUILD_ID = MATCH_PREFIX + "[0-9]+";
 var MATCH_PREFIX2 = "topicIds=";
@@ -127,8 +130,30 @@ function createUrlsPopover(topicId, parent) {
         $.getJSON( SERVER + "/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22sourceUrls_OTM%22%7D%7D%5D%7D",
             function(popover) {
                 return function( data ) {
-                    if (data.sourceUrls_OTM.items.length != 0) {
-                        popover.popoverContent.innerHTML = '';
+
+					popover.popoverContent.innerHTML = '';
+
+					var match = null;
+					while (match = COMMENT_RE.exec(data.xml)) {
+						var comment = match[1];
+
+						var match2 = null;
+						while (match2 = URL_RE.exec(comment)) {
+							var url = match2[0];
+
+							var container = document.createElement("div");
+							var link = document.createElement("a");
+
+							$(link).text("[Comment] " + url);
+							link.setAttribute("href", url);
+
+							container.appendChild(link);
+							popover.popoverContent.appendChild(container);
+						}
+					}
+
+					if (data.sourceUrls_OTM.items.length != 0) {
+
                         for (var urlIndex = 0, urlCount = data.sourceUrls_OTM.items.length; urlIndex < urlCount; ++urlIndex) {
                             var url = data.sourceUrls_OTM.items[urlIndex].item;
                             var container = document.createElement("div");
@@ -140,7 +165,9 @@ function createUrlsPopover(topicId, parent) {
                             container.appendChild(link);
                             popover.popoverContent.appendChild(container);
                         }
-                    } else {
+                    }
+
+					if (popover.popoverContent.innerHTML == '') {
 						$(popover.popoverContent).text('[No Source URLs]');
                     }
                 }
