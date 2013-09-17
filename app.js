@@ -347,7 +347,7 @@ function processSpecs(updatedSpecs) {
                                 <script type='application/javascript' src='/javascript/overlay.js'></script>\n");
                         fs.writeFileSync(APACHE_HTML_DIR + "/" + specId + "/index.html", contents);
                     } catch (ex) {
-                        // probably couldn't read or write file. Don't do anything in that case.
+                        console.log("Could not edit and save HTML file");
                     }
 
 					if (childCount < MAX_PROCESSES) {
