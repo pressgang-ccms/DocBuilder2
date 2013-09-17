@@ -8,6 +8,8 @@
 
 var MATCH_PREFIX = "cf_build_id=";
 var MATCH_BUILD_ID = MATCH_PREFIX + "[0-9]+";
+var MATCH_PREFIX2 = "topicIds=";
+var MATCH_BUILD_ID2 = MATCH_PREFIX2 + "[0-9]+";
 var SERVER = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1";
 //var SERVER = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1";
 
@@ -272,6 +274,13 @@ function findTopicIds() {
                     var temp = element.innerHTML.substring(startPos + MATCH_PREFIX.length);
                     var endPos = temp.search("(?![0-9]+).*");
                     addOverlayIcons(temp.substring(0, endPos), element);
+                } else {
+                    var startPos2 = element.innerHTML.search(MATCH_BUILD_ID2);
+                    if (startPos2 != -1) {
+                        var temp2 = element.innerHTML.substring(startPos2 + MATCH_PREFIX2.length);
+                        var endPos2 = temp2.search("(?![0-9]+).*");
+                        addOverlayIcons(temp2.substring(0, endPos2), element);
+                    }
                 }
             }
         }
