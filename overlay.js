@@ -20,6 +20,8 @@ function addOverlayIcons(topicId, RoleCreatePara) {
         RoleCreatePara.parentNode.appendChild(bubbleDiv);
         createSpecsPopover(topicId, bubbleDiv);
         createHistoryPopover(topicId, bubbleDiv);
+        createTagsPopover(topicId, bubbleDiv);
+        createUrlsPopover(topicId, bubbleDiv);
         createDescriptionPopover(topicId, bubbleDiv);
     }
 }
@@ -72,6 +74,72 @@ function createSpecsPopover(topicId, parent) {
     setupEvents(linkDiv, popover);
 }
 
+function createTagsPopover(topicId, parent) {
+    var linkDiv = createIcon("tags", topicId);
+    parent.appendChild(linkDiv);
+
+    var popover = createPopover("Tags", topicId);
+    document.body.appendChild(popover);
+
+    linkDiv.onmouseover=function(){
+
+        openPopover(popover, linkDiv);
+
+        $.getJSON( SERVER + "/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D",
+            function(popover) {
+                return function( data ) {
+                    popover.popoverContent.innerHTML = '';
+                    for (var tagIndex = 0, tagCount = data.tags.items.length; tagIndex < tagCount; ++tagIndex) {
+                        var tag = data.tags.items[tagIndex].item;
+                        var link = document.createElement("div");
+
+                        link.innerText = tag.name;
+                        popover.popoverContent.appendChild(link);
+                    }
+                }
+            }(popover));
+    };
+
+    setupEvents(linkDiv, popover);
+}
+
+function createUrlsPopover(topicId, parent) {
+    var linkDiv = createIcon("urls", topicId);
+    parent.appendChild(linkDiv);
+
+    var popover = createPopover("URLs", topicId);
+    document.body.appendChild(popover);
+
+    linkDiv.onmouseover=function(){
+
+        openPopover(popover, linkDiv);
+
+        $.getJSON( SERVER + "/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22sourceUrls_OTM%22%7D%7D%5D%7D",
+            function(popover) {
+                return function( data ) {
+                    if (data.sourceUrls_OTM.items.length != 0) {
+                        popover.popoverContent.innerHTML = '';
+                        for (var urlIndex = 0, urlCount = data.sourceUrls_OTM.items.length; urlIndex < urlCount; ++urlIndex) {
+                            var url = data.sourceUrls_OTM.items[urlIndex].item;
+                            var container = document.createElement("div");
+                            var link = document.createElement("a");
+
+                            link.innerText = url.title == null || url.title.length == 0 ? url.url : url.title;
+                            link.setAttribute("href", url.url);
+
+                            container.appendChild(link);
+                            popover.popoverContent.appendChild(container);
+                        }
+                    } else {
+                        popover.popoverContent.innerHTML = '[No Source URLs]';
+                    }
+                }
+            }(popover));
+    };
+
+    setupEvents(linkDiv, popover);
+}
+
 function createHistoryPopover(topicId, parent) {
     var linkDiv = createIcon("history", topicId);
     parent.appendChild(linkDiv);
@@ -83,7 +151,7 @@ function createHistoryPopover(topicId, parent) {
 
         openPopover(popover, linkDiv);
 
-        $.getJSON( SERVER + "/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%2C%20%22start%22%3A0%2C%20%22end%22%3A13%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22logDetails%22%7D%7D%5D%7D%5D%7D",
+        $.getJSON( SERVER + "/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%2C%20%22start%22%3A0%2C%20%22end%22%3A15%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22logDetails%22%7D%7D%5D%7D%5D%7D",
             function(popover) {
                 return function( data ) {
                     popover.popoverContent.innerHTML = '';
@@ -229,17 +297,21 @@ function createPopover(title, topicId) {
 
     var popoverTitle = document.createElement("div");
     popoverTitle.style.width = "442px";
-    popoverTitle.style.paddingTop = "8px";
-    popoverTitle.style.paddingBottom = "8px";
+    popoverTitle.style.height = "30px";
     popoverTitle.style.paddingLeft = "8px";
     popoverTitle.style.color = "white";
     popoverTitle.style.backgroundColor = "blue";
+    popoverTitle.style.fontWeight = "bold";
+    popoverTitle.style.display = "table-cell";
+    popoverTitle.style.verticalAlign = "middle";
     popoverTitle.innerText = title;
 
     popover.appendChild(popoverTitle);
 
     var popoverContent = document.createElement("div");
     popoverContent.style.margin = "8px";
+    popoverContent.style.height = "254px";
+    popoverContent.style.overflowY = "auto";
     popover.appendChild(popoverContent);
 
     popover.popoverContent = popoverContent;
