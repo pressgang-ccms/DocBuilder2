@@ -88,13 +88,17 @@ function createTagsPopover(topicId, parent) {
         $.getJSON( SERVER + "/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D",
             function(popover) {
                 return function( data ) {
-                    popover.popoverContent.innerHTML = '';
-                    for (var tagIndex = 0, tagCount = data.tags.items.length; tagIndex < tagCount; ++tagIndex) {
-                        var tag = data.tags.items[tagIndex].item;
-                        var link = document.createElement("div");
+                    if (data.tags.items.length != 0) {
+                        popover.popoverContent.innerHTML = '';
+                        for (var tagIndex = 0, tagCount = data.tags.items.length; tagIndex < tagCount; ++tagIndex) {
+                            var tag = data.tags.items[tagIndex].item;
+                            var link = document.createElement("div");
 
-                        link.innerText = tag.name;
-                        popover.popoverContent.appendChild(link);
+                            link.innerText = tag.name;
+                            popover.popoverContent.appendChild(link);
+                        }
+                    } else {
+                        popover.popoverContent.innerHTML = '[No Tags]';
                     }
                 }
             }(popover));
