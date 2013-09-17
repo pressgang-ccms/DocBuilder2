@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript/overlay.js" afterPath="$PROJECT_DIR$/javascript/overlay.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1379450165522" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1379454556760" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1379398815814" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -84,10 +84,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="360" column="0" selection-start="14426" selection-end="14426" vertical-scroll-proportion="0.36704546">
+            <state line="344" column="32" selection-start="13641" selection-end="13953" vertical-scroll-proportion="0.0">
               <folding>
                 <marker date="1379451067194" expanded="true" signature="4062:5932" placeholder="..." />
                 <marker date="1379451067194" expanded="true" signature="4075:4318" placeholder="..." />
@@ -98,6 +98,7 @@
                 <marker date="1379451067194" expanded="true" signature="4940:5932" placeholder="..." />
                 <marker date="1379451067194" expanded="true" signature="4955:5030" placeholder="..." />
                 <marker date="1379451067194" expanded="false" signature="5054:5068" placeholder="..." />
+                <marker date="1379451067194" expanded="true" signature="5070:5932" placeholder="..." />
                 <marker date="1379451067194" expanded="true" signature="5070:5932" placeholder="..." />
                 <marker date="1379451067194" expanded="true" signature="6053:6992" placeholder="..." />
                 <marker date="1379451067194" expanded="true" signature="6071:6974" placeholder="..." />
@@ -119,13 +120,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="overlay.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="overlay.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="49" selection-start="928" selection-end="928" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state line="279" column="36" selection-start="11211" selection-end="11222" vertical-scroll-proportion="0.33295456">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -150,8 +149,8 @@
       <list>
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/overlay.js" />
-        <option value="$PROJECT_DIR$/javascript/overlay.js" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/javascript/overlay.js" />
       </list>
     </option>
   </component>
@@ -241,8 +240,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -265,22 +264,6 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
-      <method />
-    </configuration>
-    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="$PROJECT_DIR$">
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -309,6 +292,22 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="$PROJECT_DIR$">
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -707,7 +706,11 @@
       <created>1379399815530</created>
       <updated>1379399815531</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="Fixed bug">
+      <created>1379451077704</created>
+      <updated>1379451077704</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -732,7 +735,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20811099" sideWeight="0.6002121" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20757738" sideWeight="0.6002121" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32873806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -784,7 +787,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="DocBuilder will now manually added overlay javascript file and other javascript libraries" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -807,6 +810,7 @@
     <MESSAGE value="Fixed file downloads" />
     <MESSAGE value="Working on overlay for docbuilder" />
     <MESSAGE value="DocBuilder will now manually added overlay javascript file and other javascript libraries" />
+    <MESSAGE value="Fixed bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -832,6 +836,7 @@
             <marker date="1379451067194" expanded="true" signature="4955:5030" placeholder="..." />
             <marker date="1379451067194" expanded="false" signature="5054:5068" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="5070:5932" placeholder="..." />
+            <marker date="1379451067194" expanded="true" signature="5070:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="6053:6992" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="6071:6974" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="6087:6566" placeholder="..." />
@@ -854,9 +859,7 @@
     <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="21" column="49" selection-start="928" selection-end="928" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -873,6 +876,7 @@
             <marker date="1379451067194" expanded="true" signature="4940:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="4955:5030" placeholder="..." />
             <marker date="1379451067194" expanded="false" signature="5054:5068" placeholder="..." />
+            <marker date="1379451067194" expanded="true" signature="5070:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="5070:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="6053:6992" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="6071:6974" placeholder="..." />
@@ -906,6 +910,7 @@
             <marker date="1379451067194" expanded="true" signature="4940:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="4955:5030" placeholder="..." />
             <marker date="1379451067194" expanded="false" signature="5054:5068" placeholder="..." />
+            <marker date="1379451067194" expanded="true" signature="5070:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="5070:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="6053:6992" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="6071:6974" placeholder="..." />
@@ -945,6 +950,7 @@
             <marker date="1379451067194" expanded="true" signature="4955:5030" placeholder="..." />
             <marker date="1379451067194" expanded="false" signature="5054:5068" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="5070:5932" placeholder="..." />
+            <marker date="1379451067194" expanded="true" signature="5070:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="6053:6992" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="6071:6974" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="6087:6566" placeholder="..." />
@@ -977,6 +983,7 @@
             <marker date="1379451067194" expanded="true" signature="4940:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="4955:5030" placeholder="..." />
             <marker date="1379451067194" expanded="false" signature="5054:5068" placeholder="..." />
+            <marker date="1379451067194" expanded="true" signature="5070:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="5070:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="6053:6992" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="6071:6974" placeholder="..." />
@@ -1015,6 +1022,7 @@
             <marker date="1379451067194" expanded="true" signature="4940:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="4955:5030" placeholder="..." />
             <marker date="1379451067194" expanded="false" signature="5054:5068" placeholder="..." />
+            <marker date="1379451067194" expanded="true" signature="5070:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="5070:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="6053:6992" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="6071:6974" placeholder="..." />
@@ -1060,18 +1068,9 @@
         <state line="7" column="24" selection-start="175" selection-end="175" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="49" selection-start="928" selection-end="928" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="360" column="0" selection-start="14426" selection-end="14426" vertical-scroll-proportion="0.36704546">
+        <state line="344" column="32" selection-start="13641" selection-end="13953" vertical-scroll-proportion="0.0">
           <folding>
             <marker date="1379451067194" expanded="true" signature="4062:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="4075:4318" placeholder="..." />
@@ -1082,6 +1081,7 @@
             <marker date="1379451067194" expanded="true" signature="4940:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="4955:5030" placeholder="..." />
             <marker date="1379451067194" expanded="false" signature="5054:5068" placeholder="..." />
+            <marker date="1379451067194" expanded="true" signature="5070:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="5070:5932" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="6053:6992" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="6071:6974" placeholder="..." />
@@ -1099,6 +1099,13 @@
             <marker date="1379451067194" expanded="true" signature="7064:7155" placeholder="..." />
             <marker date="1379451067194" expanded="true" signature="13604:13954" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="279" column="36" selection-start="11211" selection-end="11222" vertical-scroll-proportion="0.33295456">
+          <folding />
         </state>
       </provider>
     </entry>

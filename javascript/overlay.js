@@ -13,6 +13,8 @@ var MATCH_BUILD_ID2 = MATCH_PREFIX2 + "[0-9]+";
 var SERVER = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1";
 //var SERVER = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1";
 
+var foundTopics = {};
+
 $(document).ready(findTopicIds);
 
 function addOverlayIcons(topicId, RoleCreatePara) {
@@ -264,7 +266,7 @@ function setupEvents(linkDiv, popover) {
  * Finds all the topic ids in a document and adds the topic id to the bottom of the title.
  */
 function findTopicIds() {
-    var foundTopics = {};
+
     var elements = document.getElementsByTagName("div");
     for (var i = elements.length - 1; i >= 0; --i) {
         var element = elements[i];
