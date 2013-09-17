@@ -30,7 +30,10 @@ function addOverlayIcons(topicId, RoleCreatePara) {
                 popover.style.height='300px';
                 popover.style.width='450px';
                 popover.style.display = 'none';
-                popover.style.backgroundColor = 'red';
+                popover.style.backgroundColor = 'white';
+                popover.style.borderColor = 'blue';
+                popover.style.borderWidth = '2px';
+                popover.style.borderStyle = 'solid';
                 document.body.appendChild(popover);
 
                 icon.onmouseover=function(){
@@ -66,17 +69,3 @@ function findTopicIds() {
     }
     return null;
 }
-
-function cumulativeOffset(element) {
-    var top = 0, left = 0;
-    do {
-        top += element.offsetTop  || 0;
-        left += element.offsetLeft || 0;
-        element = element.offsetParent;
-    } while(element);
-
-    return {
-        top: top,
-        left: left
-    };
-};
