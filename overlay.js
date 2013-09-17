@@ -23,14 +23,7 @@ function addOverlayIcons(topicId, RoleCreatePara) {
 }
 
 function createSpecsPopover(topicId, parent) {
-    var linkDiv = document.createElement("div");
-    linkDiv.setAttribute("id", topicId + "bookIcon");
-    linkDiv.style.backgroundImage = "url(/images/book.png)";
-    linkDiv.style.width = "26px";
-    linkDiv.style.height = "26px";
-    linkDiv.style.float = "left";
-    linkDiv.style.backgroundRepeat = "no-repeat";
-    linkDiv.style.margin = "8px";
+    var linkDiv = createIcon("book", topicId);
     parent.appendChild(linkDiv);
 
     var popover = createPopover("Content Specifications", topicId);
@@ -78,14 +71,7 @@ function createSpecsPopover(topicId, parent) {
 }
 
 function createDescriptionPopover(topicId, parent) {
-    var linkDiv = document.createElement("span");
-    linkDiv.setAttribute("id", topicId + "descriptionIcon");
-    linkDiv.style.backgroundImage = "url(/images/info.png)";
-    linkDiv.style.width = "26px";
-    linkDiv.style.height = "26px";
-    linkDiv.style.float = "left";
-    linkDiv.style.backgroundRepeat = "no-repeat";
-    linkDiv.style.margin = "8px";
+    var linkDiv = createIcon("info", topicId);
     parent.appendChild(linkDiv);
 
     var popover = createPopover("Description", topicId);
@@ -130,6 +116,18 @@ function findTopicIds() {
         }
     }
     return null;
+}
+
+function createIcon(img, topicId) {
+    var linkDiv = document.createElement("div");
+    linkDiv.setAttribute("id", topicId + img + "Icon");
+    linkDiv.style.backgroundImage = "url(/images/" + img + ".png)";
+    linkDiv.style.width = "26px";
+    linkDiv.style.height = "26px";
+    linkDiv.style.float = "left";
+    linkDiv.style.backgroundRepeat = "no-repeat";
+    linkDiv.style.margin = "8px";
+    return linkDiv;
 }
 
 function createPopover(title, topicId) {
