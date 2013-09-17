@@ -336,6 +336,20 @@ function processSpecs(updatedSpecs) {
 
 					console.log("Finished build of modified book " + id);
 
+                    // Append the custom javascript files to the index.html
+                    try {
+                        var contents = fs.readFileSync(APACHE_HTML_DIR + "/" + specId + "/index.html").toString();
+                        contents = contents.replace(
+                            "<head>",
+                            "<head>\n\
+                                <script type='application/javascript' src='/javascript/jquery-2.0.3.min.js'></script>\n\
+                                <script type='application/javascript' src='/javascript/moment.min.js'></script>\n\
+                                <script type='application/javascript' src='/javascript/overlay.js'></script>\n");
+                        fs.writeFileSync(APACHE_HTML_DIR + "/" + specId + "/index.html", contents);
+                    } catch (ex) {
+                        // probably couldn't read or write file. Don't do anything in that case.
+                    }
+
 					if (childCount < MAX_PROCESSES) {
 
 						if (updatedSpecs.length != 0) {
