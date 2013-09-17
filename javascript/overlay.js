@@ -6,18 +6,52 @@
 // @require       https://rawgithub.com/moment/moment/2.2.1/min/moment.min.js
 // ==/UserScript==
 
-//http://blog.mattheworiordan.com/post/13174566389/url-regular-expression-for-links-with-or-without-the
+/**
+ * A regex to extract URls
+ * http://blog.mattheworiordan.com/post/13174566389/url-regular-expression-for-links-with-or-without-the
+ * @type {RegExp}
+ */
 var URL_RE = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g;
+/**
+ * A regex to extract XML comments
+ * @type {RegExp}
+ */
 var COMMENT_RE = /<!--([\S\s]*?)-->/g;
+/**
+ * What to look for in a bug link to indicate the topic's ID
+ * @type {string}
+ */
 var MATCH_PREFIX = "cf_build_id=";
+/**
+ * The regex that actually extracts the topic's ID
+ * @type {string}
+ */
 var MATCH_BUILD_ID = MATCH_PREFIX + "[0-9]+";
+/**
+ * Some builds don't have report a bug links, but the editor links are included by DocBuilder, so if we can't use
+ * the bug links, extract the topic id from the editor link.
+ * @type {string}
+ */
 var MATCH_PREFIX2 = "topicIds=";
+/**
+ * The regex to extract the topic's id from the editor link.
+ * @type {string}
+ */
 var MATCH_BUILD_ID2 = MATCH_PREFIX2 + "[0-9]+";
+/**
+ * The server that hosts the UI we want to connect to.
+ * @type {string}
+ */
 var SERVER = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1";
 //var SERVER = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1";
 
 $(document).ready(findTopicIds);
 
+/**
+ * Create and add the icons after the bug or editor links
+ * @param topicId The topic ID
+ * @param RoleCreatePara The element that held the link that we extracted the ID from.
+ */
 function addOverlayIcons(topicId, RoleCreatePara) {
     if (topicId != null && topicId.length > 0) {
         var bubbleDiv = document.createElement("div");
@@ -31,6 +65,11 @@ function addOverlayIcons(topicId, RoleCreatePara) {
     }
 }
 
+/**
+ * Creates the popuver that lists the specs the topic is included in.
+ * @param topicId The topic id
+ * @param parent The element that should hold the icon
+ */
 function createSpecsPopover(topicId, parent) {
     var linkDiv = createIcon("book", topicId);
     parent.appendChild(linkDiv);
@@ -83,6 +122,11 @@ function createSpecsPopover(topicId, parent) {
     setupEvents(linkDiv, popover);
 }
 
+/**
+ * Create the popover that lists the topic's tags
+ * @param topicId The topic id
+ * @param parent The element that should hold the icon
+ */
 function createTagsPopover(topicId, parent) {
     var linkDiv = createIcon("tags", topicId);
     parent.appendChild(linkDiv);
@@ -116,6 +160,11 @@ function createTagsPopover(topicId, parent) {
     setupEvents(linkDiv, popover);
 }
 
+/**
+ * Create the popover that lists the topic's URLs
+ * @param topicId The topic id
+ * @param parent The element that should hold the icon
+ */
 function createUrlsPopover(topicId, parent) {
     var linkDiv = createIcon("urls", topicId);
     parent.appendChild(linkDiv);
@@ -177,6 +226,11 @@ function createUrlsPopover(topicId, parent) {
     setupEvents(linkDiv, popover);
 }
 
+/**
+ * Create the popover that lists the topic's revision history
+ * @param topicId The topic id
+ * @param parent The element that should hold the icon
+ */
 function createHistoryPopover(topicId, parent) {
     var linkDiv = createIcon("history", topicId);
     parent.appendChild(linkDiv);
@@ -210,6 +264,11 @@ function createHistoryPopover(topicId, parent) {
     setupEvents(linkDiv, popover);
 }
 
+/**
+ * Create the popover that displays the topic's description
+ * @param topicId The topic id
+ * @param parent The icon
+ */
 function createDescriptionPopover(topicId, parent) {
     var linkDiv = createIcon("info", topicId);
     parent.appendChild(linkDiv);
@@ -235,6 +294,11 @@ function createDescriptionPopover(topicId, parent) {
     setupEvents(linkDiv, popover);
 }
 
+/**
+ * Some code to be executed whenever a popover is shown
+ * @param popover The popover div
+ * @param linkDiv The link that we extracted the topic's ID from
+ */
 function openPopover(popover, linkDiv) {
     if (popover.timeout) {
         clearTimeout(popover.timeout);
@@ -248,6 +312,11 @@ function openPopover(popover, linkDiv) {
     $(popover.popoverContent).text('Loading...');
 }
 
+/**
+ * Setup the event handlers on the popover and the icon
+ * @param popover The popover div
+ * @param linkDiv The icon
+ */
 function setupEvents(linkDiv, popover) {
     linkDiv.onmouseout=function(popover) {
         return function(){
@@ -324,6 +393,12 @@ function findTopicIds() {
     return null;
 }
 
+/**
+ * Create the icon used to display a popup
+ * @param img The name of the image to be used for the icon, exluding the filename
+ * @param topicId The topic id
+ * @returns The icon element
+ */
 function createIcon(img, topicId) {
     var linkDiv = document.createElement("div");
     linkDiv.setAttribute("id", topicId + img + "Icon");
@@ -336,6 +411,12 @@ function createIcon(img, topicId) {
     return linkDiv;
 }
 
+/**
+ * Create the popover element
+ * @param title The title of the popover
+ * @param topicId The topic's ID
+ * @returns The popover element
+ */
 function createPopover(title, topicId) {
     var popover = document.createElement("div");
     popover.setAttribute("id", topicId + "title");
