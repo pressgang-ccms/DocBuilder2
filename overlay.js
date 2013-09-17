@@ -33,14 +33,7 @@ function createSpecsPopover(topicId, parent) {
 
     linkDiv.onmouseover=function(){
 
-        if (popover.timeout) {
-            clearTimeout(popover.timeout);
-            popover.timeout = null;
-        }
-
-        popover.style.left= linkDiv.parentNode.offsetLeft + 'px';
-        popover.style.top= (linkDiv.offsetTop - 300) + 'px';
-        popover.style.display = '';
+        openPopover(popover, linkDiv);
 
         popover.popoverContent.innerHTML = 'Loading...';
 
@@ -69,7 +62,7 @@ function createSpecsPopover(topicId, parent) {
 
                     for (spec in specs) {
                         var link = document.createElement("div");
-                        link.innerText = spec + " " + specs[spec].title + " " + specs[spec].product + " " + specs[spec].version
+                        link.innerText = spec + ":  " + specs[spec].title + ", " + specs[spec].product + " " + specs[spec].version
                         popover.popoverContent.appendChild(link);
                     }
                 }
@@ -88,16 +81,7 @@ function createHistoryPopover(topicId, parent) {
 
     linkDiv.onmouseover=function(){
 
-        if (popover.timeout) {
-            clearTimeout(popover.timeout);
-            popover.timeout = null;
-        }
-
-        popover.style.left= linkDiv.parentNode.offsetLeft + 'px';
-        popover.style.top= (linkDiv.offsetTop - 300) + 'px';
-        popover.style.display = '';
-
-        popover.popoverContent.innerHTML = 'Loading...';
+        openPopover(popover, linkDiv);
 
         $.getJSON( SERVER + "/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%2C%20%22start%22%3A0%2C%20%22end%22%3A13%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22logDetails%22%7D%7D%5D%7D%5D%7D",
             function(popover) {
@@ -130,16 +114,7 @@ function createDescriptionPopover(topicId, parent) {
 
     linkDiv.onmouseover=function(){
 
-        if (popover.timeout) {
-            clearTimeout(popover.timeout);
-            popover.timeout = null;
-        }
-
-        popover.style.left= linkDiv.parentNode.offsetLeft + 'px';
-        popover.style.top= (linkDiv.offsetTop - 300) + 'px';
-        popover.style.display = '';
-
-        popover.popoverContent.innerHTML = 'Loading...';
+        openPopover(popover, linkDiv);
 
         $.getJSON( SERVER + "/topic/get/json/" + topicId, function(popover) {
             return function( data ) {
@@ -153,6 +128,19 @@ function createDescriptionPopover(topicId, parent) {
     };
 
     setupEvents(linkDiv, popover);
+}
+
+function openPopover(popover, linkDiv) {
+    if (popover.timeout) {
+        clearTimeout(popover.timeout);
+        popover.timeout = null;
+    }
+
+    popover.style.left= linkDiv.parentNode.offsetLeft + 'px';
+    popover.style.top= (linkDiv.offsetTop - 300) + 'px';
+    popover.style.display = '';
+
+    popover.popoverContent.innerHTML = 'Loading...';
 }
 
 function setupEvents(linkDiv, popover) {
