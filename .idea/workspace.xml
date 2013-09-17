@@ -7,7 +7,7 @@
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1379399401187" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1379399814703" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1379398815814" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -23,7 +23,7 @@
     <file path="$PROJECT_DIR$/../PressGangCCMSUI/.errai/BootstrapperImpl.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378767261944" ignored="false" />
     <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/topic/TopicRenderedPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378764508808" ignored="false" />
     <file path="/TopicRenderedPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378764261248" ignored="false" />
-    <file path="/overlay.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1379399688880" ignored="false" />
+    <file path="/overlay.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1379401469778" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +87,7 @@
       <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="343" column="45" selection-start="13608" selection-end="13608" vertical-scroll-proportion="0.0">
+            <state line="345" column="52" selection-start="13782" selection-end="13782" vertical-scroll-proportion="0.0">
               <folding>
                 <marker date="1379398827717" expanded="true" signature="4062:5932" placeholder="..." />
                 <marker date="1379398827717" expanded="true" signature="4075:4318" placeholder="..." />
@@ -126,7 +126,7 @@
       <file leaf-file-name="overlay.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="291" column="21" selection-start="11940" selection-end="11940" vertical-scroll-proportion="0.78017664">
+            <state line="21" column="49" selection-start="928" selection-end="928" vertical-scroll-proportion="0.31690142">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -702,7 +702,11 @@
       <created>1379399402356</created>
       <updated>1379399402356</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="DocBuilder will now manually added overlay javascript file and other javascript libraries">
+      <created>1379399815530</created>
+      <updated>1379399815531</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1035,7 +1039,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="343" column="45" selection-start="13608" selection-end="13608" vertical-scroll-proportion="0.0">
+        <state line="345" column="52" selection-start="13782" selection-end="13782" vertical-scroll-proportion="0.0">
           <folding>
             <marker date="1379398827717" expanded="true" signature="4062:5932" placeholder="..." />
             <marker date="1379398827717" expanded="true" signature="4075:4318" placeholder="..." />
@@ -1072,7 +1076,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="291" column="21" selection-start="11940" selection-end="11940" vertical-scroll-proportion="0.78017664">
+        <state line="21" column="49" selection-start="928" selection-end="928" vertical-scroll-proportion="0.31690142">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

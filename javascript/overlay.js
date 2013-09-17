@@ -19,7 +19,7 @@ function addOverlayIcons(topicId, RoleCreatePara) {
     if (topicId != null && topicId.length > 0) {
         var bubbleDiv = document.createElement("div");
         bubbleDiv.style.height = "42px";
-        RoleCreatePara.parentNode.appendChild(bubbleDiv);
+        $(bubbleDiv).insertAfter(RoleCreatePara);
         createSpecsPopover(topicId, bubbleDiv);
         createHistoryPopover(topicId, bubbleDiv);
         createTagsPopover(topicId, bubbleDiv);
@@ -266,7 +266,7 @@ function setupEvents(linkDiv, popover) {
 function findTopicIds() {
     var foundTopics = {};
     var elements = document.getElementsByTagName("div");
-    for (var i = 0; i < elements.length; ++i) {
+    for (var i = elements.length - 1; i >= 0; --i) {
         var element = elements[i];
         if (element.className.match(".*RoleCreateBugPara.*")) {
             if (element.innerHTML.match(".*Report a bug.*")) {
