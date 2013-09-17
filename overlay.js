@@ -12,45 +12,103 @@ var SERVER = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1";
 
 findTopicIds();
 
-/*
- * Alters the Edit URL to point to the new PressGang GUI
- */
 function addOverlayIcons(topicId, RoleCreatePara) {
     if (topicId != null && topicId.length > 0) {
-        var linkDiv = document.createElement("div");
-        var icon = document.createElement("img");
-        icon.setAttribute("id", topicId + "descriptionIcon");
-        icon.setAttribute("src", "/images/info.png");
-
-        linkDiv.appendChild(icon);
-        RoleCreatePara.parentNode.appendChild(linkDiv);
-
-        setTimeout(function(icon, topicId) {
-            return function() {
-                var popover = createPopover("Description", topicId);
-                document.body.appendChild(popover);
-
-                icon.onmouseover=function(){
-                    popover.style.left= icon.parentNode.offsetLeft + 'px';
-                    popover.style.top= (icon.offsetTop - 300) + 'px';
-                    popover.style.display = '';
-
-                    $.getJSON( SERVER + "/topic/get/json/" + topicId, function(popover) {
-                        return function( data ) {
-                            if (data.description.trim().length != 0) {
-                                $(popover.popoverContent).text(data.description);
-                            } else {
-                                $(popover.popoverContent).text("[No Description]");
-                            }
-                        }
-                    }(popover));
-                };
-                icon.onmouseout=function(){
-                    popover.style.display = 'none';
-                };
-            }
-        } (icon, topicId), 0);
+        var bubbleDiv = document.createElement("div");
+        bubbleDiv.style.height = "42px";
+        RoleCreatePara.parentNode.appendChild(bubbleDiv);
+        createSpecsPopover(topicId, bubbleDiv);
+        createDescriptionPopover(topicId, bubbleDiv);
     }
+}
+
+function createSpecsPopover(topicId, parent) {
+    var linkDiv = document.createElement("div");
+    linkDiv.setAttribute("id", topicId + "bookIcon");
+    linkDiv.style.backgroundImage = "url(/images/book.png)";
+    linkDiv.style.width = "26px";
+    linkDiv.style.height = "26px";
+    linkDiv.style.float = "left";
+    linkDiv.style.backgroundRepeat = "no-repeat";
+    linkDiv.style.margin = "8px";
+    parent.appendChild(linkDiv);
+
+    var popover = createPopover("Content Specifications", topicId);
+    document.body.appendChild(popover);
+
+    linkDiv.onmouseover=function(){
+        popover.style.left= linkDiv.parentNode.offsetLeft + 'px';
+        popover.style.top= (linkDiv.offsetTop - 300) + 'px';
+        popover.style.display = '';
+
+        $.getJSON( SERVER + "/contentspecnodes/get/json/query;csNodeType=0%2C9%2C10;csNodeEntityId=" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22nodes%22%7D%2C+%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22inheritedCondition%22%7D%7D%2C+%7B%22trunk%22%3A%7B%22name%22%3A+%22contentSpec%22%7D%2C+%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22children_OTM%22%7D%7D%5D%7D%5D%7D%5D%7D",
+            function(popover) {
+                return function( data ) {
+                    popover.popoverContent.innerHTML = '';
+                    specs = {};
+                    for (var specIndex = 0, specCount = data.items.length; specIndex < specCount; ++specIndex) {
+                        var spec = data.items[specIndex].item.contentSpec;
+                        if (!specs[spec.id]) {
+                            var specDetails = {title: "", product: "", version: ""};
+                            for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
+                                var child = spec.children_OTM.items[specChildrenIndex].item;
+                                if (child.title == "Product") {
+                                    specDetails.product = child.additionalText;
+                                } else if (child.title == "Version") {
+                                    specDetails.version = child.additionalText;
+                                } if (child.title == "Title") {
+                                    specDetails.title = child.additionalText;
+                                }
+                            }
+                            specs[spec.id] = specDetails;
+                        }
+                    }
+
+                    for (spec in specs) {
+                        var link = document.createElement("div");
+                        link.innerText = specs[spec].title + " " + specs[spec].product + " " + specs[spec].version
+                        popover.popoverContent.appendChild(link);
+                    }
+                }
+        }(popover));
+    };
+    linkDiv.onmouseout=function(){
+        popover.style.display = 'none';
+    };
+}
+
+function createDescriptionPopover(topicId, parent) {
+    var linkDiv = document.createElement("span");
+    linkDiv.setAttribute("id", topicId + "descriptionIcon");
+    linkDiv.style.backgroundImage = "url(/images/info.png)";
+    linkDiv.style.width = "26px";
+    linkDiv.style.height = "26px";
+    linkDiv.style.float = "left";
+    linkDiv.style.backgroundRepeat = "no-repeat";
+    linkDiv.style.margin = "8px";
+    parent.appendChild(linkDiv);
+
+    var popover = createPopover("Description", topicId);
+    document.body.appendChild(popover);
+
+    linkDiv.onmouseover=function(){
+        popover.style.left= linkDiv.parentNode.offsetLeft + 'px';
+        popover.style.top= (linkDiv.offsetTop - 300) + 'px';
+        popover.style.display = '';
+
+        $.getJSON( SERVER + "/topic/get/json/" + topicId, function(popover) {
+            return function( data ) {
+                if (data.description.trim().length != 0) {
+                    $(popover.popoverContent).text(data.description);
+                } else {
+                    $(popover.popoverContent).text("[No Description]");
+                }
+            }
+        }(popover));
+    };
+    linkDiv.onmouseout=function(){
+        popover.style.display = 'none';
+    };
 }
 
 /*
