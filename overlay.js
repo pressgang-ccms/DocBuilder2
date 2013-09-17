@@ -18,6 +18,7 @@ function addOverlayIcons(topicId, RoleCreatePara) {
         bubbleDiv.style.height = "42px";
         RoleCreatePara.parentNode.appendChild(bubbleDiv);
         createSpecsPopover(topicId, bubbleDiv);
+        createHistoryPopover(topicId, bubbleDiv);
         createDescriptionPopover(topicId, bubbleDiv);
     }
 }
@@ -64,6 +65,40 @@ function createSpecsPopover(topicId, parent) {
                     }
                 }
         }(popover));
+    };
+    linkDiv.onmouseout=function(){
+        popover.style.display = 'none';
+    };
+}
+
+function createHistoryPopover(topicId, parent) {
+    var linkDiv = createIcon("history", topicId);
+    parent.appendChild(linkDiv);
+
+    var popover = createPopover("History", topicId);
+    document.body.appendChild(popover);
+
+    linkDiv.onmouseover=function(){
+        popover.style.left= linkDiv.parentNode.offsetLeft + 'px';
+        popover.style.top= (linkDiv.offsetTop - 300) + 'px';
+        popover.style.display = '';
+
+        $.getJSON( SERVER + "/topic/get/json/10417?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%2C%20%22start%22%3A0%2C%20%22end%22%3A5%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22logDetails%22%7D%7D%5D%7D%5D%7D",
+            function(popover) {
+                return function( data ) {
+                    popover.popoverContent.innerHTML = '';
+                    specs = {};
+                    for (var revisionIndex = 0, revisionCount = data.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
+                        var revision = data.revisions.items[revisionIndex].item;
+                        var link = document.createElement("div");
+
+                        var message = revision.logDetails.message.length == 0 ? "[No Message]" : revision.logDetails.message;
+
+                        link.innerText = revision.revision + " - " + new Date(revision.lastModified).toDateString() + " - " + message;
+                        popover.popoverContent.appendChild(link);
+                    }
+                }
+            }(popover));
     };
     linkDiv.onmouseout=function(){
         popover.style.display = 'none';
