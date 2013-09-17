@@ -63,9 +63,13 @@ function createSpecsPopover(topicId, parent) {
                     }
 
                     for (spec in specs) {
-                        var link = document.createElement("div");
+                        var container = document.createElement("div");
+                        var link = document.createElement("a");
+                        container.appendChild(link);
+
                         link.innerText = spec + ":  " + specs[spec].title + ", " + specs[spec].product + " " + specs[spec].version
-                        popover.popoverContent.appendChild(link);
+                        link.setAttribute("href", "/" + spec);
+                        popover.popoverContent.appendChild(container);
                     }
                 }
         }(popover));
