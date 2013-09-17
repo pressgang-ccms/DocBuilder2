@@ -2,10 +2,13 @@
 // @name          Docbuilder Overlay
 // @namespace     https://skynet.usersys.redhat.com
 // @include       http://docbuilder.usersys.redhat.com/*
+// @require       http://code.jquery.com/jquery-2.0.3.min.js
 // ==/UserScript==
 
 var MATCH_PREFIX = "cf_build_id=";
 var MATCH_BUILD_ID = MATCH_PREFIX + "[0-9]+";
+var SERVER = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1";
+//var SERVER = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1";
 
 findTopicIds();
 
@@ -22,30 +25,31 @@ function addOverlayIcons(topicId, RoleCreatePara) {
         linkDiv.appendChild(icon);
         RoleCreatePara.parentNode.appendChild(linkDiv);
 
-        setTimeout(function(icon) {
+        setTimeout(function(icon, topicId) {
             return function() {
-                var popover = document.createElement("div");
-                popover.setAttribute("id", topicId + "popover");
-                popover.style.position="absolute";
-                popover.style.height='300px';
-                popover.style.width='450px';
-                popover.style.display = 'none';
-                popover.style.backgroundColor = 'white';
-                popover.style.borderColor = 'blue';
-                popover.style.borderWidth = '2px';
-                popover.style.borderStyle = 'solid';
+                var popover = createPopover("Description", topicId);
                 document.body.appendChild(popover);
 
                 icon.onmouseover=function(){
                     popover.style.left= icon.parentNode.offsetLeft + 'px';
                     popover.style.top= (icon.offsetTop - 300) + 'px';
                     popover.style.display = '';
+
+                    $.getJSON( SERVER + "/topic/get/json/" + topicId, function(popover) {
+                        return function( data ) {
+                            if (data.description.trim().length != 0) {
+                                $(popover.popoverContent).text(data.description);
+                            } else {
+                                $(popover.popoverContent).text("[No Description]");
+                            }
+                        }
+                    }(popover));
                 };
                 icon.onmouseout=function(){
                     popover.style.display = 'none';
                 };
             }
-        } (icon), 0);
+        } (icon, topicId), 0);
     }
 }
 
@@ -68,4 +72,36 @@ function findTopicIds() {
         }
     }
     return null;
+}
+
+function createPopover(title, topicId) {
+    var popover = document.createElement("div");
+    popover.setAttribute("id", topicId + "title");
+    popover.style.position="absolute";
+    popover.style.height='300px';
+    popover.style.width='450px';
+    popover.style.display = 'none';
+    popover.style.backgroundColor = 'white';
+    popover.style.borderColor = 'blue';
+    popover.style.borderWidth = '2px';
+    popover.style.borderStyle = 'solid';
+
+    var popoverTitle = document.createElement("div");
+    popoverTitle.style.width = "442px";
+    popoverTitle.style.paddingTop = "8px";
+    popoverTitle.style.paddingBottom = "8px";
+    popoverTitle.style.paddingLeft = "8px";
+    popoverTitle.style.color = "white";
+    popoverTitle.style.backgroundColor = "blue";
+    popoverTitle.innerText = title;
+
+    popover.appendChild(popoverTitle);
+
+    var popoverContent = document.createElement("div");
+    popoverContent.style.margin = "8px";
+    popover.appendChild(popoverContent);
+
+    popover.popoverContent = popoverContent;
+
+    return popover;
 }
