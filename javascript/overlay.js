@@ -706,7 +706,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 }
 
 function doSecondPassQuery(topicIdsString) {
-	$.get(BACKGROUND_QUERY_PREFIX + topicIdsString + BACKGROUND_QUERY_POSTFIX, function (data) {
+	$.getJSON(BACKGROUND_QUERY_PREFIX + topicIdsString + BACKGROUND_QUERY_POSTFIX, function (data, textStatus, jqXHR) {
 		if (data && data.items) {
 			for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
 				var topic = data.items[topicIndex].item;
@@ -779,6 +779,8 @@ function doSecondPassQuery(topicIdsString) {
 				updateCount($("#" + topic.id + "tagsIcon")[0], tagsCache[topic.id].data.length);
 				updateCount($("#" + topic.id + "bookIcon")[0], specCache[topic.id].data.length);
 			}
+		} else {
+			console.log("Bad request");
 		}
 	});
 }
