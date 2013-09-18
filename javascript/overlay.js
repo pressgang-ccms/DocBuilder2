@@ -61,6 +61,11 @@ var BACKGROUND_QUERY_POSTFIX = "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A
  * @type {number}
  */
 var SECOND_PASS_TIMEOUT = 30000;
+/**
+ * How long to wait beteen each call to get the data for the second pass
+ * @type {number}
+ */
+var SECOND_PASS_REST_CALL_DELAY = 5000;
 
 /**
  * Maintains the topic to source URL info
@@ -97,6 +102,7 @@ var topicIds = [];
 var topicsFound = false;
 var secondPassTimeout = false;
 var windowLoaded = false;
+var secondPassCalled = false;
 
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
@@ -355,6 +361,15 @@ function createHistoryPopover(topicId, parent) {
     var popover = createPopover("History", topicId);
     document.body.appendChild(popover);
 
+	var legend = $("<div style='padding: 8px; width: 742px; height: 46px; color: white; background-color: blue; display: table-cell; vertical-align: middle; font-weight: bold'><div style='float:left'>History. Last revision edited in&nbsp;</div>\
+		<div style='width: 25px; height: 26px; float: left; background-image: url(/images/history-blue.png)'/><div style='float:left'>&nbsp;1 Day,&nbsp;</div> \
+		<div style='width: 25px; height: 26px; float: left; background-image: url(/images/history-green.png)'/><div style='float:left'>&nbsp;1 Week,&nbsp;</div> \
+		<div style='width: 25px; height: 26px; float: left; background-image: url(/images/history-yellow.png)'/><div style='float:left'>&nbsp;1 Month,&nbsp;</div> \
+		<div style='width: 25px; height: 26px; float: left; background-image: url(/images/history-orange.png)'/><div style='float:left'>&nbsp;1 Year,&nbsp;</div> \
+		<div style='width: 25px; height: 26px; float: left; background-image: url(/images/history-red.png)'/><div style='float:left'>&nbsp;Older&nbsp;</div></div>");
+
+	$(popover.popoverTitle).replaceWith(legend);
+
 	historyCache[topicId] = {popover: popover};
 
     linkDiv.onmouseover=function(){
@@ -388,6 +403,8 @@ function createHistoryPopover(topicId, parent) {
 function renderHistory(topicId) {
 	historyCache[topicId].popover.popoverContent.innerHTML = '';
 
+
+
 	for (var revisionIndex = 0, revisionCount = historyCache[topicId].data.length; revisionIndex < revisionCount; ++revisionIndex) {
 		var revision = historyCache[topicId].data[revisionIndex];
 		var link = document.createElement("div");
@@ -398,6 +415,12 @@ function renderHistory(topicId) {
 		$(link).text(revision.revision + " - " + date.format('lll') + " - " + message);
 		historyCache[topicId].popover.popoverContent.appendChild(link);
 	}
+
+
+}
+
+function updateHistoryIcon(topicId, linkDiv) {
+	var date = historyCache[topicId].lastModified;
 }
 
 /**
@@ -602,7 +625,7 @@ function createPopover(title, topicId) {
 
     var popoverTitle = document.createElement("div");
     popoverTitle.style.width = "742px";
-    popoverTitle.style.height = "30px";
+    popoverTitle.style.height = "46px";
     popoverTitle.style.paddingLeft = "8px";
     popoverTitle.style.color = "white";
     popoverTitle.style.backgroundColor = "blue";
@@ -611,11 +634,14 @@ function createPopover(title, topicId) {
     popoverTitle.style.verticalAlign = "middle";
     $(popoverTitle).text(title);
 
+	popover.popoverTitle = popoverTitle;
+
     popover.appendChild(popoverTitle);
 
     var popoverContent = document.createElement("div");
-    popoverContent.style.margin = "8px";
-    popoverContent.style.height = "254px";
+	popoverContent.style.clear = "both";
+	popoverContent.style.margin = "8px";
+    popoverContent.style.height = "238px";
     popoverContent.style.overflowY = "auto";
 	$(popoverContent).text('Loading...');
     popover.appendChild(popoverContent);
@@ -635,10 +661,12 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 		windowLoaded = true;
 	}
 
-	if (topicsFound && (secondPassTimeout || windowLoaded)) {
+	if ((topicsFound && (secondPassTimeout || windowLoaded) && !secondPassCalled)) {
 		console.log("Starting second pass.");
 
+		secondPassCalled = true;
 		var topicIdsString = "";
+		var delay = SECOND_PASS_REST_CALL_DELAY;
 		for (var index = 0, count = topicIds.length; index < count; ++index) {
 			if (topicIdsString.length != 0) {
 				topicIdsString += ",";
@@ -647,13 +675,22 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 			topicIdsString += topicIds[index];
 
 			if (index % 10 == 0) {
-				doSecondPassQuery(topicIdsString);
+				setTimeout(function(topicIdsString) {
+					return function() {
+						doSecondPassQuery(topicIdsString);
+					}
+				}(topicIdsString), delay);
+				delay += SECOND_PASS_REST_CALL_DELAY;
 				topicIdsString = "";
 			}
 		}
 
 		if (topicIdsString.length != 0) {
-			doSecondPassQuery(topicIdsString);
+			setTimeout(function(topicIdsString) {
+				return function() {
+					doSecondPassQuery(topicIdsString);
+				}
+			}(topicIdsString), delay);
 		}
 	}
 }
