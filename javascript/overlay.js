@@ -455,3 +455,7 @@ function createPopover(title, topicId) {
 
     return popover;
 }
+
+function secondPass() {
+
+}
