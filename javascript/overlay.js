@@ -677,7 +677,7 @@ function secondPass() {
 			}
 
 			for (spec in specs) {
-				specCache[topic.Id].data.push(specs[spec]);
+				specCache[topic.id].data.push(specs[spec]);
 			}
 
 			updateCount($("#" + topic.id + "historyIcon")[0], historyCache[topic.id].data.length);
