@@ -46,6 +46,17 @@ var SERVER = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1";
 //var SERVER = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1";
 
 /**
+ * The start of the URL to the REST endpoint to call to get all the details for all the topics
+ * @type {string}
+ */
+var BACKGROUND_QUERY_PREFIX = SERVER + "/topics/get/json/query;topicIds="
+/**
+ * The end of the URL to the REST endpoint to call to get all the details for all the topics
+ * @type {string}
+ */
+var BACKGROUND_QUERY_POSTFIX = "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22sourceUrls_OTM%22%7D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%2C%20%22start%22%3A%200%2C%20%22end%22%3A%2015%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22logDetails%22%7D%7D%5D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D%5D%7D%0A%0A"
+
+/**
  * Maintains the topic to source URL info
  * @type {{}}
  */
@@ -71,6 +82,11 @@ var specCache = {};
  * @type {{}}
  */
 var historyCache = {};
+/**
+ * Maintains a list of the topics found in this book.
+ * @type {Array}
+ */
+var topicIds = [];
 
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
@@ -84,7 +100,12 @@ $(document).ready(findTopicIds);
  */
 function addOverlayIcons(topicId, RoleCreatePara) {
     if (topicId != null && topicId.length > 0) {
-        var bubbleDiv = document.createElement("div");
+
+		if ($.inArray(topicId, topicIds) == -1) {
+			topicIds.push(topicId);
+		}
+
+		var bubbleDiv = document.createElement("div");
         bubbleDiv.style.height = "42px";
         $(bubbleDiv).insertAfter(RoleCreatePara);
         createSpecsPopover(topicId, bubbleDiv);
@@ -274,6 +295,8 @@ function createUrlsPopover(topicId, parent) {
 						renderUrls(topicId);
 					}
 				}(popover));
+		} else {
+			renderUrls(topicId);
 		}
     };
 
@@ -583,5 +606,58 @@ function createPopover(title, topicId) {
 }
 
 function secondPass() {
+	var topicIdsString = "";
+	for (var index = 0, count = topicIds.length; index < count; ++index) {
+		if (topicIdsString.length != 0) {
+			topicIdsString += ",";
+		}
 
+		topicIdsString += topicIds[index];
+	}
+
+	$.get(BACKGROUND_QUERY_PREFIX + topicIdsString + BACKGROUND_QUERY_POSTFIX, function (data) {
+		for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
+			var topic = data.items[topicIndex].item;
+
+			// set the description
+			descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
+
+			// set the revisions
+			historyCache[topic.id].data = [];
+			for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
+			 	var revision = topic.revisions.items[revisionIndex].item;
+				historyCache[topic.id].data.push({revision: revision.revision, message: revision.logDetails.message, lastModified: revision.lastModified});
+			}
+
+			// set the tags
+			tagsCache[topic.id].data = [];
+			for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
+				var tag = topic.tags.items[tagIndex].item;
+				tagsCache[topic.id].data.push({name: tag.name});
+			}
+
+			// set the urls
+			urlCache[topic.id].data = [];
+
+			var match = null;
+			while (match = COMMENT_RE.exec(data.xml)) {
+				var comment = match[1];
+
+				var match2 = null;
+				while (match2 = URL_RE.exec(comment)) {
+					var url = match2[0];
+					urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
+				}
+			}
+
+			for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
+				var url = topic.sourceUrls_OTM.items[urlsIndex].item;
+				urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
+			}
+
+			updateCount($("#" + topic.id + "historyIcon")[0], historyCache[topic.id].data.length);
+			updateCount($("#" + topic.id + "urlsIcon")[0], urlCache[topic.id].data.length);
+			updateCount($("#" + topic.id + "tagsIcon")[0], tagsCache[topic.id].data.length);
+		}
+	});
 }
