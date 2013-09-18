@@ -54,7 +54,7 @@ var BACKGROUND_QUERY_PREFIX = SERVER + "/topics/get/json/query;topicIds="
  * The end of the URL to the REST endpoint to call to get all the details for all the topics
  * @type {string}
  */
-var BACKGROUND_QUERY_POSTFIX = "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22sourceUrls_OTM%22%7D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%2C%20%22start%22%3A%200%2C%20%22end%22%3A%2015%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22logDetails%22%7D%7D%5D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D%5D%7D%0A%0A"
+var BACKGROUND_QUERY_POSTFIX = "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs_OTM%22%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22children_OTM%22%7D%7D%5D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22sourceUrls_OTM%22%7D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%2C%20%22start%22%3A%200%2C%20%22end%22%3A%2015%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22logDetails%22%7D%7D%5D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D%5D%7D%0A%0A"
 
 /**
  * Maintains the topic to source URL info
@@ -655,9 +655,35 @@ function secondPass() {
 				urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
 			}
 
+			// set the specs
+			specCache[topic.id].data = [];
+			var specs = {};
+			for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
+				var spec = topic.contentSpecs_OTM.items[specIndex].item;
+				if (!specs[spec.id]) {
+					var specDetails = {id: spec.id, title: "", product: "", version: ""};
+					for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
+						var child = spec.children_OTM.items[specChildrenIndex].item;
+						if (child.title == "Product") {
+							specDetails.product = child.additionalText;
+						} else if (child.title == "Version") {
+							specDetails.version = child.additionalText;
+						} if (child.title == "Title") {
+							specDetails.title = child.additionalText;
+						}
+					}
+					specs[spec.id] = specDetails;
+				}
+			}
+
+			for (spec in specs) {
+				specCache[topic.Id].data.push(specs[spec]);
+			}
+
 			updateCount($("#" + topic.id + "historyIcon")[0], historyCache[topic.id].data.length);
 			updateCount($("#" + topic.id + "urlsIcon")[0], urlCache[topic.id].data.length);
 			updateCount($("#" + topic.id + "tagsIcon")[0], tagsCache[topic.id].data.length);
+			updateCount($("#" + topic.id + "bookIcon")[0], specs[topic.id].data.length);
 		}
 	});
 }
