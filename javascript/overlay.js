@@ -65,7 +65,7 @@ var SECOND_PASS_TIMEOUT = 30000;
  * How long to wait beteen each call to get the data for the second pass
  * @type {number}
  */
-var SECOND_PASS_REST_CALL_DELAY = 5000;
+var SECOND_PASS_REST_CALL_DELAY = 500;
 
 /**
  * Maintains the topic to source URL info
