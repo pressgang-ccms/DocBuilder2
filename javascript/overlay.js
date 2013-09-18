@@ -820,7 +820,7 @@ function buildMenu() {
 			<div class="panel-heading">PressGang</div>\
 				<div class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
-						<li><a href="#" onclick="hideAllMenus(); topicsByLastEdit.show();">Topics By Last Edit</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show();">Topics By Last Edit</a></li>\
 						<li><a href="#">Topics Added Since</a></li>\
 						<li><a href="#">Topics Removed Since</a></li>\
 					</ul>\
@@ -834,12 +834,12 @@ function buildMenu() {
 			<div class="panel-heading">Topics By Last Edit</div>\
 				<div class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
-						<li><a href="#" onclick="hideAllMenus(); mainMenu.show();">Main Menu</a></li>\
-						<li><a href="#" onclick="hideAllMenus(); topicsEditedIn1Day.show();"><img src="/images/history-blue.png" style="float: left; margin-right: 3px;">1 Day</a></li>\
-						<li><a href="#" onclick="hideAllMenus(); topicsEditedIn1Week.show();"><img src="/images/history-green.png" style="float: left; margin-right: 3px;">1 Week</a></li>\
-						<li><a href="#" onclick="hideAllMenus(); topicsEditedIn1Month.show();"><img src="/images/history-yellow.png" style="float: left; margin-right: 3px;">1 Month</a></li>\
-						<li><a href="#" onclick="hideAllMenus(); topicsEditedIn1Year.show()"><img src="/images/history-orange.png" style="float: left; margin-right: 3px;">1 Year</a></li>\
-						<li><a href="#" onclick="hideAllMenus(); topicsEditedInOlderThanYear.show();"><img src="/images/history-red.png" style="float: left; margin-right: 3px;">Older than a year</a></li>\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show();">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsEditedIn1Day.show();"><img src="/images/history-blue.png" style="float: left; margin-right: 3px;">1 Day</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsEditedIn1Week.show();"><img src="/images/history-green.png" style="float: left; margin-right: 3px;">1 Week</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsEditedIn1Month.show();"><img src="/images/history-yellow.png" style="float: left; margin-right: 3px;">1 Month</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsEditedIn1Year.show()"><img src="/images/history-orange.png" style="float: left; margin-right: 3px;">1 Year</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsEditedInOlderThanYear.show();"><img src="/images/history-red.png" style="float: left; margin-right: 3px;">Older than a year</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -848,10 +848,11 @@ function buildMenu() {
 
 	topicsEditedIn1Day = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics By Last Edit</div>\
+			<div class="panel-heading">Topics Edited In 1 Day</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedIn1DayItems" class="nav nav-pills nav-stacked">\
-						<li><a href="#" onclick="hideAllMenus(); mainMenu.show();">Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show();">&lt; -Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show();">&lt;-Topics By Last Edit</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -860,10 +861,11 @@ function buildMenu() {
 
 	topicsEditedIn1Week = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics By Last Edit</div>\
+			<div class="panel-heading">Topics Edited In 1 Week</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedIn1WeekItems" class="nav nav-pills nav-stacked">\
-						<li><a href="#" onclick="hideAllMenus(); mainMenu.show();">Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show();">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show();">&lt;- Topics By Last Edit</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -872,10 +874,11 @@ function buildMenu() {
 
 	topicsEditedIn1Month = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics By Last Edit</div>\
+			<div class="panel-heading">Topics Edited In 1 Month</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedIn1MonthItems" class="nav nav-pills nav-stacked">\
-						<li><a href="#" onclick="hideAllMenus(); mainMenu.show();">Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show();">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show();">&lt;- Topics By Last Edit</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -884,10 +887,11 @@ function buildMenu() {
 
 	topicsEditedIn1Year = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics By Last Edit</div>\
+			<div class="panel-heading">Topics Edited In 1 Year</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedIn1YearItems" class="nav nav-pills nav-stacked">\
-						<li><a href="#" onclick="hideAllMenus(); mainMenu.show();">Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show();">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show();">&lt;- Topics By Last Edit</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -897,10 +901,11 @@ function buildMenu() {
 
 	topicsEditedInOlderThanYear = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics By Last Edit</div>\
+			<div class="panel-heading">Topics Edited Prior To 1 Year</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedInOlderThanYearItems" class="nav nav-pills nav-stacked">\
-						<li><a href="#" onclick="hideAllMenus(); mainMenu.show();">Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show();">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show();">&lt;- Topics By Last Edit</a></li>\
 					</ul>\
 				</div>\
 			</div>\
