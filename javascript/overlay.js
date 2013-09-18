@@ -101,7 +101,7 @@ $(document).ready(findTopicIds);
 /**
  * When all the assets have been loaded, the second pass can start
  */
-$(document).load(secondPass);
+$(window).load(secondPass);
 
 /**
  * Create and add the icons after the bug or editor links
@@ -625,9 +625,12 @@ function secondPass() {
 		means the second time the function is called, we are actually good to go.
 	 */
 	if (!secondPassCalled) {
+		console.log("First call to second pass, so skipping.");
 		secondPassCalled = true;
 		return;
 	}
+
+	console.log("Starting second pass.");
 
 	var topicIdsString = "";
 	for (var index = 0, count = topicIds.length; index < count; ++index) {
