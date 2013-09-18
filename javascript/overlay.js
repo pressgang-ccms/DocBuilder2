@@ -361,7 +361,7 @@ function createHistoryPopover(topicId, parent) {
     var popover = createPopover("History", topicId);
     document.body.appendChild(popover);
 
-	var legend = $("<div style='padding: 8px; width: 742px; height: 46px; color: white; background-color: blue; display: table-cell; vertical-align: middle; font-weight: bold'><div style='float:left'>History. Last revision edited in&nbsp;</div>\
+	var legend = $("<div style='width: 742px; height: 42px; color: white; background-color: blue; display: table-cell; vertical-align: middle; font-weight: bold'><div style='float:left'>History. Last revision edited in&nbsp;</div>\
 		<div style='width: 25px; height: 26px; float: left; background-image: url(/images/history-blue.png)'/><div style='float:left'>&nbsp;1 Day,&nbsp;</div> \
 		<div style='width: 25px; height: 26px; float: left; background-image: url(/images/history-green.png)'/><div style='float:left'>&nbsp;1 Week,&nbsp;</div> \
 		<div style='width: 25px; height: 26px; float: left; background-image: url(/images/history-yellow.png)'/><div style='float:left'>&nbsp;1 Month,&nbsp;</div> \
@@ -421,6 +421,8 @@ function renderHistory(topicId) {
 
 function updateHistoryIcon(topicId, linkDiv) {
 	var date = historyCache[topicId].lastModified;
+
+	if (date.isAfter())
 }
 
 /**
@@ -625,7 +627,7 @@ function createPopover(title, topicId) {
 
     var popoverTitle = document.createElement("div");
     popoverTitle.style.width = "742px";
-    popoverTitle.style.height = "46px";
+    popoverTitle.style.height = "42px";
     popoverTitle.style.paddingLeft = "8px";
     popoverTitle.style.color = "white";
     popoverTitle.style.backgroundColor = "blue";
@@ -641,7 +643,7 @@ function createPopover(title, topicId) {
     var popoverContent = document.createElement("div");
 	popoverContent.style.clear = "both";
 	popoverContent.style.margin = "8px";
-    popoverContent.style.height = "238px";
+    popoverContent.style.height = "242px";
     popoverContent.style.overflowY = "auto";
 	$(popoverContent).text('Loading...');
     popover.appendChild(popoverContent);
