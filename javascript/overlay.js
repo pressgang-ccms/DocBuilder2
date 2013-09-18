@@ -343,18 +343,18 @@ function createHistoryPopover(topicId, parent) {
     setupEvents(linkDiv, popover);
 }
 
-function renderHistory() {
+function renderHistory(topicId) {
 	historyCache[topicId].popover.popoverContent.innerHTML = '';
 
 	for (var revisionIndex = 0, revisionCount = historyCache[topicId].data.length; revisionIndex < revisionCount; ++revisionIndex) {
 		var revision = historyCache[topicId].data[revisionIndex];
 		var link = document.createElement("div");
 
-		var message = revision.logDetails.message == null || revision.message.length == 0 ? "[No Message]" : revision.message;
+		var message = revision.message == null || revision.message.length == 0 ? "[No Message]" : revision.message;
 		var date = moment(revision.lastModified);
 
 		$(link).text(revision.revision + " - " + date.format('lll') + " - " + message);
-		popover.popoverContent.appendChild(link);
+		historyCache[topicId].popover.popoverContent.appendChild(link);
 	}
 }
 
