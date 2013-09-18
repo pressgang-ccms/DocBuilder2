@@ -519,7 +519,8 @@ function findTopicIds() {
             }
         }
     }
-    return null;
+
+	secondPass();
 }
 
 /**
@@ -613,8 +614,19 @@ function secondPass() {
 		}
 
 		topicIdsString += topicIds[index];
+
+		if (index % 10 == 0) {
+			doSecondPassQuery(topicIdsString);
+			topicIdsString = "";
+		}
 	}
 
+	if (topicIdsString.length != 0) {
+		doSecondPassQuery(topicIdsString);
+	}
+}
+
+function doSecondPassQuery(topicIdsString) {
 	$.get(BACKGROUND_QUERY_PREFIX + topicIdsString + BACKGROUND_QUERY_POSTFIX, function (data) {
 		for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
 			var topic = data.items[topicIndex].item;
@@ -625,7 +637,7 @@ function secondPass() {
 			// set the revisions
 			historyCache[topic.id].data = [];
 			for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
-			 	var revision = topic.revisions.items[revisionIndex].item;
+				var revision = topic.revisions.items[revisionIndex].item;
 				historyCache[topic.id].data.push({revision: revision.revision, message: revision.logDetails.message, lastModified: revision.lastModified});
 			}
 
