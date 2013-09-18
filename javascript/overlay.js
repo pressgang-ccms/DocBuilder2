@@ -803,6 +803,7 @@ function doSecondPassQuery(topicIdsString) {
 }
 
 function hideAllMenus() {
+	menuIcon.hide();
 	mainMenu.hide();
 	topicsByLastEdit.hide();
 	topicsEditedIn1Day.hide();
@@ -813,11 +814,15 @@ function hideAllMenus() {
 }
 
 function buildMenu() {
+	menuIcon = $('<div onclick="hideAllMenus(); menuIcon.hide(); mainMenu.show();" style="cursor: pointer; position: fixed; top: 8px; left: 8px; width: 64px; height: 64px; background-image: url(/images/pressgang.svg); background-size: contain"></div>')
+	$(document.body).append(menuIcon);
+
 	mainMenu = $('\
 		<div class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">PressGang</div>\
 				<div class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); menuIcon.show();">Hide Menu</a></li>\
 						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show();">Topics By Last Edit</a></li>\
 						<li><a href="#">Topics Added Since</a></li>\
 						<li><a href="#">Topics Removed Since</a></li>\
@@ -912,5 +917,5 @@ function buildMenu() {
 
 
 	hideAllMenus();
-	mainMenu.show();
+	menuIcon.show();
 }
