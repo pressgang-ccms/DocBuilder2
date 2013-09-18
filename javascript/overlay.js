@@ -66,6 +66,11 @@ var tagsCache = {};
  * @type {{}}
  */
 var specCache = {};
+/**
+ * Maintains the topic history cache.
+ * @type {{}}
+ */
+var historyCache = {};
 
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
@@ -308,30 +313,49 @@ function createHistoryPopover(topicId, parent) {
     var popover = createPopover("History", topicId);
     document.body.appendChild(popover);
 
+	historyCache[topicId] = {popover: popover};
+
     linkDiv.onmouseover=function(){
 
         openPopover(popover, linkDiv);
 
-        $.getJSON( SERVER + "/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%2C%20%22start%22%3A0%2C%20%22end%22%3A15%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22logDetails%22%7D%7D%5D%7D%5D%7D",
-            function(popover) {
-                return function( data ) {
-                    popover.popoverContent.innerHTML = '';
-                    specs = {};
-                    for (var revisionIndex = 0, revisionCount = data.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
-                        var revision = data.revisions.items[revisionIndex].item;
-                        var link = document.createElement("div");
+		if (!historyCache[topicId].data) {
+			$.getJSON( SERVER + "/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%2C%20%22start%22%3A0%2C%20%22end%22%3A15%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22logDetails%22%7D%7D%5D%7D%5D%7D",
+				function(popover) {
+					return function( data ) {
 
-                        var message = revision.logDetails.message == null || revision.logDetails.message.length == 0 ? "[No Message]" : revision.logDetails.message;
-                        var date = moment(revision.lastModified);
+						historyCache[topicId].data = [];
 
-                        $(link).text(revision.revision + " - " + date.format('lll') + " - " + message);
-                        popover.popoverContent.appendChild(link);
-                    }
-                }
-            }(popover));
+						for (var revisionIndex = 0, revisionCount = data.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
+							var revision = data.revisions.items[revisionIndex].item;
+							historyCache[topicId].data.push({revision: revision.revision, message: revision.logDetails.message, lastModified: revision.lastModified});
+						}
+
+						renderHistory(topicId);
+						updateCount(linkDiv, historyCache[topicId].data.length);
+					}
+				}(popover));
+		} else {
+			renderHistory(topicId);
+		}
     };
 
     setupEvents(linkDiv, popover);
+}
+
+function renderHistory() {
+	historyCache[topicId].popover.popoverContent.innerHTML = '';
+
+	for (var revisionIndex = 0, revisionCount = historyCache[topicId].data.length; revisionIndex < revisionCount; ++revisionIndex) {
+		var revision = historyCache[topicId].data[revisionIndex];
+		var link = document.createElement("div");
+
+		var message = revision.logDetails.message == null || revision.message.length == 0 ? "[No Message]" : revision.message;
+		var date = moment(revision.lastModified);
+
+		$(link).text(revision.revision + " - " + date.format('lll') + " - " + message);
+		popover.popoverContent.appendChild(link);
+	}
 }
 
 /**
