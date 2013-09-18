@@ -128,11 +128,11 @@ function createSpecsPopover(topicId, parent) {
     var popover = createPopover("Content Specifications", topicId);
     document.body.appendChild(popover);
 
+	specCache[topicId] = {popover: popover};
+
     linkDiv.onmouseover=function(){
 
         openPopover(popover, linkDiv);
-
-		specCache[topicId] = {popover: popover};
 
 		if (!specCache[topicId].data) {
 			$.getJSON( SERVER + "/contentspecnodes/get/json/query;csNodeType=0%2C9%2C10;csNodeEntityId=" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22nodes%22%7D%2C+%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22inheritedCondition%22%7D%7D%2C+%7B%22trunk%22%3A%7B%22name%22%3A+%22contentSpec%22%7D%2C+%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22children_OTM%22%7D%7D%5D%7D%5D%7D%5D%7D",
