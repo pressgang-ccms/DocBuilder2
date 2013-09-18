@@ -98,6 +98,11 @@ var historyCache = {};
  * @type {Array}
  */
 var topicIds = [];
+/**
+ * A mapping of topic IDs to the section elements
+ * @type {{}}
+ */
+var topicSections = {};
 
 var topicsFound = false;
 var secondPassTimeout = false;
@@ -131,6 +136,7 @@ function addOverlayIcons(topicId, RoleCreatePara) {
 
 		if ($.inArray(topicId, topicIds) == -1) {
 			topicIds.push(topicId);
+			topicSections[topicId] = RoleCreatePara.parentNode;
 		}
 
 		var bubbleDiv = document.createElement("div");
@@ -425,14 +431,19 @@ function updateHistoryIcon(topicId, linkDiv) {
 
 	if (date.isAfter(moment().subtract('day', 1))) {
 		icon.css('background-image', 'url(/images/history-blue.png)');
+		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + topicId + '</a></li>').appendTo($("#topicsEditedIn1DayItems"));
 	} else if (date.isAfter(moment().subtract('week', 1))) {
 		icon.css('background-image', 'url(/images/history-green.png)');
+		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + topicId + '</a></li>').appendTo($("#topicsEditedIn1WeekItems"));
 	} else if (date.isAfter(moment().subtract('month', 1))) {
 		icon.css('background-image', 'url(/images/history-yellow.png)');
+		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + topicId + '</a></li>').appendTo($("#topicsEditedIn1MonthItems"));
 	} else if (date.isAfter(moment().subtract('year', 1))) {
 		icon.css('background-image', 'url(/images/history-orange.png)');
+		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + topicId + '</a></li>').appendTo($("#topicsEditedIn1YearItems"));
 	} else {
 		icon.css('background-image', 'url(/images/history-red.png)');
+		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + topicId + '</a></li>').appendTo($("#topicsEditedInOlderThanYearItems"));
 	}
 }
 
@@ -721,7 +732,12 @@ function doSecondPassQuery(topicIdsString) {
 				historyCache[topic.id].data = [];
 				for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
 					var revision = topic.revisions.items[revisionIndex].item;
-					historyCache[topic.id].data.push({revision: revision.revision, message: revision.logDetails.message, lastModified: revision.lastModified});
+					historyCache[topic.id].data.push({
+						revision: revision.revision,
+						message: revision.logDetails.message,
+						lastModified: revision.lastModified});
+
+
 				}
 
 				// set the tags
@@ -791,13 +807,18 @@ function doSecondPassQuery(topicIdsString) {
 function hideAllMenus() {
 	mainMenu.hide();
 	topicsByLastEdit.hide();
+	topicsEditedIn1Day.hide();
+	topicsEditedIn1Week.hide();
+	topicsEditedIn1Month.hide();
+	topicsEditedIn1Year.hide();
+	topicsEditedInOlderThanYear.hide();
 }
 
 function buildMenu() {
 	mainMenu = $('\
 		<div class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">PressGang</div>\
-				<div class="panel-body pressgangScrollMenu">\
+				<div class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
 						<li><a href="#" onclick="hideAllMenus(); topicsByLastEdit.show();">Topics By Last Edit</a></li>\
 						<li><a href="#">Topics Added Since</a></li>\
@@ -811,19 +832,81 @@ function buildMenu() {
 	topicsByLastEdit = $('\
 		<div class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">Topics By Last Edit</div>\
-				<div class="panel-body pressgangScrollMenu">\
+				<div class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
 						<li><a href="#" onclick="hideAllMenus(); mainMenu.show();">Main Menu</a></li>\
-						<li><a href="#" onclick="hideAllMenus();">1 Day</a></li>\
-						<li><a href="#" onclick="hideAllMenus();">1 Week</a></li>\
-						<li><a href="#" onclick="hideAllMenus();">1 Month</a></li>\
-						<li><a href="#" onclick="hideAllMenus();">1 Year</a></li>\
-						<li><a href="#" onclick="hideAllMenus();">Older than a year</a></li>\
+						<li><a href="#" onclick="hideAllMenus(); topicsEditedIn1Day.show();"><img src="/images/history-blue.png" style="float: left; margin-right: 3px;">1 Day</a></li>\
+						<li><a href="#" onclick="hideAllMenus(); topicsEditedIn1Week.show();"><img src="/images/history-green.png" style="float: left; margin-right: 3px;">1 Week</a></li>\
+						<li><a href="#" onclick="hideAllMenus(); topicsEditedIn1Month.show();"><img src="/images/history-yellow.png" style="float: left; margin-right: 3px;">1 Month</a></li>\
+						<li><a href="#" onclick="hideAllMenus(); topicsEditedIn1Year.show()"><img src="/images/history-orange.png" style="float: left; margin-right: 3px;">1 Year</a></li>\
+						<li><a href="#" onclick="hideAllMenus(); topicsEditedInOlderThanYear.show();"><img src="/images/history-red.png" style="float: left; margin-right: 3px;">Older than a year</a></li>\
 					</ul>\
 				</div>\
 			</div>\
 		</div>')
 	$(document.body).append(topicsByLastEdit);
+
+	topicsEditedIn1Day = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Topics By Last Edit</div>\
+				<div class="panel-body ">\
+		            <ul id="topicsEditedIn1DayItems" class="nav nav-pills nav-stacked">\
+						<li><a href="#" onclick="hideAllMenus(); mainMenu.show();">Main Menu</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+	$(document.body).append(topicsEditedIn1Day);
+
+	topicsEditedIn1Week = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Topics By Last Edit</div>\
+				<div class="panel-body ">\
+		            <ul id="topicsEditedIn1WeekItems" class="nav nav-pills nav-stacked">\
+						<li><a href="#" onclick="hideAllMenus(); mainMenu.show();">Main Menu</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+	$(document.body).append(topicsEditedIn1Week);
+
+	topicsEditedIn1Month = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Topics By Last Edit</div>\
+				<div class="panel-body ">\
+		            <ul id="topicsEditedIn1MonthItems" class="nav nav-pills nav-stacked">\
+						<li><a href="#" onclick="hideAllMenus(); mainMenu.show();">Main Menu</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+	$(document.body).append(topicsEditedIn1Month);
+
+	topicsEditedIn1Year = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Topics By Last Edit</div>\
+				<div class="panel-body ">\
+		            <ul id="topicsEditedIn1YearItems" class="nav nav-pills nav-stacked">\
+						<li><a href="#" onclick="hideAllMenus(); mainMenu.show();">Main Menu</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+	$(document.body).append(topicsEditedIn1Year);
+
+
+	topicsEditedInOlderThanYear = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Topics By Last Edit</div>\
+				<div class="panel-body ">\
+		            <ul id="topicsEditedInOlderThanYearItems" class="nav nav-pills nav-stacked">\
+						<li><a href="#" onclick="hideAllMenus(); mainMenu.show();">Main Menu</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+	$(document.body).append(topicsEditedInOlderThanYear);
+
 
 	hideAllMenus();
 	mainMenu.show();
