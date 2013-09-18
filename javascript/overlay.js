@@ -87,11 +87,21 @@ var historyCache = {};
  * @type {Array}
  */
 var topicIds = [];
+/**
+ * true if we have started the second pass, and false otherwise
+ * @type {boolean}
+ */
+var secondPassCalled = false;
 
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
  */
 $(document).ready(findTopicIds);
+
+/**
+ * When all the assets have been loaded, the second pass can start
+ */
+$(document).load(secondPass);
 
 /**
  * Create and add the icons after the bug or editor links
@@ -607,6 +617,18 @@ function createPopover(title, topicId) {
 }
 
 function secondPass() {
+	/*
+		We only want to start the second pass once all images have been loaded and all the topics
+		have been processed.
+
+		This method is called after the topics have been processed, and also by the load event. This
+		means the second time the function is called, we are actually good to go.
+	 */
+	if (!secondPassCalled) {
+		secondPassCalled = true;
+		return;
+	}
+
 	var topicIdsString = "";
 	for (var index = 0, count = topicIds.length; index < count; ++index) {
 		if (topicIdsString.length != 0) {
