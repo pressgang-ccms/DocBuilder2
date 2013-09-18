@@ -45,6 +45,12 @@ var MATCH_BUILD_ID2 = MATCH_PREFIX2 + "[0-9]+";
 var SERVER = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1";
 //var SERVER = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1";
 
+/**
+ * Maintains the topic to source URL info
+ * @type {{}}
+ */
+var urlCache = {};
+
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
  */
@@ -175,58 +181,70 @@ function createUrlsPopover(topicId, parent) {
     var popover = createPopover("URLs", topicId);
     document.body.appendChild(popover);
 
+	urlCache[topicId] = {popover: popover};
+
     linkDiv.onmouseover=function(){
 
         openPopover(popover, linkDiv);
 
-        $.getJSON( SERVER + "/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22sourceUrls_OTM%22%7D%7D%5D%7D",
-            function(popover) {
-                return function( data ) {
+		if (!urlCache[topicId].data) {
 
-					popover.popoverContent.innerHTML = '';
+			$.getJSON( SERVER + "/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22sourceUrls_OTM%22%7D%7D%5D%7D",
+				function(popover) {
+					return function( data ) {
 
-					var match = null;
-					while (match = COMMENT_RE.exec(data.xml)) {
-						var comment = match[1];
+						if (!urlCache[topicId].data) {
+							urlCache[topicId].data = [];
 
-						var match2 = null;
-						while (match2 = URL_RE.exec(comment)) {
-							var url = match2[0];
+							var match = null;
+							while (match = COMMENT_RE.exec(data.xml)) {
+								var comment = match[1];
 
-							var container = document.createElement("div");
-							var link = document.createElement("a");
+								var match2 = null;
+								while (match2 = URL_RE.exec(comment)) {
+									var url = match2[0];
+									urlCache[topicId].data.push({url: url, title: "[Comment] " + url});
+								}
+							}
 
-							$(link).text("[Comment] " + url);
-							link.setAttribute("href", url);
+							if (data.sourceUrls_OTM.items.length != 0) {
 
-							container.appendChild(link);
-							popover.popoverContent.appendChild(container);
+								for (var urlIndex = 0, urlCount = data.sourceUrls_OTM.items.length; urlIndex < urlCount; ++urlIndex) {
+									var url = data.sourceUrls_OTM.items[urlIndex].item;
+									urlCache[topicId].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
+								}
+							}
+
+							updateCount(linkDiv, urlCache[topicId].data.length);
+							renderUrls(topicId);
 						}
 					}
-
-					if (data.sourceUrls_OTM.items.length != 0) {
-
-                        for (var urlIndex = 0, urlCount = data.sourceUrls_OTM.items.length; urlIndex < urlCount; ++urlIndex) {
-                            var url = data.sourceUrls_OTM.items[urlIndex].item;
-                            var container = document.createElement("div");
-                            var link = document.createElement("a");
-
-                            $(link).text(url.title == null || url.title.length == 0 ? url.url : url.title);
-                            link.setAttribute("href", url.url);
-
-                            container.appendChild(link);
-                            popover.popoverContent.appendChild(container);
-                        }
-                    }
-
-					if (popover.popoverContent.innerHTML == '') {
-						$(popover.popoverContent).text('[No Source URLs]');
-                    }
-                }
-            }(popover));
+				}(popover));
+		}
     };
 
     setupEvents(linkDiv, popover);
+}
+
+function renderUrls(topicId) {
+	urlCache[topicId].popover.popoverContent.innerHTML = '';
+
+	for (var index = 0, count = urlCache[topicId].data.length; index < count; ++index) {
+		var urlData = urlCache[topicId].data[index];
+
+		var container = document.createElement("div");
+		var link = document.createElement("a");
+
+		$(link).text(urlData.title);
+		link.setAttribute("href", urlData.url);
+
+		container.appendChild(link);
+		urlCache[topicId].popover.popoverContent.appendChild(container);
+	}
+
+	if (urlCache[topicId].popover.popoverContent.innerHTML == '') {
+		$(urlCache[topicId].popover.popoverContent).text('[No Source URLs]');
+	}
 }
 
 /**
@@ -311,8 +329,6 @@ function openPopover(popover, linkDiv) {
     popover.style.left= linkDiv.parentNode.offsetLeft + 'px';
     popover.style.top= (linkDiv.offsetTop - 300) + 'px';
     popover.style.display = '';
-
-    $(popover.popoverContent).text('Loading...');
 }
 
 /**
@@ -411,7 +427,29 @@ function createIcon(img, topicId) {
     linkDiv.style.cssFloat = "left";
     linkDiv.style.backgroundRepeat = "no-repeat";
     linkDiv.style.margin = "8px";
+
+	var countDiv = document.createElement("div");
+	countDiv.style.position = "relative";
+	countDiv.style.left = "14px";
+	countDiv.style.top = "14px";
+	countDiv.style.width = "12px";
+	countDiv.style.height = "12px";
+	countDiv.style.backgroundSize = "cover";
+
+	linkDiv.appendChild(countDiv);
+	linkDiv.countMarker = countDiv;
+
     return linkDiv;
+}
+
+function updateCount(linkDiv, count) {
+	if (count >= 1 && count <= 10) {
+		linkDiv.countMarker.style.backgroundImage = "url(/images/" + count + ".png)";
+	} else if (count > 10) {
+		linkDiv.countMarker.style.backgroundImage = "url(/images/10plus.png)";
+	} else {
+		linkDiv.countMarker.style.backgroundImage = null;
+	}
 }
 
 /**
@@ -449,6 +487,7 @@ function createPopover(title, topicId) {
     popoverContent.style.margin = "8px";
     popoverContent.style.height = "254px";
     popoverContent.style.overflowY = "auto";
+	$(popoverContent).text('Loading...');
     popover.appendChild(popoverContent);
 
     popover.popoverContent = popoverContent;
