@@ -425,25 +425,25 @@ function renderHistory(topicId) {
 	}
 }
 
-function updateHistoryIcon(topicId, linkDiv) {
+function updateHistoryIcon(topicId, title) {
 	var icon = $("#" + topicId + "historyIcon");
 	var date = moment(historyCache[topicId].data[0].lastModified);
 
 	if (date.isAfter(moment().subtract('day', 1))) {
 		icon.css('background-image', 'url(/images/history-blue.png)');
-		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + topicId + '</a></li>').appendTo($("#topicsEditedIn1DayItems"));
+		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + title + '</a></li>').appendTo($("#topicsEditedIn1DayItems"));
 	} else if (date.isAfter(moment().subtract('week', 1))) {
 		icon.css('background-image', 'url(/images/history-green.png)');
-		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + topicId + '</a></li>').appendTo($("#topicsEditedIn1WeekItems"));
+		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + title + '</a></li>').appendTo($("#topicsEditedIn1WeekItems"));
 	} else if (date.isAfter(moment().subtract('month', 1))) {
 		icon.css('background-image', 'url(/images/history-yellow.png)');
-		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + topicId + '</a></li>').appendTo($("#topicsEditedIn1MonthItems"));
+		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + title + '</a></li>').appendTo($("#topicsEditedIn1MonthItems"));
 	} else if (date.isAfter(moment().subtract('year', 1))) {
 		icon.css('background-image', 'url(/images/history-orange.png)');
-		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + topicId + '</a></li>').appendTo($("#topicsEditedIn1YearItems"));
+		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + title + '</a></li>').appendTo($("#topicsEditedIn1YearItems"));
 	} else {
 		icon.css('background-image', 'url(/images/history-red.png)');
-		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + topicId + '</a></li>').appendTo($("#topicsEditedInOlderThanYearItems"));
+		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + title + '</a></li>').appendTo($("#topicsEditedInOlderThanYearItems"));
 	}
 }
 
@@ -736,8 +736,6 @@ function doSecondPassQuery(topicIdsString) {
 						revision: revision.revision,
 						message: revision.logDetails.message,
 						lastModified: revision.lastModified});
-
-
 				}
 
 				// set the tags
@@ -791,7 +789,7 @@ function doSecondPassQuery(topicIdsString) {
 					specCache[topic.id].data.push(specs[spec]);
 				}
 
-				updateHistoryIcon(topic.id);
+				updateHistoryIcon(topic.id, topic.title);
 
 				updateCount($("#" + topic.id + "historyIcon")[0], historyCache[topic.id].data.length);
 				updateCount($("#" + topic.id + "urlsIcon")[0], urlCache[topic.id].data.length);
@@ -851,8 +849,8 @@ function buildMenu() {
 			<div class="panel-heading">Topics Edited In 1 Day</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedIn1DayItems" class="nav nav-pills nav-stacked">\
-						<li><a href="javascript:hideAllMenus(); mainMenu.show();">&lt; -Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show();">&lt;-Topics By Last Edit</a></li>\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show();">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show();">&lt;- Topics By Last Edit</a></li>\
 					</ul>\
 				</div>\
 			</div>\
