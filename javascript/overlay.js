@@ -51,6 +51,22 @@ var SERVER = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1";
  */
 var urlCache = {};
 
+/**
+ * Maintains the topic description info
+ * @type {{}}
+ */
+var descriptionCache = {};
+/**
+ * Maintains the topic tags cache
+ * @type {{}}
+ */
+var tagsCache = {};
+/**
+ * Maintains the spec cache
+ * @type {{}}
+ */
+var specCache = {};
+
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
  */
@@ -90,45 +106,64 @@ function createSpecsPopover(topicId, parent) {
 
         openPopover(popover, linkDiv);
 
-        popover.popoverContent.innerHTML = 'Loading...';
+		specCache[topicId] = {popover: popover};
 
-        $.getJSON( SERVER + "/contentspecnodes/get/json/query;csNodeType=0%2C9%2C10;csNodeEntityId=" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22nodes%22%7D%2C+%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22inheritedCondition%22%7D%7D%2C+%7B%22trunk%22%3A%7B%22name%22%3A+%22contentSpec%22%7D%2C+%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22children_OTM%22%7D%7D%5D%7D%5D%7D%5D%7D",
-            function(popover) {
-                return function( data ) {
-                    popover.popoverContent.innerHTML = '';
-                    specs = {};
-                    for (var specIndex = 0, specCount = data.items.length; specIndex < specCount; ++specIndex) {
-                        var spec = data.items[specIndex].item.contentSpec;
-                        if (!specs[spec.id]) {
-                            var specDetails = {title: "", product: "", version: ""};
-                            for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
-                                var child = spec.children_OTM.items[specChildrenIndex].item;
-                                if (child.title == "Product") {
-                                    specDetails.product = child.additionalText;
-                                } else if (child.title == "Version") {
-                                    specDetails.version = child.additionalText;
-                                } if (child.title == "Title") {
-                                    specDetails.title = child.additionalText;
-                                }
-                            }
-                            specs[spec.id] = specDetails;
-                        }
-                    }
+		if (!specCache[topicId].data) {
+			$.getJSON( SERVER + "/contentspecnodes/get/json/query;csNodeType=0%2C9%2C10;csNodeEntityId=" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22nodes%22%7D%2C+%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22inheritedCondition%22%7D%7D%2C+%7B%22trunk%22%3A%7B%22name%22%3A+%22contentSpec%22%7D%2C+%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22children_OTM%22%7D%7D%5D%7D%5D%7D%5D%7D",
+				function(popover) {
+					return function( data ) {
+						specCache[topicId].data = [];
+						specs = {};
+						for (var specIndex = 0, specCount = data.items.length; specIndex < specCount; ++specIndex) {
+							var spec = data.items[specIndex].item.contentSpec;
+							if (!specs[spec.id]) {
+								var specDetails = {id: spec.id, title: "", product: "", version: ""};
+								for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
+									var child = spec.children_OTM.items[specChildrenIndex].item;
+									if (child.title == "Product") {
+										specDetails.product = child.additionalText;
+									} else if (child.title == "Version") {
+										specDetails.version = child.additionalText;
+									} if (child.title == "Title") {
+										specDetails.title = child.additionalText;
+									}
+								}
+								specs[spec.id] = specDetails;
+							}
+						}
 
-                    for (spec in specs) {
-                        var container = document.createElement("div");
-                        var link = document.createElement("a");
-                        container.appendChild(link);
+						for (spec in specs) {
+							specCache[topicId].data.push(specs[spec]);
+						}
 
-                        $(link).text(spec + ":  " + specs[spec].title + ", " + specs[spec].product + " " + specs[spec].version);
-                        link.setAttribute("href", "/" + spec);
-                        popover.popoverContent.appendChild(container);
-                    }
-                }
-        }(popover));
+						updateCount(linkDiv, specCache[topicId].data.length);
+						renderSpecs(topicId);
+
+					}
+			}(popover));
+		} else {
+			renderSpecs(topicId);
+		}
     };
 
     setupEvents(linkDiv, popover);
+}
+
+function renderSpecs(topicId) {
+	specCache[topicId].popover.popoverContent.innerHTML = '';
+
+	for (var index = 0, count = specCache[topicId].data.length; index < count; ++index) {
+
+		var spec =  specCache[topicId].data[index];
+
+		var container = document.createElement("div");
+		var link = document.createElement("a");
+		container.appendChild(link);
+
+		$(link).text(spec.id + ":  " + spec.title + ", " + spec.product + " " + spec.version);
+		link.setAttribute("href", "/" + spec);
+		specCache[topicId].popover.popoverContent.appendChild(container);
+	}
 }
 
 /**
@@ -143,30 +178,47 @@ function createTagsPopover(topicId, parent) {
     var popover = createPopover("Tags", topicId);
     document.body.appendChild(popover);
 
+	tagsCache[topicId] = {popover: popover};
+
     linkDiv.onmouseover=function(){
 
         openPopover(popover, linkDiv);
 
-        $.getJSON( SERVER + "/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D",
-            function(popover) {
-                return function( data ) {
-                    if (data.tags.items.length != 0) {
-                        popover.popoverContent.innerHTML = '';
-                        for (var tagIndex = 0, tagCount = data.tags.items.length; tagIndex < tagCount; ++tagIndex) {
-                            var tag = data.tags.items[tagIndex].item;
-                            var link = document.createElement("div");
-
-                            $(link).text(tag.name);
-                            popover.popoverContent.appendChild(link);
-                        }
-                    } else {
-						$(popover.popoverContent).text('[No Tags]');
-                    }
-                }
-            }(popover));
+		if (!tagsCache[topicId].data) {
+			$.getJSON( SERVER + "/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D",
+				function(popover) {
+					return function( data ) {
+						tagsCache[topicId].data = [];
+						for (var tagIndex = 0, tagCount = data.tags.items.length; tagIndex < tagCount; ++tagIndex) {
+							tagsCache[topicId].data.push({name: data.tags.items[tagIndex].item.name});
+						}
+						updateCount(linkDiv, tagsCache[topicId].data.length);
+						renderTags(topicId);
+					}
+				}(popover));
+		} else {
+			renderTags(topicId);
+		}
     };
 
     setupEvents(linkDiv, popover);
+}
+
+function renderTags(topicId) {
+	tagsCache[topicId].popover.popoverContent.innerHTML = '';
+
+	var tagCount = tagsCache[topicId].data.length;
+	if (tagCount != 0) {
+		for (var tagIndex = 0; tagIndex < tagCount; ++tagIndex) {
+			var tag = tagsCache[topicId].data[tagIndex];
+			var link = document.createElement("div");
+
+			$(link).text(tag.name);
+			tagsCache[topicId].popover.popoverContent.appendChild(link);
+		}
+	} else {
+		$(tagsCache[topicId].popover.popoverContent).text('[No Tags]');
+	}
 }
 
 /**
@@ -192,32 +244,29 @@ function createUrlsPopover(topicId, parent) {
 			$.getJSON( SERVER + "/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22sourceUrls_OTM%22%7D%7D%5D%7D",
 				function(popover) {
 					return function( data ) {
+						urlCache[topicId].data = [];
 
-						if (!urlCache[topicId].data) {
-							urlCache[topicId].data = [];
+						var match = null;
+						while (match = COMMENT_RE.exec(data.xml)) {
+							var comment = match[1];
 
-							var match = null;
-							while (match = COMMENT_RE.exec(data.xml)) {
-								var comment = match[1];
-
-								var match2 = null;
-								while (match2 = URL_RE.exec(comment)) {
-									var url = match2[0];
-									urlCache[topicId].data.push({url: url, title: "[Comment] " + url});
-								}
+							var match2 = null;
+							while (match2 = URL_RE.exec(comment)) {
+								var url = match2[0];
+								urlCache[topicId].data.push({url: url, title: "[Comment] " + url});
 							}
-
-							if (data.sourceUrls_OTM.items.length != 0) {
-
-								for (var urlIndex = 0, urlCount = data.sourceUrls_OTM.items.length; urlIndex < urlCount; ++urlIndex) {
-									var url = data.sourceUrls_OTM.items[urlIndex].item;
-									urlCache[topicId].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
-								}
-							}
-
-							updateCount(linkDiv, urlCache[topicId].data.length);
-							renderUrls(topicId);
 						}
+
+						if (data.sourceUrls_OTM.items.length != 0) {
+
+							for (var urlIndex = 0, urlCount = data.sourceUrls_OTM.items.length; urlIndex < urlCount; ++urlIndex) {
+								var url = data.sourceUrls_OTM.items[urlIndex].item;
+								urlCache[topicId].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
+							}
+						}
+
+						updateCount(linkDiv, urlCache[topicId].data.length);
+						renderUrls(topicId);
 					}
 				}(popover));
 		}
@@ -297,22 +346,36 @@ function createDescriptionPopover(topicId, parent) {
     var popover = createPopover("Description", topicId);
     document.body.appendChild(popover);
 
+	descriptionCache[topicId] = {popover: popover};
+
     linkDiv.onmouseover=function(){
 
         openPopover(popover, linkDiv);
 
-        $.getJSON( SERVER + "/topic/get/json/" + topicId, function(popover) {
-            return function( data ) {
-                if (data.description.trim().length != 0) {
-                    $(popover.popoverContent).text(data.description);
-                } else {
-                    $(popover.popoverContent).text("[No Description]");
-                }
-            }
-        }(popover));
+		if (!descriptionCache[topicId].data) {
+
+			$.getJSON( SERVER + "/topic/get/json/" + topicId, function(popover) {
+				return function( data ) {
+
+					descriptionCache[topicId].data = data.description;
+					renderDescription(topicId);
+
+				}
+			}(popover));
+		} else {
+			renderDescription(topicId);
+		}
     };
 
     setupEvents(linkDiv, popover);
+}
+
+function renderDescription(topicId) {
+	if (descriptionCache[topicId].data.trim().length != 0) {
+		$(descriptionCache[topicId].popover.popoverContent).text(descriptionCache[topicId].data);
+	} else {
+		$(descriptionCache[topicId].popover.popoverContent).text("[No Description]");
+	}
 }
 
 /**
