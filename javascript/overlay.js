@@ -683,7 +683,7 @@ function secondPass() {
 			updateCount($("#" + topic.id + "historyIcon")[0], historyCache[topic.id].data.length);
 			updateCount($("#" + topic.id + "urlsIcon")[0], urlCache[topic.id].data.length);
 			updateCount($("#" + topic.id + "tagsIcon")[0], tagsCache[topic.id].data.length);
-			updateCount($("#" + topic.id + "bookIcon")[0], specs[topic.id].data.length);
+			updateCount($("#" + topic.id + "bookIcon")[0], specCache[topic.id].data.length);
 		}
 	});
 }
