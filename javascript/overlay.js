@@ -57,6 +57,12 @@ var BACKGROUND_QUERY_PREFIX = SERVER + "/topics/get/json/query;topicIds="
 var BACKGROUND_QUERY_POSTFIX = "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs_OTM%22%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22children_OTM%22%7D%7D%5D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22sourceUrls_OTM%22%7D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%2C%20%22start%22%3A%200%2C%20%22end%22%3A%2015%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22logDetails%22%7D%7D%5D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D%5D%7D%0A%0A"
 
 /**
+ * How long to wait for the window to load before starting the second pass
+ * @type {number}
+ */
+var SECOND_PASS_TIMEOUT = 30000;
+
+/**
  * Maintains the topic to source URL info
  * @type {{}}
  */
@@ -87,11 +93,10 @@ var historyCache = {};
  * @type {Array}
  */
 var topicIds = [];
-/**
- * true if we have started the second pass, and false otherwise
- * @type {boolean}
- */
-var secondPassCalled = false;
+
+var topicsFound = false;
+var secondPassTimeout = false;
+var windowLoaded = false;
 
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
@@ -101,7 +106,11 @@ $(document).ready(findTopicIds);
 /**
  * When all the assets have been loaded, the second pass can start
  */
-$(window).load(secondPass);
+$(window).load(function() {secondPass(false, true, false);});
+/**
+ * If the page takes longer than 30 seconds to load, start the second pass anyway
+ */
+setTimeout(function() {secondPass(false, false, true);}, SECOND_PASS_TIMEOUT);
 
 /**
  * Create and add the icons after the bug or editor links
@@ -530,7 +539,7 @@ function findTopicIds() {
         }
     }
 
-	secondPass();
+	secondPass(true, false, false);
 }
 
 /**
@@ -616,38 +625,36 @@ function createPopover(title, topicId) {
     return popover;
 }
 
-function secondPass() {
-	/*
-		We only want to start the second pass once all images have been loaded and all the topics
-		have been processed.
+function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 
-		This method is called after the topics have been processed, and also by the load event. This
-		means the second time the function is called, we are actually good to go.
-	 */
-	if (!secondPassCalled) {
-		console.log("First call to second pass, so skipping.");
-		secondPassCalled = true;
-		return;
+	if (myTopicsFound) {
+		topicsFound = true;
+	} else if (mySecondPassTimeout) {
+		secondPassTimeout = true;
+	} else if (myWindowLoaded) {
+		windowLoaded = true;
 	}
 
-	console.log("Starting second pass.");
+	if (topicsFound && (secondPassTimeout || windowLoaded)) {
+		console.log("Starting second pass.");
 
-	var topicIdsString = "";
-	for (var index = 0, count = topicIds.length; index < count; ++index) {
+		var topicIdsString = "";
+		for (var index = 0, count = topicIds.length; index < count; ++index) {
+			if (topicIdsString.length != 0) {
+				topicIdsString += ",";
+			}
+
+			topicIdsString += topicIds[index];
+
+			if (index % 10 == 0) {
+				doSecondPassQuery(topicIdsString);
+				topicIdsString = "";
+			}
+		}
+
 		if (topicIdsString.length != 0) {
-			topicIdsString += ",";
-		}
-
-		topicIdsString += topicIds[index];
-
-		if (index % 10 == 0) {
 			doSecondPassQuery(topicIdsString);
-			topicIdsString = "";
 		}
-	}
-
-	if (topicIdsString.length != 0) {
-		doSecondPassQuery(topicIdsString);
 	}
 }
 
