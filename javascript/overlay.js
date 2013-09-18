@@ -107,7 +107,10 @@ var secondPassCalled = false;
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
  */
-$(document).ready(findTopicIds);
+$(document).ready(function() {
+	findTopicIds();
+	buildMenu();
+});
 
 /**
  * When all the assets have been loaded, the second pass can start
@@ -783,4 +786,45 @@ function doSecondPassQuery(topicIdsString) {
 			console.log("Bad request");
 		}
 	});
+}
+
+function hideAllMenus() {
+	mainMenu.hide();
+	topicsByLastEdit.hide();
+}
+
+function buildMenu() {
+	mainMenu = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">PressGang</div>\
+				<div class="panel-body pressgangScrollMenu">\
+		            <ul class="nav nav-pills nav-stacked">\
+						<li><a href="#" onclick="hideAllMenus(); topicsByLastEdit.show();">Topics By Last Edit</a></li>\
+						<li><a href="#">Topics Added Since</a></li>\
+						<li><a href="#">Topics Removed Since</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+	$(document.body).append(mainMenu);
+
+	topicsByLastEdit = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Topics By Last Edit</div>\
+				<div class="panel-body pressgangScrollMenu">\
+		            <ul class="nav nav-pills nav-stacked">\
+						<li><a href="#" onclick="hideAllMenus(); mainMenu.show();">Main Menu</a></li>\
+						<li><a href="#" onclick="hideAllMenus();">1 Day</a></li>\
+						<li><a href="#" onclick="hideAllMenus();">1 Week</a></li>\
+						<li><a href="#" onclick="hideAllMenus();">1 Month</a></li>\
+						<li><a href="#" onclick="hideAllMenus();">1 Year</a></li>\
+						<li><a href="#" onclick="hideAllMenus();">Older than a year</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+	$(document.body).append(topicsByLastEdit);
+
+	hideAllMenus();
+	mainMenu.show();
 }

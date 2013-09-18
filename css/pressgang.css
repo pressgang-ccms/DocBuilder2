@@ -1,0 +1,19 @@
+.pressgangMenu a:link {
+    border-bottom: none;
+}
+
+.pressgangMenu a:visited {
+    border-bottom: none;
+}
+
+.pressgangMenu {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    width: 200px;
+    max-height: 450px;
+}
+
+.pressgangScrollMenu {
+    overflow-y: auto;
+}
