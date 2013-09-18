@@ -361,7 +361,7 @@ function createHistoryPopover(topicId, parent) {
     var popover = createPopover("History", topicId);
     document.body.appendChild(popover);
 
-	var legend = $("<div style='width: 742px; height: 42px; color: white; background-color: blue; display: table-cell; vertical-align: middle; font-weight: bold'><div style='float:left'>History. Last revision edited in&nbsp;</div>\
+	var legend = $("<div style='padding-left: 8px; padding-right:8px; width: 742px; height: 42px; color: white; background-color: blue; display: table-cell; vertical-align: middle; font-weight: bold'><div style='float:left'>History. Last revision edited in&nbsp;</div>\
 		<div style='width: 25px; height: 26px; float: left; background-image: url(/images/history-blue.png)'/><div style='float:left'>&nbsp;1 Day,&nbsp;</div> \
 		<div style='width: 25px; height: 26px; float: left; background-image: url(/images/history-green.png)'/><div style='float:left'>&nbsp;1 Week,&nbsp;</div> \
 		<div style='width: 25px; height: 26px; float: left; background-image: url(/images/history-yellow.png)'/><div style='float:left'>&nbsp;1 Month,&nbsp;</div> \
@@ -684,7 +684,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 
 			topicIdsString += topicIds[index];
 
-			if (index != 0 && index % 10 == 0) {
+			if (index != 0 && index % 15 == 0) {
 				setTimeout(function(topicIdsString) {
 					return function() {
 						doSecondPassQuery(topicIdsString);
