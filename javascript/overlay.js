@@ -389,6 +389,7 @@ function createHistoryPopover(topicId, parent) {
 						}
 
 						renderHistory(topicId);
+						updateHistoryIcon(topicId);
 						updateCount(linkDiv, historyCache[topicId].data.length);
 					}
 				}(popover));
@@ -403,8 +404,6 @@ function createHistoryPopover(topicId, parent) {
 function renderHistory(topicId) {
 	historyCache[topicId].popover.popoverContent.innerHTML = '';
 
-
-
 	for (var revisionIndex = 0, revisionCount = historyCache[topicId].data.length; revisionIndex < revisionCount; ++revisionIndex) {
 		var revision = historyCache[topicId].data[revisionIndex];
 		var link = document.createElement("div");
@@ -415,14 +414,23 @@ function renderHistory(topicId) {
 		$(link).text(revision.revision + " - " + date.format('lll') + " - " + message);
 		historyCache[topicId].popover.popoverContent.appendChild(link);
 	}
-
-
 }
 
 function updateHistoryIcon(topicId, linkDiv) {
-	var date = historyCache[topicId].lastModified;
+	var icon = $("#" + topicId + "historyIcon");
+	var date = moment(historyCache[topicId].data[0].lastModified);
 
-	if (date.isAfter())
+	if (date.isAfter(moment().subtract('day', 1))) {
+		icon.css('background-image', 'url(/images/history-blue.png)');
+	} else if (date.isAfter(moment().subtract('week', 1))) {
+		icon.css('background-image', 'url(/images/history-green.png)');
+	} else if (date.isAfter(moment().subtract('month', 1))) {
+		icon.css('background-image', 'url(/images/history-yellow.png)');
+	} else if (date.isAfter(moment().subtract('year', 1))) {
+		icon.css('background-image', 'url(/images/history-orange.png)');
+	} else {
+		icon.css('background-image', 'url(/images/history-red.png)');
+	}
 }
 
 /**
@@ -676,7 +684,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 
 			topicIdsString += topicIds[index];
 
-			if (index % 10 == 0) {
+			if (index != 0 && index % 10 == 0) {
 				setTimeout(function(topicIdsString) {
 					return function() {
 						doSecondPassQuery(topicIdsString);
@@ -699,74 +707,78 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 
 function doSecondPassQuery(topicIdsString) {
 	$.get(BACKGROUND_QUERY_PREFIX + topicIdsString + BACKGROUND_QUERY_POSTFIX, function (data) {
-		for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
-			var topic = data.items[topicIndex].item;
+		if (data && data.items) {
+			for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
+				var topic = data.items[topicIndex].item;
 
-			// set the description
-			descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
+				// set the description
+				descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
 
-			// set the revisions
-			historyCache[topic.id].data = [];
-			for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
-				var revision = topic.revisions.items[revisionIndex].item;
-				historyCache[topic.id].data.push({revision: revision.revision, message: revision.logDetails.message, lastModified: revision.lastModified});
-			}
-
-			// set the tags
-			tagsCache[topic.id].data = [];
-			for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
-				var tag = topic.tags.items[tagIndex].item;
-				tagsCache[topic.id].data.push({name: tag.name});
-			}
-
-			// set the urls
-			urlCache[topic.id].data = [];
-
-			var match = null;
-			while (match = COMMENT_RE.exec(topic.xml)) {
-				var comment = match[1];
-
-				var match2 = null;
-				while (match2 = URL_RE.exec(comment)) {
-					var url = match2[0];
-					urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
+				// set the revisions
+				historyCache[topic.id].data = [];
+				for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
+					var revision = topic.revisions.items[revisionIndex].item;
+					historyCache[topic.id].data.push({revision: revision.revision, message: revision.logDetails.message, lastModified: revision.lastModified});
 				}
-			}
 
-			for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
-				var url = topic.sourceUrls_OTM.items[urlsIndex].item;
-				urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
-			}
+				// set the tags
+				tagsCache[topic.id].data = [];
+				for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
+					var tag = topic.tags.items[tagIndex].item;
+					tagsCache[topic.id].data.push({name: tag.name});
+				}
 
-			// set the specs
-			specCache[topic.id].data = [];
-			var specs = {};
-			for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
-				var spec = topic.contentSpecs_OTM.items[specIndex].item;
-				if (!specs[spec.id]) {
-					var specDetails = {id: spec.id, title: "", product: "", version: ""};
-					for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
-						var child = spec.children_OTM.items[specChildrenIndex].item;
-						if (child.title == "Product") {
-							specDetails.product = child.additionalText;
-						} else if (child.title == "Version") {
-							specDetails.version = child.additionalText;
-						} if (child.title == "Title") {
-							specDetails.title = child.additionalText;
-						}
+				// set the urls
+				urlCache[topic.id].data = [];
+
+				var match = null;
+				while (match = COMMENT_RE.exec(topic.xml)) {
+					var comment = match[1];
+
+					var match2 = null;
+					while (match2 = URL_RE.exec(comment)) {
+						var url = match2[0];
+						urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
 					}
-					specs[spec.id] = specDetails;
 				}
-			}
 
-			for (spec in specs) {
-				specCache[topic.id].data.push(specs[spec]);
-			}
+				for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
+					var url = topic.sourceUrls_OTM.items[urlsIndex].item;
+					urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
+				}
 
-			updateCount($("#" + topic.id + "historyIcon")[0], historyCache[topic.id].data.length);
-			updateCount($("#" + topic.id + "urlsIcon")[0], urlCache[topic.id].data.length);
-			updateCount($("#" + topic.id + "tagsIcon")[0], tagsCache[topic.id].data.length);
-			updateCount($("#" + topic.id + "bookIcon")[0], specCache[topic.id].data.length);
+				// set the specs
+				specCache[topic.id].data = [];
+				var specs = {};
+				for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
+					var spec = topic.contentSpecs_OTM.items[specIndex].item;
+					if (!specs[spec.id]) {
+						var specDetails = {id: spec.id, title: "", product: "", version: ""};
+						for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
+							var child = spec.children_OTM.items[specChildrenIndex].item;
+							if (child.title == "Product") {
+								specDetails.product = child.additionalText;
+							} else if (child.title == "Version") {
+								specDetails.version = child.additionalText;
+							} if (child.title == "Title") {
+								specDetails.title = child.additionalText;
+							}
+						}
+						specs[spec.id] = specDetails;
+					}
+				}
+
+				for (spec in specs) {
+					specCache[topic.id].data.push(specs[spec]);
+				}
+
+				updateHistoryIcon(topic.id);
+
+				updateCount($("#" + topic.id + "historyIcon")[0], historyCache[topic.id].data.length);
+				updateCount($("#" + topic.id + "urlsIcon")[0], urlCache[topic.id].data.length);
+				updateCount($("#" + topic.id + "tagsIcon")[0], tagsCache[topic.id].data.length);
+				updateCount($("#" + topic.id + "bookIcon")[0], specCache[topic.id].data.length);
+			}
 		}
 	});
 }
