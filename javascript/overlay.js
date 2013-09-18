@@ -814,7 +814,7 @@ function hideAllMenus() {
 }
 
 function buildMenu() {
-	menuIcon = $('<div onclick="hideAllMenus(); menuIcon.hide(); mainMenu.show();" style="cursor: pointer; position: fixed; top: 8px; left: 8px; width: 64px; height: 64px; background-image: url(/images/pressgang.svg); background-size: contain"></div>')
+	menuIcon = $('<div onclick="hideAllMenus(); menuIcon.hide(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');" style="cursor: pointer; position: fixed; top: 8px; left: 8px; width: 64px; height: 64px; background-image: url(/images/pressgang.svg); background-size: contain"></div>')
 	$(document.body).append(menuIcon);
 
 	mainMenu = $('\
@@ -822,8 +822,8 @@ function buildMenu() {
 			<div class="panel-heading">PressGang</div>\
 				<div class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
-						<li><a href="javascript:hideAllMenus(); menuIcon.show();">Hide Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show();">Topics By Last Edit</a></li>\
+						<li><a href="javascript:hideAllMenus(); menuIcon.show(); localStorage.setItem(\'lastMenu\', \'menuIcon\');">Hide Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show(); localStorage.setItem(\'lastMenu\', \'topicsByLastEdit\');">Topics By Last Edit</a></li>\
 						<li><a href="#">Topics Added Since</a></li>\
 						<li><a href="#">Topics Removed Since</a></li>\
 					</ul>\
@@ -837,12 +837,12 @@ function buildMenu() {
 			<div class="panel-heading">Topics By Last Edit</div>\
 				<div class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
-						<li><a href="javascript:hideAllMenus(); mainMenu.show();">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsEditedIn1Day.show();"><img src="/images/history-blue.png" style="float: left; margin-right: 3px;">1 Day</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsEditedIn1Week.show();"><img src="/images/history-green.png" style="float: left; margin-right: 3px;">1 Week</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsEditedIn1Month.show();"><img src="/images/history-yellow.png" style="float: left; margin-right: 3px;">1 Month</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsEditedIn1Year.show()"><img src="/images/history-orange.png" style="float: left; margin-right: 3px;">1 Year</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsEditedInOlderThanYear.show();"><img src="/images/history-red.png" style="float: left; margin-right: 3px;">Older than a year</a></li>\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsEditedIn1Day.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Day\');"><img src="/images/history-blue.png" style="float: left; margin-right: 3px;">1 Day</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsEditedIn1Week.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Week\');"><img src="/images/history-green.png" style="float: left; margin-right: 3px;">1 Week</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsEditedIn1Month.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Month\');"><img src="/images/history-yellow.png" style="float: left; margin-right: 3px;">1 Month</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsEditedIn1Year.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Year\');"><img src="/images/history-orange.png" style="float: left; margin-right: 3px;">1 Year</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsEditedInOlderThanYear.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedInOlderThanYear\');"><img src="/images/history-red.png" style="float: left; margin-right: 3px;">Older than a year</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -854,8 +854,8 @@ function buildMenu() {
 			<div class="panel-heading">Topics Edited In 1 Day</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedIn1DayItems" class="nav nav-pills nav-stacked">\
-						<li><a href="javascript:hideAllMenus(); mainMenu.show();">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show();">&lt;- Topics By Last Edit</a></li>\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show(); localStorage.setItem(\'lastMenu\', \'topicsByLastEdit\');">&lt;- Topics By Last Edit</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -867,8 +867,8 @@ function buildMenu() {
 			<div class="panel-heading">Topics Edited In 1 Week</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedIn1WeekItems" class="nav nav-pills nav-stacked">\
-						<li><a href="javascript:hideAllMenus(); mainMenu.show();">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show();">&lt;- Topics By Last Edit</a></li>\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show(); localStorage.setItem(\'lastMenu\', \'topicsByLastEdit\');">&lt;- Topics By Last Edit</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -880,8 +880,8 @@ function buildMenu() {
 			<div class="panel-heading">Topics Edited In 1 Month</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedIn1MonthItems" class="nav nav-pills nav-stacked">\
-						<li><a href="javascript:hideAllMenus(); mainMenu.show();">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show();">&lt;- Topics By Last Edit</a></li>\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show(); localStorage.setItem(\'lastMenu\', \'topicsByLastEdit\');">&lt;- Topics By Last Edit</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -893,8 +893,8 @@ function buildMenu() {
 			<div class="panel-heading">Topics Edited In 1 Year</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedIn1YearItems" class="nav nav-pills nav-stacked">\
-						<li><a href="javascript:hideAllMenus(); mainMenu.show();">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show();">&lt;- Topics By Last Edit</a></li>\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show(); localStorage.setItem(\'lastMenu\', \'topicsByLastEdit\');">&lt;- Topics By Last Edit</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -907,15 +907,44 @@ function buildMenu() {
 			<div class="panel-heading">Topics Edited Prior To 1 Year</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedInOlderThanYearItems" class="nav nav-pills nav-stacked">\
-						<li><a href="javascript:hideAllMenus(); mainMenu.show();">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show();">&lt;- Topics By Last Edit</a></li>\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show(); localStorage.setItem(\'lastMenu\', \'topicsByLastEdit\');">&lt;- Topics By Last Edit</a></li>\
 					</ul>\
 				</div>\
 			</div>\
 		</div>')
 	$(document.body).append(topicsEditedInOlderThanYear);
 
-
 	hideAllMenus();
-	menuIcon.show();
+
+
+	menuIcon.hide();
+	mainMenu.hide();
+	topicsByLastEdit.hide();
+	topicsEditedIn1Day.hide();
+	topicsEditedIn1Week.hide();
+	topicsEditedIn1Month.hide();
+	topicsEditedIn1Year.hide();
+	topicsEditedInOlderThanYear.hide();
+
+	var lastMenu = localStorage.getItem('lastMenu');
+	if (lastMenu == 'mainMenu') {
+		mainMenu.show();
+	} else if (lastMenu == 'topicsByLastEdit') {
+		topicsByLastEdit.show();
+	} else if (lastMenu == 'topicsEditedIn1Day') {
+		topicsEditedIn1Day.show();
+	} else if (lastMenu == 'topicsEditedIn1Week') {
+		topicsEditedIn1Week.show();
+	} else if (lastMenu == 'topicsEditedIn1Month') {
+		topicsEditedIn1Month.show();
+	} else if (lastMenu == 'topicsEditedIn1Year') {
+		topicsEditedIn1Year.show();
+	} else if (lastMenu == 'topicsEditedInOlderThanYear') {
+		topicsEditedInOlderThanYear.show();
+	} else {
+		menuIcon.show();
+	}
+
+
 }
