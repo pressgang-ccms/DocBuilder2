@@ -684,7 +684,7 @@ function doSecondPassQuery(topicIdsString) {
 			urlCache[topic.id].data = [];
 
 			var match = null;
-			while (match = COMMENT_RE.exec(data.xml)) {
+			while (match = COMMENT_RE.exec(topic.xml)) {
 				var comment = match[1];
 
 				var match2 = null;
