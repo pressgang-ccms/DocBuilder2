@@ -109,6 +109,9 @@ var secondPassTimeout = false;
 var windowLoaded = false;
 var secondPassCalled = false;
 
+var secondPassRESTCalls = 0;
+var secondPassRESTCallsCompleted = 0;
+
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
  */
@@ -699,6 +702,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 			topicIdsString += topicIds[index];
 
 			if (index != 0 && index % 15 == 0) {
+				++secondPassRESTCalls;
 				setTimeout(function(topicIdsString) {
 					return function() {
 						doSecondPassQuery(topicIdsString);
@@ -710,6 +714,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 		}
 
 		if (topicIdsString.length != 0) {
+			++secondPassRESTCalls;
 			setTimeout(function(topicIdsString) {
 				return function() {
 					doSecondPassQuery(topicIdsString);
@@ -721,6 +726,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 
 function doSecondPassQuery(topicIdsString) {
 	$.getJSON(BACKGROUND_QUERY_PREFIX + topicIdsString + BACKGROUND_QUERY_POSTFIX, function (data, textStatus, jqXHR) {
+		++secondPassRESTCallsCompleted;
 		if (data && data.items) {
 			for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
 				var topic = data.items[topicIndex].item;
@@ -799,6 +805,12 @@ function doSecondPassQuery(topicIdsString) {
 		} else {
 			console.log("Bad request");
 		}
+
+		// Call some functions when all the data is availble.
+		if (secondPassRESTCallsCompleted == secondPassRESTCalls) {
+			console.log("Second pass completed");
+			buildTopicEditedInChart();
+		}
 	});
 }
 
@@ -811,6 +823,42 @@ function hideAllMenus() {
 	topicsEditedIn1Month.hide();
 	topicsEditedIn1Year.hide();
 	topicsEditedInOlderThanYear.hide();
+}
+
+function buildTopicEditedInChart() {
+
+	var day = 0,
+		week = 0,
+		month = 0,
+		year = 0,
+		older = 0,
+		count = topicIds.length;
+
+	for (var index = 0; index < count; ++index) {
+		var topic = historyCache[topicIds[index]].data[0];
+		var date = moment(topic.lastModified);
+
+		if (date.isAfter(moment().subtract('day', 1))) {
+			++day;
+		} else if (date.isAfter(moment().subtract('week', 1))) {
+			++week;
+		} else if (date.isAfter(moment().subtract('month', 1))) {
+			++month;
+		} else if (date.isAfter(moment().subtract('year', 1))) {
+			++year;
+		} else {
+			++older;
+		}
+	}
+
+	var chart = $('<div id="topicEditedInChart"></div>');
+	chart.appendTo($("#topicsEditedInPanel"));
+
+	var values = [day / count * 100.0,  week / count * 100.0, month / count * 100.0, year / count * 100.0, older / count * 100.0];
+	var labels = ["day", "week", "month", "year", "older"];
+	var colors = [Raphael.rgb(0, 254, 254), Raphael.rgb(0, 254, 0), Raphael.rgb(254, 254, 0), Raphael.rgb(254, 127, 0), Raphael.rgb(254, 0, 0)];
+
+	Raphael("topicEditedInChart", 200, 200).pieChart(100, 100, 50, values, labels, colors, 10, 10, 20, "#fff");
 }
 
 function buildMenu() {
@@ -835,7 +883,7 @@ function buildMenu() {
 	topicsByLastEdit = $('\
 		<div class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">Topics By Last Edit</div>\
-				<div class="panel-body ">\
+				<div id="topicsEditedInPanel" class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
 						<li><a href="javascript:hideAllMenus(); topicsEditedIn1Day.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Day\');"><img src="/images/history-blue.png" style="float: left; margin-right: 3px;">1 Day</a></li>\
@@ -916,16 +964,6 @@ function buildMenu() {
 	$(document.body).append(topicsEditedInOlderThanYear);
 
 	hideAllMenus();
-
-
-	menuIcon.hide();
-	mainMenu.hide();
-	topicsByLastEdit.hide();
-	topicsEditedIn1Day.hide();
-	topicsEditedIn1Week.hide();
-	topicsEditedIn1Month.hide();
-	topicsEditedIn1Year.hide();
-	topicsEditedInOlderThanYear.hide();
 
 	var lastMenu = localStorage.getItem('lastMenu');
 	if (lastMenu == 'mainMenu') {
