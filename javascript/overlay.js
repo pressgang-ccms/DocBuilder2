@@ -777,13 +777,19 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 
 					var date = moment(revision.lastModified);
 
-					if (date.isAfter(moment().subtract('day', 1)) && (!specRevisionCache.day || revision.revision > specRevisionCache.day)) {
+					if (!specRevisionCache.day || (date.isAfter(moment().subtract('day', 1)) && revision.revision < specRevisionCache.day)) {
 						specRevisionCache.day = revision.revision;
-					} else if (date.isAfter(moment().subtract('week', 1)) && (!specRevisionCache.week || revision.revision > specRevisionCache.week)) {
+					}
+
+					if (!specRevisionCache.week || (date.isAfter(moment().subtract('week', 1)) && revision.revision < specRevisionCache.week)) {
 						specRevisionCache.week = revision.revision;
-					} else if (date.isAfter(moment().subtract('month', 1)) && (!specRevisionCache.month || revision.revision > specRevisionCache.month)) {
+					}
+
+					if (!specRevisionCache.month || (date.isAfter(moment().subtract('month', 1)) && revision.revision < specRevisionCache.month)) {
 						specRevisionCache.month = revision.revision;
-					} else if (date.isAfter(moment().subtract('year', 1)) && (!specRevisionCache.year || revision.revision > specRevisionCache.year)) {
+					}
+
+					if (!specRevisionCache.year || (date.isAfter(moment().subtract('year', 1)) && revision.revision < specRevisionCache.year)) {
 						specRevisionCache.year = revision.revision;
 					}
 				}
@@ -791,13 +797,13 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 				// a callback to call when all spec topics are found
 				var compareRevisions = function() {
 					for (var revisionIndex = 0, revisionCount = specRevisionCache.revisions.length; revisionIndex < revisionCount; ++revisionIndex) {
-						var revision = specRevisionCache[revisions[revisionIndex]].topics;
+						var revision = specRevisionCache[specRevisionCache.revisions[revisionIndex]].topics;
 						var added = [];
 						var removed = [];
 
 						for (var revTopicIndex = 0, revTopicCount = revision.length; revTopicIndex < revTopicCount; ++revTopicIndex) {
 							var revTopicID = revision[revTopicIndex];
-							boolean found = false;
+							var found = false;
 							for (var currentTopicIndex = 0, currentTopicCount = specRevisionCache.current.length; currentTopicIndex < currentTopicCount; ++currentTopicIndex) {
 								var currentTopicID = specRevisionCache.current[currentTopicIndex];
 								if (currentTopicID == revTopicID) {
@@ -813,7 +819,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 
 						for (var currentTopicIndex = 0, currentTopicCount = specRevisionCache.current.length; currentTopicIndex < currentTopicCount; ++currentTopicIndex) {
 							var currentTopicID = specRevisionCache.current[currentTopicIndex];
-							boolean found = false;
+							var found = false;
 							for (var revTopicIndex = 0, revTopicCount = revision.length; revTopicIndex < revTopicCount; ++revTopicIndex) {
 								var revTopicID = revision[revTopicIndex];
 								if (currentTopicID == revTopicID) {
@@ -907,17 +913,23 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 
 function getTopicsFromSpecAndRevision(specId, revision, callback) {
 	var spec = SERVER + "/contentspec/get/json/" + specId + "/r/" + revision + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22children_OTM%22%7D%7D%5D%7D";
+	var topics = {};
 
 	$.getJSON(spec, function(data) {
 		var callsCompleted = 0;
-		for (var index = 0, count = data.children_OTM.items.length; index < count; ++index) {
-			var child = data.children_OTM.items[index].item;
-			expandSpecChildren(topics, child.id, child.revision, function(){
-				++callsCompleted;
-				if (callsCompleted == count) {
-					callback(topics);
-				}
-			});
+		var count = data.children_OTM.items.length;
+		if (count == 0) {
+			callback(topics)
+		} else {
+			for (var index = 0, count = data.children_OTM.items.length; index < count; ++index) {
+				var child = data.children_OTM.items[index].item;
+				expandSpecChildren(topics, child.id, child.revision, function(){
+					++callsCompleted;
+					if (callsCompleted == count) {
+						callback(topics);
+					}
+				});
+			}
 		}
 	});
 }
@@ -928,14 +940,19 @@ function getTopicsFromSpec(specId, callback) {
 
 	$.getJSON(specRevision, function(data) {
 		var callsCompleted = 0;
-		for (var index = 0, count = data.children_OTM.items.length; index < count; ++index) {
-			var child = data.children_OTM.items[index].item;
-			expandSpecChildren(topics, child.id, child.revision, function(){
-				++callsCompleted;
-				if (callsCompleted == count) {
-					callback(topics);
-				}
-			});
+		var count = data.children_OTM.items.length;
+		if (count = 0) {
+			callback(topics);
+		} else {
+			for (var index = 0, count = data.children_OTM.items.length; index < count; ++index) {
+				var child = data.children_OTM.items[index].item;
+				expandSpecChildren(topics, child.id, child.revision, function(){
+					++callsCompleted;
+					if (callsCompleted == count) {
+						callback(topics);
+					}
+				});
+			}
 		}
 	});
 }
@@ -943,7 +960,7 @@ function getTopicsFromSpec(specId, callback) {
 function expandSpecChildren(topics, nodeId, revision, callback) {
 	var children = SERVER + "/contentspecnode/get/json/" + nodeId + "/r/" + revision + "/?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22children_OTM%22%7D%7D%5D%7D";
 
-	$.getJSON(specRevision, function(data) {
+	$.getJSON(children, function(data) {
 		var childCallsCompleted = 0;
 		var childrenToExpand = [];
 
@@ -962,13 +979,17 @@ function expandSpecChildren(topics, nodeId, revision, callback) {
 		}
 
 		// expand the children
-		for (var index = 0, count = childrenToExpand.length; index < count; ++index) {
-			expandSpecChildren(topics, childrenToExpand[index].id, childrenToExpand[index].revision, function() {
-				++childCallsCompleted;
-				if (childCallsCompleted == childrenToExpand.length) {
-					callback();
-				}
-			});
+		if (childrenToExpand.length == 0) {
+			callback();
+		} else {
+			for (var index = 0, count = childrenToExpand.length; index < count; ++index) {
+				expandSpecChildren(topics, childrenToExpand[index].id, childrenToExpand[index].revision, function() {
+					++childCallsCompleted;
+					if (childCallsCompleted == childrenToExpand.length) {
+						callback();
+					}
+				});
+			}
 		}
 	});
 }
@@ -1072,6 +1093,8 @@ function hideAllMenus() {
 	topicsEditedIn1Month.hide();
 	topicsEditedIn1Year.hide();
 	topicsEditedInOlderThanYear.hide();
+	topicsAddedSince.hide();
+	topicsRemovedSince.hide();
 }
 
 function buildTopicEditedInChart() {
@@ -1143,13 +1166,45 @@ function buildMenu() {
 		            <ul class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); hideMenu(); menuIcon.show(); localStorage.setItem(\'lastMenu\', \'menuIcon\');">Hide Menu</a></li>\
 						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show(); localStorage.setItem(\'lastMenu\', \'topicsByLastEdit\');">Topics By Last Edit</a></li>\
-						<li><a href="#">Topics Added Since</a></li>\
-						<li><a href="#">Topics Removed Since</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince\');">Topics Added Since</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsRemovedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">Topics Removed Since</a></li>\
 					</ul>\
 				</div>\
 			</div>\
 		</div>')
 	$(document.body).append(mainMenu);
+
+	topicsAddedSince = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Topics Added Since</div>\
+				<div id="topicsEditedInPanel" class="panel-body ">\
+		            <ul class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li ><a id="topicsAddedIn1Day" href="javascript:hideAllMenus(); topicsEditedIn1Day.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Day\');"><div style="background-image: url(/images/history-blue.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Day</a></li>\
+						<li ><a id="topicsAddedIn1Week" href="javascript:hideAllMenus(); topicsEditedIn1Week.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Week\');"><div style="background-image: url(/images/history-green.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Week</a></li>\
+						<li ><a id="topicsAddedIn1Month" href="javascript:hideAllMenus(); topicsEditedIn1Month.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Month\');"><div style="background-image: url(/images/history-yellow.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Month</a></li>\
+						<li ><a id="topicsAddedIn1Year" href="javascript:hideAllMenus(); topicsEditedIn1Year.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Year\');"><div style="background-image: url(/images/history-orange.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Year</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+	$(document.body).append(topicsAddedSince);
+
+	topicsRemovedSince = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Topics topicsRemovedSince Since</div>\
+				<div id="topicsEditedInPanel" class="panel-body ">\
+		            <ul class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li ><a id="topicsRemovedIn1Day" href="javascript:hideAllMenus(); topicsEditedIn1Day.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Day\');"><div style="background-image: url(/images/history-blue.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Day</a></li>\
+						<li ><a id="topicsRemovedIn1Week" href="javascript:hideAllMenus(); topicsEditedIn1Week.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Week\');"><div style="background-image: url(/images/history-green.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Week</a></li>\
+						<li ><a id="topicsRemovedIn1Month" href="javascript:hideAllMenus(); topicsEditedIn1Month.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Month\');"><div style="background-image: url(/images/history-yellow.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Month</a></li>\
+						<li ><a id="topicsRemovedIn1Year" href="javascript:hideAllMenus(); topicsEditedIn1Year.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Year\');"><div style="background-image: url(/images/history-orange.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Year</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+	$(document.body).append(topicsRemovedSince);
 
 	topicsByLastEdit = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1258,10 +1313,18 @@ function buildMenu() {
 	} else if (lastMenu == 'topicsEditedInOlderThanYear') {
 		topicsEditedInOlderThanYear.show();
 		showMenu();
+	} else if (lastMenu == "topicsAddedSince") {
+		topicsAddedSince.show();
+		showMenu();
+	} else if (lastMenu == "topicsRemovedSince") {
+		topicsRemovedSince.show();
+		showMenu();
 	} else {
 		menuIcon.show();
 		hideMenu();
 	}
+
+
 
 
 }
