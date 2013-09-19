@@ -838,6 +838,21 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 					}
 
 					// add the results to the menu
+					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.day].added.length; topicIndex < topicCount; ++topicIndex) {
+						var topic = specRevisionCache[specRevisionCache.day].added[topicIndex];
+						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1DayItems"));
+					}
+
+					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.week].added.length; topicIndex < topicCount; ++topicIndex) {
+						var topic = specRevisionCache[specRevisionCache.week].added[topicIndex];
+						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1WeekItems"));
+					}
+
+					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.month].added.length; topicIndex < topicCount; ++topicIndex) {
+						var topic = specRevisionCache[specRevisionCache.month].added[topicIndex];
+						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1MonthItems"));
+					}
+
 					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.year].added.length; topicIndex < topicCount; ++topicIndex) {
 						var topic = specRevisionCache[specRevisionCache.year].added[topicIndex];
 						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1YearItems"));
@@ -1102,6 +1117,9 @@ function hideAllMenus() {
 	topicsEditedInOlderThanYear.hide();
 	topicsAddedSince.hide();
 	topicsRemovedSince.hide();
+	topicsAddedSince1Day.hide();
+	topicsAddedSince1Wekk.hide();
+	topicsAddedSince1Month.hide();
 	topicsAddedSince1Year.hide();
 }
 
@@ -1197,6 +1215,45 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsAddedSince);
+
+	topicsAddedSince1Day = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">1 Year</div>\
+				<div id="topicsEditedInPanel" class="panel-body ">\
+		            <ul id="topicsAddedSince1DayItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince\');">&lt;- Topics Added Since</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+	$(document.body).append(topicsAddedSince1Day);
+
+	topicsAddedSince1Week = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">1 Year</div>\
+				<div id="topicsEditedInPanel" class="panel-body ">\
+		            <ul id="topicsAddedSince1WeekItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince\');">&lt;- Topics Added Since</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+	$(document.body).append(topicsAddedSince1Week);
+
+	topicsAddedSince1Month = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">1 Year</div>\
+				<div id="topicsEditedInPanel" class="panel-body ">\
+		            <ul id="topicsAddedSince1MonthItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince\');">&lt;- Topics Added Since</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+	$(document.body).append(topicsAddedSince1Month);
 
 	topicsAddedSince1Year = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1339,6 +1396,15 @@ function buildMenu() {
 		showMenu();
 	} else if (lastMenu == "topicsRemovedSince") {
 		topicsRemovedSince.show();
+		showMenu();
+	} else if (lastMenu == "topicsAddedSince1Day") {
+		topicsAddedSince1Year.show();
+		showMenu();
+	} else if (lastMenu == "topicsAddedSince1Week") {
+		topicsAddedSince1Year.show();
+		showMenu();
+	} else if (lastMenu == "topicsAddedSince1Month") {
+		topicsAddedSince1Year.show();
 		showMenu();
 	} else if (lastMenu == "topicsAddedSince1Year") {
 		topicsAddedSince1Year.show();
