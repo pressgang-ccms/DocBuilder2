@@ -858,7 +858,7 @@ function buildTopicEditedInChart() {
 	var labels = ["day", "week", "month", "year", "older"];
 	var colors = [Raphael.rgb(0, 254, 254), Raphael.rgb(0, 254, 0), Raphael.rgb(254, 254, 0), Raphael.rgb(254, 127, 0), Raphael.rgb(254, 0, 0)];
 
-	Raphael("topicEditedInChart", 200, 200).pieChart(100, 100, 50, values, labels, colors, 10, 10, 20, "#fff");
+	Raphael("topicEditedInChart", 250, 200).pieChart(100, 100, 50, values, labels, colors, 10, 10, 16, "#fff");
 }
 
 function buildMenu() {
