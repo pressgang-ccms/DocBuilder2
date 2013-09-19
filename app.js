@@ -345,9 +345,9 @@ function processSpecs(updatedSpecs) {
                                 <script type='application/javascript' src='/javascript/jquery-2.0.3.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/moment.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/bootstrap.min.js'></script>\n\
+                                <script type='application/javascript' src='/javascript/raphael-min.js'></script>\n\
+                                <script type='application/javascript' src='/javascript/pie.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/overlay.js'></script>\n\
-                                <script type='application/javascript' src='/javascript/raphael-min.js'></script>\
-                                <script type='application/javascript' src='/javascript/pie.js'></script>\
                                 <link href='/css/bootstrap.min.css' rel='stylesheet'>\n");
                         fs.writeFileSync(APACHE_HTML_DIR + "/" + id + "/index.html", contents);
                     } catch (ex) {

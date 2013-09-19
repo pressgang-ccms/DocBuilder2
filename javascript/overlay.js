@@ -90,6 +90,8 @@ var tagsCache = {};
 var specCache = {};
 /**
  * Maintains the topic history cache.
+ * keys are topic ids with values being revisions for the topic
+ * summary key contains counts of last revisions
  * @type {{}}
  */
 var historyCache = {};
@@ -827,34 +829,48 @@ function hideAllMenus() {
 
 function buildTopicEditedInChart() {
 
-	var day = 0,
-		week = 0,
-		month = 0,
-		year = 0,
-		older = 0,
-		count = topicIds.length;
+	historyCache.summary = {};
+	historyCache.summary.day = 0;
+	historyCache.summary.week = 0;
+	historyCache.summary.month = 0;
+	historyCache.summary.year = 0;
+	historyCache.summary.older = 0;
+	historyCache.summary.count = topicIds.length;
 
-	for (var index = 0; index < count; ++index) {
+	for (var index = 0; index < historyCache.summary.count; ++index) {
 		var topic = historyCache[topicIds[index]].data[0];
 		var date = moment(topic.lastModified);
 
 		if (date.isAfter(moment().subtract('day', 1))) {
-			++day;
+			++historyCache.summary.day;
 		} else if (date.isAfter(moment().subtract('week', 1))) {
-			++week;
+			++historyCache.summary.week;
 		} else if (date.isAfter(moment().subtract('month', 1))) {
-			++month;
+			++historyCache.summary.month;
 		} else if (date.isAfter(moment().subtract('year', 1))) {
-			++year;
+			++historyCache.summary.year;
 		} else {
-			++older;
+			++historyCache.summary.older;
 		}
 	}
+
+	$('#topicsEditedIn1Day').append($('<span class="badge pull-right">' + historyCache.summary.day + '</span>'));
+	$('#topicsEditedIn1Week').append($('<span class="badge pull-right">' + historyCache.summary.week + '</span>'));
+	$('#topicsEditedIn1Month').append($('<span class="badge pull-right">' + historyCache.summary.month + '</span>'));
+	$('#topicsEditedIn1Year').append($('<span class="badge pull-right">' + historyCache.summary.year + '</span>'));
+	$('#topicsEditedInOlderThanYear').append($('<span class="badge pull-right">' + historyCache.summary.older + '</span>'));
+
 
 	var chart = $('<div id="topicEditedInChart"></div>');
 	chart.appendTo($("#topicsEditedInPanel"));
 
-	var values = [day / count * 100.0,  week / count * 100.0, month / count * 100.0, year / count * 100.0, older / count * 100.0];
+	var values = [
+		historyCache.summary.day / historyCache.summary.count * 100.0,
+		historyCache.summary.week / historyCache.summary.count * 100.0,
+		historyCache.summary.month / historyCache.summary.count * 100.0,
+		historyCache.summary.year / historyCache.summary.count * 100.0,
+		historyCache.summary.older / historyCache.summary.count * 100.0];
+
 	var labels = ["day", "week", "month", "year", "older"];
 	var colors = [Raphael.rgb(0, 254, 254), Raphael.rgb(0, 254, 0), Raphael.rgb(254, 254, 0), Raphael.rgb(254, 127, 0), Raphael.rgb(254, 0, 0)];
 
@@ -894,11 +910,11 @@ function buildMenu() {
 				<div id="topicsEditedInPanel" class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsEditedIn1Day.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Day\');"><img src="/images/history-blue.png" style="float: left; margin-right: 3px;">1 Day</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsEditedIn1Week.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Week\');"><img src="/images/history-green.png" style="float: left; margin-right: 3px;">1 Week</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsEditedIn1Month.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Month\');"><img src="/images/history-yellow.png" style="float: left; margin-right: 3px;">1 Month</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsEditedIn1Year.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Year\');"><img src="/images/history-orange.png" style="float: left; margin-right: 3px;">1 Year</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsEditedInOlderThanYear.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedInOlderThanYear\');"><img src="/images/history-red.png" style="float: left; margin-right: 3px;">Older than a year</a></li>\
+						<li ><a id="topicsEditedIn1Day" href="javascript:hideAllMenus(); topicsEditedIn1Day.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Day\');"><div style="background-image: url(/images/history-blue.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Day</a></li>\
+						<li ><a id="topicsEditedIn1Week" href="javascript:hideAllMenus(); topicsEditedIn1Week.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Week\');"><div style="background-image: url(/images/history-green.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Week</a></li>\
+						<li ><a id="topicsEditedIn1Month" href="javascript:hideAllMenus(); topicsEditedIn1Month.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Month\');"><div style="background-image: url(/images/history-yellow.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Month</a></li>\
+						<li ><a id="topicsEditedIn1Year" href="javascript:hideAllMenus(); topicsEditedIn1Year.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Year\');"><div style="background-image: url(/images/history-orange.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Year</a></li>\
+						<li ><a id="topicsEditedInOlderThanYear" href="javascript:hideAllMenus(); topicsEditedInOlderThanYear.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedInOlderThanYear\');"><div style="background-image: url(/images/history-red.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>Older than a year</a></li>\
 					</ul>\
 				</div>\
 			</div>\
