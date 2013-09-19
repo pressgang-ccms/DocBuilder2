@@ -804,7 +804,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 						for (var revTopicIndex = 0, revTopicCount = revision.length; revTopicIndex < revTopicCount; ++revTopicIndex) {
 							var revTopicID = revision[revTopicIndex];
 							var found = false;
-							for (var currentTopicIndex = 0, currentTopicCount = specRevisionCache.current.length; currentTopicIndex < currentTopicCount; ++currentTopicIndex) {
+							for (var currentTopicIndex = 0, currentTopicCount = specRevisionCache.current.topics.length; currentTopicIndex < currentTopicCount; ++currentTopicIndex) {
 								var currentTopicID = specRevisionCache.current[currentTopicIndex];
 								if (currentTopicID == revTopicID) {
 									found = true;
@@ -817,7 +817,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 							}
 						}
 
-						for (var currentTopicIndex = 0, currentTopicCount = specRevisionCache.current.length; currentTopicIndex < currentTopicCount; ++currentTopicIndex) {
+						for (var currentTopicIndex = 0, currentTopicCount = specRevisionCache.current.topics.length; currentTopicIndex < currentTopicCount; ++currentTopicIndex) {
 							var currentTopicID = specRevisionCache.current[currentTopicIndex];
 							var found = false;
 							for (var revTopicIndex = 0, revTopicCount = revision.length; revTopicIndex < revTopicCount; ++revTopicIndex) {
@@ -833,8 +833,8 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 							}
 						}
 
-						specRevisionCache[revisions[revisionIndex]].added = added;
-						specRevisionCache[revisions[revisionIndex]].removed = removed;
+						specRevisionCache[specRevisionCache.revisions[revisionIndex]].added = added;
+						specRevisionCache[specRevisionCache.revisions[revisionIndex]].removed = removed;
 					}
 
 					// add the results to the menu
@@ -967,7 +967,7 @@ function expandSpecChildren(topics, nodeId, revision, callback) {
 		for (var index = 0, count = data.children_OTM.items.length; index < count; ++index) {
 			var child = data.children_OTM.items[index].item;
 
-			if (child.nodeType = "TOPIC") {
+			if (child.nodeType = "TOPIC" && child.entityId != null) {
 				if (!topics[child.entityId]) {
 					topics[child.entityId] = 1;
 				} else {
