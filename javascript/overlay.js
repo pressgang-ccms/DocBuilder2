@@ -106,12 +106,35 @@ var topicIds = [];
  */
 var topicSections = {};
 
+/**
+ * true when secondPass() has been called after all the topics have been found
+ * @type {boolean}
+ */
 var topicsFound = false;
+/**
+ * true when secondPass() has been called after a predetermined timeout
+ * @type {boolean}
+ */
 var secondPassTimeout = false;
+/**
+ * true when secondPass() has been called after the window has been loaded
+ * @type {boolean}
+ */
 var windowLoaded = false;
+/**
+ * true when secondPass() has been called and has actually started processing
+ * @type {boolean}
+ */
 var secondPassCalled = false;
-
+/**
+ * Keeps a track of how many second pass rest calls are to be made
+ * @type {number}
+ */
 var secondPassRESTCalls = 0;
+/**
+ * Keeps a track of how many second pass rest calls have been made
+ * @type {number}
+ */
 var secondPassRESTCallsCompleted = 0;
 
 /*
@@ -694,6 +717,9 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 		console.log("Starting second pass.");
 
 		secondPassCalled = true;
+
+		// fire off rest queries requesting information on topics in batches
+		var topicBacthSize = 15;
 		var topicIdsString = "";
 		var delay = SECOND_PASS_REST_CALL_DELAY;
 		for (var index = 0, count = topicIds.length; index < count; ++index) {
@@ -703,7 +729,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 
 			topicIdsString += topicIds[index];
 
-			if (index != 0 && index % 15 == 0) {
+			if (index != 0 && index % topicBacthSize == 0) {
 				++secondPassRESTCalls;
 				setTimeout(function(topicIdsString) {
 					return function() {
@@ -722,6 +748,27 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 					doSecondPassQuery(topicIdsString);
 				}
 			}(topicIdsString), delay);
+		}
+
+
+		// get the spec id
+		var urlComonents = window.location.href.split("/");
+		if (urlComonents.length >= 2) {
+			var specId = urlComonents[urlComonents.length - 2];
+
+			// get the revisions of the spec itself
+
+			// get content spec revisions
+			var revisionsURL = SERVER + "/contentspec/get/json/" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%7D%7D%5D%7D";
+
+			$.getJSON(revisionsURL, function(data){
+				// get the revisions that existed 1 day, week, month, year ago
+				// get topic for current revision
+				// get topics for the previous revisions
+				// get added and removed topics
+			});
+
+
 		}
 	}
 }
