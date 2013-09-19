@@ -105,6 +105,15 @@ var topicIds = [];
  * @type {{}}
  */
 var topicSections = {};
+/**
+ * A mapping of spec revisions to the topics contained in the revision
+ * day key maps revision number from one day ago
+ * week key maps revision number from one week ago
+ * month key maps revision number from one month ago
+ * year key maps revision number from one year ago
+ * @type {{}}
+ */
+var specRevisionCache = {};
 
 /**
  * true when secondPass() has been called after all the topics have been found
@@ -701,6 +710,7 @@ function createPopover(title, topicId) {
     popover.popoverContent = popoverContent;
 
     return popover;
+
 }
 
 function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
@@ -750,7 +760,6 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 			}(topicIdsString), delay);
 		}
 
-
 		// get the spec id
 		var urlComonents = window.location.href.split("/");
 		if (urlComonents.length >= 2) {
@@ -761,16 +770,207 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 			// get content spec revisions
 			var revisionsURL = SERVER + "/contentspec/get/json/" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%7D%7D%5D%7D";
 
-			$.getJSON(revisionsURL, function(data){
+			$.getJSON(revisionsURL, function(data) {
 				// get the revisions that existed 1 day, week, month, year ago
+				for (var index = 0, count = data.revisions.items.length; index < count; ++index) {
+					var revision = data.revisions.items[index].item;
+
+					var date = moment(revision.lastModified);
+
+					if (date.isAfter(moment().subtract('day', 1)) && (!specRevisionCache.day || revision.revision > specRevisionCache.day)) {
+						specRevisionCache.day = revision.revision;
+					} else if (date.isAfter(moment().subtract('week', 1)) && (!specRevisionCache.week || revision.revision > specRevisionCache.week)) {
+						specRevisionCache.week = revision.revision;
+					} else if (date.isAfter(moment().subtract('month', 1)) && (!specRevisionCache.month || revision.revision > specRevisionCache.month)) {
+						specRevisionCache.month = revision.revision;
+					} else if (date.isAfter(moment().subtract('year', 1)) && (!specRevisionCache.year || revision.revision > specRevisionCache.year)) {
+						specRevisionCache.year = revision.revision;
+					}
+				}
+
+				// a callback to call when all spec topics are found
+				var compareRevisions = function() {
+					for (var revisionIndex = 0, revisionCount = specRevisionCache.revisions.length; revisionIndex < revisionCount; ++revisionIndex) {
+						var revision = specRevisionCache[revisions[revisionIndex]].topics;
+						var added = [];
+						var removed = [];
+
+						for (var revTopicIndex = 0, revTopicCount = revision.length; revTopicIndex < revTopicCount; ++revTopicIndex) {
+							var revTopicID = revision[revTopicIndex];
+							boolean found = false;
+							for (var currentTopicIndex = 0, currentTopicCount = specRevisionCache.current.length; currentTopicIndex < currentTopicCount; ++currentTopicIndex) {
+								var currentTopicID = specRevisionCache.current[currentTopicIndex];
+								if (currentTopicID == revTopicID) {
+									found = true;
+									break;
+								}
+							}
+
+							if (!found) {
+								added.push(revTopicID);
+							}
+						}
+
+						for (var currentTopicIndex = 0, currentTopicCount = specRevisionCache.current.length; currentTopicIndex < currentTopicCount; ++currentTopicIndex) {
+							var currentTopicID = specRevisionCache.current[currentTopicIndex];
+							boolean found = false;
+							for (var revTopicIndex = 0, revTopicCount = revision.length; revTopicIndex < revTopicCount; ++revTopicIndex) {
+								var revTopicID = revision[revTopicIndex];
+								if (currentTopicID == revTopicID) {
+									found = true;
+									break;
+								}
+							}
+
+							if (!found) {
+								removed.push(currentTopicID);
+							}
+						}
+
+						specRevisionCache[revisions[revisionIndex]].added = added;
+						specRevisionCache[revisions[revisionIndex]].removed = removed;
+					}
+
+					// add the results to the menu
+				}
+
+				// keep a track of how many async calls are to be made and have been made
+				var callsToMake = 2;
+				var callsMade = 0;
+				if (specRevisionCache.week != specRevisionCache.day) {
+					++callsToMake;
+				}
+				if (specRevisionCache.month != specRevisionCache.week) {
+					++callsToMake;
+				}
+				if (specRevisionCache.year != specRevisionCache.month) {
+					++callsToMake;
+				}
+
 				// get topic for current revision
+				getTopicsFromSpec(specId, function(data){
+					specRevisionCache.current = {topics: data};
+					++callsMade;
+					if (callsMade == callsToMake) {
+						compareRevisions();
+					}
+				});
+
 				// get topics for the previous revisions
+				specRevisionCache.revisions = [specRevisionCache.day];
+				getTopicsFromSpecAndRevision(specId, specRevisionCache.day, function(data) {
+					specRevisionCache[specRevisionCache.day] = {topics: data};
+					++callsMade;
+					if (callsMade == callsToMake) {
+						compareRevisions();
+					}
+				});
+
+				if (specRevisionCache.week != specRevisionCache.day) {
+					specRevisionCache.revisions.push(specRevisionCache.week);
+					getTopicsFromSpecAndRevision(specId, specRevisionCache.week, function(data) {
+						specRevisionCache[specRevisionCache.week] = {topics: data};
+						++callsMade;
+						if (callsMade == callsToMake) {
+							compareRevisions();
+						}
+					});
+				}
+
+				if (specRevisionCache.month != specRevisionCache.week) {
+					specRevisionCache.revisions.push(specRevisionCache.month);
+					getTopicsFromSpecAndRevision(specId, specRevisionCache.month, function(data) {
+						specRevisionCache[specRevisionCache.month] = {topics: data};
+						++callsMade;
+						if (callsMade == callsToMake) {
+							compareRevisions();
+						}
+					});
+				}
+
+				if (specRevisionCache.year != specRevisionCache.month) {
+					specRevisionCache.revisions.push(specRevisionCache.year);
+					getTopicsFromSpecAndRevision(specId, specRevisionCache.year, function(data) {
+						specRevisionCache[specRevisionCache.year] = {topics: data};
+						++callsMade;
+						if (callsMade == callsToMake) {
+							compareRevisions();
+						}
+					});
+				}
+
 				// get added and removed topics
 			});
-
-
 		}
 	}
+}
+
+function getTopicsFromSpecAndRevision(specId, revision, callback) {
+	var spec = SERVER + "/contentspec/get/json/" + specId + "/r/" + revision + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22children_OTM%22%7D%7D%5D%7D";
+
+	$.getJSON(spec, function(data) {
+		var callsCompleted = 0;
+		for (var index = 0, count = data.children_OTM.items.length; index < count; ++index) {
+			var child = data.children_OTM.items[index].item;
+			expandSpecChildren(topics, child.id, child.revision, function(){
+				++callsCompleted;
+				if (callsCompleted == count) {
+					callback(topics);
+				}
+			});
+		}
+	});
+}
+
+function getTopicsFromSpec(specId, callback) {
+	var specRevision = SERVER + "/contentspec/get/json/" + specId + "/?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22children_OTM%22%7D%7D%5D%7D";
+	var topics = {};
+
+	$.getJSON(specRevision, function(data) {
+		var callsCompleted = 0;
+		for (var index = 0, count = data.children_OTM.items.length; index < count; ++index) {
+			var child = data.children_OTM.items[index].item;
+			expandSpecChildren(topics, child.id, child.revision, function(){
+				++callsCompleted;
+				if (callsCompleted == count) {
+					callback(topics);
+				}
+			});
+		}
+	});
+}
+
+function expandSpecChildren(topics, nodeId, revision, callback) {
+	var children = SERVER + "/contentspecnode/get/json/" + nodeId + "/r/" + revision + "/?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22children_OTM%22%7D%7D%5D%7D";
+
+	$.getJSON(specRevision, function(data) {
+		var childCallsCompleted = 0;
+		var childrenToExpand = [];
+
+		for (var index = 0, count = data.children_OTM.items.length; index < count; ++index) {
+			var child = data.children_OTM.items[index].item;
+
+			if (child.nodeType = "TOPIC") {
+				if (!topics[child.entityId]) {
+					topics[child.entityId] = 1;
+				} else {
+				 	++topics[child.entityId];
+				}
+			} else {
+				childrenToExpand.push({id: child.id, revision: child.revision})
+			}
+		}
+
+		// expand the children
+		for (var index = 0, count = childrenToExpand.length; index < count; ++index) {
+			expandSpecChildren(topics, childrenToExpand[index].id, childrenToExpand[index].revision, function() {
+				++childCallsCompleted;
+				if (childCallsCompleted == childrenToExpand.length) {
+					callback();
+				}
+			});
+		}
+	});
 }
 
 function doSecondPassQuery(topicIdsString) {
