@@ -858,11 +858,19 @@ function buildTopicEditedInChart() {
 	var labels = ["day", "week", "month", "year", "older"];
 	var colors = [Raphael.rgb(0, 254, 254), Raphael.rgb(0, 254, 0), Raphael.rgb(254, 254, 0), Raphael.rgb(254, 127, 0), Raphael.rgb(254, 0, 0)];
 
-	Raphael("topicEditedInChart", 250, 200).pieChart(100, 100, 50, values, labels, colors, 10, 10, 16, "#fff");
+	Raphael("topicEditedInChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 10, 10, 16, "#fff");
+}
+
+function showMenu() {
+	document.body.style.margin = "0 auto auto 350px";
+}
+
+function hideMenu() {
+	document.body.style.margin = "0 auto";
 }
 
 function buildMenu() {
-	menuIcon = $('<div onclick="hideAllMenus(); menuIcon.hide(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');" style="cursor: pointer; position: fixed; top: 8px; left: 8px; width: 64px; height: 64px; background-image: url(/images/pressgang.svg); background-size: contain"></div>')
+	menuIcon = $('<div onclick="hideAllMenus(); mainMenu.show(); showMenu(); localStorage.setItem(\'lastMenu\', \'mainMenu\');" style="cursor: pointer; position: fixed; top: 8px; left: 8px; width: 64px; height: 64px; background-image: url(/images/pressgang.svg); background-size: contain"></div>')
 	$(document.body).append(menuIcon);
 
 	mainMenu = $('\
@@ -870,7 +878,7 @@ function buildMenu() {
 			<div class="panel-heading">PressGang</div>\
 				<div class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
-						<li><a href="javascript:hideAllMenus(); menuIcon.show(); localStorage.setItem(\'lastMenu\', \'menuIcon\');">Hide Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); hideMenu(); menuIcon.show(); localStorage.setItem(\'lastMenu\', \'menuIcon\');">Hide Menu</a></li>\
 						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show(); localStorage.setItem(\'lastMenu\', \'topicsByLastEdit\');">Topics By Last Edit</a></li>\
 						<li><a href="#">Topics Added Since</a></li>\
 						<li><a href="#">Topics Removed Since</a></li>\
@@ -968,20 +976,28 @@ function buildMenu() {
 	var lastMenu = localStorage.getItem('lastMenu');
 	if (lastMenu == 'mainMenu') {
 		mainMenu.show();
+		showMenu();
 	} else if (lastMenu == 'topicsByLastEdit') {
 		topicsByLastEdit.show();
+		showMenu();
 	} else if (lastMenu == 'topicsEditedIn1Day') {
 		topicsEditedIn1Day.show();
+		showMenu();
 	} else if (lastMenu == 'topicsEditedIn1Week') {
 		topicsEditedIn1Week.show();
+		showMenu();
 	} else if (lastMenu == 'topicsEditedIn1Month') {
 		topicsEditedIn1Month.show();
+		showMenu();
 	} else if (lastMenu == 'topicsEditedIn1Year') {
 		topicsEditedIn1Year.show();
+		showMenu();
 	} else if (lastMenu == 'topicsEditedInOlderThanYear') {
 		topicsEditedInOlderThanYear.show();
+		showMenu();
 	} else {
 		menuIcon.show();
+		hideMenu();
 	}
 
 
