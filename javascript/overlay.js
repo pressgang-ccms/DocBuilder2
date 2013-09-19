@@ -838,6 +838,10 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 					}
 
 					// add the results to the menu
+					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.year].added.length; topicIndex < topicCount; ++topicIndex) {
+						var topic = specRevisionCache[specRevisionCache.year].added[topicIndex];
+						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1YearItems"));
+					}
 				}
 
 				// keep a track of how many async calls are to be made and have been made
@@ -863,6 +867,9 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 				});
 
 				// get topics for the previous revisions
+
+				// specRevisionCache.revisions is a list of the revisions that we will be processing. It is
+				// there for convenience so we can loop over it later.
 				specRevisionCache.revisions = [specRevisionCache.day];
 				getTopicsFromSpecAndRevision(specId, specRevisionCache.day, function(data) {
 					specRevisionCache[specRevisionCache.day] = {topics: data};
@@ -1095,6 +1102,7 @@ function hideAllMenus() {
 	topicsEditedInOlderThanYear.hide();
 	topicsAddedSince.hide();
 	topicsRemovedSince.hide();
+	topicsAddedSince1Year.hide();
 }
 
 function buildTopicEditedInChart() {
@@ -1180,15 +1188,28 @@ function buildMenu() {
 				<div id="topicsEditedInPanel" class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li ><a id="topicsAddedIn1Day" href="javascript:hideAllMenus(); topicsEditedIn1Day.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Day\');"><div style="background-image: url(/images/history-blue.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Day</a></li>\
-						<li ><a id="topicsAddedIn1Week" href="javascript:hideAllMenus(); topicsEditedIn1Week.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Week\');"><div style="background-image: url(/images/history-green.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Week</a></li>\
-						<li ><a id="topicsAddedIn1Month" href="javascript:hideAllMenus(); topicsEditedIn1Month.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Month\');"><div style="background-image: url(/images/history-yellow.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Month</a></li>\
-						<li ><a id="topicsAddedIn1Year" href="javascript:hideAllMenus(); topicsEditedIn1Year.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Year\');"><div style="background-image: url(/images/history-orange.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Year</a></li>\
+						<li ><a id="topicsAddedIn1Day" href="javascript:hideAllMenus(); topicsAddedSince1Day.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Day\');"><div style="background-image: url(/images/history-blue.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Day</a></li>\
+						<li ><a id="topicsAddedIn1Week" href="javascript:hideAllMenus(); topicsAddedSince1Week.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Week\');"><div style="background-image: url(/images/history-green.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Week</a></li>\
+						<li ><a id="topicsAddedIn1Month" href="javascript:hideAllMenus(); topicsAddedSince1Month.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Month\');"><div style="background-image: url(/images/history-yellow.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Month</a></li>\
+						<li ><a id="topicsAddedIn1Year" href="javascript:hideAllMenus(); topicsAddedSince1Year.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Year\');"><div style="background-image: url(/images/history-orange.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Year</a></li>\
 					</ul>\
 				</div>\
 			</div>\
 		</div>')
 	$(document.body).append(topicsAddedSince);
+
+	topicsAddedSince1Year = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">1 Year</div>\
+				<div id="topicsEditedInPanel" class="panel-body ">\
+		            <ul id="topicsAddedSince1YearItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince\');">&lt;- Topics Added Since</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+	$(document.body).append(topicsAddedSince1Year);
 
 	topicsRemovedSince = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1319,12 +1340,11 @@ function buildMenu() {
 	} else if (lastMenu == "topicsRemovedSince") {
 		topicsRemovedSince.show();
 		showMenu();
+	} else if (lastMenu == "topicsAddedSince1Year") {
+		topicsAddedSince1Year.show();
+		showMenu();
 	} else {
 		menuIcon.show();
 		hideMenu();
 	}
-
-
-
-
 }
