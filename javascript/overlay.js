@@ -801,11 +801,9 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 						var added = [];
 						var removed = [];
 
-						for (var revTopicIndex = 0, revTopicCount = revision.length; revTopicIndex < revTopicCount; ++revTopicIndex) {
-							var revTopicID = revision[revTopicIndex];
+						for (revTopicID in revision) {
 							var found = false;
-							for (var currentTopicIndex = 0, currentTopicCount = specRevisionCache.current.topics.length; currentTopicIndex < currentTopicCount; ++currentTopicIndex) {
-								var currentTopicID = specRevisionCache.current[currentTopicIndex];
+							for (currentTopicID in specRevisionCache.current.topics) {
 								if (currentTopicID == revTopicID) {
 									found = true;
 									break;
@@ -817,11 +815,9 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 							}
 						}
 
-						for (var currentTopicIndex = 0, currentTopicCount = specRevisionCache.current.topics.length; currentTopicIndex < currentTopicCount; ++currentTopicIndex) {
-							var currentTopicID = specRevisionCache.current[currentTopicIndex];
+						for (currentTopicID in specRevisionCache.current.topics) {
 							var found = false;
-							for (var revTopicIndex = 0, revTopicCount = revision.length; revTopicIndex < revTopicCount; ++revTopicIndex) {
-								var revTopicID = revision[revTopicIndex];
+							for (revTopicID in revision) {
 								if (currentTopicID == revTopicID) {
 									found = true;
 									break;
@@ -1414,3 +1410,11 @@ function buildMenu() {
 		hideMenu();
 	}
 }
+
+function countKeys(obj) {
+	var size = 0, key;
+	for (key in obj) {
+		if (obj.hasOwnProperty(key)) size++;
+	}
+	return size;
+};
