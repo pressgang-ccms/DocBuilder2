@@ -348,6 +348,7 @@ function processSpecs(updatedSpecs) {
                                 <script type='application/javascript' src='/javascript/raphael-min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/pie.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/overlay.js'></script>\n\
+                                <link href='/css/pressgang.css' rel='stylesheet'>\n\
                                 <link href='/css/bootstrap.min.css' rel='stylesheet'>\n");
                         fs.writeFileSync(APACHE_HTML_DIR + "/" + id + "/index.html", contents);
                     } catch (ex) {

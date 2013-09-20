@@ -1118,7 +1118,7 @@ function hideAllMenus() {
 	topicsAddedSince.hide();
 	topicsRemovedSince.hide();
 	topicsAddedSince1Day.hide();
-	topicsAddedSince1Wekk.hide();
+	topicsAddedSince1Week.hide();
 	topicsAddedSince1Month.hide();
 	topicsAddedSince1Year.hide();
 }
