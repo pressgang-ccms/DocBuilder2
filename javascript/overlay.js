@@ -853,6 +853,26 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 						var topic = specRevisionCache[specRevisionCache.year].added[topicIndex];
 						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1YearItems"));
 					}
+
+					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.day].removed.length; topicIndex < topicCount; ++topicIndex) {
+						var topic = specRevisionCache[specRevisionCache.day].removed[topicIndex];
+						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1DayItems"));
+					}
+
+					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.week].removed.length; topicIndex < topicCount; ++topicIndex) {
+						var topic = specRevisionCache[specRevisionCache.week].removed[topicIndex];
+						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1WeekItems"));
+					}
+
+					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.month].removed.length; topicIndex < topicCount; ++topicIndex) {
+						var topic = specRevisionCache[specRevisionCache.month].removed[topicIndex];
+						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1MonthItems"));
+					}
+
+					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.year].removed.length; topicIndex < topicCount; ++topicIndex) {
+						var topic = specRevisionCache[specRevisionCache.year].removed[topicIndex];
+						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1YearItems"));
+					}
 				}
 
 				// keep a track of how many async calls are to be made and have been made
@@ -1116,7 +1136,7 @@ function hideAllMenus() {
 	topicsAddedSince1Day.hide();
 	topicsAddedSince1Week.hide();
 	topicsAddedSince1Month.hide();
-	topicsRemovedSince1Year.hide();
+	topicsAddedSince1Year.hide();
 	topicsRemovedSince1Day.hide();
 	topicsRemovedSince1Week.hide();
 	topicsRemovedSince1Month.hide();
@@ -1290,7 +1310,7 @@ function buildMenu() {
 				<div class="panel-body ">\
 		            <ul id="topicsRemovedSince1DayItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">&lt;- Topics Removed Since</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsRemovedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">&lt;- Topics Removed Since</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -1303,7 +1323,7 @@ function buildMenu() {
 				<div class="panel-body ">\
 		            <ul id="topicsRemovedSince1WeekItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">&lt;- Topics Removed Since</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsRemovedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">&lt;- Topics Removed Since</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -1316,7 +1336,7 @@ function buildMenu() {
 				<div class="panel-body ">\
 		            <ul id="topicsRemovedSince1MonthItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">&lt;- Topics Removed Since</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsRemovedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">&lt;- Topics Removed Since</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -1329,7 +1349,7 @@ function buildMenu() {
 				<div class="panel-body ">\
 		            <ul id="topicsRemovedSince1YearItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">&lt;- Topics Removed Since</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsRemovedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">&lt;- Topics Removed Since</a></li>\
 					</ul>\
 				</div>\
 			</div>\
