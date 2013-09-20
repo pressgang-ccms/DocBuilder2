@@ -897,6 +897,45 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 						var topic = specRevisionCache[specRevisionCache.year].removed[topicIndex];
 						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1YearItems"));
 					}
+
+					// create the graphs
+					var addedSince = $('<div id="topicsAddedSinceChart"></div>');
+					addedSince.appendTo($("#topicsAddedSincePanel"));
+
+					var addedTotal = specRevisionCache[specRevisionCache.day].added.length +
+						specRevisionCache[specRevisionCache.week].added.length +
+						specRevisionCache[specRevisionCache.month].added.length +
+						specRevisionCache[specRevisionCache.year].added.length;
+
+					var values = [
+						specRevisionCache[specRevisionCache.day].added.length / addedTotal * 100.0,
+						specRevisionCache[specRevisionCache.week].added.length / addedTotal * 100.0,
+						specRevisionCache[specRevisionCache.month].added.length / addedTotal * 100.0,
+						specRevisionCache[specRevisionCache.year].added.length / addedTotal * 100.0];
+
+					var labels = ["day", "week", "month", "year"];
+					var colors = [Raphael.rgb(0, 254, 254), Raphael.rgb(0, 254, 0), Raphael.rgb(254, 254, 0), Raphael.rgb(254, 127, 0)];
+
+					Raphael("topicsAddedSinceChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 10, 10, 30, 16, "#fff");
+
+					var removedSince = $('<div id="topicsRemovedSinceChart"></div>');
+					removedSince.appendTo($("#topicsRemovedSincePanel"));
+
+					var removedTotal = specRevisionCache[specRevisionCache.day].removed.length +
+						specRevisionCache[specRevisionCache.week].removed.length +
+						specRevisionCache[specRevisionCache.month].removed.length +
+						specRevisionCache[specRevisionCache.year].removed.length;
+
+					var values = [
+						specRevisionCache[specRevisionCache.day].removed.length / removedTotal * 100.0,
+						specRevisionCache[specRevisionCache.week].removed.length / removedTotal * 100.0,
+						specRevisionCache[specRevisionCache.month].removed.length / removedTotal * 100.0,
+						specRevisionCache[specRevisionCache.year].removed.length / removedTotal * 100.0];
+
+					var labels = ["day", "week", "month", "year"];
+					var colors = [Raphael.rgb(0, 254, 254), Raphael.rgb(0, 254, 0), Raphael.rgb(254, 254, 0), Raphael.rgb(254, 127, 0)];
+
+					Raphael("topicsRemovedSinceChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 10, 10, 30, 16, "#fff");
 				}
 
 				// keep a track of how many async calls are to be made and have been made
@@ -1177,21 +1216,35 @@ function buildTopicEditedInChart() {
 	historyCache.summary.older = 0;
 	historyCache.summary.count = topicIds.length;
 
+	var totalCount = 0;
+
 	for (var index = 0; index < historyCache.summary.count; ++index) {
 		var topic = historyCache[topicIds[index]].data[0];
 		var date = moment(topic.lastModified);
 
 		if (date.isAfter(moment().subtract('day', 1))) {
 			++historyCache.summary.day;
-		} if (date.isAfter(moment().subtract('week', 1))) {
-			++historyCache.summary.week;
-		} if (date.isAfter(moment().subtract('month', 1))) {
-			++historyCache.summary.month;
-		} if (date.isAfter(moment().subtract('year', 1))) {
-			++historyCache.summary.year;
-		} {
-			++historyCache.summary.older;
+			++totalCount;
 		}
+
+		if (date.isAfter(moment().subtract('week', 1))) {
+			++historyCache.summary.week;
+			++totalCount;
+		}
+
+		if (date.isAfter(moment().subtract('month', 1))) {
+			++historyCache.summary.month;
+			++totalCount;
+		}
+
+		if (date.isAfter(moment().subtract('year', 1))) {
+			++historyCache.summary.year;
+			++totalCount;
+		}
+
+		++historyCache.summary.older;
+		++totalCount;
+
 	}
 
 	$('#topicsEditedIn1Day').append($('<span class="badge pull-right">' + historyCache.summary.day + '</span>'));
@@ -1205,16 +1258,16 @@ function buildTopicEditedInChart() {
 	chart.appendTo($("#topicsEditedInPanel"));
 
 	var values = [
-		historyCache.summary.day / historyCache.summary.count * 100.0,
-		historyCache.summary.week / historyCache.summary.count * 100.0,
-		historyCache.summary.month / historyCache.summary.count * 100.0,
-		historyCache.summary.year / historyCache.summary.count * 100.0,
-		historyCache.summary.older / historyCache.summary.count * 100.0];
+		historyCache.summary.day / totalCount * 100.0,
+		historyCache.summary.week / totalCount * 100.0,
+		historyCache.summary.month / totalCount * 100.0,
+		historyCache.summary.year / totalCount * 100.0,
+		historyCache.summary.older / totalCount * 100.0];
 
 	var labels = ["day", "week", "month", "year", "older"];
 	var colors = [Raphael.rgb(0, 254, 254), Raphael.rgb(0, 254, 0), Raphael.rgb(254, 254, 0), Raphael.rgb(254, 127, 0), Raphael.rgb(254, 0, 0)];
 
-	Raphael("topicEditedInChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 10, 10, 10, 16, "#fff");
+	Raphael("topicEditedInChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 10, 10, 20, 16, "#fff");
 }
 
 function showMenu() {
