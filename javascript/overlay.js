@@ -23,7 +23,8 @@
 		The second pass loaded the information for each topic in batches from the REST service, as well as information
 		on the spec itself, such as which topics were added and removed.
 		This information is used to prepopulate the information presented by the icons and side bar, and the information
-		is stored in a number of cache objects. Once all the REST requests have completed, the third pass is started.
+		is stored in a number of cache objects.
+		Once all the REST requests have completed, the third pass is started.
 
 	3.	The third pass takes all the information found in the second pass and uses it to generate an email report.
 
