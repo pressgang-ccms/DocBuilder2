@@ -6,6 +6,29 @@
 // @require       https://rawgithub.com/moment/moment/2.2.1/min/moment.min.js
 // ==/UserScript==
 
+/*
+	This script works in a number of passes to extract the information from the document, and then pull down
+	addition information from the REST server.
+
+	1. 	When the DOM is ready, the script scans the document for the editor or bug links, and uses the information in
+		the links to extract the topic information. When this is completed, the second pass is notified that this
+		information is available.
+		When the document is loaded, or after a timeout has been reached, the second pass is notified that it is ready
+		to be run.
+
+	NOTE: Between the first and second runs the user can manually mouse over the icons to have that information loaded.
+
+	2.	The second pass is started once all the topics have been found, and after the document has been loaded or the
+		timeout was reached.
+		The second pass loaded the information for each topic in batches from the REST service, as well as information
+		on the spec itself, such as which topics were added and removed.
+		This information is used to prepopulate the information presented by the icons and side bar, and the information
+		is stored in a number of cache objects. Once all the REST requests have completed, the third pass is started.
+
+	3.	The third pass takes all the information found in the second pass and uses it to generate an email report.
+
+ */
+
 /**
  * A regex to extract URls
  * http://blog.mattheworiordan.com/post/13174566389/url-regular-expression-for-links-with-or-without-the
@@ -167,7 +190,7 @@ var specHistoryDone = true;
 	When the page is loaded, start looking for the links that indicate the topics.
  */
 $(document).ready(function() {
-	findTopicIds();
+	firstPass();
 	buildMenu();
 });
 
@@ -263,6 +286,10 @@ function createSpecsPopover(topicId, parent) {
     setupEvents(linkDiv, popover);
 }
 
+/**
+ * Renderes the list of specs that a topics is referenced in.
+ * @param topicId The topic whose spec popup is being generated.
+ */
 function renderSpecs(topicId) {
 	specCache[topicId].popover.popoverContent.innerHTML = '';
 
@@ -318,6 +345,10 @@ function createTagsPopover(topicId, parent) {
     setupEvents(linkDiv, popover);
 }
 
+/**
+ * Renderes the list of tags that are assigned to the topic
+ * @param topicId The topic whose tags popup is being generated.
+ */
 function renderTags(topicId) {
 	tagsCache[topicId].popover.popoverContent.innerHTML = '';
 
@@ -391,6 +422,10 @@ function createUrlsPopover(topicId, parent) {
     setupEvents(linkDiv, popover);
 }
 
+/**
+ * Renderes the list of source urls that are assigned to the topic
+ * @param topicId The topic whose urls popup is being generated.
+ */
 function renderUrls(topicId) {
 	urlCache[topicId].popover.popoverContent.innerHTML = '';
 
@@ -464,6 +499,10 @@ function createHistoryPopover(topicId, parent) {
     setupEvents(linkDiv, popover);
 }
 
+/**
+ * Renderes the list of topic revisions revisions
+ * @param topicId The topic whose revisions popup is being generated.
+ */
 function renderHistory(topicId) {
 	historyCache[topicId].popover.popoverContent.innerHTML = '';
 
@@ -479,6 +518,12 @@ function renderHistory(topicId) {
 	}
 }
 
+/**
+ * Updates the icon used for the history based on how long ago the topic was last edited. Also adds the links to the
+ * topics in the various history submenus.
+ * @param topicId The topic whose tags popup is being generated.
+ * @param title The topic title.
+ */
 function updateHistoryIcon(topicId, title) {
 	var icon = $("#" + topicId + "historyIcon");
 	var date = moment(historyCache[topicId].data[0].lastModified);
@@ -553,6 +598,11 @@ function createDescriptionPopover(topicId, parent) {
     setupEvents(linkDiv, popover);
 }
 
+
+/**
+ * Renderes the topic description
+ * @param topicId The topic whose revisions popup is being generated.
+ */
 function renderDescription(topicId) {
 	if (descriptionCache[topicId].data.trim().length != 0) {
 		$(descriptionCache[topicId].popover.popoverContent).text(descriptionCache[topicId].data);
@@ -624,7 +674,7 @@ function setupEvents(linkDiv, popover) {
 /*
  * Finds all the topic ids in a document and adds the topic id to the bottom of the title.
  */
-function findTopicIds() {
+function firstPass() {
     var foundTopics = {};
     var elements = document.getElementsByTagName("div");
     for (var i = elements.length - 1; i >= 0; --i) {
@@ -689,6 +739,11 @@ function createIcon(img, topicId) {
     return linkDiv;
 }
 
+/**
+ * Sets the number icon in the bottom right hand corner
+ * @param linkDiv The icon to be edited
+ * @param count The number to be displayed
+ */
 function updateCount(linkDiv, count) {
 	if (count >= 1 && count <= 10) {
 		linkDiv.countMarker.style.backgroundImage = "url(/images/" + count + ".png)";
@@ -746,6 +801,14 @@ function createPopover(title, topicId) {
 
 }
 
+/**
+ * The second pass is run once all the topics have been found, and once the window is loaded or a timeout has been
+ * reached. This function will be called three times, but will only run once.
+ *
+ * @param myTopicsFound Set to true when this function is called after the topics have been found.
+ * @param mySecondPassTimeout Set to true when this function is called when the timeout is reached.
+ * @param myWindowLoaded Set to true when this function is called when the window is loaded.
+ */
 function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 
 	if (myTopicsFound) {
@@ -1031,6 +1094,12 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 	}
 }
 
+/**
+ * Get all the topics from a spec revision
+ * @param specId The spec ID
+ * @param revision The spec revision
+ * @param callback The callback to call when all the topics are found
+ */
 function getTopicsFromSpecAndRevision(specId, revision, callback) {
 	var spec = SERVER + "/contentspec/get/json/" + specId + "/r/" + revision + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22children_OTM%22%7D%7D%5D%7D";
 	var topics = {};
@@ -1054,6 +1123,11 @@ function getTopicsFromSpecAndRevision(specId, revision, callback) {
 	});
 }
 
+/**
+ * Get all the topics from a spec
+ * @param specId The spec ID
+ * @param callback The callback to call when all the topics are found
+ */
 function getTopicsFromSpec(specId, callback) {
 	var specRevision = SERVER + "/contentspec/get/json/" + specId + "/?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22children_OTM%22%7D%7D%5D%7D";
 	var topics = {};
@@ -1077,6 +1151,13 @@ function getTopicsFromSpec(specId, callback) {
 	});
 }
 
+/**
+ * Returning the children of a spec involves recursivly expanding each child CSNode.
+ * @param topics The collection of topics
+ * @param nodeId The cs node to expand
+ * @param revision The cs node revision
+ * @param callback The callback to call when this child has been fully expanded
+ */
 function expandSpecChildren(topics, nodeId, revision, callback) {
 	var children = SERVER + "/contentspecnode/get/json/" + nodeId + "/r/" + revision + "/?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22children_OTM%22%7D%7D%5D%7D";
 
@@ -1114,6 +1195,10 @@ function expandSpecChildren(topics, nodeId, revision, callback) {
 	});
 }
 
+/**
+ * Getting the information on the topics in the spec is done in batches. Each batch is processed by this function.
+ * @param topicIdsString The comma separated list of topic ids to query.
+ */
 function doSecondPassQuery(topicIdsString) {
 	$.getJSON(BACKGROUND_QUERY_PREFIX + topicIdsString + BACKGROUND_QUERY_POSTFIX, function (data, textStatus, jqXHR) {
 		++secondPassRESTCallsCompleted;
@@ -1221,6 +1306,9 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
 	}
 }
 
+/**
+ * Hides all the side bar menus
+ */
 function hideAllMenus() {
 	menuIcon.hide();
 	mainMenu.hide();
@@ -1242,6 +1330,9 @@ function hideAllMenus() {
 	topicsRemovedSince1Year.hide();	
 }
 
+/**
+ * Builds the Raphael pie chart showing when topics were last edited.
+ */
 function buildTopicEditedInChart() {
 
 	historyCache.summary = {};
@@ -1325,6 +1416,9 @@ function hideMenu() {
 	document.body.style.margin = "0 auto";
 }
 
+/**
+ * Builds the side bar. Each menu is a separate panel that is shown or hidden as the user navigates through.
+ */
 function buildMenu() {
 	// A place to do off screen rendering, to work around a Rapael bug
 	offscreenRendering = $('<div id="offscreenRendering" style="position: absolute; left: -1000px; top: -1000px"></div>');
@@ -1627,6 +1721,11 @@ function buildMenu() {
 	}
 }
 
+/**
+ * A utility function to count the number of keys in a dictionary
+ * @param obj The object that is the dictionary
+ * @returns {number} The number of keys it has.
+ */
 function countKeys(obj) {
 	var size = 0, key;
 	for (key in obj) {
