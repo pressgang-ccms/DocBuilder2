@@ -1291,7 +1291,7 @@ function buildMenu() {
 	topicsRemovedSince = $('\
 		<div class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">Topics topicsRemovedSince Since</div>\
-				<div id="topicsEditedInPanel" class="panel-body ">\
+				<div id="topicsRemovedSincePanel" class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
 						<li ><a id="topicsRemovedIn1Day" href="javascript:hideAllMenus(); topicsEditedIn1Day.show(); localStorage.setItem(\'lastMenu\', \'topicsEditedIn1Day\');"><div style="background-image: url(/images/history-blue.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Day</a></li>\
