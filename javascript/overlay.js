@@ -1424,9 +1424,11 @@ function buildMenu() {
 	offscreenRendering = $('<div id="offscreenRendering" style="position: absolute; left: -1000px; top: -1000px"></div>');
 	$(document.body).append(offscreenRendering);
 
+	// the icon used to show the initil menu
 	menuIcon = $('<div onclick="hideAllMenus(); mainMenu.show(); showMenu(); localStorage.setItem(\'lastMenu\', \'mainMenu\');" style="cursor: pointer; position: fixed; top: 8px; left: 8px; width: 64px; height: 64px; background-image: url(/images/pressgang.svg); background-size: contain"></div>')
 	$(document.body).append(menuIcon);
 
+	// each menu is a Bootstrap panel with vertically stacked nav pills.
 	mainMenu = $('\
 		<div class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">PressGang</div>\
