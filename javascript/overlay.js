@@ -145,6 +145,13 @@ var secondPassRESTCalls = 0;
  * @type {number}
  */
 var secondPassRESTCallsCompleted = 0;
+/**
+ * There is a bug in Raphael that prevents a SVG text element from being created
+ * properly when added to a canvas not attached to the DOM (https://github.com/DmitryBaranovskiy/raphael/issues/772).
+ * This is kind of a problem, so this div element is off the screen and used to create new graphs.
+ * @type {null}
+ */
+var offscreenRendering = null;
 
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
@@ -899,43 +906,42 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 					}
 
 					// create the graphs
-					var addedSince = $('<div id="topicsAddedSinceChart"></div>');
-					addedSince.appendTo($("#topicsAddedSincePanel"));
-
-					var addedTotal = specRevisionCache[specRevisionCache.day].added.length +
-						specRevisionCache[specRevisionCache.week].added.length +
-						specRevisionCache[specRevisionCache.month].added.length +
-						specRevisionCache[specRevisionCache.year].added.length;
-
 					var values = [
-						specRevisionCache[specRevisionCache.day].added.length / addedTotal * 100.0,
-						specRevisionCache[specRevisionCache.week].added.length / addedTotal * 100.0,
-						specRevisionCache[specRevisionCache.month].added.length / addedTotal * 100.0,
-						specRevisionCache[specRevisionCache.year].added.length / addedTotal * 100.0];
+						specRevisionCache[specRevisionCache.day].added.length,
+						specRevisionCache[specRevisionCache.week].added.length,
+						specRevisionCache[specRevisionCache.month].added.length,
+						specRevisionCache[specRevisionCache.year].added.length];
 
 					var labels = ["day", "week", "month", "year"];
 					var colors = [Raphael.rgb(0, 254, 254), Raphael.rgb(0, 254, 0), Raphael.rgb(254, 254, 0), Raphael.rgb(254, 127, 0)];
 
-					Raphael("topicsAddedSinceChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 10, 10, 30, 16, "#fff");
+					var offscreenDiv = $('<div id="topicsAddedSinceChart"></div>');
+					offscreenDiv.appendTo(offscreenRendering);
 
-					var removedSince = $('<div id="topicsRemovedSinceChart"></div>');
-					removedSince.appendTo($("#topicsRemovedSincePanel"));
+					setTimeout(function(offscreenDiv, values, labels, colors) {
+						return function(){
+							Raphael("topicsAddedSinceChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 30, 30, 16, "#fff");
+							$(offscreenDiv).appendTo($("#topicsAddedSincePanel"));
+						}
+					}(offscreenDiv, values, labels, colors), 0);
 
-					var removedTotal = specRevisionCache[specRevisionCache.day].removed.length +
-						specRevisionCache[specRevisionCache.week].removed.length +
-						specRevisionCache[specRevisionCache.month].removed.length +
-						specRevisionCache[specRevisionCache.year].removed.length;
 
 					var values = [
-						specRevisionCache[specRevisionCache.day].removed.length / removedTotal * 100.0,
-						specRevisionCache[specRevisionCache.week].removed.length / removedTotal * 100.0,
-						specRevisionCache[specRevisionCache.month].removed.length / removedTotal * 100.0,
-						specRevisionCache[specRevisionCache.year].removed.length / removedTotal * 100.0];
+						specRevisionCache[specRevisionCache.day].removed.length ,
+						specRevisionCache[specRevisionCache.week].removed.length,
+						specRevisionCache[specRevisionCache.month].removed.length,
+						specRevisionCache[specRevisionCache.year].removed.length];
 
-					var labels = ["day", "week", "month", "year"];
-					var colors = [Raphael.rgb(0, 254, 254), Raphael.rgb(0, 254, 0), Raphael.rgb(254, 254, 0), Raphael.rgb(254, 127, 0)];
+					var offscreenDiv = $('<div id="topicsRemovedSinceChart"></div>');
+					offscreenDiv.appendTo(offscreenRendering);
 
-					Raphael("topicsRemovedSinceChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 10, 10, 30, 16, "#fff");
+					setTimeout(function(offscreenDiv, values, labels, colors) {
+						return function(){
+							Raphael("topicsRemovedSinceChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 30, 30, 16, "#fff");
+							$(offscreenDiv).appendTo($("#topicsRemovedSincePanel"));
+						}
+					}(offscreenDiv, values, labels, colors), 0);
+
 				}
 
 				// keep a track of how many async calls are to be made and have been made
@@ -1267,7 +1273,7 @@ function buildTopicEditedInChart() {
 	var labels = ["day", "week", "month", "year", "older"];
 	var colors = [Raphael.rgb(0, 254, 254), Raphael.rgb(0, 254, 0), Raphael.rgb(254, 254, 0), Raphael.rgb(254, 127, 0), Raphael.rgb(254, 0, 0)];
 
-	Raphael("topicEditedInChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 10, 10, 20, 16, "#fff");
+	Raphael("topicEditedInChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 10, 10, 16, "#fff");
 }
 
 function showMenu() {
@@ -1279,6 +1285,10 @@ function hideMenu() {
 }
 
 function buildMenu() {
+	// A place to do off screen rendering, to work around a Rapael bug
+	offscreenRendering = $('<div id="offscreenRendering" style="position: absolute; left: -1000px; top: -1000px"></div>');
+	$(document.body).append(offscreenRendering);
+
 	menuIcon = $('<div onclick="hideAllMenus(); mainMenu.show(); showMenu(); localStorage.setItem(\'lastMenu\', \'mainMenu\');" style="cursor: pointer; position: fixed; top: 8px; left: 8px; width: 64px; height: 64px; background-image: url(/images/pressgang.svg); background-size: contain"></div>')
 	$(document.body).append(menuIcon);
 

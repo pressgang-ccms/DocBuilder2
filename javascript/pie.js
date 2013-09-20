@@ -1,4 +1,4 @@
-Raphael.fn.pieChart = function (cx, cy, r, values, labels, colors, xoffset, yoffset, delta, fontsize, stroke) {
+Raphael.fn.pieChart = function (cx, cy, r, values, labels, colors, xoffset, yoffset, fontsize, stroke) {
     var paper = this,
         rad = Math.PI / 180,
         chart = this.set();
@@ -20,7 +20,7 @@ Raphael.fn.pieChart = function (cx, cy, r, values, labels, colors, xoffset, yoff
                 ms = 500,
                 bcolor = colors[j],
                 p = sector(cx, cy, r, angle, angle + angleplus, {fill: "90-" + bcolor + "-" + color, stroke: stroke, "stroke-width": 3}),
-                txt = paper.text(cx + (r + delta + xoffset) * Math.cos(-popangle * rad), cy + (r + delta + yoffset) * Math.sin(-popangle * rad), labels[j]).attr({fill: bcolor, stroke: "none", opacity: 0, "font-size": fontsize});
+                txt = paper.text(cx + (r + xoffset) * Math.cos(-popangle * rad), cy + (r + yoffset) * Math.sin(-popangle * rad), labels[j]).attr({fill: bcolor, stroke: "none", opacity: 0, "font-size": fontsize});
             p.mouseover(function () {
                 p.stop().animate({transform: "s1.1 1.1 " + cx + " " + cy}, ms, "elastic");
                 txt.stop().animate({opacity: 1}, ms, "elastic");
