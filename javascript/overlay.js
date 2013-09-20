@@ -466,22 +466,38 @@ function updateHistoryIcon(topicId, title) {
 	var icon = $("#" + topicId + "historyIcon");
 	var date = moment(historyCache[topicId].data[0].lastModified);
 
+	// set the icon
 	if (date.isAfter(moment().subtract('day', 1))) {
 		icon.css('background-image', 'url(/images/history-blue.png)');
-		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + title + '</a></li>').appendTo($("#topicsEditedIn1DayItems"));
 	} else if (date.isAfter(moment().subtract('week', 1))) {
 		icon.css('background-image', 'url(/images/history-green.png)');
-		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + title + '</a></li>').appendTo($("#topicsEditedIn1WeekItems"));
 	} else if (date.isAfter(moment().subtract('month', 1))) {
 		icon.css('background-image', 'url(/images/history-yellow.png)');
-		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + title + '</a></li>').appendTo($("#topicsEditedIn1MonthItems"));
 	} else if (date.isAfter(moment().subtract('year', 1))) {
 		icon.css('background-image', 'url(/images/history-orange.png)');
-		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + title + '</a></li>').appendTo($("#topicsEditedIn1YearItems"));
 	} else {
 		icon.css('background-image', 'url(/images/history-red.png)');
-		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + title + '</a></li>').appendTo($("#topicsEditedInOlderThanYearItems"));
 	}
+
+	// add the menu icons
+	if (date.isAfter(moment().subtract('day', 1))) {
+		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + title + '</a></li>').appendTo($("#topicsEditedIn1DayItems"));
+	}
+
+	if (date.isAfter(moment().subtract('week', 1))) {
+		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + title + '</a></li>').appendTo($("#topicsEditedIn1WeekItems"));
+	}
+
+	if (date.isAfter(moment().subtract('month', 1))) {
+		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + title + '</a></li>').appendTo($("#topicsEditedIn1MonthItems"));
+	}
+
+	if (date.isAfter(moment().subtract('year', 1))) {
+		$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + title + '</a></li>').appendTo($("#topicsEditedIn1YearItems"));
+	}
+
+	$('<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">' + title + '</a></li>').appendTo($("#topicsEditedInOlderThanYearItems"));
+
 }
 
 /**
@@ -1167,13 +1183,13 @@ function buildTopicEditedInChart() {
 
 		if (date.isAfter(moment().subtract('day', 1))) {
 			++historyCache.summary.day;
-		} else if (date.isAfter(moment().subtract('week', 1))) {
+		} if (date.isAfter(moment().subtract('week', 1))) {
 			++historyCache.summary.week;
-		} else if (date.isAfter(moment().subtract('month', 1))) {
+		} if (date.isAfter(moment().subtract('month', 1))) {
 			++historyCache.summary.month;
-		} else if (date.isAfter(moment().subtract('year', 1))) {
+		} if (date.isAfter(moment().subtract('year', 1))) {
 			++historyCache.summary.year;
-		} else {
+		} {
 			++historyCache.summary.older;
 		}
 	}
