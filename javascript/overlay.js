@@ -1663,6 +1663,8 @@ function buildMenu() {
 
 	hideAllMenus();
 
+	// Show the initial menu, either from what was saved in local storage as being the last displayed menu,
+	// or defaulting to the icon.
 	var lastMenu = localStorage.getItem('lastMenu');
 	if (lastMenu == 'mainMenu') {
 		mainMenu.show();
