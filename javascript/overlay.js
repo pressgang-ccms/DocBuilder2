@@ -1482,13 +1482,13 @@ function buildMenu() {
 		topicsAddedSince1Year.show();
 		showMenu();
 	} else if (lastMenu == "topicsRemovedSince1Day") {
-		topicsRemovedSince1Year.show();
+		topicsRemovedSince1Day.show();
 		showMenu();
 	} else if (lastMenu == "topicsRemovedSince1Week") {
-		topicsRemovedSince1Year.show();
+		topicsRemovedSince1Week.show();
 		showMenu();
 	} else if (lastMenu == "topicsRemovedSince1Month") {
-		topicsRemovedSince1Year.show();
+		topicsRemovedSince1Month.show();
 		showMenu();
 	} else if (lastMenu == "topicsRemovedSince1Year") {
 		topicsRemovedSince1Year.show();
