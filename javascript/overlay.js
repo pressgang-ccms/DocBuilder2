@@ -1259,10 +1259,6 @@ function buildTopicEditedInChart() {
 	$('#topicsEditedIn1Year').append($('<span class="badge pull-right">' + historyCache.summary.year + '</span>'));
 	$('#topicsEditedInOlderThanYear').append($('<span class="badge pull-right">' + historyCache.summary.older + '</span>'));
 
-
-	var chart = $('<div id="topicEditedInChart"></div>');
-	chart.appendTo($("#topicsEditedInPanel"));
-
 	var values = [
 		historyCache.summary.day / totalCount * 100.0,
 		historyCache.summary.week / totalCount * 100.0,
@@ -1273,7 +1269,15 @@ function buildTopicEditedInChart() {
 	var labels = ["day", "week", "month", "year", "older"];
 	var colors = [Raphael.rgb(0, 254, 254), Raphael.rgb(0, 254, 0), Raphael.rgb(254, 254, 0), Raphael.rgb(254, 127, 0), Raphael.rgb(254, 0, 0)];
 
-	Raphael("topicEditedInChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 10, 10, 16, "#fff");
+	var offscreenDiv = $('<div id="topicEditedInChart"></div>');
+	offscreenDiv.appendTo(offscreenRendering);
+
+	setTimeout(function(offscreenDiv, values, labels, colors) {
+		return function(){
+			Raphael("topicsAddedSinceChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 30, 30, 16, "#fff");
+			$(offscreenDiv).appendTo($("#topicsAddedSincePanel"));
+		}
+	}(offscreenDiv, values, labels, colors), 0);
 }
 
 function showMenu() {
