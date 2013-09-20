@@ -1116,7 +1116,11 @@ function hideAllMenus() {
 	topicsAddedSince1Day.hide();
 	topicsAddedSince1Week.hide();
 	topicsAddedSince1Month.hide();
-	topicsAddedSince1Year.hide();
+	topicsRemovedSince1Year.hide();
+	topicsRemovedSince1Day.hide();
+	topicsRemovedSince1Week.hide();
+	topicsRemovedSince1Month.hide();
+	topicsRemovedSince1Year.hide();	
 }
 
 function buildTopicEditedInChart() {
@@ -1214,7 +1218,7 @@ function buildMenu() {
 
 	topicsAddedSince1Day = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">1 Year</div>\
+			<div class="panel-heading">Topics Added In 1 Day</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsAddedSince1DayItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -1227,7 +1231,7 @@ function buildMenu() {
 
 	topicsAddedSince1Week = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">1 Year</div>\
+			<div class="panel-heading">Topics Added In 1 Week</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsAddedSince1WeekItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -1240,7 +1244,7 @@ function buildMenu() {
 
 	topicsAddedSince1Month = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">1 Year</div>\
+			<div class="panel-heading">Topics Added In 1 Month</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsAddedSince1MonthItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -1253,7 +1257,7 @@ function buildMenu() {
 
 	topicsAddedSince1Year = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">1 Year</div>\
+			<div class="panel-heading">Topics Added In 1 Year</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsAddedSince1YearItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -1279,6 +1283,58 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsRemovedSince);
+
+	topicsRemovedSince1Day = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Topics Removed In 1 Day</div>\
+				<div class="panel-body ">\
+		            <ul id="topicsRemovedSince1DayItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">&lt;- Topics Removed Since</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+	$(document.body).append(topicsRemovedSince1Day);
+
+	topicsRemovedSince1Week = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Topics Removed In 1 Week</div>\
+				<div class="panel-body ">\
+		            <ul id="topicsRemovedSince1WeekItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">&lt;- Topics Removed Since</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+	$(document.body).append(topicsRemovedSince1Week);
+
+	topicsRemovedSince1Month = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Topics Removed In 1 Month</div>\
+				<div class="panel-body ">\
+		            <ul id="topicsRemovedSince1MonthItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">&lt;- Topics Removed Since</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+	$(document.body).append(topicsRemovedSince1Month);
+
+	topicsRemovedSince1Year = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Topics Removed In 1 Year</div>\
+				<div class="panel-body ">\
+		            <ul id="topicsRemovedSince1YearItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">&lt;- Topics Removed Since</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+	$(document.body).append(topicsRemovedSince1Year);
 
 	topicsByLastEdit = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1405,7 +1461,19 @@ function buildMenu() {
 	} else if (lastMenu == "topicsAddedSince1Year") {
 		topicsAddedSince1Year.show();
 		showMenu();
-	} else {
+	} else if (lastMenu == "topicsRemovedSince1Day") {
+		topicsRemovedSince1Year.show();
+		showMenu();
+	} else if (lastMenu == "topicsRemovedSince1Week") {
+		topicsRemovedSince1Year.show();
+		showMenu();
+	} else if (lastMenu == "topicsRemovedSince1Month") {
+		topicsRemovedSince1Year.show();
+		showMenu();
+	} else if (lastMenu == "topicsRemovedSince1Year") {
+		topicsRemovedSince1Year.show();
+		showMenu();
+	}else {
 		menuIcon.show();
 		hideMenu();
 	}
