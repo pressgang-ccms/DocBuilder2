@@ -23,4 +23,6 @@ The index.html and js files should not be cached. Setting this up in Apache and 
    </ifModule>
    </FilesMatch>
 
+See http://www.askapache.com/htaccess/using-http-headers-with-htaccess.html for more details
+
 
