@@ -274,21 +274,19 @@ function abstract_build_table(data, columns, sortableColumns) {
         }
 
         for (var topicIndex = 0; topicIndex < topicsCount; ++topicIndex) {
-            $.getJSON(queryStart + topicIds[topicIndex] + queryEnd, function(specIds) {
-                return function(data){
-                    ++completedQueries;
+            $.getJSON(queryStart + topicIds[topicIndex] + queryEnd, function(data){
+                ++completedQueries;
 
-                    for (var itemIndex = 0, itemCount = data.items.length; itemIndex < itemCount; ++itemIndex) {
-                        var item = data.items[itemIndex].item;
-                        var specId = item.contentSpec.id;
-                        specIds.push[specId];
-                    }
-
-                    if (completedQueries == topicsCount) {
-                        secondFilter();
-                    }
+                for (var itemIndex = 0, itemCount = data.items.length; itemIndex < itemCount; ++itemIndex) {
+                    var item = data.items[itemIndex].item;
+                    var specId = item.contentSpec.id;
+                    specIds.push(specId);
                 }
-            }(specIds));
+
+                if (completedQueries == topicsCount) {
+                    secondFilter();
+                }
+            });
         }
     }
 
