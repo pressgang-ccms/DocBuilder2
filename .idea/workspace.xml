@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="decee61b-06ea-4134-a1b4-54fc006cf003" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions-1.1.js" afterPath="$PROJECT_DIR$/functions-1.1.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1379889022803" ignored="false" />
+    <file path="/Dummy.txt" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1379889248189" ignored="false" />
     <file path="/functions-1.1.js" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1379889010255" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -68,19 +68,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="functions-1.1.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="functions-1.1.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/functions-1.1.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="221" column="33" selection-start="6788" selection-end="6788" vertical-scroll-proportion="0.0">
+            <state line="221" column="59" selection-start="6814" selection-end="6814" vertical-scroll-proportion="0.23138833">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="232" column="75" selection-start="8297" selection-end="8297" vertical-scroll-proportion="0.5241449">
+            <state line="232" column="75" selection-start="8297" selection-end="8297" vertical-scroll-proportion="-29.84">
               <folding>
                 <marker date="1379889244919" expanded="true" signature="4062:6008" placeholder="..." />
                 <marker date="1379889244919" expanded="true" signature="4075:4394" placeholder="..." />
@@ -146,8 +146,8 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/functions-1.1.js" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/functions-1.1.js" />
       </list>
     </option>
   </component>
@@ -371,7 +371,11 @@
       <created>1379889026014</created>
       <updated>1379889026014</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Adding topic id filter">
+      <created>1379889254483</created>
+      <updated>1379889254483</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -410,8 +414,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true" />
-    <option name="CHECK_NEW_TODO" value="true" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <option name="myTodoPanelSettings">
       <value>
         <are-packages-shown value="false" />
@@ -467,16 +471,9 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/functions-1.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="221" column="33" selection-start="6788" selection-end="6788" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="232" column="75" selection-start="8297" selection-end="8297" vertical-scroll-proportion="0.5241449">
+        <state line="232" column="75" selection-start="8297" selection-end="8297" vertical-scroll-proportion="-29.84">
           <folding>
             <marker date="1379889244919" expanded="true" signature="4062:6008" placeholder="..." />
             <marker date="1379889244919" expanded="true" signature="4075:4394" placeholder="..." />
@@ -520,6 +517,13 @@
             <marker date="1379889244919" expanded="true" signature="7424:7515" placeholder="..." />
             <marker date="1379889244919" expanded="true" signature="14190:15056" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/functions-1.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="221" column="59" selection-start="6814" selection-end="6814" vertical-scroll-proportion="0.23138833">
+          <folding />
         </state>
       </provider>
     </entry>
