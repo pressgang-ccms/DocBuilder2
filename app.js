@@ -356,7 +356,12 @@ function processSpecs(updatedSpecs) {
                             "<head>\n\
                                 <script type='application/javascript' src='/javascript/jquery-2.0.3.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/moment.min.js'></script>\n\
-                                <script type='application/javascript' src='/javascript/overlay.js'></script>\n");
+                                <script type='application/javascript' src='/javascript/bootstrap.min.js'></script>\n\
+                                <script type='application/javascript' src='/javascript/raphael-min.js'></script>\n\
+                                <script type='application/javascript' src='/javascript/pie.js'></script>\n\
+                                <script type='application/javascript' src='/javascript/overlay.js'></script>\n\
+                                <link href='/css/pressgang.css' rel='stylesheet'>\n\
+                                <link href='/css/bootstrap.min.css' rel='stylesheet'>\n");
                         fs.writeFileSync(APACHE_HTML_DIR + "/" + id + "/index.html", contents);
                     } catch (ex) {
                         console.log("Could not edit and save HTML file");
@@ -370,12 +375,6 @@ function processSpecs(updatedSpecs) {
 							 */
 							processSpecs(updatedSpecs);
 						} else if (childCount == 0) {
-							/*
-							 	Otherwise, wait until the last child process has finished, and
-							 	restart the build.
-							 */
-							getListOfSpecsToBuild();
-
 							if (thisBuildTime) {
 
 								var runTimeSeconds = moment().unix() - thisBuildTime.unix();
