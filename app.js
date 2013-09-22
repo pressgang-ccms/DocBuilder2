@@ -203,6 +203,10 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 									<td>\n\
 										<input type=\"text\" id=\"topicIDFilter\" onkeyup=\"save_filter()\">\n\
 									</td>\n\
+									<td>\n\
+									</td>\n\
+									<td>\n\
+									</td>\n\
 								</tr>\n\
 							</table> \n\
 							</div>\n\
@@ -226,6 +230,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 							localStorage[\"titleFilter\"] = titleFilter.value;\n\
 							localStorage[\"versionFilter\"] = versionFilter.value;\n\
 							localStorage[\"idFilter\"] = idFilter.value;\n\
+							localStorage[\"topicIDFilter\"] = topicIDFilter.value;\n\
 							if (rebuildTimeout) {\n\
 								window.clearTimeout(rebuildTimeout);\n\
 								rebuildTimeout = null;\n\
