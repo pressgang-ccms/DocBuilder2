@@ -9,10 +9,9 @@ Scripts used on the DocBuilder Server
 
 The location of the script files can be changed if being run by another user.
 
-The index.html and js files should not be cached. Setting this up in Apache and RHEL involves:
+The index.html and js files should not be cached. Setting this up in Apache and RHEL involves adding the following to /etc/httpd/conf/httpd.conf:
 
-1. Setting "AllowOverride ALL" in /etc/httpd/conf/httpd.conf
-2. Creating a .htaccess file with the contents
+<Directory /var/www/html>
    <FilesMatch "index\.html|\.js$">
    FileETag None
    <ifModule mod_headers.c>
@@ -22,6 +21,8 @@ The index.html and js files should not be cached. Setting this up in Apache and 
    Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
    </ifModule>
    </FilesMatch>
+</Directory>
+
 
 See http://www.askapache.com/htaccess/using-http-headers-with-htaccess.html for more details
 
