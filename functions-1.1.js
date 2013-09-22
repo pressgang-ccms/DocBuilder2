@@ -219,7 +219,7 @@ function abstract_build_table(data, columns, sortableColumns) {
 
     var topicIds = null;
 
-    if (topicIDFilter.trim().matches(/(\\d+,)*\\d+/)) {
+    if (topicIDFilter != null && topicIDFilter.trim().matches(/(\\d+,)*\\d+/)) {
         topicIds = topicIDFilter.split(",");
     }
 
