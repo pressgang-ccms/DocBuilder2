@@ -266,7 +266,7 @@ function abstract_build_table(data, columns, sortableColumns) {
                 }
 
                 if (found) {
-                    secondFilteredData.filteredData(data[i]);
+                    secondFilteredData.push(filteredData[i]);
                 }
             }
 
