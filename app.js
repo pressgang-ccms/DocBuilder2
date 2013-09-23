@@ -504,10 +504,6 @@ function processPendingSpecUpdates() {
 				 	for (var i = 0, count = data.items.length; i < count; ++i) {
 						var item = data.items[i].item;
 
-                        if (!specDetailsCache[specId]) {
-                            specDetailsCache[specId] = {};
-                        }
-
 						if (item.title == "Title") {
 							specDetailsCache[specId].title = item.additionalText;
 						} else if (item.title == "Version") {
@@ -530,10 +526,6 @@ function processPendingSpecUpdates() {
         $.getJSON(specTagQuery,
             function(data) {
                 if (data.tags) {
-
-                    if (!specDetailsCache[specId]) {
-                        specDetailsCache[specId] = {};
-                    }
 
                     specDetailsCache[specId].tags = [];
 
@@ -561,9 +553,7 @@ function processPendingSpecUpdates() {
  */
 function getSpecs(lastRun, updatedSpecs, allSpecsArray) {
 
-	var specQuery = REST_SERVER + "/1/contentspecs/get/json/query;";
-
-	specQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%7D%5D%7D";
+	var specQuery = REST_SERVER + "/1/contentspecs/get/json/query;?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%7D%5D%7D";
 
 	//console.log("Getting specs from URL " + specQuery);
 	console.log("Finding content specs");
