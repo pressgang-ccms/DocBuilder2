@@ -2,14 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="decee61b-06ea-4134-a1b4-54fc006cf003" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript/overlay.js" afterPath="$PROJECT_DIR$/javascript/overlay.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1379893140494" ignored="false" />
+    <file path="/Dummy.txt" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1379893459521" ignored="false" />
     <file path="/functions-1.1.js" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1379889912251" ignored="false" />
     <file path="/README.md" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1379893423105" ignored="false" />
+    <file path="/overlay.js" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1379899553388" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,10 +79,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="0" selection-start="739" selection-end="739" vertical-scroll-proportion="0.3488372">
+            <state line="24" column="0" selection-start="739" selection-end="739" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -90,7 +91,7 @@
       <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="232" column="75" selection-start="8297" selection-end="8297" vertical-scroll-proportion="-29.84">
+            <state line="232" column="75" selection-start="8297" selection-end="8297" vertical-scroll-proportion="-17.24">
               <folding>
                 <marker date="1379889244919" expanded="true" signature="4062:6008" placeholder="..." />
                 <marker date="1379889244919" expanded="true" signature="4075:4394" placeholder="..." />
@@ -138,6 +139,17 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="overlay.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="76" column="43" selection-start="3078" selection-end="3078" vertical-scroll-proportion="0.515211">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FindManager">
@@ -159,6 +171,7 @@
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/functions-1.1.js" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/javascript/overlay.js" />
       </list>
     </option>
   </component>
@@ -234,6 +247,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="DocBuilder2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DocBuilder2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DocBuilder2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="javascript" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -414,7 +441,11 @@
       <created>1379893141812</created>
       <updated>1379893141812</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Added instructions on disabling the cache">
+      <created>1379893460943</created>
+      <updated>1379893460943</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -511,9 +542,23 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/functions-1.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="282" column="40" selection-start="9325" selection-end="9325" vertical-scroll-proportion="-28.96">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="0" selection-start="739" selection-end="739" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="232" column="75" selection-start="8297" selection-end="8297" vertical-scroll-proportion="-29.84">
+        <state line="232" column="75" selection-start="8297" selection-end="8297" vertical-scroll-proportion="-17.24">
           <folding>
             <marker date="1379889244919" expanded="true" signature="4062:6008" placeholder="..." />
             <marker date="1379889244919" expanded="true" signature="4075:4394" placeholder="..." />
@@ -560,17 +605,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/functions-1.1.js">
+    <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="282" column="40" selection-start="9325" selection-end="9325" vertical-scroll-proportion="-28.96">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="0" selection-start="739" selection-end="739" vertical-scroll-proportion="0.3488372">
-          <folding />
+        <state line="76" column="43" selection-start="3078" selection-end="3078" vertical-scroll-proportion="0.515211">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

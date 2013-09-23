@@ -63,12 +63,21 @@ var MATCH_PREFIX2 = "topicIds=";
  */
 var MATCH_BUILD_ID2 = MATCH_PREFIX2 + "[0-9]+";
 /**
+ * The server hostname and port
+ * @type {string}
+ */
+var BASE_SERVER =  "topika.ecs.eng.bne.redhat.com:8080";
+/**
  * The server that hosts the UI we want to connect to.
  * @type {string}
  */
-var SERVER = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1";
+var SERVER = "http://" + BASE_SERVER + "/pressgang-ccms/rest/1";
 //var SERVER = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1";
-
+/**
+ * The WebDAV server, without the protocol.
+ * @type {string}
+ */
+var WEBDAV_SERVER = BASE_SERVER + "/pressgang-ccms/webdav"
 /**
  * The start of the URL to the REST endpoint to call to get all the details for all the topics
  * @type {string}
