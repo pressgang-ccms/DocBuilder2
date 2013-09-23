@@ -234,7 +234,37 @@ function addOverlayIcons(topicId, RoleCreatePara) {
         createTagsPopover(topicId, bubbleDiv);
         createUrlsPopover(topicId, bubbleDiv);
         createDescriptionPopover(topicId, bubbleDiv);
+        createWebDAVPopover(topicId, bubbleDiv);
     }
+}
+
+function createWebDAVPopover(topicId, parent) {
+    var linkDiv = createIcon("webdav", topicId);
+    parent.appendChild(linkDiv);
+
+    var popover = createPopover("WebDAV", topicId);
+    document.body.appendChild(popover);
+
+    var path = "/TOPICS";
+    for (var charIndex = 0, charLength = topicId.toString().length; charIndex < charLength; ++charIndex) {
+        path += "/" + topicId.toString().charAt(charIndex);
+    }
+    path += "/TOPIC" + topicId;
+    var fullPath = path + "/" + topicId + ".xml";
+
+    popover.popoverContent.innerHTML = '';
+    $(popover.popoverContent).append($("<h3>WebDAV URLs</h3>"));
+    $(popover.popoverContent).append($("<ul><li>http://" + WEBDAV_SERVER + fullPath + "</li><li>http://" + WEBDAV_SERVER + path + "</li></ul>"))
+    $(popover.popoverContent).append($("<h3>Editing with cadaver:</h3>"));
+    $(popover.popoverContent).append($("<p>cadaver http://" + WEBDAV_SERVER + path + "<br/>edit " + topicId + ".xml<br/>exit</p>"));
+
+    linkDiv.onmouseover=function(){
+        openPopover(popover, linkDiv);
+    };
+
+
+
+    setupEvents(linkDiv, popover);
 }
 
 /**
