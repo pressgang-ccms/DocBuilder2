@@ -230,6 +230,7 @@ function abstract_build_table(data, columns, sortableColumns) {
         topicIds = topicIDFilter.split(",");
     }
 
+    outerLoop:
     for (var i = 0, count = data.length; i < count; ++i) {
         if (productFilter != null && productFilter.length != 0 && !data[i].productRaw.toLowerCase().match(productFilter.toLowerCase())) {
             continue;
@@ -250,7 +251,7 @@ function abstract_build_table(data, columns, sortableColumns) {
         if (specObsoleteFilter != null && specObsoleteFilter.toString().toLowerCase() == false.toString().toLowerCase()) {
             for (var tagIndex = 0, tagCount = data[i].tags.length; tagIndex < tagCount; ++tagIndex) {
                 if (data[i].tags[tagIndex] == OBSOLETE_TAG) {
-                    continue;
+                    continue outerLoop;
                 }
             }
         }
