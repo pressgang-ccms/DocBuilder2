@@ -121,209 +121,200 @@ var processingPendingCacheUpdates = false;
  */
 var diff = null;
 
+var contentSpecRESTCallFailed = false;
+var topicRESTCallFailed = false;
+
 /**
  * Called when the modified topics and specs have been found. Once both
  * functions have called this function, the process of actually building the
  * books will start.
  */
 function buildBooks(updatedSpecs, allSpecsArray) {
-	if (specsProcessed && topicsProcessed) {
 
-		indexHtml = "<html>\n\
-			<head>\n\
-				<title>Docbuilder Index</title>\n\
-				<link rel=\"stylesheet\" href=\"index.css\"/>\n\
-				<script src=\"http://yui.yahooapis.com/3.10.0/build/yui/yui-min.js\"></script>\n\
-				<script src=\"http://code.jquery.com/jquery-2.0.3.min.js\"></script>\n\
-				<script src=\"functions-1.1.js\" ></script>\n\
-			</head>\n\
-			<body onload=\"setLangSelectLanguage()\">\n\
-				<div class=\"container\">\n\
-					<div class=\"langBar\">Language:\n\
-						<select id=\"lang\" class=\"langSelect\" onchange=\"changeLang(this)\">\n\
-							<option selected value=\"\">English</option>\n\
-							<option value=\"zh-Hans\">Chinese</option>\n\
-							<option value=\"fr\">French</option>\n\
-							<option value=\"de\">German</option>\n\
-							<option value=\"ja\">Japanese</option>\n\
-							<option value=\"pt-BR\">Portuguese</option>\n\
-							<option value=\"es\">Spanish</option>\n\
-						</select>\n\
+	indexHtml = "<html>\n\
+		<head>\n\
+			<title>Docbuilder Index</title>\n\
+			<link rel=\"stylesheet\" href=\"index.css\"/>\n\
+			<script src=\"http://yui.yahooapis.com/3.10.0/build/yui/yui-min.js\"></script>\n\
+			<script src=\"http://code.jquery.com/jquery-2.0.3.min.js\"></script>\n\
+			<script src=\"functions-1.1.js\" ></script>\n\
+		</head>\n\
+		<body onload=\"setLangSelectLanguage()\">\n\
+			<div class=\"container\">\n\
+				<div class=\"langBar\">Language:\n\
+					<select id=\"lang\" class=\"langSelect\" onchange=\"changeLang(this)\">\n\
+						<option selected value=\"\">English</option>\n\
+						<option value=\"zh-Hans\">Chinese</option>\n\
+						<option value=\"fr\">French</option>\n\
+						<option value=\"de\">German</option>\n\
+						<option value=\"ja\">Japanese</option>\n\
+						<option value=\"pt-BR\">Portuguese</option>\n\
+						<option value=\"es\">Spanish</option>\n\
+					</select>\n\
+				</div>\n\
+				<div class=\"content\">\n\
+					<div>\n\
+						<img height=\"87\" src=\"pg.png\" width=\"879\">\n\
 					</div>\n\
-					<div class=\"content\">\n\
-						<div>\n\
-							<img height=\"87\" src=\"pg.png\" width=\"879\">\n\
-						</div>\n\
-						<div style=\"margin-top:1em\">\n\
-							<p>DocBuilder is a service that automatically rebuilds content specifications as they are created or edited.</p>\n\
-							<p>Each content spec has three links: a link to the compiled book itself, a link to the build log, and a link to the publican log.</p>\n\
-							<p>If a book could not be built, first check the build log. This log contains information that may indicate syntax errors in the content specification. You can also view this log to see when the document was last built.</p>\n\
-							<p>If the build log has no errors, check the publican log. This may indicate some syntax errors in the XML.</p>\n\
-							<p>The topics in each document include a \"Edit this topic\" link, which will take you to the topic in the CCMS.</p>\n\
-							<p>To view the latest changes to a document, simply refresh the page.</p><p>Estimated Rebuild Time: " + (diff == null ? "Unknown" : (diff/60).toFixed(1)) + " minutes</p>\n\
+					<div style=\"margin-top:1em\">\n\
+						<p>DocBuilder is a service that automatically rebuilds content specifications as they are created or edited.</p>\n\
+						<p>Each content spec has three links: a link to the compiled book itself, a link to the build log, and a link to the publican log.</p>\n\
+						<p>If a book could not be built, first check the build log. This log contains information that may indicate syntax errors in the content specification. You can also view this log to see when the document was last built.</p>\n\
+						<p>If the build log has no errors, check the publican log. This may indicate some syntax errors in the XML.</p>\n\
+						<p>The topics in each document include a \"Edit this topic\" link, which will take you to the topic in the CCMS.</p>\n\
+						<p>To view the latest changes to a document, simply refresh the page.</p><p>Estimated Rebuild Time: " + (diff == null ? "Unknown" : (diff/60).toFixed(1)) + " minutes</p>\n\
+					</div>\n\
+					<div></div>\n\
+					<div>\n\
+						<table>\n\
+							<tr>\n\
+								<td>\n\
+									ID Filter\n\
+								</td>\n\
+								<td>\n\
+									<input type=\"text\" id=\"idFilter\" onkeyup=\"save_filter()\">\n\
+								</td>\n\
+								<td>\n\
+									Product Filter\n\
+								</td>\n\
+								<td>\n\
+									<input type=\"text\" id=\"productFilter\" onkeyup=\"save_filter()\">\n\
+								</td>\n\
+								<td rowspan=\"2\">\n\
+									<button onclick=\"reset_filter()\">Reset</button>\n\
+								</td>\n\
+							</tr>\n\
+							<tr>\n\
+								<td>\n\
+									Version Filter\n\
+								</td>\n\
+								<td>\n\
+									<input type=\"text\" id=\"versionFilter\" onkeyup=\"save_filter()\">\n\
+								</td>\n\
+								<td>\n\
+									Title Filter\n\
+								</td>\n\
+								<td>\n\
+									<input type=\"text\" id=\"titleFilter\" onkeyup=\"save_filter()\">\n\
+								</td>\n\
+							</tr>\n\
+							<tr>\n\
+								<td>\n\
+									Topic ID Filter\n\
+								</td>\n\
+								<td>\n\
+									<input type=\"text\" id=\"topicIDFilter\" onkeyup=\"save_filter()\">\n\
+								</td>\n\
+								<td>\n\
+								</td>\n\
+								<td>\n\
+								</td>\n\
+							</tr>\n\
+						</table> \n\
 						</div>\n\
 						<div></div>\n\
-						<div>\n\
-							<table>\n\
-								<tr>\n\
-									<td>\n\
-										ID Filter\n\
-									</td>\n\
-									<td>\n\
-										<input type=\"text\" id=\"idFilter\" onkeyup=\"save_filter()\">\n\
-									</td>\n\
-									<td>\n\
-										Product Filter\n\
-									</td>\n\
-									<td>\n\
-										<input type=\"text\" id=\"productFilter\" onkeyup=\"save_filter()\">\n\
-									</td>\n\
-									<td rowspan=\"2\">\n\
-										<button onclick=\"reset_filter()\">Reset</button>\n\
-									</td>\n\
-								</tr>\n\
-								<tr>\n\
-									<td>\n\
-										Version Filter\n\
-									</td>\n\
-									<td>\n\
-										<input type=\"text\" id=\"versionFilter\" onkeyup=\"save_filter()\">\n\
-									</td>\n\
-									<td>\n\
-										Title Filter\n\
-									</td>\n\
-									<td>\n\
-										<input type=\"text\" id=\"titleFilter\" onkeyup=\"save_filter()\">\n\
-									</td>\n\
-								</tr>\n\
-								<tr>\n\
-									<td>\n\
-										Topic ID Filter\n\
-									</td>\n\
-									<td>\n\
-										<input type=\"text\" id=\"topicIDFilter\" onkeyup=\"save_filter()\">\n\
-									</td>\n\
-									<td>\n\
-									</td>\n\
-									<td>\n\
-									</td>\n\
-								</tr>\n\
-							</table> \n\
-							</div>\n\
-							<div></div>\n\
-						</div>\n\
-						</div>\n\
-						<script>\n\
-							// build the array that holds the details of the books \n\
-							var data = [\n";
+					</div>\n\
+					</div>\n\
+					<script>\n\
+						// build the array that holds the details of the books \n\
+						var data = [\n";
 
-		finishProcessing = function() {
-			indexHtml += " ];\n\
-						rebuildTimeout = null;\n\
-						productFilter.value = localStorage[\"productFilter\"] || \"\"; \n\
-						titleFilter.value = localStorage[\"titleFilter\"] || \"\"; \n\
-						versionFilter.value = localStorage[\"versionFilter\"] || \"\"; \n\
-						idFilter.value = localStorage[\"idFilter\"] || \"\"; \n\
-						topicIDFilter.value = localStorage[\"topicIDFilter\"] || \"\"; \n\
-						save_filter = function() {\n\
-							localStorage[\"productFilter\"] = productFilter.value;\n\
-							localStorage[\"titleFilter\"] = titleFilter.value;\n\
-							localStorage[\"versionFilter\"] = versionFilter.value;\n\
-							localStorage[\"idFilter\"] = idFilter.value;\n\
-							localStorage[\"topicIDFilter\"] = topicIDFilter.value;\n\
-							if (rebuildTimeout) {\n\
-								window.clearTimeout(rebuildTimeout);\n\
-								rebuildTimeout = null;\n\
-							}\n\
-							rebuildTimeout = setTimeout(function(){\n\
-								build_table(data);\n\
-								rebuildTimeout = null;\n\
-							},1000);\n\
+	finishProcessing = function() {
+		indexHtml += " ];\n\
+					rebuildTimeout = null;\n\
+					productFilter.value = localStorage[\"productFilter\"] || \"\"; \n\
+					titleFilter.value = localStorage[\"titleFilter\"] || \"\"; \n\
+					versionFilter.value = localStorage[\"versionFilter\"] || \"\"; \n\
+					idFilter.value = localStorage[\"idFilter\"] || \"\"; \n\
+					topicIDFilter.value = localStorage[\"topicIDFilter\"] || \"\"; \n\
+					save_filter = function() {\n\
+						localStorage[\"productFilter\"] = productFilter.value;\n\
+						localStorage[\"titleFilter\"] = titleFilter.value;\n\
+						localStorage[\"versionFilter\"] = versionFilter.value;\n\
+						localStorage[\"idFilter\"] = idFilter.value;\n\
+						localStorage[\"topicIDFilter\"] = topicIDFilter.value;\n\
+						if (rebuildTimeout) {\n\
+							window.clearTimeout(rebuildTimeout);\n\
+							rebuildTimeout = null;\n\
 						}\n\
-						reset_filter = function() {\n\
-							localStorage[\"productFilter\"] = \"\";\n\
-							localStorage[\"titleFilter\"] = \"\";\n\
-							localStorage[\"versionFilter\"] = \"\";\n\
-							localStorage[\"idFilter\"] = \"\";\n\
-							localStorage[\"topicIDFilter\"] = \"\";\n\
-							productFilter.value = \"\";\n\
-							titleFilter.value = \"\";\n\
-							versionFilter.value = \"\";\n\
-							idFilter.value = \"\";\n\
-							topicIDFilter.value = \"\";\n\
-							if (rebuildTimeout) {\n\
-								window.clearTimeout(rebuildTimeout);\n\
-								rebuildTimeout = null;\n\
-							}\n\
+						rebuildTimeout = setTimeout(function(){\n\
 							build_table(data);\n\
+							rebuildTimeout = null;\n\
+						},1000);\n\
+					}\n\
+					reset_filter = function() {\n\
+						localStorage[\"productFilter\"] = \"\";\n\
+						localStorage[\"titleFilter\"] = \"\";\n\
+						localStorage[\"versionFilter\"] = \"\";\n\
+						localStorage[\"idFilter\"] = \"\";\n\
+						localStorage[\"topicIDFilter\"] = \"\";\n\
+						productFilter.value = \"\";\n\
+						titleFilter.value = \"\";\n\
+						versionFilter.value = \"\";\n\
+						idFilter.value = \"\";\n\
+						topicIDFilter.value = \"\";\n\
+						if (rebuildTimeout) {\n\
+							window.clearTimeout(rebuildTimeout);\n\
+							rebuildTimeout = null;\n\
 						}\n\
 						build_table(data);\n\
-					</script>\n\
-				</body>\n\
-			</html>";
+					}\n\
+					build_table(data);\n\
+				</script>\n\
+			</body>\n\
+		</html>";
 
-			processSpecs(updatedSpecs);
-		}
-
-		processSpecDetails = function(processIndex) {
-			if (processIndex >= allSpecsArray.length) {
-				finishProcessing();
-			} else {
-				var specId = allSpecsArray[processIndex];
-
-				getLatestFile(PUBLICAN_BOOK_ZIPS_COMPLETE, specId + ".*?\\.zip", function(error, latest, latestFile) {
-
-					var latestFileFixed = latestFile == null ? "" :encodeURIComponent(latestFile);
-
-					var fixedSpecDetails = specDetailsCache[specId] ?
-					{
-						title: specDetailsCache[specId].title ? specDetailsCache[specId].title.replace(/'/g, "\\'") : "",
-						version: specDetailsCache[specId].version ? specDetailsCache[specId].version.replace(/'/g, "\\'") : "",
-						product: specDetailsCache[specId].product ? specDetailsCache[specId].product.replace(/'/g, "\\'") : ""
-					}
-					:
-					{
-						title: "To Be Synced",
-						version: "To Be Synced",
-						product: "To Be Synced"
-					};
-					
-					indexHtml += "{\n\
-						idRaw: " + specId + ",\n\
-						id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specId + "\" target=\"_top\">" + specId + "</a>',\n\
-						versionRaw: '" + fixedSpecDetails.version + "',\n\
-						version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\" target=\"_top\">" + fixedSpecDetails.version + "</a>',\n\
-						productRaw: '" + fixedSpecDetails.product + "',\n\
-						product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\" target=\"_top\">" + fixedSpecDetails.product + "</a>',\n\
-						titleRaw: '" + fixedSpecDetails.title + "', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\"  target=\"_top\">" + fixedSpecDetails.title + "</a>',\n\
-						remarks: '<a href=\"" + specId + "/remarks\"><button>With Remarks</button></a>',\n\
-						buildlog: '<a href=\"" + specId + "/build.log\"><button>Build Log</button></a>',\n\
-						publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + latestFileFixed + "\"><button>Publican ZIP</button></a>',\n\
-						publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>'\n\
-					},\n";
-
-					/*indexHtml += "{\n\
-						idRaw: " + specId + ",\n\
-						id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specId + "\" target=\"_top\">" + specId + "</a>',\n\
-						versionRaw: '" + fixedSpecDetails.version + "',\n\
-						version: '<a href=\"" + specId + "\" target=\"_top\">" + fixedSpecDetails.version + "</a>',\n\
-						productRaw: '" + fixedSpecDetails.product + "',\n\
-						product: '<a href=\"" + specId + "\" target=\"_top\">" + fixedSpecDetails.product + "</a>',\n\
-						titleRaw: '" + fixedSpecDetails.title + "', \n\
-						title: '<a href=\"" + specId + "\"  target=\"_top\">" + fixedSpecDetails.title + "</a>',\n\
-						remarks: '<a href=\"" + specId + "/remarks\"><button>With Remarks</button></a>',\n\
-						buildlog: '<a href=\"" + specId + "/build.log\"><button>Build Log</button></a>',\n\
-						publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + latestFileFixed + "\"><button>Publican ZIP</button></a>',\n\
-						publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>'\n\
-					},\n";*/
-
-					processSpecDetails(++processIndex);
-				});
-			}
-		}
-
-		processSpecDetails(0);
+		processSpecs(updatedSpecs);
 	}
+
+	processSpecDetails = function(processIndex) {
+		if (processIndex > allSpecsArray.length) {
+			console.log("Error: processIndex > allSpecsArray.length");
+			return;
+		}
+
+		if (processIndex == allSpecsArray.length) {
+			finishProcessing();
+		} else {
+			var specId = allSpecsArray[processIndex];
+
+			getLatestFile(PUBLICAN_BOOK_ZIPS_COMPLETE, specId + ".*?\\.zip", function(error, latest, latestFile) {
+
+				var latestFileFixed = latestFile == null ? "" :encodeURIComponent(latestFile);
+
+				var fixedSpecDetails = specDetailsCache[specId] ?
+				{
+					title: specDetailsCache[specId].title ? specDetailsCache[specId].title.replace(/'/g, "\\'") : "",
+					version: specDetailsCache[specId].version ? specDetailsCache[specId].version.replace(/'/g, "\\'") : "",
+					product: specDetailsCache[specId].product ? specDetailsCache[specId].product.replace(/'/g, "\\'") : ""
+				}
+				:
+				{
+					title: "To Be Synced",
+					version: "To Be Synced",
+					product: "To Be Synced"
+				};
+
+				indexHtml += "{\n\
+					idRaw: " + specId + ",\n\
+					id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specId + "\" target=\"_top\">" + specId + "</a>',\n\
+					versionRaw: '" + fixedSpecDetails.version + "',\n\
+					version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\" target=\"_top\">" + fixedSpecDetails.version + "</a>',\n\
+					productRaw: '" + fixedSpecDetails.product + "',\n\
+					product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\" target=\"_top\">" + fixedSpecDetails.product + "</a>',\n\
+					titleRaw: '" + fixedSpecDetails.title + "', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\"  target=\"_top\">" + fixedSpecDetails.title + "</a>',\n\
+					remarks: '<a href=\"" + specId + "/remarks\"><button>With Remarks</button></a>',\n\
+					buildlog: '<a href=\"" + specId + "/build.log\"><button>Build Log</button></a>',\n\
+					publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + latestFileFixed + "\"><button>Publican ZIP</button></a>',\n\
+					publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>'\n\
+				},\n";
+
+				processSpecDetails(++processIndex);
+			});
+		}
+	}
+
+	processSpecDetails(0);
 }
 
 /**
@@ -380,23 +371,18 @@ function processSpecs(updatedSpecs) {
 							 */
 							processSpecs(updatedSpecs);
 						} else if (childCount == 0) {
-							if (thisBuildTime) {
+							var runTimeSeconds = moment().unix() - thisBuildTime.unix();
+							var delay = (DELAY_WHEN_NO_UPDATES / 1000) - runTimeSeconds;
 
-								var runTimeSeconds = moment().unix() - thisBuildTime.unix();
-								var delay = (DELAY_WHEN_NO_UPDATES / 1000) - runTimeSeconds;
-
-								if (delay <= 0) {
-									getListOfSpecsToBuild();
-								} else {
-
-									console.log("Delaying for " + delay + " seconds");
-
-									setTimeout((function() {
-										getListOfSpecsToBuild();
-									}), delay * 1000);
-								}
-							} else {
+							if (delay <= 0) {
 								getListOfSpecsToBuild();
+							} else {
+
+								console.log("Delaying for " + delay + " seconds");
+
+								setTimeout((function() {
+									getListOfSpecsToBuild();
+								}), delay * 1000);
 							}
 						}
 					}
@@ -411,6 +397,7 @@ function processSpecs(updatedSpecs) {
  * @param lastRun The time DocBuilder was last run
  */
 function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
+
 	/**
 	 * If there is no lastRun then we know that all specs have to be rebuilt. This is accounted
 	 * for in the getSpecs() function. There is no need to get all the topics, so we just
@@ -455,11 +442,12 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
 			}
 
 			topicsProcessed = true;
-			buildBooks(updatedSpecs, allSpecsArray);
+			routeAfterRESTCalls(updatedSpecs, allSpecsArray);
 		}).error(function(jqXHR, textStatus, errorThrown) {
 			console.log("Call to " + topicQuery + " failed!");
 			console.log(errorThrown);
-			restartAfterFailure();
+			topicRESTCallFailed = true;
+			routeAfterRESTCalls();
 		});
 }
 
@@ -524,6 +512,7 @@ function processPendingSpecUpdates() {
  * @param lastRun The time DocBuilder was last run
  */
 function getSpecs(lastRun, updatedSpecs, allSpecsArray) {
+
 	var specQuery = REST_SERVER + "/1/contentspecs/get/json/query;";
 
 	specQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%7D%5D%7D";
@@ -563,12 +552,42 @@ function getSpecs(lastRun, updatedSpecs, allSpecsArray) {
 			}
 
 			specsProcessed = true;
-			buildBooks(updatedSpecs, allSpecsArray);
+			routeAfterRESTCalls(updatedSpecs, allSpecsArray);
 		}).error(function(jqXHR, textStatus, errorThrown) {
 			console.log("Call to " + specQuery + " failed!");
 			console.log(errorThrown);
-			restartAfterFailure();
+			contentSpecRESTCallFailed = true;
+			routeAfterRESTCalls();
 		});
+}
+
+/**
+ * Two REST calls need to compete before we can move on. There are 4 possible outcomes of these 2 REST calls:
+ * 1. both succeed
+ * 2. both fail
+ * 3. the spec call succeeds while the topic call fails
+ * 4. the topic call succeeds while the spec call fails
+ *
+ * If both calls succeed, we want to process the changed specs. If one or more of the calls fail, we want to
+ * restart after a short delay.
+ *
+ * If one REST call has not completed when this function is called, no decision is made.
+ */
+function routeAfterRESTCalls(updatedSpecs, allSpecsArray) {
+
+	if (specsProcessed && topicsProcessed) {
+		// both REST calls succeeded
+		buildBooks(updatedSpecs, allSpecsArray);
+	} else if (contentSpecRESTCallFailed && topicRESTCallFailed) {
+		// both REST calls failed
+		restartAfterFailure();
+	} else if ((specsProcessed && topicRESTCallFailed) ||
+			   (topicsProcessed && contentSpecRESTCallFailed)) {
+		// One rest call succeeded while the other failed
+		restartAfterFailure();
+	}
+
+	// otherwise one REST call is still to succeed or fail, so do nothing
 }
 
 /**
@@ -578,7 +597,20 @@ function getSpecs(lastRun, updatedSpecs, allSpecsArray) {
 function restartAfterFailure() {
 	indexHtml = null;
 	thisBuildTime = null;
-	getListOfSpecsToBuild();
+
+	var runTimeSeconds = moment().unix() - thisBuildTime.unix();
+	var delay = (DELAY_WHEN_NO_UPDATES / 1000) - runTimeSeconds;
+
+	if (delay <= 0) {
+		getListOfSpecsToBuild();
+	} else {
+
+		console.log("Delaying for " + delay + " seconds");
+
+		setTimeout((function() {
+			getListOfSpecsToBuild();
+		}), delay * 1000);
+	}
 }
 
 /**
@@ -628,6 +660,8 @@ function getListOfSpecsToBuild() {
 	 */
 	topicsProcessed = false;
 	specsProcessed = false;
+	contentSpecRESTCallFailed = false;
+	topicRESTCallFailed = false;
 	var updatedSpecs = new set([]);
 	var allSpecs = [];
 
