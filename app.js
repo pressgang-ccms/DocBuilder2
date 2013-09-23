@@ -293,7 +293,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 					title: specDetailsCache[specId].title ? specDetailsCache[specId].title.replace(/'/g, "\\'") : "",
 					version: specDetailsCache[specId].version ? specDetailsCache[specId].version.replace(/'/g, "\\'") : "",
 					product: specDetailsCache[specId].product ? specDetailsCache[specId].product.replace(/'/g, "\\'") : "",
-                    tags: specDetailsCache[specId].tags ? [] : specDetailsCache[specId].tags
+                    tags: specDetailsCache[specId].tags ? specDetailsCache[specId].tags : []
 				}
 				:
 				{
