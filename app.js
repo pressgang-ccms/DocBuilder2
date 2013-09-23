@@ -210,7 +210,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 								    Show Obsolete Specs\n\
 								</td>\n\
 								<td>\n\
-								    <input type=\"checkbox\" id=\"specObsoleteFilter\" onkeyup=\"save_filter()\">\n\
+								    <input type=\"checkbox\" id=\"specObsoleteFilter\" onchange=\"save_filter()\">\n\
 								</td>\n\
 							</tr>\n\
 						</table> \n\
@@ -230,14 +230,15 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 					versionFilter.value = localStorage[\"versionFilter\"] || \"\"; \n\
 					idFilter.value = localStorage[\"idFilter\"] || \"\"; \n\
 					topicIDFilter.value = localStorage[\"topicIDFilter\"] || \"\"; \n\
-					specObsoleteFilter.value = localStorage[\"specObsoleteFilter\"] || \"\"; \n\
+					specObsoleteFilter.checked = localStorage[\"specObsoleteFilter\"] && localStorage[\"specObsoleteFilter\"].length != 0 \n\
+                        ? (localStorage[\"specObsoleteFilter\"].toLowerCase() == true.toString().toLowerCase() ? true : false) : false; \n\
 					save_filter = function() {\n\
 						localStorage[\"productFilter\"] = productFilter.value;\n\
 						localStorage[\"titleFilter\"] = titleFilter.value;\n\
 						localStorage[\"versionFilter\"] = versionFilter.value;\n\
 						localStorage[\"idFilter\"] = idFilter.value;\n\
 						localStorage[\"topicIDFilter\"] = topicIDFilter.value;\n\
-						localStorage[\"specObsoleteFilter\"] = specObsoleteFilter.value;\n\
+						localStorage[\"specObsoleteFilter\"] = specObsoleteFilter.checked.toString();\n\
 						if (rebuildTimeout) {\n\
 							window.clearTimeout(rebuildTimeout);\n\
 							rebuildTimeout = null;\n\
