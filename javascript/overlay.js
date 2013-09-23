@@ -63,12 +63,21 @@ var MATCH_PREFIX2 = "topicIds=";
  */
 var MATCH_BUILD_ID2 = MATCH_PREFIX2 + "[0-9]+";
 /**
+ * The server hostname and port
+ * @type {string}
+ */
+var BASE_SERVER =  "topika.ecs.eng.bne.redhat.com:8080";
+/**
  * The server that hosts the UI we want to connect to.
  * @type {string}
  */
-var SERVER = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1";
+var SERVER = "http://" + BASE_SERVER + "/pressgang-ccms/rest/1";
 //var SERVER = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1";
-
+/**
+ * The WebDAV server, without the protocol.
+ * @type {string}
+ */
+var WEBDAV_SERVER = BASE_SERVER + "/pressgang-ccms/webdav"
 /**
  * The start of the URL to the REST endpoint to call to get all the details for all the topics
  * @type {string}
@@ -225,7 +234,37 @@ function addOverlayIcons(topicId, RoleCreatePara) {
         createTagsPopover(topicId, bubbleDiv);
         createUrlsPopover(topicId, bubbleDiv);
         createDescriptionPopover(topicId, bubbleDiv);
+        createWebDAVPopover(topicId, bubbleDiv);
     }
+}
+
+function createWebDAVPopover(topicId, parent) {
+    var linkDiv = createIcon("webdav", topicId);
+    parent.appendChild(linkDiv);
+
+    var popover = createPopover("WebDAV", topicId);
+    document.body.appendChild(popover);
+
+    var path = "/TOPICS";
+    for (var charIndex = 0, charLength = topicId.toString().length; charIndex < charLength; ++charIndex) {
+        path += "/" + topicId.toString().charAt(charIndex);
+    }
+    path += "/TOPIC" + topicId;
+    var fullPath = path + "/" + topicId + ".xml";
+
+    popover.popoverContent.innerHTML = '';
+    $(popover.popoverContent).append($("<h3>WebDAV URLs</h3>"));
+    $(popover.popoverContent).append($("<ul><li>http://" + WEBDAV_SERVER + fullPath + "</li><li>webdav://" + WEBDAV_SERVER + fullPath + "</li></ul>"))
+    $(popover.popoverContent).append($("<h3>Editing With Cadaver (copy and paste into a terminal):</h3>"));
+    $(popover.popoverContent).append($("<p>cadaver http://" + WEBDAV_SERVER + path + "<br/>edit " + topicId + ".xml<br/>exit</p>"));
+
+    linkDiv.onmouseover=function(){
+        openPopover(popover, linkDiv);
+    };
+
+
+
+    setupEvents(linkDiv, popover);
 }
 
 /**

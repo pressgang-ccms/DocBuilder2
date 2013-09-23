@@ -134,6 +134,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 				<title>Docbuilder Index</title>\n\
 				<link rel=\"stylesheet\" href=\"index.css\"/>\n\
 				<script src=\"http://yui.yahooapis.com/3.10.0/build/yui/yui-min.js\"></script>\n\
+				<script src=\"http://code.jquery.com/jquery-2.0.3.min.js\"></script>\n\
 				<script src=\"functions-1.1.js\" ></script>\n\
 			</head>\n\
 			<body onload=\"setLangSelectLanguage()\">\n\
@@ -195,6 +196,18 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 										<input type=\"text\" id=\"titleFilter\" onkeyup=\"save_filter()\">\n\
 									</td>\n\
 								</tr>\n\
+								<tr>\n\
+									<td>\n\
+										Topic ID Filter\n\
+									</td>\n\
+									<td>\n\
+										<input type=\"text\" id=\"topicIDFilter\" onkeyup=\"save_filter()\">\n\
+									</td>\n\
+									<td>\n\
+									</td>\n\
+									<td>\n\
+									</td>\n\
+								</tr>\n\
 							</table> \n\
 							</div>\n\
 							<div></div>\n\
@@ -211,11 +224,13 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 						titleFilter.value = localStorage[\"titleFilter\"] || \"\"; \n\
 						versionFilter.value = localStorage[\"versionFilter\"] || \"\"; \n\
 						idFilter.value = localStorage[\"idFilter\"] || \"\"; \n\
+						topicIDFilter.value = localStorage[\"topicIDFilter\"] || \"\"; \n\
 						save_filter = function() {\n\
 							localStorage[\"productFilter\"] = productFilter.value;\n\
 							localStorage[\"titleFilter\"] = titleFilter.value;\n\
 							localStorage[\"versionFilter\"] = versionFilter.value;\n\
 							localStorage[\"idFilter\"] = idFilter.value;\n\
+							localStorage[\"topicIDFilter\"] = topicIDFilter.value;\n\
 							if (rebuildTimeout) {\n\
 								window.clearTimeout(rebuildTimeout);\n\
 								rebuildTimeout = null;\n\
@@ -230,10 +245,12 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 							localStorage[\"titleFilter\"] = \"\";\n\
 							localStorage[\"versionFilter\"] = \"\";\n\
 							localStorage[\"idFilter\"] = \"\";\n\
+							localStorage[\"topicIDFilter\"] = \"\";\n\
 							productFilter.value = \"\";\n\
 							titleFilter.value = \"\";\n\
 							versionFilter.value = \"\";\n\
 							idFilter.value = \"\";\n\
+							topicIDFilter.value = \"\";\n\
 							if (rebuildTimeout) {\n\
 								window.clearTimeout(rebuildTimeout);\n\
 								rebuildTimeout = null;\n\

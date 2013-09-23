@@ -186,12 +186,42 @@ function build_table_with_pdfs(data) {
  * from the passed columns and sortable column arrays.
  */
 function abstract_build_table(data, columns, sortableColumns) {
+
+    var buildTable = function(filteredData) {
+        var existingTableDiv = document.getElementById("table");
+        if (existingTableDiv) {
+            existingTableDiv.parentNode.removeChild(existingTableDiv);
+        }
+
+        var tableDiv = document.createElement("div");
+        tableDiv.style.margineTop = "1em";
+        tableDiv.className = "yui3-skin-sam";
+        tableDiv.id = "table";
+        document.body.appendChild(tableDiv);
+
+        YUI().use('datatable', function (Y) {
+            var table = new Y.DataTable({
+                columns: columns,
+                sortable: sortableColumns,
+                data: filteredData
+            });
+            table.render("#table");
+        });
+    }
+
     var filteredData = [];
 
     var productFilter = localStorage["productFilter"];
     var titleFilter = localStorage["titleFilter"];
     var versionFilter = localStorage["versionFilter"];
     var idFilter = localStorage["idFilter"];
+    var topicIDFilter = localStorage["topicIDFilter"];
+
+    var topicIds = null;
+
+    if (topicIDFilter != null && topicIDFilter.trim().match(/(\d+,)*\d+/)) {
+        topicIds = topicIDFilter.split(",");
+    }
 
     for (var i = 0, count = data.length; i < count; ++i) {
         if (productFilter != null && productFilter.length != 0 && !data[i].productRaw.toLowerCase().match(productFilter.toLowerCase())) {
@@ -213,23 +243,52 @@ function abstract_build_table(data, columns, sortableColumns) {
         filteredData.push(data[i]);
     }
 
-    var existingTableDiv = document.getElementById("table");
-    if (existingTableDiv) {
-        existingTableDiv.parentNode.removeChild(existingTableDiv);
+    if (!topicIds) {
+        buildTable(filteredData);
+    } else {
+        var specIds = [];
+        var secondFilteredData = [];
+        var queryStart = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/contentspecnodes/get/json/query;csNodeType=0%2C9%2C10;csNodeEntityId="
+        var queryEnd = "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpec%22%7D%7D%5D%7D%5D%7D";
+
+        var topicsCount = topicIds.length;
+        var completedQueries = 0;
+
+        var secondFilter = function() {
+            for (var i = 0, count = filteredData.length; i < count; ++i) {
+
+                var found = false;
+                for (var specIndex = 0, specCount = specIds.length; specIndex < specCount; ++specIndex)  {
+                    if (String(filteredData[i].idRaw).match(specIds[specIndex].toString())) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found) {
+                    secondFilteredData.push(filteredData[i]);
+                }
+            }
+
+            buildTable(secondFilteredData);
+        }
+
+        for (var topicIndex = 0; topicIndex < topicsCount; ++topicIndex) {
+            $.getJSON(queryStart + topicIds[topicIndex] + queryEnd, function(data){
+                ++completedQueries;
+
+                for (var itemIndex = 0, itemCount = data.items.length; itemIndex < itemCount; ++itemIndex) {
+                    var item = data.items[itemIndex].item;
+                    var specId = item.contentSpec.id;
+                    specIds.push(specId);
+                }
+
+                if (completedQueries == topicsCount) {
+                    secondFilter();
+                }
+            });
+        }
     }
 
-    var tableDiv = document.createElement("div");
-    tableDiv.style.margineTop = "1em";
-    tableDiv.className = "yui3-skin-sam";
-    tableDiv.id = "table";
-    document.body.appendChild(tableDiv);
 
-    YUI().use('datatable', function (Y) {
-        var table = new Y.DataTable({
-            columns: columns,
-            sortable: sortableColumns,
-            data: filteredData
-        });
-        table.render("#table");
-    });
 }
