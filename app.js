@@ -22,6 +22,7 @@ var exec = require('child_process').exec;
 	so there is little downside to having this information being slightly out of sync.
  */
 
+
 /**
  * The REST server that the DocBuilder will connect to.
  * @type {string}
@@ -206,8 +207,10 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 									<input type=\"text\" id=\"topicIDFilter\" onkeyup=\"save_filter()\">\n\
 								</td>\n\
 								<td>\n\
+								    Show Obsolete Specs\n\
 								</td>\n\
 								<td>\n\
+								    <input type=\"checkbox\" id=\"specObsoleteFilter\" onkeyup=\"save_filter()\">\n\
 								</td>\n\
 							</tr>\n\
 						</table> \n\
@@ -227,12 +230,14 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 					versionFilter.value = localStorage[\"versionFilter\"] || \"\"; \n\
 					idFilter.value = localStorage[\"idFilter\"] || \"\"; \n\
 					topicIDFilter.value = localStorage[\"topicIDFilter\"] || \"\"; \n\
+					specObsoleteFilter.value = localStorage[\"specObsoleteFilter\"] || \"\"; \n\
 					save_filter = function() {\n\
 						localStorage[\"productFilter\"] = productFilter.value;\n\
 						localStorage[\"titleFilter\"] = titleFilter.value;\n\
 						localStorage[\"versionFilter\"] = versionFilter.value;\n\
 						localStorage[\"idFilter\"] = idFilter.value;\n\
 						localStorage[\"topicIDFilter\"] = topicIDFilter.value;\n\
+						localStorage[\"specObsoleteFilter\"] = specObsoleteFilter.value;\n\
 						if (rebuildTimeout) {\n\
 							window.clearTimeout(rebuildTimeout);\n\
 							rebuildTimeout = null;\n\
@@ -248,6 +253,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 						localStorage[\"versionFilter\"] = \"\";\n\
 						localStorage[\"idFilter\"] = \"\";\n\
 						localStorage[\"topicIDFilter\"] = \"\";\n\
+						localStorage[\"specObsoleteFilter\"] = \"\";\n\
 						productFilter.value = \"\";\n\
 						titleFilter.value = \"\";\n\
 						versionFilter.value = \"\";\n\
@@ -286,13 +292,15 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 				{
 					title: specDetailsCache[specId].title ? specDetailsCache[specId].title.replace(/'/g, "\\'") : "",
 					version: specDetailsCache[specId].version ? specDetailsCache[specId].version.replace(/'/g, "\\'") : "",
-					product: specDetailsCache[specId].product ? specDetailsCache[specId].product.replace(/'/g, "\\'") : ""
+					product: specDetailsCache[specId].product ? specDetailsCache[specId].product.replace(/'/g, "\\'") : "",
+                    tags: specDetailsCache[specId].tags ? [] : specDetailsCache[specId].tags
 				}
 				:
 				{
 					title: "To Be Synced",
 					version: "To Be Synced",
-					product: "To Be Synced"
+					product: "To Be Synced",
+                    tags: []
 				};
 
 				indexHtml += "{\n\
@@ -307,6 +315,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 					buildlog: '<a href=\"" + specId + "/build.log\"><button>Build Log</button></a>',\n\
 					publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + latestFileFixed + "\"><button>Publican ZIP</button></a>',\n\
 					publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>'\n\
+					tags: fixedSpecDetails.tags\n\
 				},\n";
 
 				processSpecDetails(++processIndex);
@@ -480,11 +489,24 @@ function processPendingSpecUpdates() {
 
 		console.log("Filling spec cache. " + pendingSpecCacheUpdates.length + " calls to be made.");
 
+        var nodesQueryFinished = false;
+        var tagsQueryFinished = false;
+
+        var finished = function() {
+            if (nodesQueryFinished && tagsQueryFinished) {
+                processPendingSpecUpdates();
+            }
+        }
+
 		$.getJSON(specDetailsQuery,
 			function(data) {
 				if (data.items) {
 				 	for (var i = 0, count = data.items.length; i < count; ++i) {
 						var item = data.items[i].item;
+
+                        if (!specDetailsCache[specId]) {
+                            specDetailsCache[specId] = {};
+                        }
 
 						if (item.title == "Title") {
 							specDetailsCache[specId].title = item.additionalText;
@@ -495,13 +517,39 @@ function processPendingSpecUpdates() {
 						}
 					}
 				}
-
-				processPendingSpecUpdates();
+                nodesQueryFinished = true;
+                finished();
 			}).error(function(jqXHR, textStatus, errorThrown) {
 				console.log("Call to " + specDetailsQuery + " failed!");
-				console.log(errorThrown);
-				processPendingSpecUpdates();
+                nodesQueryFinished = true;
+                finished();
 			});
+
+        var specTagQuery = REST_SERVER + "/1/contentspec/get/json/" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D";
+
+        $.getJSON(specTagQuery,
+            function(data) {
+                if (data.tags) {
+
+                    if (!specDetailsCache[specId]) {
+                        specDetailsCache[specId] = {};
+                    }
+
+                    specDetailsCache[specId].tags = [];
+
+                    for (var i = 0, count = data.tags.items.length; i < count; ++i) {
+                        var tag = data.tags.items[i].item;
+                        specDetailsCache[specId].tags.push(tag.id);
+                    }
+                }
+                tagsQueryFinished = true;
+                finished();
+            }).error(function(jqXHR, textStatus, errorThrown) {
+                console.log("Call to " + tagsQueryFinished + " failed!");
+                tagsQueryFinished = true;
+                finished();
+            });
+
 	} else {
 		processingPendingCacheUpdates = false;
 	}

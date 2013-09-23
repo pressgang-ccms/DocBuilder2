@@ -1,3 +1,9 @@
+/**
+ * The id of the Obsolete tag
+ * @type {number}
+ */
+var OBSOLETE_TAG = 652;
+
 function changeLang() {
     var langSelect = document.getElementById("lang");
     changeLang(langSelect);
@@ -216,6 +222,7 @@ function abstract_build_table(data, columns, sortableColumns) {
     var versionFilter = localStorage["versionFilter"];
     var idFilter = localStorage["idFilter"];
     var topicIDFilter = localStorage["topicIDFilter"];
+    var specObsoleteFilter = localStorage["specObsoleteFilter"];
 
     var topicIds = null;
 
@@ -238,6 +245,14 @@ function abstract_build_table(data, columns, sortableColumns) {
 
         if (idFilter != null && idFilter.length != 0 && !String(data[i].idRaw).toLowerCase().match(idFilter.toLowerCase())) {
             continue;
+        }
+
+        if (specObsoleteFilter != null && specObsoleteFilter.toString().toLowerCase().equals(false.toString().toLowerCase())) {
+            for (var tagIndex = 0, tagCount = data[i].tags.length; tagIndex < tagCount; ++tagIndex) {
+                if (data[i].tags[tagIndex] == OBSOLETE_TAG) {
+                    continue;
+                }
+            }
         }
 
         filteredData.push(data[i]);
