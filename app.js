@@ -314,8 +314,8 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 					remarks: '<a href=\"" + specId + "/remarks\"><button>With Remarks</button></a>',\n\
 					buildlog: '<a href=\"" + specId + "/build.log\"><button>Build Log</button></a>',\n\
 					publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + latestFileFixed + "\"><button>Publican ZIP</button></a>',\n\
-					publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>'\n\
-					tags: fixedSpecDetails.tags\n\
+					publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>',\n\
+					tags: [" + fixedSpecDetails.tags.toString() + "]\n\
 				},\n";
 
 				processSpecDetails(++processIndex);
