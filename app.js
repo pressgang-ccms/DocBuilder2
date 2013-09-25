@@ -215,7 +215,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 							</tr>\n\
 							<tr>\n\
 								<td>\n\
-									Spec Frozen Filter\n\
+									Show Frozen Specs\n\
 								</td>\n\
 								<td>\n\
                                     <input type=\"checkbox\" id=\"specFrozenFilter\" onchange=\"save_filter()\">\n\
