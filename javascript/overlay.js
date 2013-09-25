@@ -257,6 +257,7 @@ function createWebDAVPopover(topicId, parent) {
     $(popover.popoverContent).append($("<ul><li>http://" + WEBDAV_SERVER + fullPath + "</li><li>webdav://" + WEBDAV_SERVER + fullPath + "</li></ul>"))
     $(popover.popoverContent).append($("<h3>Editing With Cadaver (copy and paste into a terminal):</h3>"));
     $(popover.popoverContent).append($("<p>cadaver http://" + WEBDAV_SERVER + path + "<br/>edit " + topicId + ".xml<br/>exit</p>"));
+    $(popover.popoverContent).append($("<p><a href='/16778'>Further Reading</a></p>"));
 
     linkDiv.onmouseover=function(){
         openPopover(popover, linkDiv);
@@ -548,13 +549,11 @@ function renderHistory(topicId) {
 
 	for (var revisionIndex = 0, revisionCount = historyCache[topicId].data.length; revisionIndex < revisionCount; ++revisionIndex) {
 		var revision = historyCache[topicId].data[revisionIndex];
-		var link = document.createElement("div");
-
 		var message = revision.message == null || revision.message.length == 0 ? "[No Message]" : revision.message;
 		var date = moment(revision.lastModified);
 
-		$(link).text(revision.revision + " - " + date.format('lll') + " - " + message);
-		historyCache[topicId].popover.popoverContent.appendChild(link);
+        var link = $("<div><a target='_blank' href='http://" + BASE_SERVER + "/pressgang-ccms-ui-next/#TopicHistoryView;" + topicId + ";" + revision.revision + ";" + historyCache[topicId].data[0].revision + "'><div style='width: 16px; height: 16px; margin-right: 8px; background-image: url(/images/rendereddiff.png); background-size: contain; float: left'></div></a>" + revision.revision + " - " + date.format('lll') + " - " + message + "</div>");
+		$(historyCache[topicId].popover.popoverContent).append(link);
 	}
 }
 

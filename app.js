@@ -354,12 +354,7 @@ function processSpecs(updatedSpecs) {
 
 					console.log("Finished build of modified book " + id);
 
-                    // Append the custom javascript files to the index.html
-                    try {
-                        var contents = fs.readFileSync(APACHE_HTML_DIR + "/" + id + "/index.html").toString();
-                        contents = contents.replace(
-                            "<head>",
-                            "<head>\n\
+                    var scriptsAndStyleFiles = "<head>\n\
                                 <script type='application/javascript' src='/javascript/jquery-2.0.3.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/moment.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/bootstrap.min.js'></script>\n\
@@ -367,10 +362,23 @@ function processSpecs(updatedSpecs) {
                                 <script type='application/javascript' src='/javascript/pie.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/overlay.js'></script>\n\
                                 <link href='/css/pressgang.css' rel='stylesheet'>\n\
-                                <link href='/css/bootstrap.min.css' rel='stylesheet'>\n");
+                                <link href='/css/bootstrap.min.css' rel='stylesheet'>\n";
+
+                    // Append the custom javascript files to the index.html
+                    try {
+                        var contents = fs.readFileSync(APACHE_HTML_DIR + "/" + id + "/index.html").toString();
+                        contents = contents.replace("<head>", scriptsAndStyleFiles);
                         fs.writeFileSync(APACHE_HTML_DIR + "/" + id + "/index.html", contents);
                     } catch (ex) {
-                        console.log("Could not edit and save HTML file");
+                        console.log("Could not edit and save main HTML file");
+                    }
+
+                    try {
+                        var contents = fs.readFileSync(APACHE_HTML_DIR + "/" + id + "/remarks/index.html").toString();
+                        contents = contents.replace("<head>", scriptsAndStyleFiles);
+                        fs.writeFileSync(APACHE_HTML_DIR + "/" + id + "/remarks/index.html", contents);
+                    } catch (ex) {
+                        console.log("Could not edit and save remarks HTML file");
                     }
 
 					if (childCount < MAX_PROCESSES) {
