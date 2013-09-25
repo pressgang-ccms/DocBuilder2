@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="decee61b-06ea-4134-a1b4-54fc006cf003" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions-1.1.js" afterPath="$PROJECT_DIR$/functions-1.1.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1380077144349" ignored="false" />
+    <file path="/Dummy.txt" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1380077504290" ignored="false" />
     <file path="/functions-1.1.js" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1380077320187" ignored="false" />
     <file path="/README.md" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1379893423105" ignored="false" />
     <file path="/overlay.js" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1379987965479" ignored="false" />
@@ -75,19 +74,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="functions-1.1.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="functions-1.1.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/functions-1.1.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="226" column="60" selection-start="6956" selection-end="6956" vertical-scroll-proportion="0.0">
+            <state line="260" column="39" selection-start="8260" selection-end="8260" vertical-scroll-proportion="0.76642334">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="219" column="39" selection-start="7496" selection-end="7496" vertical-scroll-proportion="0.5535714">
+            <state line="219" column="39" selection-start="7496" selection-end="7496" vertical-scroll-proportion="0.0">
               <folding>
                 <marker date="1380077486949" expanded="true" signature="4093:6008" placeholder="..." />
                 <marker date="1380077486949" expanded="true" signature="4105:4418" placeholder="..." />
@@ -249,8 +248,8 @@
       <list>
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/javascript/overlay.js" />
-        <option value="$PROJECT_DIR$/functions-1.1.js" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/functions-1.1.js" />
       </list>
     </option>
   </component>
@@ -646,7 +645,11 @@
       <created>1380077145952</created>
       <updated>1380077145952</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Added filters for frozen specs">
+      <created>1380077505346</created>
+      <updated>1380077505346</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -722,7 +725,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added menu to remarks build" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added filters for frozen specs" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -742,6 +745,7 @@
     <MESSAGE value="Added WebDAV icon" />
     <MESSAGE value="Added filter for obsolete specs" />
     <MESSAGE value="Added menu to remarks build" />
+    <MESSAGE value="Added filters for frozen specs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1436,16 +1440,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/functions-1.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="226" column="60" selection-start="6956" selection-end="6956" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="219" column="39" selection-start="7496" selection-end="7496" vertical-scroll-proportion="0.5535714">
+        <state line="219" column="39" selection-start="7496" selection-end="7496" vertical-scroll-proportion="0.0">
           <folding>
             <marker date="1380077486949" expanded="true" signature="4093:6008" placeholder="..." />
             <marker date="1380077486949" expanded="true" signature="4105:4418" placeholder="..." />
@@ -1493,6 +1490,13 @@
             <marker date="1380077486949" expanded="true" signature="7810:7899" placeholder="..." />
             <marker date="1380077486949" expanded="true" signature="14265:15131" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/functions-1.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="260" column="39" selection-start="8260" selection-end="8260" vertical-scroll-proportion="0.76642334">
+          <folding />
         </state>
       </provider>
     </entry>
