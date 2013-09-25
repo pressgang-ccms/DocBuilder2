@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="decee61b-06ea-4134-a1b4-54fc006cf003" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions-1.1.js" afterPath="$PROJECT_DIR$/functions-1.1.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1380142900461" ignored="false" />
+    <file path="/Dummy.txt" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1380143302769" ignored="false" />
     <file path="/functions-1.1.js" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1380077320187" ignored="false" />
     <file path="/README.md" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1379893423105" ignored="false" />
     <file path="/overlay.js" changelist="decee61b-06ea-4134-a1b4-54fc006cf003" time="1379987965479" ignored="false" />
@@ -74,19 +74,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="functions-1.1.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="functions-1.1.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/functions-1.1.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="187" column="26" selection-start="5510" selection-end="5510" vertical-scroll-proportion="-30.24">
+            <state line="125" column="9" selection-start="3528" selection-end="3528" vertical-scroll-proportion="0.63983905">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="340" column="100" selection-start="13368" selection-end="13368" vertical-scroll-proportion="0.444668">
+            <state line="340" column="100" selection-start="13368" selection-end="13368" vertical-scroll-proportion="-17.68">
               <folding>
                 <marker date="1380143299482" expanded="true" signature="4093:6008" placeholder="..." />
                 <marker date="1380143299482" expanded="true" signature="4105:4418" placeholder="..." />
@@ -258,8 +258,8 @@
       <list>
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/javascript/overlay.js" />
-        <option value="$PROJECT_DIR$/functions-1.1.js" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/functions-1.1.js" />
       </list>
     </option>
   </component>
@@ -679,7 +679,11 @@
       <created>1380142901561</created>
       <updated>1380142901561</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Fixed NPE">
+      <created>1380143304073</created>
+      <updated>1380143304073</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1423,13 +1427,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/functions-1.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="187" column="26" selection-start="5510" selection-end="5510" vertical-scroll-proportion="-30.24">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/express/node_modules/connect/node_modules/multiparty/node_modules/readable-stream/fs.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="158" column="3" selection-start="4763" selection-end="4763" vertical-scroll-proportion="0.0">
@@ -1439,7 +1436,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="340" column="100" selection-start="13368" selection-end="13368" vertical-scroll-proportion="0.444668">
+        <state line="340" column="100" selection-start="13368" selection-end="13368" vertical-scroll-proportion="-17.68">
           <folding>
             <marker date="1380143299482" expanded="true" signature="4093:6008" placeholder="..." />
             <marker date="1380143299482" expanded="true" signature="4105:4418" placeholder="..." />
@@ -1488,6 +1485,13 @@
             <marker date="1380143299482" expanded="true" signature="13310:13355" placeholder="..." />
             <marker date="1380143299482" expanded="true" signature="14623:15489" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/functions-1.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="125" column="9" selection-start="3528" selection-end="3528" vertical-scroll-proportion="0.63983905">
+          <folding />
         </state>
       </provider>
     </entry>
