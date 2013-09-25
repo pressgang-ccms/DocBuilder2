@@ -3,6 +3,7 @@
  * @type {number}
  */
 var OBSOLETE_TAG = 652;
+var FROZEN_TAG = 669;
 
 function changeLang() {
     var langSelect = document.getElementById("lang");
@@ -223,6 +224,7 @@ function abstract_build_table(data, columns, sortableColumns) {
     var idFilter = localStorage["idFilter"];
     var topicIDFilter = localStorage["topicIDFilter"];
     var specObsoleteFilter = localStorage["specObsoleteFilter"];
+    var specFrozenFilter = localStorage["specFrozenFilter"];
 
     var topicIds = null;
 
@@ -251,6 +253,14 @@ function abstract_build_table(data, columns, sortableColumns) {
         if (specObsoleteFilter != null && specObsoleteFilter.toString().toLowerCase() == false.toString().toLowerCase()) {
             for (var tagIndex = 0, tagCount = data[i].tags.length; tagIndex < tagCount; ++tagIndex) {
                 if (data[i].tags[tagIndex] == OBSOLETE_TAG) {
+                    continue outerLoop;
+                }
+            }
+        }
+
+        if (specFrozenFilter != null && specFrozenFilter.toString().toLowerCase() == false.toString().toLowerCase()) {
+            for (var tagIndex = 0, tagCount = data[i].tags.length; tagIndex < tagCount; ++tagIndex) {
+                if (data[i].tags[tagIndex] == FROZEN_TAG) {
                     continue outerLoop;
                 }
             }

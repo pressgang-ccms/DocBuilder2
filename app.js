@@ -213,6 +213,18 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 								    <input type=\"checkbox\" id=\"specObsoleteFilter\" onchange=\"save_filter()\">\n\
 								</td>\n\
 							</tr>\n\
+							<tr>\n\
+								<td>\n\
+									Spec Frozen Filter\n\
+								</td>\n\
+								<td>\n\
+                                    <input type=\"checkbox\" id=\"specFrozenFilter\" onchange=\"save_filter()\">\n\
+								</td>\n\
+								<td>\n\
+								</td>\n\
+								<td>\n\
+								</td>\n\
+							</tr>\n\
 						</table> \n\
 						</div>\n\
 						<div></div>\n\
@@ -232,6 +244,8 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 					topicIDFilter.value = localStorage[\"topicIDFilter\"] || \"\"; \n\
 					specObsoleteFilter.checked = localStorage[\"specObsoleteFilter\"] && localStorage[\"specObsoleteFilter\"].length != 0 \n\
                         ? (localStorage[\"specObsoleteFilter\"].toLowerCase() == true.toString().toLowerCase() ? true : false) : false; \n\
+                    specFrozenFilter.checked = localStorage[\"specFrozenFilter\"] && localStorage[\"specFrozenFilter\"].length != 0 \n\
+                        ? (localStorage[\"specFrozenFilter\"].toLowerCase() == true.toString().toLowerCase() ? true : false) : false; \n\
 					save_filter = function() {\n\
 						localStorage[\"productFilter\"] = productFilter.value;\n\
 						localStorage[\"titleFilter\"] = titleFilter.value;\n\
@@ -239,6 +253,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 						localStorage[\"idFilter\"] = idFilter.value;\n\
 						localStorage[\"topicIDFilter\"] = topicIDFilter.value;\n\
 						localStorage[\"specObsoleteFilter\"] = specObsoleteFilter.checked.toString();\n\
+						localStorage[\"specFrozenFilter\"] = specFrozenFilter.checked.toString();\n\
 						if (rebuildTimeout) {\n\
 							window.clearTimeout(rebuildTimeout);\n\
 							rebuildTimeout = null;\n\
@@ -255,11 +270,14 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 						localStorage[\"idFilter\"] = \"\";\n\
 						localStorage[\"topicIDFilter\"] = \"\";\n\
 						localStorage[\"specObsoleteFilter\"] = \"\";\n\
+						localStorage[\"specFrozenFilter\"] = \"\";\n\
 						productFilter.value = \"\";\n\
 						titleFilter.value = \"\";\n\
 						versionFilter.value = \"\";\n\
 						idFilter.value = \"\";\n\
 						topicIDFilter.value = \"\";\n\
+						specObsoleteFilter.checked = false;\n\
+						specFrozenFilter.checked = false;\n\
 						if (rebuildTimeout) {\n\
 							window.clearTimeout(rebuildTimeout);\n\
 							rebuildTimeout = null;\n\
