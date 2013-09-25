@@ -250,7 +250,7 @@ function abstract_build_table(data, columns, sortableColumns) {
             continue;
         }
 
-        if (specObsoleteFilter != null || specObsoleteFilter.toString().toLowerCase() == false.toString().toLowerCase()) {
+        if (specObsoleteFilter == null || specObsoleteFilter.toString().toLowerCase() == false.toString().toLowerCase()) {
             for (var tagIndex = 0, tagCount = data[i].tags.length; tagIndex < tagCount; ++tagIndex) {
                 if (data[i].tags[tagIndex] == OBSOLETE_TAG) {
                     continue outerLoop;
@@ -258,7 +258,7 @@ function abstract_build_table(data, columns, sortableColumns) {
             }
         }
 
-        if (specFrozenFilter != null || specFrozenFilter.toString().toLowerCase() == false.toString().toLowerCase()) {
+        if (specFrozenFilter == null || specFrozenFilter.toString().toLowerCase() == false.toString().toLowerCase()) {
             for (var tagIndex = 0, tagCount = data[i].tags.length; tagIndex < tagCount; ++tagIndex) {
                 if (data[i].tags[tagIndex] == FROZEN_TAG) {
                     continue outerLoop;
