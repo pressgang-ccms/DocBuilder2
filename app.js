@@ -664,11 +664,11 @@ function routeAfterRESTCalls(updatedSpecs, allSpecsArray) {
  * will start again as if this was the first run.
  */
 function restartAfterFailure() {
-	indexHtml = null;
-	thisBuildTime = null;
-
 	var runTimeSeconds = moment().unix() - thisBuildTime.unix();
 	var delay = (DELAY_WHEN_NO_UPDATES / 1000) - runTimeSeconds;
+
+    indexHtml = null;
+    thisBuildTime = null;
 
 	if (delay <= 0) {
 		getListOfSpecsToBuild();
