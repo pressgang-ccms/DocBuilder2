@@ -182,6 +182,11 @@ function build_table_with_pdfs(data) {
             key: "publicanlog",
             label: "Publican Log",
             allowHTML: true
+        },
+        {
+            key: "status",
+            label: "Status",
+            allowHTML: true
         }
     ];
     var sortableColumns = ["id", "product", "title", "version"];

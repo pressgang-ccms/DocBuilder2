@@ -322,6 +322,9 @@ function buildBooks(updatedSpecs, allSpecsArray) {
                     tags: []
 				};
 
+                // select an image based on the presence of the index.html file
+                var image = fs.existsSync(APACHE_HTML_DIR + "/" + specId + "/index.html") ? 'url(/images/tick.png)' : 'url(/images/cross.png)';
+
 				indexHtml += "{\n\
 					idRaw: " + specId + ",\n\
 					id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specId + "\" target=\"_top\">" + specId + "</a>',\n\
@@ -334,7 +337,8 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 					buildlog: '<a href=\"" + specId + "/build.log\"><button>Build Log</button></a>',\n\
 					publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + latestFileFixed + "\"><button>Publican ZIP</button></a>',\n\
 					publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>',\n\
-					tags: [" + fixedSpecDetails.tags.toString() + "]\n\
+					tags: [" + fixedSpecDetails.tags.toString() + "],\n\
+                    status: '<div style=\"width: 32px; height: 32px; background-image: ' + image + '; background-size: cover\"/>'\n\
 				},\n";
 
 				processSpecDetails(++processIndex);
