@@ -338,7 +338,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 					publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + latestFileFixed + "\"><button>Publican ZIP</button></a>',\n\
 					publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>',\n\
 					tags: [" + fixedSpecDetails.tags.toString() + "],\n\
-                    status: '<div style=\"width: 32px; height: 32px; background-image: ' + image + '; background-size: cover\"/>'\n\
+                    status: '<div style=\"width: 32px; height: 32px; background-image: " + image + "; background-size: cover\"/>'\n\
 				},\n";
 
 				processSpecDetails(++processIndex);
