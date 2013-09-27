@@ -1385,7 +1385,7 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
 
                 var newMenuString = '\
                         <div class="panel panel-default pressgangMenu">\
-                            <div class="panel-heading">usedLicenses[tag].name</div>\
+                            <div class="panel-heading">' + usedLicenses[tag].name + '</div>\
                                 <div class="panel-body ">\
                                     <ul id="licenseConflictsItems" class="nav nav-pills nav-stacked">\
                                         <li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
