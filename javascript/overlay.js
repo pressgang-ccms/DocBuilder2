@@ -39,12 +39,12 @@ var LICENSE_CATEGORY = 43;
  * The ID of the tag that indicates the topic details the compatibility between two or more licenses
  * @type {number}
  */
-var LICENSE_COMPATIBILITY_TAG = 670;
+var LICENSE_COMPATIBILITY_TAG = 679;
 /**
  * The ID of the tag that indicates the topic details the incompatibility between two or more licenses
  * @type {number}
  */
-var LICENSE_INCOMPATIBILITY_TAG = 671;
+var LICENSE_INCOMPATIBILITY_TAG = 678;
 /**
  * A regex to extract URls
  * http://blog.mattheworiordan.com/post/13174566389/url-regular-expression-for-links-with-or-without-the
