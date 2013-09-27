@@ -1416,14 +1416,16 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
                 licenseMenu.hide();
             }
 
-            $('#licenseConflicts').append($('<span class="badge pull-right">' + incompatibleLicenses.length + '</span>'));
-
+            var licenseConflictCount = 0;
             for (var licenseIndex = 0, licenseCount = incompatibleLicenses.length; licenseIndex < licenseCount; ++licenseIndex) {
                  var licenseDetails = incompatibleLicenses[licenseIndex];
                  if (usedLicenses[licenseDetails.license1] && usedLicenses[licenseDetails.license2]) {
+                     ++licenseConflictCount;
                      $('<li><a href="http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + licenseDetails.topicId + '">' + usedLicenses[licenseDetails.license1].name + " / " + usedLicenses[licenseDetails.license2].name + '</a></li>').appendTo($("#licenseConflictsItems"));
                  }
             }
+
+            $('#licenseConflicts').append($('<span class="badge pull-right">' + licenseConflictCount + '</span>'));
         }
 
         // find all the tags in the license category
