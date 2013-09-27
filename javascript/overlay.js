@@ -1360,13 +1360,24 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
 
 	if (secondPassDone && specHistoryDone) {
         // the function to call when all incompatibilites have been found
-        var reportIncompatibilities = function(incompatibleTags) {
+        var reportIncompatibilities = function(usedLicenses, incompatibleLicenses) {
+            for (var tag in usedLicenses) {
+                $('<li>' + usedLicenses[tag].tag.name + '</li>').appendTo($("#licensesPresentItems"));
+            }
 
+            for (var licenseIndex = 0, licenseCount = incompatibleLicenses.length - 1; licenseIndex < licenseCount; ++licenseIndex) {
+                 var licenseDetails = incompatibleLicenses[licenseIndex];
+                 if (usedLicenses[licenseDetails[0]] && usedLicenses[licenseDetails[1]]) {
+                     $('<li>' + usedLicenses[licenseDetails[0]].tag.name + " / " + usedLicenses[licenseDetails[1]].tag.name + '</li>').appendTo($("#licensesPresentItems"));
+                 }
+            }
         }
 
         // find all the tags in the license category
         var categoryQuery = SERVER + "/1/category/get/json/" + LICENSE_CATEGORY + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22tags%22%7D%7D%5D%7D";
         $.getJSON(categoryQuery, function(data) {
+
+            // extract all the license tags
             var licenseTags = [];
             for (var tagIndex = 0, tagCount = data.tags.items.length; tagIndex < tagCount; ++tagIndex) {
                 var tagId = data.tags.items[tagIndex].item.id;
@@ -1375,8 +1386,21 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
                 }
             }
 
+            //find out what licenses we are actually using
+            var usedLicenses = {};
+            for (var topic in tagsCache) {
+                for (var tagIndex = 0, tagCount = tagsCache[topic].data.length; tagIndex < tagCount; ++tagIndex) {
+                    var tag = tagsCache[topic].data[tagIndex];
+                    if (!usedLicenses[tag.id]) {
+                        usedLicenses[tag.id] = {tag: tag, topics: [topic]};
+                    } else {
+                        usedLicenses[tag.id].topics.push(topic);
+                    }
+                }
+            }
+
             // build up a map of what licenses are compatible or not
-            var incompatibleTags = [];
+            var incompatibleLicenses = [];
             var queryCount = factorial(licenseTags.length) / (factorial(2) * (factorial(licenseTags.length) - factorial(2)));
             var queryCompleted = 0;
 
@@ -1388,10 +1412,10 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
 
                     $.getJSON(query, function(topics) {
                         ++queryCompleted;
-                        incompatibleTags.push([license1, license2]);
+                        incompatibleLicenses.push([license1, license2]);
 
                         if (queryCompleted ==  queryCount) {
-                            reportIncompatibilities(incompatibleTags);
+                            reportIncompatibilities(incompatibleLicenses);
                         }
                     });
                 }
@@ -1429,7 +1453,10 @@ function hideAllMenus() {
 	topicsRemovedSince1Day.hide();
 	topicsRemovedSince1Week.hide();
 	topicsRemovedSince1Month.hide();
-	topicsRemovedSince1Year.hide();	
+	topicsRemovedSince1Year.hide();
+    licenses.hide();
+    licenseConflicts.hide();
+    licensesPresent.hide();
 }
 
 /**
@@ -1540,6 +1567,7 @@ function buildMenu() {
 						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show(); localStorage.setItem(\'lastMenu\', \'topicsByLastEdit\');">Topics By Last Edit</a></li>\
 						<li><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince\');">Topics Added In</a></li>\
 						<li><a href="javascript:hideAllMenus(); topicsRemovedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">Topics Removed In</a></li>\
+						<li><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">Licenses</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -1765,6 +1793,46 @@ function buildMenu() {
 		</div>')
 	$(document.body).append(topicsEditedInOlderThanYear);
 
+    licenses = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Licenses</div>\
+				<div class="panel-body ">\
+		            <ul class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); licensesPresent.show(); localStorage.setItem(\'lastMenu\', \'licensesPresent\');">Licenses Present</a></li>\
+						<li><a href="javascript:hideAllMenus(); licenseConflicts.show(); localStorage.setItem(\'lastMenu\', \'licenseConflicts\');">License Conflicts</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>');
+    $(document.body).append(licenses);
+
+    licensesPresent = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Licenses Present</div>\
+				<div class="panel-body ">\
+		            <ul id="licensesPresentItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">&lt;- Licenses</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>');
+    $(document.body).append(licensesPresent);
+
+    licenseConflicts = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Licenses Conflicts</div>\
+				<div class="panel-body ">\
+		            <ul id="licenseConflictsItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">&lt;- Licenses</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>');
+    $(document.body).append(licenseConflicts);
+
 	hideAllMenus();
 
 	// Show the initial menu, either from what was saved in local storage as being the last displayed menu,
@@ -1821,10 +1889,21 @@ function buildMenu() {
 	} else if (lastMenu == "topicsRemovedSince1Year") {
 		topicsRemovedSince1Year.show();
 		showMenu();
-	}else {
+	} else if (lastMenu == "licenses") {
+        licenses.show();
+        showMenu();
+    } else if (lastMenu == "licensesPresent") {
+        licensesPresent.show();
+        showMenu();
+    } else if (lastMenu == "licenseConflicts") {
+        licenseConflicts.show();
+        showMenu();
+    } else {
 		menuIcon.show();
 		hideMenu();
 	}
+
+
 }
 
 /**
