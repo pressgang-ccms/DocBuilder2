@@ -1418,7 +1418,9 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
 
                     $.getJSON(query, function(topics) {
                         ++queryCompleted;
-                        incompatibleLicenses.push([license1, license2]);
+                        if (topics.items.length != 0) {
+                            incompatibleLicenses.push([license1, license2]);
+                        }
 
                         if (queryCompleted ==  queryCount) {
                             reportIncompatibilities(incompatibleLicenses);
