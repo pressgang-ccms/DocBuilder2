@@ -1369,7 +1369,7 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
                 $('<li>' + usedLicenses[tag].name + '</li>').appendTo($("#licensesPresentItems"));
             }
 
-            for (var licenseIndex = 0, licenseCount = incompatibleLicenses.length - 1; licenseIndex < licenseCount; ++licenseIndex) {
+            for (var licenseIndex = 0, licenseCount = incompatibleLicenses.length; licenseIndex < licenseCount; ++licenseIndex) {
                  var licenseDetails = incompatibleLicenses[licenseIndex];
                  if (usedLicenses[licenseDetails[0]] && usedLicenses[licenseDetails[1]]) {
                      $('<li>' + usedLicenses[licenseDetails[0]].name + " / " + usedLicenses[licenseDetails[1]].name + '</li>').appendTo($("#licensesPresentItems"));
