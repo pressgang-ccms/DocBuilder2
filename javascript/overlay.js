@@ -1392,7 +1392,7 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
             for (var topic in tagsCache) {
                 for (var tagIndex = 0, tagCount = tagsCache[topic].data.length; tagIndex < tagCount; ++tagIndex) {
                     var tag = tagsCache[topic].data[tagIndex];
-                    if (!usedLicenses[tag.id]) {
+                    if (!usedLicenses[tag.id] && jQuery.inArray(tag.id, licenseTags)) {
                         usedLicenses[tag.id] = {name: tag.name, topics: [topic]};
                     } else {
                         usedLicenses[tag.id].topics.push(topic);
