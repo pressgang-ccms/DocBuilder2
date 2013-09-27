@@ -1372,7 +1372,7 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
         var reportIncompatibilities = function(usedLicenses, incompatibleLicenses) {
             for (var tag in usedLicenses) {
 
-                $('<li><a href="javascript:hideAllMenus(); sideMenus[\\\'' + usedLicenses[tag].name + '\\\'].show();">' + usedLicenses[tag].name + '</a></li>').appendTo($("#licensesPresentItems"));
+                $('<li><a href="javascript:hideAllMenus(); sideMenus[\'' + usedLicenses[tag].name + '\'].show();">' + usedLicenses[tag].name + '</a></li>').appendTo($("#licensesPresentItems"));
 
                 var newMenuString = '\
                         <div class="panel panel-default pressgangMenu">\
