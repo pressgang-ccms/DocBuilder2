@@ -1280,7 +1280,10 @@ function doSecondPassQuery(topicIdsString) {
 				tagsCache[topic.id].data = [];
 				for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
 					var tag = topic.tags.items[tagIndex].item;
-					tagsCache[topic.id].data.push({name: tag.name});
+                    tagsCache[topic.id].data.push({
+                        name: tag.name,
+                        id: tag.id
+                    });
 				}
 
 				// set the urls
