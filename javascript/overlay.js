@@ -1415,8 +1415,8 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
 
             for (var licenseIndex = 0, licenseCount = incompatibleLicenses.length; licenseIndex < licenseCount; ++licenseIndex) {
                  var licenseDetails = incompatibleLicenses[licenseIndex];
-                 if (usedLicenses[licenseDetails[0]] && usedLicenses[licenseDetails[1]]) {
-                     $('<li><a href="javascript:void">' + usedLicenses[licenseDetails[0]].name + " / " + usedLicenses[licenseDetails[1]].name + '</a></li>').appendTo($("#licenseConflictsItems"));
+                 if (usedLicenses[licenseDetails.license1] && usedLicenses[licenseDetails.license2]) {
+                     $('<li><a href="http://' + BASE_SERVER + ':8080/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + licenseDetails.topicId + '">' + usedLicenses[licenseDetails[0]].name + " / " + usedLicenses[licenseDetails[1]].name + '</a></li>').appendTo($("#licenseConflictsItems"));
                  }
             }
         }
@@ -1464,7 +1464,7 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
                         return function(topics) {
                             ++queryCompleted;
                             if (topics.items.length != 0) {
-                                incompatibleLicenses.push([license1, license2]);
+                                incompatibleLicenses.push({license1: license1, license2: license2, topicId: topics.items[0].item.id});
                             }
 
                             if (queryCompleted ==  queryCount) {
