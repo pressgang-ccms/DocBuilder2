@@ -1375,7 +1375,7 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
         }
 
         // find all the tags in the license category
-        var categoryQuery = SERVER + "/1/category/get/json/" + LICENSE_CATEGORY + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22tags%22%7D%7D%5D%7D";
+        var categoryQuery = SERVER + "/category/get/json/" + LICENSE_CATEGORY + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22tags%22%7D%7D%5D%7D";
         $.getJSON(categoryQuery, function(data) {
 
             // extract all the license tags
@@ -1409,7 +1409,7 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
                 for (var licenseIndex2 = licenseIndex + 1, licenseCount2 = licenseTags.length; licenseIndex2 < licenseCount2; ++licenseIndex2) {
                     var license1 = licenseTags[licenseIndex];
                     var license2 = licenseTags[licenseIndex2];
-                    var query = SERVER + "/1/topics/get/json/query;tag" + LICENSE_INCOMPATIBILITY_TAG + "=1;tag" + license1 + "=1;tag" + license2 + "=1;logic=And?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%7D%5D%7D";
+                    var query = SERVER + "/topics/get/json/query;tag" + LICENSE_INCOMPATIBILITY_TAG + "=1;tag" + license1 + "=1;tag" + license2 + "=1;logic=And?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%7D%5D%7D";
 
                     $.getJSON(query, function(topics) {
                         ++queryCompleted;
