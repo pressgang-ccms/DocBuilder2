@@ -204,12 +204,12 @@ var offscreenRendering = null;
  * true after the second pass has completed
  * @type {boolean}
  */
-var secondPassDone = true;
+var secondPassDone = false;
 /**
  * true after the spec history pass has completed
  * @type {boolean}
  */
-var specHistoryDone = true;
+var specHistoryDone = false;
 
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
