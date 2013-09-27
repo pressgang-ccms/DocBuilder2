@@ -1416,7 +1416,7 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
             for (var licenseIndex = 0, licenseCount = incompatibleLicenses.length; licenseIndex < licenseCount; ++licenseIndex) {
                  var licenseDetails = incompatibleLicenses[licenseIndex];
                  if (usedLicenses[licenseDetails.license1] && usedLicenses[licenseDetails.license2]) {
-                     $('<li><a href="http://' + BASE_SERVER + ':8080/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + licenseDetails.topicId + '">' + usedLicenses[licenseDetails[0]].name + " / " + usedLicenses[licenseDetails[1]].name + '</a></li>').appendTo($("#licenseConflictsItems"));
+                     $('<li><a href="http://' + BASE_SERVER + ':8080/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + licenseDetails.topicId + '">' + usedLicenses[licenseDetails.license1].name + " / " + usedLicenses[licenseDetails.license2].name + '</a></li>').appendTo($("#licenseConflictsItems"));
                  }
             }
         }
