@@ -1383,7 +1383,7 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
                                         <li><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">&lt;- Licenses</a></li>\
                                         <li><a href="javascript:hideAllMenus(); licensesPresent.show(); localStorage.setItem(\'lastMenu\', \'licensesPresent\');">&lt;- Licenses Present</a></li>';
 
-                for (var licenceTopicIndex = 0, licenseTopicCount = usedLicenses[tag].topics; licenceTopicIndex < licenseTopicCount; ++licenceTopicIndex) {
+                for (var licenceTopicIndex = 0, licenseTopicCount = usedLicenses[tag].topics.length; licenceTopicIndex < licenseTopicCount; ++licenceTopicIndex) {
                     newMenuString += '<li><a href="javascript:topicSections[' + usedLicenses[tag].topics[licenceTopicIndex] + '].scrollIntoView()">' +
                         usedLicenses[tag].topics[licenceTopicIndex] + '</a></li>';
                 }
