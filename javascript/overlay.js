@@ -1359,16 +1359,17 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
 	}
 
 	if (secondPassDone && specHistoryDone) {
-        // the function to call when all incompatibilites have been found
+
+        // the function to call when all incompatibilities have been found
         var reportIncompatibilities = function(usedLicenses, incompatibleLicenses) {
             for (var tag in usedLicenses) {
-                $('<li>' + usedLicenses[tag].tag.name + '</li>').appendTo($("#licensesPresentItems"));
+                $('<li>' + usedLicenses[tag].name + '</li>').appendTo($("#licensesPresentItems"));
             }
 
             for (var licenseIndex = 0, licenseCount = incompatibleLicenses.length - 1; licenseIndex < licenseCount; ++licenseIndex) {
                  var licenseDetails = incompatibleLicenses[licenseIndex];
                  if (usedLicenses[licenseDetails[0]] && usedLicenses[licenseDetails[1]]) {
-                     $('<li>' + usedLicenses[licenseDetails[0]].tag.name + " / " + usedLicenses[licenseDetails[1]].tag.name + '</li>').appendTo($("#licensesPresentItems"));
+                     $('<li>' + usedLicenses[licenseDetails[0]].name + " / " + usedLicenses[licenseDetails[1]].name + '</li>').appendTo($("#licensesPresentItems"));
                  }
             }
         }
@@ -1392,7 +1393,7 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
                 for (var tagIndex = 0, tagCount = tagsCache[topic].data.length; tagIndex < tagCount; ++tagIndex) {
                     var tag = tagsCache[topic].data[tagIndex];
                     if (!usedLicenses[tag.id]) {
-                        usedLicenses[tag.id] = {tag: tag, topics: [topic]};
+                        usedLicenses[tag.id] = {name: tag.name, topics: [topic]};
                     } else {
                         usedLicenses[tag.id].topics.push(topic);
                     }
