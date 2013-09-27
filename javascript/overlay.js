@@ -1423,7 +1423,7 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
                         }
 
                         if (queryCompleted ==  queryCount) {
-                            reportIncompatibilities(incompatibleLicenses);
+                            reportIncompatibilities(usedLicenses, incompatibleLicenses);
                         }
                     });
                 }
