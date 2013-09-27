@@ -1366,13 +1366,13 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
         // the function to call when all incompatibilities have been found
         var reportIncompatibilities = function(usedLicenses, incompatibleLicenses) {
             for (var tag in usedLicenses) {
-                $('<li>' + usedLicenses[tag].name + '</li>').appendTo($("#licensesPresentItems"));
+                $('<li><a href="javascript:void">' + usedLicenses[tag].name + '</a></li>').appendTo($("#licensesPresentItems"));
             }
 
             for (var licenseIndex = 0, licenseCount = incompatibleLicenses.length; licenseIndex < licenseCount; ++licenseIndex) {
                  var licenseDetails = incompatibleLicenses[licenseIndex];
                  if (usedLicenses[licenseDetails[0]] && usedLicenses[licenseDetails[1]]) {
-                     $('<li>' + usedLicenses[licenseDetails[0]].name + " / " + usedLicenses[licenseDetails[1]].name + '</li>').appendTo($("#licenseConflictsItems"));
+                     $('<li><a href="javascript:void">' + usedLicenses[licenseDetails[0]].name + " / " + usedLicenses[licenseDetails[1]].name + '</a></li>').appendTo($("#licenseConflictsItems"));
                  }
             }
         }
