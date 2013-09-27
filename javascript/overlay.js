@@ -1407,7 +1407,7 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
 
             // build up a map of what licenses are compatible or not
             var incompatibleLicenses = [];
-            var queryCount = factorial(licenseTags.length) / (factorial(2) * (factorial(licenseTags.length) - factorial(2)));
+            var queryCount = factorial(licenseTags.length) / (factorial(2) * (factorial(licenseTags.length - 2)));
             var queryCompleted = 0;
 
             for (var licenseIndex = 0, licenseCount = licenseTags.length - 1; licenseIndex < licenseCount; ++licenseIndex) {
