@@ -1416,16 +1416,18 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
                     var license2 = licenseTags[licenseIndex2];
                     var query = SERVER + "/topics/get/json/query;catint" + LICENSE_CATEGORY + "=And;tag" + LICENSE_INCOMPATIBILITY_TAG + "=1;tag" + license1 + "=1;tag" + license2 + "=1;logic=And?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%7D%5D%7D";
 
-                    $.getJSON(query, function(topics) {
-                        ++queryCompleted;
-                        if (topics.items.length != 0) {
-                            incompatibleLicenses.push([license1, license2]);
-                        }
+                    $.getJSON(query, function(license1, license2) {
+                        return function(topics) {
+                            ++queryCompleted;
+                            if (topics.items.length != 0) {
+                                incompatibleLicenses.push([license1, license2]);
+                            }
 
-                        if (queryCompleted ==  queryCount) {
-                            reportIncompatibilities(usedLicenses, incompatibleLicenses);
+                            if (queryCompleted ==  queryCount) {
+                                reportIncompatibilities(usedLicenses, incompatibleLicenses);
+                            }
                         }
-                    });
+                    }(license1, license2));
                 }
             }
         });
