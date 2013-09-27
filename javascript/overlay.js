@@ -1395,8 +1395,9 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
                             </div>\
                         </div>'
 
+                var licenseMenu =  $(newMenuString);
                 // so we can reference this menu in code
-                sideMenus[usedLicenses[tag].name] =  $(newMenuString);
+                sideMenus[usedLicenses[tag].name] = licenseMenu
                 // so all menus will be closed
                 sideMenus.push(licenseMenu);
                 $(document.body).append(licenseMenu);
