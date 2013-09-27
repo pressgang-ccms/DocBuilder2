@@ -31,6 +31,21 @@
  */
 
 /**
+ * The license category
+ * @type {number}
+ */
+var LICENSE_CATEGORY = 43;
+/**
+ * The ID of the tag that indicates the topic details the compatibility between two or more licenses
+ * @type {number}
+ */
+var LICENSE_COMPATIBILITY_TAG = 670;
+/**
+ * The ID of the tag that indicates the topic details the incompatibility between two or more licenses
+ * @type {number}
+ */
+var LICENSE_INCOMPATIBILITY_TAG = 671;
+/**
  * A regex to extract URls
  * http://blog.mattheworiordan.com/post/13174566389/url-regular-expression-for-links-with-or-without-the
  * @type {RegExp}
@@ -372,7 +387,10 @@ function createTagsPopover(topicId, parent) {
 					return function( data ) {
 						tagsCache[topicId].data = [];
 						for (var tagIndex = 0, tagCount = data.tags.items.length; tagIndex < tagCount; ++tagIndex) {
-							tagsCache[topicId].data.push({name: data.tags.items[tagIndex].item.name});
+							tagsCache[topicId].data.push({
+                                name: data.tags.items[tagIndex].item.name,
+                                id: data.tags.items[tagIndex].item.id
+                            });
 						}
 						updateCount(linkDiv, tagsCache[topicId].data.length);
 						renderTags(topicId);
@@ -1341,8 +1359,53 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
 	}
 
 	if (secondPassDone && specHistoryDone) {
+        // the function to call when all incompatibilites have been found
+        var reportIncompatibilities = function(incompatibleTags) {
 
+        }
+
+        // find all the tags in the license category
+        var categoryQuery = SERVER + "/1/category/get/json/" + LICENSE_CATEGORY + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22tags%22%7D%7D%5D%7D";
+        $.getJSON(categoryQuery, function(data) {
+            var licenseTags = [];
+            for (var tagIndex = 0, tagCount = data.tags.items.length; tagIndex < tagCount; ++tagIndex) {
+                var tagId = data.tags.items[tagIndex].item.id;
+                if (tagId != LICENSE_INCOMPATIBILITY_TAG && tagId != LICENSE_COMPATIBILITY_TAG) {
+                    licenseTags.push(tagId);
+                }
+            }
+
+            // build up a map of what licenses are compatible or not
+            var incompatibleTags = [];
+            var queryCount = factorial(licenseTags.length) / (factorial(2) * (factorial(licenseTags.length) - factorial(2)));
+            var queryCompleted = 0;
+
+            for (var licenseIndex = 0, licenseCount = licenseTags.length - 1; licenseIndex < licenseCount; ++licenseIndex) {
+                for (var licenseIndex2 = licenseIndex + 1, licenseCount2 = licenseTags.length; licenseIndex2 < licenseCount2; ++licenseIndex2) {
+                    var license1 = licenseTags[licenseIndex];
+                    var license2 = licenseTags[licenseIndex2];
+                    var query = SERVER + "/1/topics/get/json/query;tag" + LICENSE_INCOMPATIBILITY_TAG + "=1;tag" + license1 + "=1;tag" + license2 + "=1;logic=And?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%7D%5D%7D";
+
+                    $.getJSON(query, function(topics) {
+                        ++queryCompleted;
+                        incompatibleTags.push([license1, license2]);
+
+                        if (queryCompleted ==  queryCount) {
+                            reportIncompatibilities(incompatibleTags);
+                        }
+                    });
+                }
+            }
+        });
 	}
+}
+
+function factorial(num)
+{
+    var rval=1;
+    for (var i = 2; i <= num; i++)
+        rval = rval * i;
+    return rval;
 }
 
 /**
