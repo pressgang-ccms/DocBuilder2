@@ -210,6 +210,11 @@ var secondPassDone = false;
  * @type {boolean}
  */
 var specHistoryDone = false;
+/**
+ * A collection of all the sied menus.
+ * @type {Array}
+ */
+var sideMenus = [];
 
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
@@ -1366,7 +1371,36 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
         // the function to call when all incompatibilities have been found
         var reportIncompatibilities = function(usedLicenses, incompatibleLicenses) {
             for (var tag in usedLicenses) {
-                $('<li><a href="javascript:void">' + usedLicenses[tag].name + '</a></li>').appendTo($("#licensesPresentItems"));
+
+                var fixedLicenceName
+
+                $('<li><a href="javascript:hideAllMenus(); sideMenus[" + usedLicenses[tag].name + "].show();">' + usedLicenses[tag].name + '</a></li>').appendTo($("#licensesPresentItems"));
+
+                var newMenuString = '\
+                        <div class="panel panel-default pressgangMenu">\
+                            <div class="panel-heading">usedLicenses[tag].name</div>\
+                                <div class="panel-body ">\
+                                    <ul id="licenseConflictsItems" class="nav nav-pills nav-stacked">\
+                                        <li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+                                        <li><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">&lt;- Licenses</a></li>\
+                                        <li><a href="javascript:hideAllMenus(); licensesPresent.show(); localStorage.setItem(\'lastMenu\', \'licensesPresent\');">&lt;- Licenses Present</a></li>';
+
+                for (var licenceTopicIndex = 0, licenseTopicCount = usedLicenses[tag].topics; licenceTopicIndex < licenseTopicCount; ++licenceTopicIndex) {
+                    newMenuString += '<li><a href="javascript:topicSections[' + usedLicenses[tag].topics[licenceTopicIndex] + '].scrollIntoView()">' +
+                        usedLicenses[tag].topics[licenceTopicIndex] + '</a></li>';
+                }
+
+                newMenuString += '</ul>\
+                                </div>\
+                            </div>\
+                        </div>'
+
+                // so we can reference this menu in code
+                sideMenus[usedLicenses[tag].name] =  $(newMenuString);
+                // so all menus will be closed
+                sideMenus.push(licenseMenu);
+                $(document.body).append(licenseMenu);
+                licenseMenu.hide();
             }
 
             for (var licenseIndex = 0, licenseCount = incompatibleLicenses.length; licenseIndex < licenseCount; ++licenseIndex) {
@@ -1446,27 +1480,9 @@ function factorial(num)
  * Hides all the side bar menus
  */
 function hideAllMenus() {
-	menuIcon.hide();
-	mainMenu.hide();
-	topicsByLastEdit.hide();
-	topicsEditedIn1Day.hide();
-	topicsEditedIn1Week.hide();
-	topicsEditedIn1Month.hide();
-	topicsEditedIn1Year.hide();
-	topicsEditedInOlderThanYear.hide();
-	topicsAddedSince.hide();
-	topicsRemovedSince.hide();
-	topicsAddedSince1Day.hide();
-	topicsAddedSince1Week.hide();
-	topicsAddedSince1Month.hide();
-	topicsAddedSince1Year.hide();
-	topicsRemovedSince1Day.hide();
-	topicsRemovedSince1Week.hide();
-	topicsRemovedSince1Month.hide();
-	topicsRemovedSince1Year.hide();
-    licenses.hide();
-    licenseConflicts.hide();
-    licensesPresent.hide();
+	for (var menuIndex = 0, menuCount = sideMenus.length; menuIndex < menuCount; ++menuIndex) {
+        sideMenus[menuIndex].hide();
+    }
 }
 
 /**
@@ -1583,6 +1599,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(mainMenu);
+    sideMenus.push(mainMenu);
 
 	topicsAddedSince = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1599,6 +1616,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsAddedSince);
+    sideMenus.push(topicsAddedSince);
 
 	topicsAddedSince1Day = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1612,6 +1630,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsAddedSince1Day);
+    sideMenus.push(topicsAddedSince1Day);
 
 	topicsAddedSince1Week = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1625,6 +1644,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsAddedSince1Week);
+    sideMenus.push(topicsAddedSince1Week);
 
 	topicsAddedSince1Month = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1638,6 +1658,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsAddedSince1Month);
+    sideMenus.push(topicsAddedSince1Month);
 
 	topicsAddedSince1Year = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1651,6 +1672,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsAddedSince1Year);
+    sideMenus.push(topicsAddedSince1Year);
 
 	topicsRemovedSince = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1667,6 +1689,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsRemovedSince);
+    sideMenus.push(topicsRemovedSince);
 
 	topicsRemovedSince1Day = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1680,6 +1703,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsRemovedSince1Day);
+    sideMenus.push(topicsRemovedSince1Day);
 
 	topicsRemovedSince1Week = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1693,6 +1717,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsRemovedSince1Week);
+    sideMenus.push(topicsRemovedSince1Week);
 
 	topicsRemovedSince1Month = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1706,6 +1731,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsRemovedSince1Month);
+    sideMenus.push(topicsRemovedSince1Month);
 
 	topicsRemovedSince1Year = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1719,6 +1745,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsRemovedSince1Year);
+    sideMenus.push(topicsRemovedSince1Year);
 
 	topicsByLastEdit = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1736,6 +1763,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsByLastEdit);
+    sideMenus.push(topicsByLastEdit);
 
 	topicsEditedIn1Day = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1749,6 +1777,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsEditedIn1Day);
+    sideMenus.push(topicsEditedIn1Day);
 
 	topicsEditedIn1Week = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1762,6 +1791,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsEditedIn1Week);
+    sideMenus.push(topicsEditedIn1Week);
 
 	topicsEditedIn1Month = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1775,6 +1805,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsEditedIn1Month);
+    sideMenus.push(topicsEditedIn1Month);
 
 	topicsEditedIn1Year = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1788,6 +1819,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsEditedIn1Year);
+    sideMenus.push(topicsEditedIn1Year);
 
 
 	topicsEditedInOlderThanYear = $('\
@@ -1802,6 +1834,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsEditedInOlderThanYear);
+    sideMenus.push(topicsEditedInOlderThanYear);
 
     licenses = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1816,6 +1849,7 @@ function buildMenu() {
 			</div>\
 		</div>');
     $(document.body).append(licenses);
+    sideMenus.push(licenses);
 
     licensesPresent = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1829,6 +1863,7 @@ function buildMenu() {
 			</div>\
 		</div>');
     $(document.body).append(licensesPresent);
+    sideMenus.push(licensesPresent);
 
     licenseConflicts = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1842,6 +1877,7 @@ function buildMenu() {
 			</div>\
 		</div>');
     $(document.body).append(licenseConflicts);
+    sideMenus.push(licenseConflicts);
 
 	hideAllMenus();
 
