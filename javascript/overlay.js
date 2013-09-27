@@ -1274,7 +1274,7 @@ function doSecondPassQuery(topicIdsString) {
 				var topic = data.items[topicIndex].item;
 
                 if (!topicNames[topic.id]) {
-                    topicNames[topic.id] = topic.name;
+                    topicNames[topic.id] = topic.title;
                 }
 
 				// set the description
