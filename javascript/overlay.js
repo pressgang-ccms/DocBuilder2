@@ -149,6 +149,11 @@ var historyCache = {};
  */
 var topicIds = [];
 /**
+ * Maps topic ids to topic names;
+ * @type {{}}
+ */
+var topicNames = {};
+/**
  * A mapping of topic IDs to the section elements
  * @type {{}}
  */
@@ -998,25 +1003,25 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 					$('#topicsAddedIn1Day').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.day].added.length + '</span>'));
 					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.day].added.length; topicIndex < topicCount; ++topicIndex) {
 						var topic = specRevisionCache[specRevisionCache.day].added[topicIndex];
-						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1DayItems"));
+						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topicNames[topic] + '</a></li>').appendTo($("#topicsAddedSince1DayItems"));
 					}
 
 					$('#topicsAddedIn1Week').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.week].added.length + '</span>'));
 					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.week].added.length; topicIndex < topicCount; ++topicIndex) {
 						var topic = specRevisionCache[specRevisionCache.week].added[topicIndex];
-						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1WeekItems"));
+						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topicNames[topic] + '</a></li>').appendTo($("#topicsAddedSince1WeekItems"));
 					}
 
 					$('#topicsAddedIn1Month').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.month].added.length + '</span>'));
 					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.month].added.length; topicIndex < topicCount; ++topicIndex) {
 						var topic = specRevisionCache[specRevisionCache.month].added[topicIndex];
-						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1MonthItems"));
+						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topicNames[topic] + '</a></li>').appendTo($("#topicsAddedSince1MonthItems"));
 					}
 
 					$('#topicsAddedIn1Year').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.year].added.length + '</span>'));
 					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.year].added.length; topicIndex < topicCount; ++topicIndex) {
 						var topic = specRevisionCache[specRevisionCache.year].added[topicIndex];
-						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1YearItems"));
+						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topicNames[topic] + '</a></li>').appendTo($("#topicsAddedSince1YearItems"));
 					}
 
 					$('#topicsRemovedIn1Day').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.day].removed.length + '</span>'));
@@ -1268,6 +1273,10 @@ function doSecondPassQuery(topicIdsString) {
 			for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
 				var topic = data.items[topicIndex].item;
 
+                if (!topicNames[topic.id]) {
+                    topicNames[topic.id] = topic.name;
+                }
+
 				// set the description
 				descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
 
@@ -1384,8 +1393,10 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
                                         <li><a href="javascript:hideAllMenus(); licensesPresent.show(); localStorage.setItem(\'lastMenu\', \'licensesPresent\');">&lt;- Licenses Present</a></li>';
 
                 for (var licenceTopicIndex = 0, licenseTopicCount = usedLicenses[tag].topics.length; licenceTopicIndex < licenseTopicCount; ++licenceTopicIndex) {
-                    newMenuString += '<li><a href="javascript:topicSections[' + usedLicenses[tag].topics[licenceTopicIndex] + '].scrollIntoView()">' +
-                        usedLicenses[tag].topics[licenceTopicIndex] + '</a></li>';
+                    var topicID = usedLicenses[tag].topics[licenceTopicIndex];
+                    var topicName = topicNames[topicID];
+
+                    newMenuString += '<li><a href="javascript:topicSections[' + topicID + '].scrollIntoView()">' + topicName + '</a></li>';
                 }
 
                 newMenuString += '</ul>\
