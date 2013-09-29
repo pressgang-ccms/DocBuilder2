@@ -243,7 +243,7 @@ function getSpecIdFromURL() {
 	var urlComponents = window.location.href.split("/");
 	for (var index = urlComponents.length - 1; index >= 0; --index) {
 		var int = parseInt(urlComponents[index]);
-		if (!isNan(int)) {
+		if (!isNaN(int)) {
 			return int;
 		}
 	}
