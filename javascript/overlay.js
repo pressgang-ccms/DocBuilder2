@@ -1983,9 +1983,9 @@ function countKeys(obj) {
 };
 
 function getSpecIdFromURL() {
-	var urlComonents = window.location.href.split("/");
-	for (var index = urlComonents.length - 1; index >= 0; --index) {
-	 	var int = parseInt(urlComonents[index]);
+	var urlComponents = window.location.href.split("/");
+	for (var index = urlComponents.length - 1; index >= 0; --index) {
+	 	var int = parseInt(urlComponents[index]);
 		if (int != NaN) {
 			return int;
 		}
