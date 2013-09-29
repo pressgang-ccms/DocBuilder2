@@ -939,8 +939,6 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 		// get the spec id
 		var specId = getSpecIdFromURL();
 		if (specId) {
-			var specId = urlComonents[urlComonents.length - 2];
-
 			// get the revisions of the spec itself
 
 			// get content spec revisions
