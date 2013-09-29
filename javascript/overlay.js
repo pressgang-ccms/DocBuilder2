@@ -924,8 +924,8 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 		}
 
 		// get the spec id
-		var urlComonents = window.location.href.split("/");
-		if (urlComonents.length >= 2) {
+		var specId = getSpecIdFromURL();
+		if (specId) {
 			var specId = urlComonents[urlComonents.length - 2];
 
 			// get the revisions of the spec itself
@@ -1981,3 +1981,15 @@ function countKeys(obj) {
 	}
 	return size;
 };
+
+function getSpecIdFromURL() {
+	var urlComonents = window.location.href.split("/");
+	for (var index = urlComonents.length - 1; index >= 0; --index) {
+	 	var int = parseInt(urlComonents[index]);
+		if (int != NaN) {
+			return int;
+		}
+	}
+
+	return null;
+}
