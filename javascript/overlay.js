@@ -238,6 +238,19 @@ $(window).load(function() {secondPass(false, true, false);});
  */
 setTimeout(function() {secondPass(false, false, true);}, SECOND_PASS_TIMEOUT);
 
+
+function getSpecIdFromURL() {
+	var urlComponents = window.location.href.split("/");
+	for (var index = urlComponents.length - 1; index >= 0; --index) {
+		var int = parseInt(urlComponents[index]);
+		if (!isNan(int)) {
+			return int;
+		}
+	}
+
+	return null;
+}
+
 /**
  * Create and add the icons after the bug or editor links
  * @param topicId The topic ID
@@ -1981,15 +1994,3 @@ function countKeys(obj) {
 	}
 	return size;
 };
-
-function getSpecIdFromURL() {
-	var urlComponents = window.location.href.split("/");
-	for (var index = urlComponents.length - 1; index >= 0; --index) {
-	 	var int = parseInt(urlComponents[index]);
-		if (int != NaN) {
-			return int;
-		}
-	}
-
-	return null;
-}
