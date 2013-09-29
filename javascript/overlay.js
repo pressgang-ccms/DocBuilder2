@@ -31,6 +31,21 @@
  */
 
 /**
+ * The license category
+ * @type {number}
+ */
+var LICENSE_CATEGORY = 43;
+/**
+ * The ID of the tag that indicates the topic details the compatibility between two or more licenses
+ * @type {number}
+ */
+var LICENSE_COMPATIBILITY_TAG = 679;
+/**
+ * The ID of the tag that indicates the topic details the incompatibility between two or more licenses
+ * @type {number}
+ */
+var LICENSE_INCOMPATIBILITY_TAG = 678;
+/**
  * A regex to extract URls
  * http://blog.mattheworiordan.com/post/13174566389/url-regular-expression-for-links-with-or-without-the
  * @type {RegExp}
@@ -134,6 +149,11 @@ var historyCache = {};
  */
 var topicIds = [];
 /**
+ * Maps topic ids to topic names;
+ * @type {{}}
+ */
+var topicNames = {};
+/**
  * A mapping of topic IDs to the section elements
  * @type {{}}
  */
@@ -189,12 +209,17 @@ var offscreenRendering = null;
  * true after the second pass has completed
  * @type {boolean}
  */
-var secondPassDone = true;
+var secondPassDone = false;
 /**
  * true after the spec history pass has completed
  * @type {boolean}
  */
-var specHistoryDone = true;
+var specHistoryDone = false;
+/**
+ * A collection of all the sied menus.
+ * @type {Array}
+ */
+var sideMenus = [];
 
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
@@ -257,6 +282,7 @@ function createWebDAVPopover(topicId, parent) {
     $(popover.popoverContent).append($("<ul><li>http://" + WEBDAV_SERVER + fullPath + "</li><li>webdav://" + WEBDAV_SERVER + fullPath + "</li></ul>"))
     $(popover.popoverContent).append($("<h3>Editing With Cadaver (copy and paste into a terminal):</h3>"));
     $(popover.popoverContent).append($("<p>cadaver http://" + WEBDAV_SERVER + path + "<br/>edit " + topicId + ".xml<br/>exit</p>"));
+    $(popover.popoverContent).append($("<p><a href='/16778'>Further Reading</a></p>"));
 
     linkDiv.onmouseover=function(){
         openPopover(popover, linkDiv);
@@ -371,7 +397,10 @@ function createTagsPopover(topicId, parent) {
 					return function( data ) {
 						tagsCache[topicId].data = [];
 						for (var tagIndex = 0, tagCount = data.tags.items.length; tagIndex < tagCount; ++tagIndex) {
-							tagsCache[topicId].data.push({name: data.tags.items[tagIndex].item.name});
+							tagsCache[topicId].data.push({
+                                name: data.tags.items[tagIndex].item.name,
+                                id: data.tags.items[tagIndex].item.id
+                            });
 						}
 						updateCount(linkDiv, tagsCache[topicId].data.length);
 						renderTags(topicId);
@@ -548,13 +577,11 @@ function renderHistory(topicId) {
 
 	for (var revisionIndex = 0, revisionCount = historyCache[topicId].data.length; revisionIndex < revisionCount; ++revisionIndex) {
 		var revision = historyCache[topicId].data[revisionIndex];
-		var link = document.createElement("div");
-
 		var message = revision.message == null || revision.message.length == 0 ? "[No Message]" : revision.message;
 		var date = moment(revision.lastModified);
 
-		$(link).text(revision.revision + " - " + date.format('lll') + " - " + message);
-		historyCache[topicId].popover.popoverContent.appendChild(link);
+        var link = $("<div><a target='_blank' href='http://" + BASE_SERVER + "/pressgang-ccms-ui-next/#TopicHistoryView;" + topicId + ";" + revision.revision + ";" + historyCache[topicId].data[0].revision + "'><div style='width: 16px; height: 16px; margin-right: 8px; background-image: url(/images/rendereddiff.png); background-size: contain; float: left'></div></a>" + revision.revision + " - " + date.format('lll') + " - " + message + "</div>");
+		$(historyCache[topicId].popover.popoverContent).append(link);
 	}
 }
 
@@ -1246,6 +1273,10 @@ function doSecondPassQuery(topicIdsString) {
 			for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
 				var topic = data.items[topicIndex].item;
 
+                if (!topicNames[topic.id]) {
+                    topicNames[topic.id] = topic.title;
+                }
+
 				// set the description
 				descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
 
@@ -1263,7 +1294,10 @@ function doSecondPassQuery(topicIdsString) {
 				tagsCache[topic.id].data = [];
 				for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
 					var tag = topic.tags.items[tagIndex].item;
-					tagsCache[topic.id].data.push({name: tag.name});
+                    tagsCache[topic.id].data.push({
+                        name: tag.name,
+                        id: tag.id
+                    });
 				}
 
 				// set the urls
@@ -1343,31 +1377,129 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
 
 	if (secondPassDone && specHistoryDone) {
 
+        // the function to call when all incompatibilities have been found
+        var reportIncompatibilities = function(usedLicenses, incompatibleLicenses) {
+
+            $('#licensesPresent').append($('<span class="badge pull-right">' + countKeys(usedLicenses) + '</span>'));
+
+            for (var tag in usedLicenses) {
+
+                $('<li><a href="javascript:hideAllMenus(); sideMenus[\'' + usedLicenses[tag].name + '\'].show();">' + usedLicenses[tag].name + '<span class="badge pull-right">' + usedLicenses[tag].topics.length + '</span></a></li>').appendTo($("#licensesPresentItems"));
+
+                var newMenuString = '\
+                        <div class="panel panel-default pressgangMenu">\
+                            <div class="panel-heading">' + usedLicenses[tag].name + '</div>\
+                                <div class="panel-body ">\
+                                    <ul id="licenseConflictsItems" class="nav nav-pills nav-stacked">\
+                                        <li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+                                        <li><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">&lt;- Licenses</a></li>\
+                                        <li><a href="javascript:hideAllMenus(); licensesPresent.show(); localStorage.setItem(\'lastMenu\', \'licensesPresent\');">&lt;- Licenses Present</a></li>';
+
+                for (var licenceTopicIndex = 0, licenseTopicCount = usedLicenses[tag].topics.length; licenceTopicIndex < licenseTopicCount; ++licenceTopicIndex) {
+                    var topicID = usedLicenses[tag].topics[licenceTopicIndex];
+                    var topicName = topicNames[topicID];
+
+                    newMenuString += '<li><a href="javascript:topicSections[' + topicID + '].scrollIntoView()">' + topicName + '</a></li>';
+                }
+
+                newMenuString += '</ul>\
+                                </div>\
+                            </div>\
+                        </div>'
+
+                var licenseMenu =  $(newMenuString);
+                // so we can reference this menu in code
+                sideMenus[usedLicenses[tag].name] = licenseMenu
+                // so all menus will be closed
+                sideMenus.push(licenseMenu);
+                $(document.body).append(licenseMenu);
+                licenseMenu.hide();
+            }
+
+            var licenseConflictCount = 0;
+            for (var licenseIndex = 0, licenseCount = incompatibleLicenses.length; licenseIndex < licenseCount; ++licenseIndex) {
+                 var licenseDetails = incompatibleLicenses[licenseIndex];
+                 if (usedLicenses[licenseDetails.license1] && usedLicenses[licenseDetails.license2]) {
+                     ++licenseConflictCount;
+                     $('<li><a href="http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + licenseDetails.topicId + '">' + usedLicenses[licenseDetails.license1].name + " / " + usedLicenses[licenseDetails.license2].name + '</a></li>').appendTo($("#licenseConflictsItems"));
+                 }
+            }
+
+            $('#licenseConflicts').append($('<span class="badge pull-right">' + licenseConflictCount + '</span>'));
+        }
+
+        // find all the tags in the license category
+        var categoryQuery = SERVER + "/category/get/json/" + LICENSE_CATEGORY + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22tags%22%7D%7D%5D%7D";
+        $.getJSON(categoryQuery, function(data) {
+
+            // extract all the license tags
+            var licenseTags = [];
+            for (var tagIndex = 0, tagCount = data.tags.items.length; tagIndex < tagCount; ++tagIndex) {
+                var tagId = data.tags.items[tagIndex].item.id;
+                if (tagId != LICENSE_INCOMPATIBILITY_TAG && tagId != LICENSE_COMPATIBILITY_TAG) {
+                    licenseTags.push(tagId);
+                }
+            }
+
+            //find out what licenses we are actually using
+            var usedLicenses = {};
+            for (var topic in tagsCache) {
+                for (var tagIndex = 0, tagCount = tagsCache[topic].data.length; tagIndex < tagCount; ++tagIndex) {
+                    var tag = tagsCache[topic].data[tagIndex];
+                    if (jQuery.inArray(tag.id, licenseTags) != -1) {
+                        if (!usedLicenses[tag.id]) {
+                            usedLicenses[tag.id] = {name: tag.name, topics: [topic]};
+                        } else {
+                            usedLicenses[tag.id].topics.push(topic);
+                        }
+                    }
+                }
+            }
+
+            // build up a map of what licenses are compatible or not
+            var incompatibleLicenses = [];
+            var queryCount = factorial(licenseTags.length) / (factorial(2) * (factorial(licenseTags.length - 2)));
+            var queryCompleted = 0;
+
+            for (var licenseIndex = 0, licenseCount = licenseTags.length - 1; licenseIndex < licenseCount; ++licenseIndex) {
+                for (var licenseIndex2 = licenseIndex + 1, licenseCount2 = licenseTags.length; licenseIndex2 < licenseCount2; ++licenseIndex2) {
+                    var license1 = licenseTags[licenseIndex];
+                    var license2 = licenseTags[licenseIndex2];
+                    var query = SERVER + "/topics/get/json/query;catint" + LICENSE_CATEGORY + "=And;tag" + LICENSE_INCOMPATIBILITY_TAG + "=1;tag" + license1 + "=1;tag" + license2 + "=1;logic=And?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%7D%5D%7D";
+
+                    $.getJSON(query, function(license1, license2) {
+                        return function(topics) {
+                            ++queryCompleted;
+                            if (topics.items.length != 0) {
+                                incompatibleLicenses.push({license1: license1, license2: license2, topicId: topics.items[0].item.id});
+                            }
+
+                            if (queryCompleted ==  queryCount) {
+                                reportIncompatibilities(usedLicenses, incompatibleLicenses);
+                            }
+                        }
+                    }(license1, license2));
+                }
+            }
+        });
 	}
+}
+
+function factorial(num)
+{
+    var rval=1;
+    for (var i = 2; i <= num; i++)
+        rval = rval * i;
+    return rval;
 }
 
 /**
  * Hides all the side bar menus
  */
 function hideAllMenus() {
-	menuIcon.hide();
-	mainMenu.hide();
-	topicsByLastEdit.hide();
-	topicsEditedIn1Day.hide();
-	topicsEditedIn1Week.hide();
-	topicsEditedIn1Month.hide();
-	topicsEditedIn1Year.hide();
-	topicsEditedInOlderThanYear.hide();
-	topicsAddedSince.hide();
-	topicsRemovedSince.hide();
-	topicsAddedSince1Day.hide();
-	topicsAddedSince1Week.hide();
-	topicsAddedSince1Month.hide();
-	topicsAddedSince1Year.hide();
-	topicsRemovedSince1Day.hide();
-	topicsRemovedSince1Week.hide();
-	topicsRemovedSince1Month.hide();
-	topicsRemovedSince1Year.hide();	
+	for (var menuIndex = 0, menuCount = sideMenus.length; menuIndex < menuCount; ++menuIndex) {
+        sideMenus[menuIndex].hide();
+    }
 }
 
 /**
@@ -1478,11 +1610,13 @@ function buildMenu() {
 						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show(); localStorage.setItem(\'lastMenu\', \'topicsByLastEdit\');">Topics By Last Edit</a></li>\
 						<li><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince\');">Topics Added In</a></li>\
 						<li><a href="javascript:hideAllMenus(); topicsRemovedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">Topics Removed In</a></li>\
+						<li><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">Licenses</a></li>\
 					</ul>\
 				</div>\
 			</div>\
 		</div>')
 	$(document.body).append(mainMenu);
+    sideMenus.push(mainMenu);
 
 	topicsAddedSince = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1499,6 +1633,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsAddedSince);
+    sideMenus.push(topicsAddedSince);
 
 	topicsAddedSince1Day = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1512,6 +1647,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsAddedSince1Day);
+    sideMenus.push(topicsAddedSince1Day);
 
 	topicsAddedSince1Week = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1525,6 +1661,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsAddedSince1Week);
+    sideMenus.push(topicsAddedSince1Week);
 
 	topicsAddedSince1Month = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1538,6 +1675,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsAddedSince1Month);
+    sideMenus.push(topicsAddedSince1Month);
 
 	topicsAddedSince1Year = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1551,6 +1689,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsAddedSince1Year);
+    sideMenus.push(topicsAddedSince1Year);
 
 	topicsRemovedSince = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1567,6 +1706,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsRemovedSince);
+    sideMenus.push(topicsRemovedSince);
 
 	topicsRemovedSince1Day = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1580,6 +1720,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsRemovedSince1Day);
+    sideMenus.push(topicsRemovedSince1Day);
 
 	topicsRemovedSince1Week = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1593,6 +1734,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsRemovedSince1Week);
+    sideMenus.push(topicsRemovedSince1Week);
 
 	topicsRemovedSince1Month = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1606,6 +1748,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsRemovedSince1Month);
+    sideMenus.push(topicsRemovedSince1Month);
 
 	topicsRemovedSince1Year = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1619,6 +1762,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsRemovedSince1Year);
+    sideMenus.push(topicsRemovedSince1Year);
 
 	topicsByLastEdit = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1636,6 +1780,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsByLastEdit);
+    sideMenus.push(topicsByLastEdit);
 
 	topicsEditedIn1Day = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1649,6 +1794,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsEditedIn1Day);
+    sideMenus.push(topicsEditedIn1Day);
 
 	topicsEditedIn1Week = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1662,6 +1808,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsEditedIn1Week);
+    sideMenus.push(topicsEditedIn1Week);
 
 	topicsEditedIn1Month = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1675,6 +1822,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsEditedIn1Month);
+    sideMenus.push(topicsEditedIn1Month);
 
 	topicsEditedIn1Year = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -1688,6 +1836,7 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsEditedIn1Year);
+    sideMenus.push(topicsEditedIn1Year);
 
 
 	topicsEditedInOlderThanYear = $('\
@@ -1702,6 +1851,50 @@ function buildMenu() {
 			</div>\
 		</div>')
 	$(document.body).append(topicsEditedInOlderThanYear);
+    sideMenus.push(topicsEditedInOlderThanYear);
+
+    licenses = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Licenses</div>\
+				<div class="panel-body ">\
+		            <ul class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a id="licensesPresent" href="javascript:hideAllMenus(); licensesPresent.show(); localStorage.setItem(\'lastMenu\', \'licensesPresent\');">Licenses Present</a></li>\
+						<li><a id="licenseConflicts" href="javascript:hideAllMenus(); licenseConflicts.show(); localStorage.setItem(\'lastMenu\', \'licenseConflicts\');">License Conflicts</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>');
+    $(document.body).append(licenses);
+    sideMenus.push(licenses);
+
+    licensesPresent = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Licenses Present</div>\
+				<div class="panel-body ">\
+		            <ul id="licensesPresentItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">&lt;- Licenses</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>');
+    $(document.body).append(licensesPresent);
+    sideMenus.push(licensesPresent);
+
+    licenseConflicts = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Licenses Conflicts</div>\
+				<div class="panel-body ">\
+		            <ul id="licenseConflictsItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">&lt;- Licenses</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>');
+    $(document.body).append(licenseConflicts);
+    sideMenus.push(licenseConflicts);
 
 	hideAllMenus();
 
@@ -1759,10 +1952,21 @@ function buildMenu() {
 	} else if (lastMenu == "topicsRemovedSince1Year") {
 		topicsRemovedSince1Year.show();
 		showMenu();
-	}else {
+	} else if (lastMenu == "licenses") {
+        licenses.show();
+        showMenu();
+    } else if (lastMenu == "licensesPresent") {
+        licensesPresent.show();
+        showMenu();
+    } else if (lastMenu == "licenseConflicts") {
+        licenseConflicts.show();
+        showMenu();
+    } else {
 		menuIcon.show();
 		hideMenu();
 	}
+
+
 }
 
 /**

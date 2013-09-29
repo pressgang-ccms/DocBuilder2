@@ -22,6 +22,7 @@ var exec = require('child_process').exec;
 	so there is little downside to having this information being slightly out of sync.
  */
 
+
 /**
  * The REST server that the DocBuilder will connect to.
  * @type {string}
@@ -206,6 +207,20 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 									<input type=\"text\" id=\"topicIDFilter\" onkeyup=\"save_filter()\">\n\
 								</td>\n\
 								<td>\n\
+								    Show Obsolete Specs\n\
+								</td>\n\
+								<td>\n\
+								    <input type=\"checkbox\" id=\"specObsoleteFilter\" onchange=\"save_filter()\">\n\
+								</td>\n\
+							</tr>\n\
+							<tr>\n\
+								<td>\n\
+									Show Frozen Specs\n\
+								</td>\n\
+								<td>\n\
+                                    <input type=\"checkbox\" id=\"specFrozenFilter\" onchange=\"save_filter()\">\n\
+								</td>\n\
+								<td>\n\
 								</td>\n\
 								<td>\n\
 								</td>\n\
@@ -227,12 +242,18 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 					versionFilter.value = localStorage[\"versionFilter\"] || \"\"; \n\
 					idFilter.value = localStorage[\"idFilter\"] || \"\"; \n\
 					topicIDFilter.value = localStorage[\"topicIDFilter\"] || \"\"; \n\
+					specObsoleteFilter.checked = localStorage[\"specObsoleteFilter\"] && localStorage[\"specObsoleteFilter\"].length != 0 \n\
+                        ? (localStorage[\"specObsoleteFilter\"].toLowerCase() == true.toString().toLowerCase() ? true : false) : false; \n\
+                    specFrozenFilter.checked = localStorage[\"specFrozenFilter\"] && localStorage[\"specFrozenFilter\"].length != 0 \n\
+                        ? (localStorage[\"specFrozenFilter\"].toLowerCase() == true.toString().toLowerCase() ? true : false) : false; \n\
 					save_filter = function() {\n\
 						localStorage[\"productFilter\"] = productFilter.value;\n\
 						localStorage[\"titleFilter\"] = titleFilter.value;\n\
 						localStorage[\"versionFilter\"] = versionFilter.value;\n\
 						localStorage[\"idFilter\"] = idFilter.value;\n\
 						localStorage[\"topicIDFilter\"] = topicIDFilter.value;\n\
+						localStorage[\"specObsoleteFilter\"] = specObsoleteFilter.checked.toString();\n\
+						localStorage[\"specFrozenFilter\"] = specFrozenFilter.checked.toString();\n\
 						if (rebuildTimeout) {\n\
 							window.clearTimeout(rebuildTimeout);\n\
 							rebuildTimeout = null;\n\
@@ -248,11 +269,15 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 						localStorage[\"versionFilter\"] = \"\";\n\
 						localStorage[\"idFilter\"] = \"\";\n\
 						localStorage[\"topicIDFilter\"] = \"\";\n\
+						localStorage[\"specObsoleteFilter\"] = \"\";\n\
+						localStorage[\"specFrozenFilter\"] = \"\";\n\
 						productFilter.value = \"\";\n\
 						titleFilter.value = \"\";\n\
 						versionFilter.value = \"\";\n\
 						idFilter.value = \"\";\n\
 						topicIDFilter.value = \"\";\n\
+						specObsoleteFilter.checked = false;\n\
+						specFrozenFilter.checked = false;\n\
 						if (rebuildTimeout) {\n\
 							window.clearTimeout(rebuildTimeout);\n\
 							rebuildTimeout = null;\n\
@@ -286,14 +311,19 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 				{
 					title: specDetailsCache[specId].title ? specDetailsCache[specId].title.replace(/'/g, "\\'") : "",
 					version: specDetailsCache[specId].version ? specDetailsCache[specId].version.replace(/'/g, "\\'") : "",
-					product: specDetailsCache[specId].product ? specDetailsCache[specId].product.replace(/'/g, "\\'") : ""
+					product: specDetailsCache[specId].product ? specDetailsCache[specId].product.replace(/'/g, "\\'") : "",
+                    tags: specDetailsCache[specId].tags ? specDetailsCache[specId].tags : []
 				}
 				:
 				{
 					title: "To Be Synced",
 					version: "To Be Synced",
-					product: "To Be Synced"
+					product: "To Be Synced",
+                    tags: []
 				};
+
+                // select an image based on the presence of the index.html file
+                var image = fs.existsSync(APACHE_HTML_DIR + "/" + specId + "/index.html") ? 'url(/images/tick.png)' : 'url(/images/cross.png)';
 
 				indexHtml += "{\n\
 					idRaw: " + specId + ",\n\
@@ -306,7 +336,9 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 					remarks: '<a href=\"" + specId + "/remarks\"><button>With Remarks</button></a>',\n\
 					buildlog: '<a href=\"" + specId + "/build.log\"><button>Build Log</button></a>',\n\
 					publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + latestFileFixed + "\"><button>Publican ZIP</button></a>',\n\
-					publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>'\n\
+					publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>',\n\
+					tags: [" + fixedSpecDetails.tags.toString() + "],\n\
+                    status: '<div style=\"width: 32px; height: 32px; background-image: " + image + "; background-size: cover\"/>'\n\
 				},\n";
 
 				processSpecDetails(++processIndex);
@@ -344,12 +376,7 @@ function processSpecs(updatedSpecs) {
 
 					console.log("Finished build of modified book " + id);
 
-                    // Append the custom javascript files to the index.html
-                    try {
-                        var contents = fs.readFileSync(APACHE_HTML_DIR + "/" + id + "/index.html").toString();
-                        contents = contents.replace(
-                            "<head>",
-                            "<head>\n\
+                    var scriptsAndStyleFiles = "<head>\n\
                                 <script type='application/javascript' src='/javascript/jquery-2.0.3.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/moment.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/bootstrap.min.js'></script>\n\
@@ -357,10 +384,23 @@ function processSpecs(updatedSpecs) {
                                 <script type='application/javascript' src='/javascript/pie.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/overlay.js'></script>\n\
                                 <link href='/css/pressgang.css' rel='stylesheet'>\n\
-                                <link href='/css/bootstrap.min.css' rel='stylesheet'>\n");
+                                <link href='/css/bootstrap.min.css' rel='stylesheet'>\n";
+
+                    // Append the custom javascript files to the index.html
+                    try {
+                        var contents = fs.readFileSync(APACHE_HTML_DIR + "/" + id + "/index.html").toString();
+                        contents = contents.replace("<head>", scriptsAndStyleFiles);
                         fs.writeFileSync(APACHE_HTML_DIR + "/" + id + "/index.html", contents);
                     } catch (ex) {
-                        console.log("Could not edit and save HTML file");
+                        console.log("Could not edit and save main HTML file");
+                    }
+
+                    try {
+                        var contents = fs.readFileSync(APACHE_HTML_DIR + "/" + id + "/remarks/index.html").toString();
+                        contents = contents.replace("<head>", scriptsAndStyleFiles);
+                        fs.writeFileSync(APACHE_HTML_DIR + "/" + id + "/remarks/index.html", contents);
+                    } catch (ex) {
+                        console.log("Could not edit and save remarks HTML file");
                     }
 
 					if (childCount < MAX_PROCESSES) {
@@ -478,6 +518,15 @@ function processPendingSpecUpdates() {
 
 		console.log("Filling spec cache. " + pendingSpecCacheUpdates.length + " calls to be made.");
 
+        var nodesQueryFinished = false;
+        var tagsQueryFinished = false;
+
+        var finished = function() {
+            if (nodesQueryFinished && tagsQueryFinished) {
+                processPendingSpecUpdates();
+            }
+        }
+
 		$.getJSON(specDetailsQuery,
 			function(data) {
 				if (data.items) {
@@ -493,13 +542,35 @@ function processPendingSpecUpdates() {
 						}
 					}
 				}
-
-				processPendingSpecUpdates();
+                nodesQueryFinished = true;
+                finished();
 			}).error(function(jqXHR, textStatus, errorThrown) {
 				console.log("Call to " + specDetailsQuery + " failed!");
-				console.log(errorThrown);
-				processPendingSpecUpdates();
+                nodesQueryFinished = true;
+                finished();
 			});
+
+        var specTagQuery = REST_SERVER + "/1/contentspec/get/json/" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D";
+
+        $.getJSON(specTagQuery,
+            function(data) {
+                if (data.tags) {
+
+                    specDetailsCache[specId].tags = [];
+
+                    for (var i = 0, count = data.tags.items.length; i < count; ++i) {
+                        var tag = data.tags.items[i].item;
+                        specDetailsCache[specId].tags.push(tag.id);
+                    }
+                }
+                tagsQueryFinished = true;
+                finished();
+            }).error(function(jqXHR, textStatus, errorThrown) {
+                console.log("Call to " + tagsQueryFinished + " failed!");
+                tagsQueryFinished = true;
+                finished();
+            });
+
 	} else {
 		processingPendingCacheUpdates = false;
 	}
@@ -511,9 +582,7 @@ function processPendingSpecUpdates() {
  */
 function getSpecs(lastRun, updatedSpecs, allSpecsArray) {
 
-	var specQuery = REST_SERVER + "/1/contentspecs/get/json/query;";
-
-	specQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%7D%5D%7D";
+	var specQuery = REST_SERVER + "/1/contentspecs/get/json/query;?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%7D%5D%7D";
 
 	//console.log("Getting specs from URL " + specQuery);
 	console.log("Finding content specs");
@@ -593,11 +662,11 @@ function routeAfterRESTCalls(updatedSpecs, allSpecsArray) {
  * will start again as if this was the first run.
  */
 function restartAfterFailure() {
-	indexHtml = null;
-	thisBuildTime = null;
-
 	var runTimeSeconds = moment().unix() - thisBuildTime.unix();
 	var delay = (DELAY_WHEN_NO_UPDATES / 1000) - runTimeSeconds;
+
+    indexHtml = null;
+    thisBuildTime = null;
 
 	if (delay <= 0) {
 		getListOfSpecsToBuild();

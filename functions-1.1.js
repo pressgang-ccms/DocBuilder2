@@ -1,3 +1,10 @@
+/**
+ * The id of the Obsolete tag
+ * @type {number}
+ */
+var OBSOLETE_TAG = 652;
+var FROZEN_TAG = 669;
+
 function changeLang() {
     var langSelect = document.getElementById("lang");
     changeLang(langSelect);
@@ -111,6 +118,11 @@ function build_table(data) {
             key: "publicanbook",
             label: "Publican ZIP",
             allowHTML: true
+        }   ,
+        {
+            key: "status",
+            label: "Status",
+            allowHTML: true
         }
     ];
     var sortableColumns = ["id", "product", "title", "version"];
@@ -175,6 +187,11 @@ function build_table_with_pdfs(data) {
             key: "publicanlog",
             label: "Publican Log",
             allowHTML: true
+        },
+        {
+            key: "status",
+            label: "Status",
+            allowHTML: true
         }
     ];
     var sortableColumns = ["id", "product", "title", "version"];
@@ -216,6 +233,8 @@ function abstract_build_table(data, columns, sortableColumns) {
     var versionFilter = localStorage["versionFilter"];
     var idFilter = localStorage["idFilter"];
     var topicIDFilter = localStorage["topicIDFilter"];
+    var specObsoleteFilter = localStorage["specObsoleteFilter"];
+    var specFrozenFilter = localStorage["specFrozenFilter"];
 
     var topicIds = null;
 
@@ -223,6 +242,7 @@ function abstract_build_table(data, columns, sortableColumns) {
         topicIds = topicIDFilter.split(",");
     }
 
+    outerLoop:
     for (var i = 0, count = data.length; i < count; ++i) {
         if (productFilter != null && productFilter.length != 0 && !data[i].productRaw.toLowerCase().match(productFilter.toLowerCase())) {
             continue;
@@ -238,6 +258,22 @@ function abstract_build_table(data, columns, sortableColumns) {
 
         if (idFilter != null && idFilter.length != 0 && !String(data[i].idRaw).toLowerCase().match(idFilter.toLowerCase())) {
             continue;
+        }
+
+        if (specObsoleteFilter == null || specObsoleteFilter.toString().toLowerCase() == false.toString().toLowerCase()) {
+            for (var tagIndex = 0, tagCount = data[i].tags.length; tagIndex < tagCount; ++tagIndex) {
+                if (data[i].tags[tagIndex] == OBSOLETE_TAG) {
+                    continue outerLoop;
+                }
+            }
+        }
+
+        if (specFrozenFilter == null || specFrozenFilter.toString().toLowerCase() == false.toString().toLowerCase()) {
+            for (var tagIndex = 0, tagCount = data[i].tags.length; tagIndex < tagCount; ++tagIndex) {
+                if (data[i].tags[tagIndex] == FROZEN_TAG) {
+                    continue outerLoop;
+                }
+            }
         }
 
         filteredData.push(data[i]);
