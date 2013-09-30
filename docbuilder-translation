@@ -131,11 +131,11 @@ do
     fi
 
     #echo ${CS_ID}
-	  CONTENT_SPEC=$(curl --silent http://skynet.usersys.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/${CS_ID})
+	  CONTENT_SPEC=$(curl --silent http://skynet.usersys.redhat.com:8080/pressgang-ccms/rest/1/contentspec/get/json+text/${CS_ID})
 	
 	  TITLE=$(echo ${CONTENT_SPEC} | grep -Po '(?<="title":").*?(?=",)')
-	  PRODUCT=$(echo ${CONTENT_SPEC} | sed -n "s/^.*\\\nProduct\\s*=\\s*\([0-9A-Za-z_.][0-9A-Za-z_. -]*\)\(\\\\r\)\?\\\\n.*$/\1/p")
-	  VERSION=$(echo ${CONTENT_SPEC} | sed -n "s/^.*\\\nVersion\\s*=\\s*\([0-9A-Za-z_. -]*\)\(\\\\r\)\?\\\\n.*$/\1/p")
+	  PRODUCT=$(echo ${CONTENT_SPEC} | grep -Po '(?<="product":").*?(?=",)')
+	  VERSION=$(echo ${CONTENT_SPEC} | grep -Po '(?<="version":").*?(?=",)')
 	
 	  PRODUCT=${PRODUCT//\'/\\\'}
 	  ESCAPED_PRODUCT=${PRODUCT// /_}

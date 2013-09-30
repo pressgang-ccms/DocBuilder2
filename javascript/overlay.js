@@ -244,6 +244,19 @@ $(window).load(function() {secondPass(false, true, false);});
  */
 setTimeout(function() {secondPass(false, false, true);}, SECOND_PASS_TIMEOUT);
 
+
+function getSpecIdFromURL() {
+	var urlComponents = window.location.href.split("/");
+	for (var index = urlComponents.length - 1; index >= 0; --index) {
+		var int = parseInt(urlComponents[index]);
+		if (!isNaN(int)) {
+			return int;
+		}
+	}
+
+	return null;
+}
+
 /**
  * Create and add the icons after the bug or editor links
  * @param topicId The topic ID
@@ -930,10 +943,8 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 		}
 
 		// get the spec id
-		var urlComonents = window.location.href.split("/");
-		if (urlComonents.length >= 2) {
-			var specId = urlComonents[urlComonents.length - 2];
-
+		var specId = getSpecIdFromURL();
+		if (specId) {
 			// get the revisions of the spec itself
 
 			// get content spec revisions
