@@ -1,4 +1,4 @@
-var deployment = require("deployment_details.js");
+var deployment = require("./deployment_details.js");
 var fs = require('fs');
 var set = require('collections/sorted-set.js');
 var iterator = require("collections/iterator");
