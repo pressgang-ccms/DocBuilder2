@@ -91,7 +91,7 @@ do
           cp publican.cfg publican-remarks.cfg
 
           # Add the extra options for the html and remark builds
-          echo -e "\nbrand: PressGang-Websites\nchunk_first: 1" >> publican-html.cfg
+          echo -e "\nchunk_first: 1" >> publican-html.cfg
           echo -e "\nshow_remarks: 1" >> publican-remarks.cfg
 
           # Do the original publican build
