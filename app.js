@@ -1,3 +1,4 @@
+var deployment = require("deployment_details.js");
 var fs = require('fs');
 var set = require('collections/sorted-set.js');
 var iterator = require("collections/iterator");
@@ -27,34 +28,12 @@ var exec = require('child_process').exec;
  * The REST server that the DocBuilder will connect to.
  * @type {string}
  */
-//var REST_SERVER = "http://topicindex-dev.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest";
-var REST_SERVER = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest";
-/**
- * The file that holds the lat time a complete rebuild was completed.
- * @type {string}
- */
-var LAST_RUN_FILE = "/home/pressgang/.docbuilder/docbuilder2_lastrun";
-//var LAST_RUN_FILE = "/home/matthew/.docbuilder/docbuilder2_lastrun";
+var REST_SERVER = "http://" + deployment.BASE_SERVER + "/pressgang-ccms/rest";
 /**
  * The format of the date to be supplied to the REST query.
  * @type {string}
  */
 var DATE_FORMAT = "YYYY-MM-DDTHH:mm:ss.000Z";
-/**
- * The maximum number of child processes to run at any given time.
- * @type {number}
- */
-var MAX_PROCESSES = 12;
-/**
- * The index file for the DocBuilder
- * @type {string}
- */
-var INDEX_HTML = "/var/www/html/index.html";
-/**
- * The web root dir.
- * @type {string}
- */
-var APACHE_HTML_DIR="/var/www/html";
 /**
  * The directory that holds the Publican ZIP files
  */
@@ -62,7 +41,7 @@ var PUBLICAN_BOOK_ZIPS= "/books";
 /**
  *	The complete directory that holds the Publican ZIP files
  */
-var PUBLICAN_BOOK_ZIPS_COMPLETE=APACHE_HTML_DIR + PUBLICAN_BOOK_ZIPS;
+var PUBLICAN_BOOK_ZIPS_COMPLETE=deployment.APACHE_HTML_DIR + PUBLICAN_BOOK_ZIPS;
 /**
  * The script used to build the book
  * @type {string}
@@ -121,8 +100,15 @@ var processingPendingCacheUpdates = false;
  * @type {number}
  */
 var diff = null;
-
+/**
+ * true if the REST call to get the list of modified specs failed
+ * @type {boolean}
+ */
 var contentSpecRESTCallFailed = false;
+/**
+ * true if the REST call to get the list of modified topics failed
+ * @type {boolean}
+ */
 var topicRESTCallFailed = false;
 
 /**
@@ -323,7 +309,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 				};
 
                 // select an image based on the presence of the index.html file
-                var image = fs.existsSync(APACHE_HTML_DIR + "/" + specId + "/index.html") ? 'url(/images/tick.png)' : 'url(/images/cross.png)';
+                var image = fs.existsSync(deployment.APACHE_HTML_DIR + "/" + specId + "/index.html") ? 'url(/images/tick.png)' : 'url(/images/cross.png)';
 
 				indexHtml += "{\n\
 					idRaw: " + specId + ",\n\
@@ -364,7 +350,7 @@ function processSpecs(updatedSpecs) {
 			getListOfSpecsToBuild();
 		}), DELAY_WHEN_NO_UPDATES);
 	} else {
-		for (var processIndex = 0, processCount = updatedSpecs.length < (MAX_PROCESSES - childCount) ? updatedSpecs.length : (MAX_PROCESSES - childCount); processIndex < processCount; ++processIndex) {
+		for (var processIndex = 0, processCount = updatedSpecs.length < (deployment.MAX_PROCESSES - childCount) ? updatedSpecs.length : (deployment.MAX_PROCESSES - childCount); processIndex < processCount; ++processIndex) {
 			var specId = updatedSpecs.pop();
 			++childCount;
 
@@ -376,7 +362,14 @@ function processSpecs(updatedSpecs) {
 
 					console.log("Finished build of modified book " + id);
 
+                    /*
+                        Add the style, scripts and constants required to build the side menu
+                     */
                     var scriptsAndStyleFiles = "<head>\n\
+                                <script type='application/javascript'>\n\
+                                    var BASE_SERVER = '" + deployment.BASE_SERVER + "';\n\
+                                    var SPEC_ID = " + specId + ";\n\
+                                </script>\n\
                                 <script type='application/javascript' src='/javascript/jquery-2.0.3.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/moment.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/bootstrap.min.js'></script>\n\
@@ -388,22 +381,22 @@ function processSpecs(updatedSpecs) {
 
                     // Append the custom javascript files to the index.html
                     try {
-                        var contents = fs.readFileSync(APACHE_HTML_DIR + "/" + id + "/index.html").toString();
+                        var contents = fs.readFileSync(deployment.APACHE_HTML_DIR + "/" + id + "/index.html").toString();
                         contents = contents.replace("<head>", scriptsAndStyleFiles);
-                        fs.writeFileSync(APACHE_HTML_DIR + "/" + id + "/index.html", contents);
+                        fs.writeFileSync(deployment.APACHE_HTML_DIR + "/" + id + "/index.html", contents);
                     } catch (ex) {
                         console.log("Could not edit and save main HTML file");
                     }
 
                     try {
-                        var contents = fs.readFileSync(APACHE_HTML_DIR + "/" + id + "/remarks/index.html").toString();
+                        var contents = fs.readFileSync(deployment.APACHE_HTML_DIR + "/" + id + "/remarks/index.html").toString();
                         contents = contents.replace("<head>", scriptsAndStyleFiles);
-                        fs.writeFileSync(APACHE_HTML_DIR + "/" + id + "/remarks/index.html", contents);
+                        fs.writeFileSync(deployment.APACHE_HTML_DIR + "/" + id + "/remarks/index.html", contents);
                     } catch (ex) {
                         console.log("Could not edit and save remarks HTML file");
                     }
 
-					if (childCount < MAX_PROCESSES) {
+					if (childCount < deployment.MAX_PROCESSES) {
 
 						if (updatedSpecs.length != 0) {
 							/*
@@ -694,9 +687,9 @@ function getListOfSpecsToBuild() {
 		 	Save the index.html file
 		 */
 		try {
-			fs.writeFileSync(INDEX_HTML, indexHtml);
+			fs.writeFileSync(deployment.INDEX_HTML, indexHtml);
 		} catch (ex) {
-			console.log("Could not save " + INDEX_HTML);
+			console.log("Could not save " + deployment.INDEX_HTML);
 		}
 
 		indexHtml = null;
@@ -706,18 +699,18 @@ function getListOfSpecsToBuild() {
 		lastRun = thisBuildTime;
 
 		try {
-			fs.writeFileSync(LAST_RUN_FILE, lastRun.format(DATE_FORMAT));
+			fs.writeFileSync(deployment.LAST_RUN_FILE, lastRun.format(DATE_FORMAT));
 		} catch (ex) {
-			console.log("Could not save " + LAST_RUN_FILE);
+			console.log("Could not save " + deployment.LAST_RUN_FILE);
 		}
 
 		diff = moment().unix() - thisBuildTime.unix();
 	} else {
 		// See if the last run file exists
 		try {
-			var stats = fs.lstatSync(LAST_RUN_FILE);
+			var stats = fs.lstatSync(deployment.LAST_RUN_FILE);
 			if (stats.isFile()) {
-				lastRun = moment(fs.readFileSync(LAST_RUN_FILE).toString().replace(/\n/g, ""));
+				lastRun = moment(fs.readFileSync(deployment.LAST_RUN_FILE).toString().replace(/\n/g, ""));
 			}
 		} catch (ex) {
 			// the file or directory doesn't exist. leave lastRun as null.
