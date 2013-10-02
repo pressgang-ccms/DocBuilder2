@@ -395,7 +395,8 @@ function processSpecs(updatedSpecs) {
 
                     try {
                         var contents = fs.readFileSync(deployment.APACHE_HTML_DIR + "/" + id + "/remarks/index.html").toString();
-                        contents = contents.replace("<head>", scriptsAndStyleFiles);
+						contents = contents.replace("<head>", styleFiles);
+						contents = contents.replace("</body></html>", scriptFiles);
                         fs.writeFileSync(deployment.APACHE_HTML_DIR + "/" + id + "/remarks/index.html", contents);
                     } catch (ex) {
                         console.log("Could not edit and save remarks HTML file");
