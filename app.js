@@ -376,20 +376,25 @@ function processSpecs(updatedSpecs) {
 
 					console.log("Finished build of modified book " + id);
 
-                    var scriptsAndStyleFiles = "<head>\n\
+                    var scriptFiles = "\
                                 <script type='application/javascript' src='/javascript/jquery-2.0.3.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/moment.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/bootstrap.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/raphael-min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/pie.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/overlay.js'></script>\n\
-                                <link href='/css/pressgang.css' rel='stylesheet'>\n\
-                                <link href='/css/bootstrap.min.css' rel='stylesheet'>\n";
+                                </body>\n\
+								</html>";
+
+					var styleFiles = "<head>\n\
+						<link href='/css/pressgang.css' rel='stylesheet'>\n\
+						<link href='/css/bootstrap.min.css' rel='stylesheet'>";
 
                     // Append the custom javascript files to the index.html
                     try {
                         var contents = fs.readFileSync(APACHE_HTML_DIR + "/" + id + "/index.html").toString();
-                        contents = contents.replace("<head>", scriptsAndStyleFiles);
+						contents = contents.replace("<head>", styleFiles);
+						contents = contents.replace("</body></html>", scriptFiles);
                         fs.writeFileSync(APACHE_HTML_DIR + "/" + id + "/index.html", contents);
                     } catch (ex) {
                         console.log("Could not edit and save main HTML file");
