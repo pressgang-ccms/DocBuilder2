@@ -26,7 +26,8 @@
 		is stored in a number of cache objects.
 		Once all the REST requests have completed, the third pass is started.
 
-	3.	The third pass takes all the information found in the second pass and uses it to generate an email report.
+	3.	The third pass takes all the information found in the second pass and uses it to generate reports like
+	    license clashes.
 
  */
 
@@ -114,6 +115,11 @@ var SECOND_PASS_TIMEOUT = 30000;
  * @type {number}
  */
 var SECOND_PASS_REST_CALL_DELAY = 500;
+/**
+ * Report a bug url.
+ * @type {string}
+ */
+var BUG_LINK = "https://bugzilla.redhat.com/enter_bug.cgi?alias=&assigned_to=pressgang-ccms-dev%40redhat.com&bug_status=NEW&component=DocBook-builder&product=PressGang%20CCMS&version=1.1";
 
 /**
  * Maintains the topic to source URL info
@@ -1622,6 +1628,7 @@ function buildMenu() {
 						<li><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince\');">Topics Added In</a></li>\
 						<li><a href="javascript:hideAllMenus(); topicsRemovedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">Topics Removed In</a></li>\
 						<li><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">Licenses</a></li>\
+						<li><a href="' + BUG_LINK + '&cf_build_id=Content%20Spec%20ID:%20' + SPEC_ID + '">Report a bug</a></li>\
 					</ul>\
 				</div>\
 			</div>\
