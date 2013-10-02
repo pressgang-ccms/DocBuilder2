@@ -365,7 +365,7 @@ function processSpecs(updatedSpecs) {
                     /*
                         Add the style, scripts and constants required to build the side menu
                      */
-                    var scriptsAndStyleFiles = "<head>\n\
+                    var scriptFiles = "\
                                 <script type='application/javascript'>\n\
                                     var BASE_SERVER = '" + deployment.BASE_SERVER + "';\n\
                                     var SPEC_ID = " + specId + ";\n\
@@ -377,12 +377,19 @@ function processSpecs(updatedSpecs) {
                                 <script type='application/javascript' src='/javascript/pie.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/overlay.js'></script>\n\
                                 <link href='/css/pressgang.css' rel='stylesheet'>\n\
-                                <link href='/css/bootstrap.min.css' rel='stylesheet'>\n";
+                                <link href='/css/bootstrap.min.css' rel='stylesheet'>\n\
+                                </body>\n\
+								</html>";
+
+					var styleFiles = "<head>\n\
+						<link href='/css/pressgang.css' rel='stylesheet'>\n\
+                        <link href='/css/bootstrap.min.css' rel='stylesheet'>\n";
 
                     // Append the custom javascript files to the index.html
                     try {
                         var contents = fs.readFileSync(deployment.APACHE_HTML_DIR + "/" + id + "/index.html").toString();
-                        contents = contents.replace("<head>", scriptsAndStyleFiles);
+                        contents = contents.replace("<head>", styleFiles);
+						contents = contents.replace("</body></html>", scriptFiles);
                         fs.writeFileSync(deployment.APACHE_HTML_DIR + "/" + id + "/index.html", contents);
                     } catch (ex) {
                         console.log("Could not edit and save main HTML file");
