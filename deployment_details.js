@@ -31,5 +31,5 @@ module.exports = {
      * The maximum number of child processes to run at any given time.
      * @type {number}
      */
-    MAX_PROCESSES: 12
+    MAX_PROCESSES: 6
 }
