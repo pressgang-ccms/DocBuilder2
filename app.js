@@ -141,7 +141,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 				</div>\n\
 				<div class=\"content\">\n\
 					<div>\n\
-						<img height=\"87\" src=\"pg.png\" width=\"879\">\n\
+						<img height=\"" + deployment.LOGO_HEIGHT + "\" src=\"" + deployment.LOGO + "\" width=\"" + deployment.LOGO_WIDTH + "\">\n\
 					</div>\n\
 					<div style=\"margin-top:1em\">\n\
 						<p>DocBuilder is a service that automatically rebuilds content specifications as they are created or edited.</p>\n\

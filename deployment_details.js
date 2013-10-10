@@ -3,7 +3,19 @@
     DocBuilder, the contents of this file is all you will have to change.
 */
 module.exports = {
-    /**
+	/**
+	 * The image that is used at the top of the screen
+	 */
+	LOGO: "pg-next.png",
+	/**
+	 * The logo width
+	 */
+	LOGO_WIDTH: 879,
+	/**
+	 * The logo height
+	 */
+	LOGO_HEIGHT: 87,
+	/**
      * The REST server hostname and port
      * @type {string}
      */
