@@ -35,7 +35,7 @@ module.exports = {
 	/**
 	 * Where the links to edit the books should go. Replace ${ID} with the spec ID
 	 */
-	EDIT_LINK: "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=${ID}",
+	EDIT_LINK: "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms-ui-next/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=${ID}",
     /**
      * The file that holds the lat time a complete rebuild was completed.
      * @type {string}
