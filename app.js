@@ -315,7 +315,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 
 				indexHtml += "{\n\
 					idRaw: " + specId + ",\n\
-					id: '<a href=\"" + deployment.OPEN_LINK.replace(deployment.OPEN_LINK_ID_REPLACE, specId) + "\" target=\"_top\">" + specId + "</a>',\n\
+					id: '<a href=\"" + deployment.EDIT_LINK.replace(deployment.OPEN_LINK_ID_REPLACE, specId) + "\" target=\"_top\">" + specId + "</a>',\n\
 					versionRaw: '" + fixedSpecDetails.version + "',\n\
 					version: '<a href=\"" + deployment.OPEN_LINK.replace(deployment.OPEN_LINK_ID_REPLACE, specId) + "\" target=\"_top\">" + fixedSpecDetails.version + "</a>',\n\
 					productRaw: '" + fixedSpecDetails.product + "',\n\
