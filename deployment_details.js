@@ -24,6 +24,18 @@ module.exports = {
      * The DocBuilder server
      */
     DOCBUILDER_SERVER: "docbuilder.usersys.redhat.com",
+	/**
+	 * The marker in the OPEN_LINK string that is to be replaced by the spec ID
+	 */
+	OPEN_LINK_ID_REPLACE: "${ID}",
+	/**
+	 * Where the links to open the books should go. Replace ${ID} with the spec ID
+	 */
+	OPEN_LINK: "http://docbuilder.usersys.redhat.com/${ID}", //http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;${ID}
+	/**
+	 * Where the links to edit the books should go. Replace ${ID} with the spec ID
+	 */
+	EDIT_LINK: "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=${ID}",
     /**
      * The file that holds the lat time a complete rebuild was completed.
      * @type {string}
