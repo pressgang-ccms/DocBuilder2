@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/git_force_pull.sh" afterPath="$PROJECT_DIR$/git_force_pull.sh" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1381524798728" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1381524844144" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1381524834070" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -27,7 +27,7 @@
     <file path="/pressgang.css" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1379556444928" ignored="false" />
     <file path="/pie.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1379638501361" ignored="false" />
     <file path="/deployment_details.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1381524369991" ignored="false" />
-    <file path="/git_force_pull.sh" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1381524767671" ignored="false" />
+    <file path="/git_force_pull.sh" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1381524890881" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,10 +88,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="334" column="67" selection-start="13387" selection-end="13387" vertical-scroll-proportion="0.8347386">
+            <state line="334" column="67" selection-start="13387" selection-end="13387" vertical-scroll-proportion="0.0">
               <folding>
                 <marker date="1381524836556" expanded="true" signature="3699:4670" placeholder="..." />
                 <marker date="1381524836556" expanded="true" signature="3711:4024" placeholder="..." />
@@ -135,10 +135,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="git_force_pull.sh" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="git_force_pull.sh" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/git_force_pull.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="119" selection-start="225" selection-end="225" vertical-scroll-proportion="0.0">
+            <state line="7" column="21" selection-start="248" selection-end="248" vertical-scroll-proportion="0.17326732">
               <folding />
             </state>
           </provider>
@@ -206,8 +206,8 @@
         <option value="$PROJECT_DIR$/javascript/pie.js" />
         <option value="$PROJECT_DIR$/javascript/overlay.js" />
         <option value="$PROJECT_DIR$/deployment_details.js" />
-        <option value="$PROJECT_DIR$/git_force_pull.sh" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/git_force_pull.sh" />
       </list>
     </option>
   </component>
@@ -1143,7 +1143,11 @@
       <created>1381524800568</created>
       <updated>1381524800568</updated>
     </task>
-    <option name="localTasksCounter" value="174" />
+    <task id="LOCAL-00174" summary="Added update script">
+      <created>1381524845444</created>
+      <updated>1381524845444</updated>
+    </task>
+    <option name="localTasksCounter" value="175" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1461,25 +1465,9 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deployment_details.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="13" selection-start="1059" selection-end="1068" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/git_force_pull.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="119" selection-start="225" selection-end="225" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="334" column="67" selection-start="13387" selection-end="13387" vertical-scroll-proportion="0.8347386">
+        <state line="334" column="67" selection-start="13387" selection-end="13387" vertical-scroll-proportion="0.0">
           <folding>
             <marker date="1381524836556" expanded="true" signature="3699:4670" placeholder="..." />
             <marker date="1381524836556" expanded="true" signature="3711:4024" placeholder="..." />
@@ -1519,6 +1507,22 @@
             <marker date="1381524836556" expanded="true" signature="14763:14822" placeholder="..." />
             <marker date="1381524836556" expanded="true" signature="15753:15895" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deployment_details.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="13" selection-start="1059" selection-end="1068" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/git_force_pull.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="21" selection-start="248" selection-end="248" vertical-scroll-proportion="0.17326732">
+          <folding />
         </state>
       </provider>
     </entry>

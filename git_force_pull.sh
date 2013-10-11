@@ -5,7 +5,7 @@
 
 echo deployment_details.js will be copied to /tmp. Copy it back if you had custom settings that were overwritten by GIT
 
-cp deployment_detail.js /tmp
+cp deployment_details.js /tmp
 
 git fetch --all
 git reset --hard origin/master
