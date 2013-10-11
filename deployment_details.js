@@ -1,6 +1,11 @@
 /*
     This file contains deployment specific info, like what server to contact for REST queries. When deploying
     DocBuilder, the contents of this file is all you will have to change.
+
+    This file is currently configured for DocBuilder Next. This means the logo and links to the UI all reference
+    Next.
+
+    The stable release of DocBuilder should change the logo and links to the UI to not reference next.
 */
 module.exports = {
 	/**
