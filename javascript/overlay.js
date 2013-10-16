@@ -119,7 +119,7 @@ var SECOND_PASS_REST_CALL_DELAY = 500;
  * Report a bug url.
  * @type {string}
  */
-var BUG_LINK = "https://bugzilla.redhat.com/enter_bug.cgi?alias=&assigned_to=pressgang-ccms-dev%40redhat.com&bug_status=NEW&component=DocBook-builder&product=PressGang%20CCMS&version=1.1";
+var BUG_LINK = "https://bugzilla.redhat.com/enter_bug.cgi?alias=&assigned_to=pressgang-ccms-dev%40redhat.com&bug_status=NEW&component=DocBook-builder&product=PressGang%20CCMS&version=1.2";
 
 /**
  * Maintains the topic to source URL info
