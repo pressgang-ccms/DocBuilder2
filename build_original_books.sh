@@ -95,9 +95,9 @@ do
           echo -e "\nshow_remarks: 1" >> publican-remarks.cfg
 
           # Do the original publican build
-					echo 'publican build --formats=html-single --langs=en-US --skip-bug-link-validation &> publican.log'
+					echo 'publican build --formats=html-single --langs=en-US  &> publican.log'
 	
-					publican build --formats=html-single --langs=en-US --skip-bug-link-validation &> publican.log
+					publican build --formats=html-single --langs=en-US  &> publican.log
 					
 					PUBLICAN_STATUS=$?
 	
@@ -119,9 +119,9 @@ do
             rm publican.log
 
 	          # Do the html publican build
-            echo 'publican build --formats=html --langs=en-US --skip-bug-link-validation &> publican.log'
+            echo 'publican build --formats=html --langs=en-US  &> publican.log'
 
-					  publican build --formats=html --langs=en-US --config=publican-html.cfg --skip-bug-link-validation &> publican.log
+					  publican build --formats=html --langs=en-US --config=publican-html.cfg  &> publican.log
 
 					  if [ -d /var/www/html/${CSPID}/html ] || [ -e /var/www/html/${CSPID}/html ]
 					  then
@@ -138,9 +138,9 @@ do
             rm publican.log
 
             # Do the remarks build
-            echo 'publican build --formats=html-single --langs=en-US --skip-bug-link-validation &> publican.log'
+            echo 'publican build --formats=html-single --langs=en-US  &> publican.log'
 
-					  publican build --formats=html-single --langs=en-US --config=publican-remarks.cfg --skip-bug-link-validation &> publican.log
+					  publican build --formats=html-single --langs=en-US --config=publican-remarks.cfg &> publican.log
 
 					  if [ -d /var/www/html/${CSPID}/remarks ] || [ -e /var/www/html/${CSPID}/remarks ]
 					  then
