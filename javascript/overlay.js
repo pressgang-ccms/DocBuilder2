@@ -599,7 +599,22 @@ function renderHistory(topicId) {
 		var message = revision.message == null || revision.message.length == 0 ? "[No Message]" : revision.message;
 		var date = moment(revision.lastModified);
 
-        var link = $("<div><a target='_blank' href='http://" + BASE_SERVER + "/pressgang-ccms-ui-next/#TopicHistoryView;" + topicId + ";" + revision.revision + ";" + historyCache[topicId].data[0].revision + "'><div style='width: 16px; height: 16px; margin-right: 8px; background-image: url(/images/rendereddiff.png); background-size: contain; float: left'></div></a>" + revision.revision + " - " + date.format('lll') + " - " + message + "</div>");
+        var icon = "";
+
+        if (date.isAfter(moment().subtract('day', 1))) {
+            icon = 'url(/images/rendereddiff-blue.png)';
+        } else if (date.isAfter(moment().subtract('week', 1))) {
+            icon = 'url(/images/rendereddiff-green.png)';
+        } else if (date.isAfter(moment().subtract('month', 1))) {
+            icon = 'url(/images/rendereddiff-yellow.png)';
+        } else if (date.isAfter(moment().subtract('year', 1))) {
+            icon = 'url(/images/rendereddiff-orange.png)';
+        } else {
+            icon = 'url(/images/rendereddiff-red.png)';
+        }
+
+
+        var link = $("<div><a target='_blank' href='http://" + BASE_SERVER + "/pressgang-ccms-ui-next/#TopicHistoryView;" + topicId + ";" + revision.revision + ";" + historyCache[topicId].data[0].revision + "'><div style='width: 16px; height: 16px; margin-right: 8px; background-image: " + icon + "; background-size: contain; float: left'></div></a>" + revision.revision + " - " + date.format('lll') + " - " + message + "</div>");
 		$(historyCache[topicId].popover.popoverContent).append(link);
 	}
 }
