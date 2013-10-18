@@ -6,7 +6,7 @@
 // @include     http://docbuilder.usersys.redhat.com/*
 // @include     http://docbuilder.ecs.eng.bne.redhat.com/*
 // @require     http://code.jquery.com/jquery-2.0.3.min.js
-// @version     1.1
+// @version     1.2
 // @grant       none
 // ==/UserScript==
 
@@ -68,7 +68,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
             var bzURLRegex = /.*?(&|\?)comment=(.*?)(&|$)/;
             var match = bzURLRegex.exec(iframeSrc);
-            iframeSrc = iframeSrc.replace("comment=" + match[2], "comment=" + encodeURIComponent("Selected Text: \"" + text + "\"\n\nBug Details: "));
+            iframeSrc = iframeSrc.replace("comment=" + match[2], "comment=" + encodeURIComponent("Selected Text: \"" + text + "\"\n\nBug Details: ") + "&short_desc=" + encodeURIComponent("PressZilla Bug"));
 
             logToConsole(iframeSrc);
 
