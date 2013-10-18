@@ -64,8 +64,12 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
                 </div>');
         jQuery(document.body).append(callout);
         jQuery('#PressZillaCalloutButton').click(function(event) {
-            var iframeSrc = "https://bugzilla.redhat.com/enter_bug.cgi?product=" + encodeURIComponent(bzProduct) + "&component=" + encodeURIComponent(bzComponent) + "&version=" + encodeURIComponent(bzVersion) + "&short_desc=PressZilla%20Bug&comment=" + encodeURIComponent(text);
-            var newwindow = window.open(iframeSrc, NEW_WINDOW_NAME, 'height=480,width=640');
+            var iframeSrc = "https://bugzilla.redhat.com/enter_bug.cgi?product=" + encodeURIComponent(bzProduct) +
+                "&component=" + encodeURIComponent(bzComponent) +
+                "&version=" + encodeURIComponent(bzVersion) +
+                "&short_desc=PressZilla%20Bug" +
+                "&comment=" + encodeURIComponent("Selected Text: \"" + text + "\"");
+            var newwindow = window.open(iframeSrc, NEW_WINDOW_NAME, 'directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,resizable=no,height=240,width=640');
             newwindow.focus();
             removeCallout();
         });
@@ -257,15 +261,24 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
 
         var createForm = jQuery('\
             <form id="Create" class="enter_bug_form" onsubmit="return validateEnterBug(this)" enctype="multipart/form-data" action="post_bug.cgi" method="post" name="Create">\
+                <table>\
+                    <tr>\
+                        <td id="CommentCell">\
+                        </td>\
+                    </tr>\
+                    <tr>\
+                        <td id="SubmittCell">\
+                        </td>\
+                    </tr>\
+                </table>\
             </form>'
         );
 
         createForm.append(componentSelect);
         createForm.append(versionSelect);
         createForm.append(shortDesc);
-        createForm.append(comment);
-        createForm.append("<br/>");
-        createForm.append(commit);
+        createForm.find('#CommentCell').append(comment);
+        createForm.find('#SubmittCell').append(commit);
 
         jQuery("body").empty();
         jQuery("body").css("background-image", "none");
@@ -278,9 +291,12 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
         if (match) {
             var id = match[1];
             var link = jQuery('<a href="' + window.location.href + '">Bug ' + id + ' Created</a>');
+            var close = jQuery('<button onclick="javascript:window.close()" type="button">Close Window</button>');
+
             jQuery("body").empty();
             jQuery("body").css("background-image", "none");
             jQuery("body").append(link);
+            jQuery("body").append(close);
         }
     } else if (jQuery("#bugzilla-body").length != 0) {
         // something else (maybe product selection)
