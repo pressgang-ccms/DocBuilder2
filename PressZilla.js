@@ -64,9 +64,16 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
             }
         }
 
-        logToConsole(iframeSrc);
+
 
         if (iframeSrc) {
+
+            var bzURLRegex = /.*?(&|\?)comment=(.*?)(&|$)/;
+            var match = bzURLRegex.exec(iframeSrc);
+            iframeSrc = iframeSrc.replace("comment=" + match[2], "comment=" + encodeURIComponent("Selected Text: \"" + text + "\"\n\nBug Details: "));
+
+            logToConsole(iframeSrc);
+
             callout = jQuery('<div id="PressZillaCallout" style="position: absolute; top: ' + top + 'px; left: ' + left + 'px; height: ' + height + 'px; width: ' + width + 'px">\
                            <div id="PressZillaCalloutArrowBackground" style="height: 0; width: 0; border-right: 12px solid #ffffff; border-top: 12px dotted transparent; border-bottom: 12px dotted transparent; left: 0px; top: 0px; margin-top: 2px; z-index: 11; float: left">\
                                 <div id="PressZillaCalloutArrowForeground" style="position: relative; left: -10px; top: -12px; height: 0; width: 0; border-right: 10px solid rgb(66, 139, 202); border-top: 10px dotted transparent; border-bottom: 10px dotted transparent; z-index: 10;">\
@@ -80,6 +87,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                                 </div>\
                             </div>\
                         </div>');
+            jQuery(document.body).append(callout);
 
             jQuery('#PressZillaCalloutButton').click(function(event) {
 
@@ -99,9 +107,10 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                             </div>\
                         </div>\
                     </div>');
+            jQuery(document.body).append(callout);
         }
 
-        jQuery(document.body).append(callout);
+
     }
 
     function removeCallout() {
