@@ -40,7 +40,18 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
         return null;
     }
 
-    function buildBugCallout(top, left) {
+    function openIFrame() {
+        logToConsole("Opening iFrame");
+        var iframeSrc = "https://bugzilla.redhat.com/enter_bug.cgi?product=" + encodeURIComponent(bzProduct) + "&component=" + encodeURIComponent(bzComponent) + "&version=" + encodeURIComponent(bzVersion) + "&short_desc=PressZilla%20Bug";
+        var iFrame = jQuery('<iframe style="width: 100%; height: 100%;" frameBorder="0" src="' + iframeSrc + '"></iframe>');
+        var calloutButtonContents = jQuery('#PressZillaCalloutButtonContents');
+        var calloutContents = jQuery('#PressZillaCalloutContents');
+        calloutButtonContents.remove();
+        calloutContents.append(iFrame);
+    }
+
+    function buildBugCallout(top, left, text) {
+
         callout = jQuery('<div id="PressZillaCallout" style="position: absolute; top: ' + top + 'px; left: ' + left + 'px; height: ' + height + 'px; width: ' + width + 'px">\
                    <div id="PressZillaCalloutArrowBackground" style="height: 0; width: 0; border-right: 12px solid #ffffff; border-top: 12px dotted transparent; border-bottom: 12px dotted transparent; left: 0px; top: 0px; margin-top: 2px; z-index: 11; float: left">\
                         <div id="PressZillaCalloutArrowForeground" style="position: relative; left: -10px; top: -12px; height: 0; width: 0; border-right: 10px solid rgb(66, 139, 202); border-top: 10px dotted transparent; border-bottom: 10px dotted transparent; z-index: 10;">\
@@ -48,12 +59,16 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
                     </div>\
                     <div id="PressZillaCalloutContents" style="border: solid 5px rgb(66, 139, 202); position: relative; top: 1px; left: 0; z-index: 3; width: ' + width + 'px; height: ' + height + 'px; padding: 4px; margin: 0">\
                         <div id="PressZillaCalloutButtonContents" style="display:table-cell; text-align: center; vertical-align:middle; width: ' + width + 'px; height: ' + height + 'px">\
-                            <a href="#" style="text-decoration: none; background-color: rgb(66, 139, 202); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; color: rgb(255, 255, 255); font-family: \'Helvetica Neue\',Helvetica,Arial,sans-serif; font-size: 14px; line-height: 20px; list-style-image: none; list-style-position: outside; list-style-type: none; padding-bottom: 10px; padding-left: 15px; padding-right: 15px; padding-top: 10px; position: relative; text-decoration: none; -moz-box-sizing: border-box; -moz-text-blink: none; -moz-text-decoration-color: rgb(255, 255, 255); -moz-text-decoration-line: none; -moz-text-decoration-style: solid;">\
+                            <a id="PressZillaCalloutButton" href="javascript:void" style="text-decoration: none; background-color: rgb(66, 139, 202); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; color: rgb(255, 255, 255); font-family: \'Helvetica Neue\',Helvetica,Arial,sans-serif; font-size: 14px; line-height: 20px; list-style-image: none; list-style-position: outside; list-style-type: none; padding-bottom: 10px; padding-left: 15px; padding-right: 15px; padding-top: 10px; position: relative; text-decoration: none; -moz-box-sizing: border-box; -moz-text-blink: none; -moz-text-decoration-color: rgb(255, 255, 255); -moz-text-decoration-line: none; -moz-text-decoration-style: solid;">\
                                 Create Bug\
                             </a>\
                         </div>\
                     </div>\
                 </div>');
+        jQuery(document.body).append(callout);
+        jQuery('#PressZillaCalloutButton').click(function(event) {
+            openIFrame();
+        });
     }
 
     function buildMissingDetauilsCallout(top, left) {
@@ -68,6 +83,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
                         </div>\
                     </div>\
                 </div>');
+        jQuery(document.body).append(callout);
     }
 
     var specId = getSpecIdFromURL();
@@ -138,7 +154,21 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
         }
     }
 
-    jQuery(document.body).bind('mouseup', function(e) {
+    jQuery(document.body).mouseup(function(e) {
+
+        if (callout) {
+            var x = e.pageX;
+            var y = e.pageY;
+            var offset = callout.offset();
+
+            if (x >= offset.left && x <= offset.left + callout.width() &&
+                y >= offset.top && y <= offset.top + callout.height()) {
+                // click was over callout, so don't do anything
+                logToConsole("Clicked over callout");
+                return;
+            }
+        }
+
         removeCallout();
         var selectionDetails = getSelectionBoundaryElement(true);
         if (selectionDetails && selectionDetails.selection && jQuery.trim(selectionDetails.selection.toString()).length != 0) {
@@ -148,7 +178,6 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
             var left = jQuery(document.body).offset().left + jQuery(document.body).width() + 20;
 
             logToConsole(selectedText);
-            logToConsole("top: " + top + " left: " + left);
 
             if (!processedSpecNodes) {
                 callout = jQuery('<div id="PressZillaCallout" style="position: absolute; top: ' + top + 'px; left: ' + left + 'px; height: ' + height + 'px; width: ' + width + 'px">\
@@ -163,16 +192,16 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
                     </div>\
                 </div>');
             } else if (haveBugDetails) {
-                buildBugCallout(top, left);
+                buildBugCallout(top, left, selectedText);
             } else {
                 buildMissingDetauilsCallout(top, left);
             }
-
-            jQuery(document.body).append(callout);
         }
+
+        return;
     });
 
-} else if (window.location.host == "bugzilla.redhat.com") {
+} else if (false && window.location.host == "bugzilla.redhat.com" && window.top.location.host == "docbuilder.usersys.redhat.com") {
     if (jQuery("#Bugzilla_login").length != 0) {
         // logging in
 
