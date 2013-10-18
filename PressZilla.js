@@ -21,19 +21,13 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
     logToConsole("Detected DocBuilder Window");
 
-    var height = 150;
+    var height = 250;
     var width = 200;
     var CS_METADATA_NODE = 7;
-
     var BASE_SERVER =  "topika.ecs.eng.bne.redhat.com:8080";
     var SERVER = "http://" + BASE_SERVER + "/pressgang-ccms/rest/1";
 
     var callout = null;
-    var processedSpecNodes = false;
-    var haveBugDetails = false;
-    var bzProduct = null;
-    var bzComponent = null;
-    var bzVersion = null;
 
     function getSpecIdFromURL() {
         var urlComponents = window.location.href.split("/");
@@ -47,74 +41,68 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
         return null;
     }
 
-    function buildBugCallout(top, left, text) {
+    function buildBugCallout(top, left, text, parent) {
 
-        callout = jQuery('<div id="PressZillaCallout" style="position: absolute; top: ' + top + 'px; left: ' + left + 'px; height: ' + height + 'px; width: ' + width + 'px">\
+        var iframeSrc = null;
+
+        var parentSection = parent.parentNode;
+        while (parentSection && (parentSection.nodeName != "DIV" || parentSection.className != "section")) {
+            parentSection = parentSection.parentNode;
+        }
+
+
+        if (parentSection && parentSection.nodeName == "DIV" && parentSection.className == "section") {
+            var elements = parentSection.childNodes;
+            for (var i = elements.length - 1; i >= 0; --i) {
+                var element = elements[i];
+                if (element.className.match(".*RoleCreateBugPara.*")) {
+                    if (element.innerHTML.match(".*Report a bug.*")) {
+                        iframeSrc = element.children[0].getAttribute("href");
+                        break;
+                    }
+                }
+            }
+        }
+
+        logToConsole(iframeSrc);
+
+        if (iframeSrc) {
+            callout = jQuery('<div id="PressZillaCallout" style="position: absolute; top: ' + top + 'px; left: ' + left + 'px; height: ' + height + 'px; width: ' + width + 'px">\
+                           <div id="PressZillaCalloutArrowBackground" style="height: 0; width: 0; border-right: 12px solid #ffffff; border-top: 12px dotted transparent; border-bottom: 12px dotted transparent; left: 0px; top: 0px; margin-top: 2px; z-index: 11; float: left">\
+                                <div id="PressZillaCalloutArrowForeground" style="position: relative; left: -10px; top: -12px; height: 0; width: 0; border-right: 10px solid rgb(66, 139, 202); border-top: 10px dotted transparent; border-bottom: 10px dotted transparent; z-index: 10;">\
+                                </div>\
+                            </div>\
+                            <div id="PressZillaCalloutContents" style="border: solid 5px rgb(66, 139, 202); position: relative; top: 1px; left: 0; z-index: 3; width: ' + width + 'px; height: ' + height + 'px; padding: 4px; margin: 0">\
+                                <div id="PressZillaCalloutButtonContents" style="display:table-cell; text-align: center; vertical-align:middle; width: ' + (width - 18) + 'px; height: ' + (height - 18) + 'px">\
+                                    <a id="PressZillaCalloutButton" href="javascript:void" style="text-decoration: none; background-color: rgb(66, 139, 202); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; color: rgb(255, 255, 255); font-family: \'Helvetica Neue\',Helvetica,Arial,sans-serif; font-size: 14px; line-height: 20px; list-style-image: none; list-style-position: outside; list-style-type: none; padding-bottom: 10px; padding-left: 15px; padding-right: 15px; padding-top: 10px; position: relative; text-decoration: none; -moz-box-sizing: border-box; -moz-text-blink: none; -moz-text-decoration-color: rgb(255, 255, 255); -moz-text-decoration-line: none; -moz-text-decoration-style: solid;">\
+                                        Create Bug\
+                                    </a>\
+                                </div>\
+                            </div>\
+                        </div>');
+
+            jQuery('#PressZillaCalloutButton').click(function(event) {
+
+                var newwindow = window.open(iframeSrc, NEW_WINDOW_NAME, 'directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,resizable=no,height=480,width=640');
+                newwindow.focus();
+                removeCallout();
+            });
+        } else {
+            callout = jQuery('<div id="PressZillaCallout" style="position: absolute; top: ' + top + 'px; left: ' + left + 'px; height: ' + height + 'px; width: ' + width + 'px">\
                        <div id="PressZillaCalloutArrowBackground" style="height: 0; width: 0; border-right: 12px solid #ffffff; border-top: 12px dotted transparent; border-bottom: 12px dotted transparent; left: 0px; top: 0px; margin-top: 2px; z-index: 11; float: left">\
                             <div id="PressZillaCalloutArrowForeground" style="position: relative; left: -10px; top: -12px; height: 0; width: 0; border-right: 10px solid rgb(66, 139, 202); border-top: 10px dotted transparent; border-bottom: 10px dotted transparent; z-index: 10;">\
                             </div>\
                         </div>\
                         <div id="PressZillaCalloutContents" style="border: solid 5px rgb(66, 139, 202); position: relative; top: 1px; left: 0; z-index: 3; width: ' + width + 'px; height: ' + height + 'px; padding: 4px; margin: 0">\
                             <div id="PressZillaCalloutButtonContents" style="display:table-cell; text-align: center; vertical-align:middle; width: ' + (width - 18) + 'px; height: ' + (height - 18) + 'px">\
-                                <a id="PressZillaCalloutButton" href="javascript:void" style="text-decoration: none; background-color: rgb(66, 139, 202); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; color: rgb(255, 255, 255); font-family: \'Helvetica Neue\',Helvetica,Arial,sans-serif; font-size: 14px; line-height: 20px; list-style-image: none; list-style-position: outside; list-style-type: none; padding-bottom: 10px; padding-left: 15px; padding-right: 15px; padding-top: 10px; position: relative; text-decoration: none; -moz-box-sizing: border-box; -moz-text-blink: none; -moz-text-decoration-color: rgb(255, 255, 255); -moz-text-decoration-line: none; -moz-text-decoration-style: solid;">\
-                                    Create Bug\
-                                </a>\
+                                The content selected does not have any bug information. This may be because you selected text in a boilerplate section of the document which was not supplied by PressGang, or because the content specification has not enabled bug links.\
                             </div>\
                         </div>\
                     </div>');
-        jQuery(document.body).append(callout);
-        jQuery('#PressZillaCalloutButton').click(function(event) {
-            var iframeSrc = "https://bugzilla.redhat.com/enter_bug.cgi?product=" + encodeURIComponent(bzProduct) +
-                "&component=" + encodeURIComponent(bzComponent) +
-                "&version=" + encodeURIComponent(bzVersion) +
-                "&short_desc=PressZilla%20Bug" +
-                "&comment=" + encodeURIComponent("Selected Text: \"" + text + "\"\n\nBug Details:");
-            var newwindow = window.open(iframeSrc, NEW_WINDOW_NAME, 'directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,resizable=no,height=480,width=640');
-            newwindow.focus();
-            removeCallout();
-        });
-    }
-
-    function buildMissingDetauilsCallout(top, left) {
-        callout = jQuery('<div id="PressZillaCallout" style="position: absolute; top: ' + top + 'px; left: ' + left + 'px; height: ' + height + 'px; width: ' + width + 'px">\
-                       <div id="PressZillaCalloutArrowBackground" style="height: 0; width: 0; border-right: 12px solid #ffffff; border-top: 12px dotted transparent; border-bottom: 12px dotted transparent; left: 0px; top: 0px; margin-top: 2px; z-index: 11; float: left">\
-                            <div id="PressZillaCalloutArrowForeground" style="position: relative; left: -10px; top: -12px; height: 0; width: 0; border-right: 10px solid rgb(66, 139, 202); border-top: 10px dotted transparent; border-bottom: 10px dotted transparent; z-index: 10;">\
-                            </div>\
-                        </div>\
-                        <div id="PressZillaCalloutContents" style="border: solid 5px rgb(66, 139, 202); position: relative; top: 1px; left: 0; z-index: 3; width: ' + width + 'px; height: ' + height + 'px; padding: 4px; margin: 0">\
-                            <div id="PressZillaCalloutButtonContents" style="display:table-cell; text-align: center; vertical-align:middle; width: ' + (width - 18) + 'px; height: ' + (height - 18) + 'px">\
-                                This content specification does not have the required metadata associated with it. The BZProduct, BZComponent and BZVersion metadata fields all need to be specified.\
-                            </div>\
-                        </div>\
-                    </div>');
-        jQuery(document.body).append(callout);
-    }
-
-    var specId = getSpecIdFromURL();
-    jQuery.getJSON(SERVER + "/contentspecnodes/get/json/query;csNodeType=" + CS_METADATA_NODE + ";contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D", function(data) {
-        for (var itemIndex = 0, itemCount = data.items.length; itemIndex < itemCount; ++itemIndex) {
-            var csNode = data.items[itemIndex].item;
-            if (csNode.title == "BZProduct") {
-                bzProduct = csNode.additionalText;
-            } else if (csNode.title == "BZComponent") {
-                bzComponent = csNode.additionalText;
-            } else if (csNode.title == "BZVersion") {
-                bzVersion = csNode.additionalText;
-            }
         }
 
-        processedSpecNodes = true;
-        haveBugDetails = bzProduct && bzComponent && bzVersion;
-
-        if (callout) {
-            callout.remove();
-            if (haveBugDetails) {
-                buildBugCallout();
-            } else {
-                buildMissingDetauilsCallout();
-            }
-        }
-    });
+        jQuery(document.body).append(callout);
+    }
 
     function removeCallout() {
         if (callout) {
@@ -183,23 +171,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
             logToConsole(selectedText);
 
-            if (!processedSpecNodes) {
-                callout = jQuery('<div id="PressZillaCallout" style="position: absolute; top: ' + top + 'px; left: ' + left + 'px; height: ' + height + 'px; width: ' + width + 'px">\
-                       <div id="PressZillaCalloutArrowBackground" style="height: 0; width: 0; border-right: 12px solid #ffffff; border-top: 12px dotted transparent; border-bottom: 12px dotted transparent; left: 0px; top: 0px; margin-top: 2px; z-index: 11; float: left">\
-                            <div id="PressZillaCalloutArrowForeground" style="position: relative; left: -10px; top: -12px; height: 0; width: 0; border-right: 10px solid rgb(66, 139, 202); border-top: 10px dotted transparent; border-bottom: 10px dotted transparent; z-index: 10;">\
-                            </div>\
-                        </div>\
-                        <div id="PressZillaCalloutContents" style="border: solid 5px rgb(66, 139, 202); position: relative; top: 1px; left: 0; z-index: 3; width: ' + width + 'px; height: ' + height + 'px; padding: 4px; margin: 0">\
-                            <div id="PressZillaCalloutButtonContents" style="display:table-cell; text-align: center; vertical-align:middle; width: ' + (width - 18) + 'px; height: ' + (height - 18) + 'px">\
-                                Loading Spec Bug Details. Please Wait.\
-                            </div>\
-                        </div>\
-                    </div>');
-            } else if (haveBugDetails) {
-                buildBugCallout(top, left, selectedText);
-            } else {
-                buildMissingDetauilsCallout(top, left);
-            }
+            buildBugCallout(top, left, selectedText, selectionDetails.parent);
         }
 
         return;
