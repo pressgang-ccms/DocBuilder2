@@ -158,7 +158,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
         }
     }
 
-    jQuery(document.body).mouseup(function(e) {
+    jQuery(document).mouseup(function(e) {
 
         if (callout) {
             var x = e.pageX;
