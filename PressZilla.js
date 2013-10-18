@@ -4,9 +4,11 @@
 // @description PressGang BugZilla customization
 // @include     https://bugzilla.redhat.com/*
 // @include     http://docbuilder.usersys.redhat.com/*
+// @include     http://docbuilder.ecs.eng.bne.redhat.com/*
 // @require     http://code.jquery.com/jquery-2.0.3.min.js
 // @version     1
 // @grant       none
+// @run-at      document-end
 // ==/UserScript==
 
 var NEW_WINDOW_NAME = "PressZilla";
@@ -15,9 +17,7 @@ function logToConsole(message) {
     console.log(message);
 }
 
-logToConsole("Starting PressZilla");
-
-if (window.location.host == "docbuilder.usersys.redhat.com") {
+if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.host == "docbuilder.ecs.eng.bne.redhat.com") {
 
     logToConsole("Detected DocBuilder Window");
 
@@ -50,26 +50,26 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
     function buildBugCallout(top, left, text) {
 
         callout = jQuery('<div id="PressZillaCallout" style="position: absolute; top: ' + top + 'px; left: ' + left + 'px; height: ' + height + 'px; width: ' + width + 'px">\
-                   <div id="PressZillaCalloutArrowBackground" style="height: 0; width: 0; border-right: 12px solid #ffffff; border-top: 12px dotted transparent; border-bottom: 12px dotted transparent; left: 0px; top: 0px; margin-top: 2px; z-index: 11; float: left">\
-                        <div id="PressZillaCalloutArrowForeground" style="position: relative; left: -10px; top: -12px; height: 0; width: 0; border-right: 10px solid rgb(66, 139, 202); border-top: 10px dotted transparent; border-bottom: 10px dotted transparent; z-index: 10;">\
+                       <div id="PressZillaCalloutArrowBackground" style="height: 0; width: 0; border-right: 12px solid #ffffff; border-top: 12px dotted transparent; border-bottom: 12px dotted transparent; left: 0px; top: 0px; margin-top: 2px; z-index: 11; float: left">\
+                            <div id="PressZillaCalloutArrowForeground" style="position: relative; left: -10px; top: -12px; height: 0; width: 0; border-right: 10px solid rgb(66, 139, 202); border-top: 10px dotted transparent; border-bottom: 10px dotted transparent; z-index: 10;">\
+                            </div>\
                         </div>\
-                    </div>\
-                    <div id="PressZillaCalloutContents" style="border: solid 5px rgb(66, 139, 202); position: relative; top: 1px; left: 0; z-index: 3; width: ' + width + 'px; height: ' + height + 'px; padding: 4px; margin: 0">\
-                        <div id="PressZillaCalloutButtonContents" style="display:table-cell; text-align: center; vertical-align:middle; width: ' + width + 'px; height: ' + height + 'px">\
-                            <a id="PressZillaCalloutButton" href="javascript:void" style="text-decoration: none; background-color: rgb(66, 139, 202); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; color: rgb(255, 255, 255); font-family: \'Helvetica Neue\',Helvetica,Arial,sans-serif; font-size: 14px; line-height: 20px; list-style-image: none; list-style-position: outside; list-style-type: none; padding-bottom: 10px; padding-left: 15px; padding-right: 15px; padding-top: 10px; position: relative; text-decoration: none; -moz-box-sizing: border-box; -moz-text-blink: none; -moz-text-decoration-color: rgb(255, 255, 255); -moz-text-decoration-line: none; -moz-text-decoration-style: solid;">\
-                                Create Bug\
-                            </a>\
+                        <div id="PressZillaCalloutContents" style="border: solid 5px rgb(66, 139, 202); position: relative; top: 1px; left: 0; z-index: 3; width: ' + width + 'px; height: ' + height + 'px; padding: 4px; margin: 0">\
+                            <div id="PressZillaCalloutButtonContents" style="display:table-cell; text-align: center; vertical-align:middle; width: ' + width + 'px; height: ' + height + 'px">\
+                                <a id="PressZillaCalloutButton" href="javascript:void" style="text-decoration: none; background-color: rgb(66, 139, 202); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; color: rgb(255, 255, 255); font-family: \'Helvetica Neue\',Helvetica,Arial,sans-serif; font-size: 14px; line-height: 20px; list-style-image: none; list-style-position: outside; list-style-type: none; padding-bottom: 10px; padding-left: 15px; padding-right: 15px; padding-top: 10px; position: relative; text-decoration: none; -moz-box-sizing: border-box; -moz-text-blink: none; -moz-text-decoration-color: rgb(255, 255, 255); -moz-text-decoration-line: none; -moz-text-decoration-style: solid;">\
+                                    Create Bug\
+                                </a>\
+                            </div>\
                         </div>\
-                    </div>\
-                </div>');
+                    </div>');
         jQuery(document.body).append(callout);
         jQuery('#PressZillaCalloutButton').click(function(event) {
             var iframeSrc = "https://bugzilla.redhat.com/enter_bug.cgi?product=" + encodeURIComponent(bzProduct) +
                 "&component=" + encodeURIComponent(bzComponent) +
                 "&version=" + encodeURIComponent(bzVersion) +
                 "&short_desc=PressZilla%20Bug" +
-                "&comment=" + encodeURIComponent("Selected Text: \"" + text + "\"");
-            var newwindow = window.open(iframeSrc, NEW_WINDOW_NAME, 'directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,resizable=no,height=240,width=640');
+                "&comment=" + encodeURIComponent("Selected Text: \"" + text + "\"\n\nBug Details:");
+            var newwindow = window.open(iframeSrc, NEW_WINDOW_NAME, 'directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,resizable=no,height=480,width=640');
             newwindow.focus();
             removeCallout();
         });
@@ -77,16 +77,16 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
 
     function buildMissingDetauilsCallout(top, left) {
         callout = jQuery('<div id="PressZillaCallout" style="position: absolute; top: ' + top + 'px; left: ' + left + 'px; height: ' + height + 'px; width: ' + width + 'px">\
-                   <div id="PressZillaCalloutArrowBackground" style="height: 0; width: 0; border-right: 12px solid #ffffff; border-top: 12px dotted transparent; border-bottom: 12px dotted transparent; left: 0px; top: 0px; margin-top: 2px; z-index: 11; float: left">\
-                        <div id="PressZillaCalloutArrowForeground" style="position: relative; left: -10px; top: -12px; height: 0; width: 0; border-right: 10px solid rgb(66, 139, 202); border-top: 10px dotted transparent; border-bottom: 10px dotted transparent; z-index: 10;">\
+                       <div id="PressZillaCalloutArrowBackground" style="height: 0; width: 0; border-right: 12px solid #ffffff; border-top: 12px dotted transparent; border-bottom: 12px dotted transparent; left: 0px; top: 0px; margin-top: 2px; z-index: 11; float: left">\
+                            <div id="PressZillaCalloutArrowForeground" style="position: relative; left: -10px; top: -12px; height: 0; width: 0; border-right: 10px solid rgb(66, 139, 202); border-top: 10px dotted transparent; border-bottom: 10px dotted transparent; z-index: 10;">\
+                            </div>\
                         </div>\
-                    </div>\
-                    <div id="PressZillaCalloutContents" style="border: solid 5px rgb(66, 139, 202); position: relative; top: 1px; left: 0; z-index: 3; width: ' + width + 'px; height: ' + height + 'px; padding: 4px; margin: 0">\
-                        <div id="PressZillaCalloutButtonContents" style="display:table-cell; text-align: center; vertical-align:middle; width: ' + width + 'px; height: ' + height + 'px">\
-                            This content specification does not have the required metadata associated with it. The BZProduct, BZComponent and BZVersion metadata fields all need to be specified.\
+                        <div id="PressZillaCalloutContents" style="border: solid 5px rgb(66, 139, 202); position: relative; top: 1px; left: 0; z-index: 3; width: ' + width + 'px; height: ' + height + 'px; padding: 4px; margin: 0">\
+                            <div id="PressZillaCalloutButtonContents" style="display:table-cell; text-align: center; vertical-align:middle; width: ' + width + 'px; height: ' + height + 'px">\
+                                This content specification does not have the required metadata associated with it. The BZProduct, BZComponent and BZVersion metadata fields all need to be specified.\
+                            </div>\
                         </div>\
-                    </div>\
-                </div>');
+                    </div>');
         jQuery(document.body).append(callout);
     }
 
@@ -185,16 +185,16 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
 
             if (!processedSpecNodes) {
                 callout = jQuery('<div id="PressZillaCallout" style="position: absolute; top: ' + top + 'px; left: ' + left + 'px; height: ' + height + 'px; width: ' + width + 'px">\
-                   <div id="PressZillaCalloutArrowBackground" style="height: 0; width: 0; border-right: 12px solid #ffffff; border-top: 12px dotted transparent; border-bottom: 12px dotted transparent; left: 0px; top: 0px; margin-top: 2px; z-index: 11; float: left">\
-                        <div id="PressZillaCalloutArrowForeground" style="position: relative; left: -10px; top: -12px; height: 0; width: 0; border-right: 10px solid rgb(66, 139, 202); border-top: 10px dotted transparent; border-bottom: 10px dotted transparent; z-index: 10;">\
+                       <div id="PressZillaCalloutArrowBackground" style="height: 0; width: 0; border-right: 12px solid #ffffff; border-top: 12px dotted transparent; border-bottom: 12px dotted transparent; left: 0px; top: 0px; margin-top: 2px; z-index: 11; float: left">\
+                            <div id="PressZillaCalloutArrowForeground" style="position: relative; left: -10px; top: -12px; height: 0; width: 0; border-right: 10px solid rgb(66, 139, 202); border-top: 10px dotted transparent; border-bottom: 10px dotted transparent; z-index: 10;">\
+                            </div>\
                         </div>\
-                    </div>\
-                    <div id="PressZillaCalloutContents" style="border: solid 5px rgb(66, 139, 202); position: relative; top: 1px; left: 0; z-index: 3; width: ' + width + 'px; height: ' + height + 'px; padding: 4px; margin: 0">\
-                        <div id="PressZillaCalloutButtonContents" style="display:table-cell; text-align: center; vertical-align:middle; width: ' + width + 'px; height: ' + height + 'px">\
-                            Loading Spec Bug Details. Please Wait.\
+                        <div id="PressZillaCalloutContents" style="border: solid 5px rgb(66, 139, 202); position: relative; top: 1px; left: 0; z-index: 3; width: ' + width + 'px; height: ' + height + 'px; padding: 4px; margin: 0">\
+                            <div id="PressZillaCalloutButtonContents" style="display:table-cell; text-align: center; vertical-align:middle; width: ' + width + 'px; height: ' + height + 'px">\
+                                Loading Spec Bug Details. Please Wait.\
+                            </div>\
                         </div>\
-                    </div>\
-                </div>');
+                    </div>');
             } else if (haveBugDetails) {
                 buildBugCallout(top, left, selectedText);
             } else {
@@ -209,6 +209,12 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
 
     logToConsole("Detected Bugzilla Window");
 
+    //jQuery(document.body).css("display", "none");
+
+    //jQuery(document).ready(function() {
+
+    //jQuery(document.body).css("display", "");
+
     if (jQuery("#Bugzilla_login").length != 0) {
         // logging in
 
@@ -216,31 +222,31 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
 
         var newForm = jQuery('<form method="POST" action="enter_bug.cgi" name="login">');
         var newFormInputs = jQuery('\
-            <table>\
-                <tbody>\
-                    <tr>\
-                        <th align="right">\
-                            <label for="Bugzilla_login">\
-                                Login:\
-                            </label>\
-                        </th>\
-                        <td>\
-                            <input id="Bugzilla_login" name="Bugzilla_login" size="35"></input>\
-                        </td>\
-                    </tr>\
-                    <tr>\
-                        <th align="right">\
-                            <label for="Bugzilla_password">\
-                                Password:\
-                            </label>\
-                        </th>\
-                        <td>\
-                            <input id="Bugzilla_password" type="password" name="Bugzilla_password" size="35"></input>\
-                        </td>\
-                    </tr>\
-                </tbody>\
-            </table>\
-            <input id="log_in" type="submit" value="Log in" name="GoAheadAndLogIn"></input>');
+                <table>\
+                    <tbody>\
+                        <tr>\
+                            <th align="right">\
+                                <label for="Bugzilla_login">\
+                                    Login:\
+                                </label>\
+                            </th>\
+                            <td>\
+                                <input id="Bugzilla_login" name="Bugzilla_login" size="35"></input>\
+                            </td>\
+                        </tr>\
+                        <tr>\
+                            <th align="right">\
+                                <label for="Bugzilla_password">\
+                                    Password:\
+                                </label>\
+                            </th>\
+                            <td>\
+                                <input id="Bugzilla_password" type="password" name="Bugzilla_password" size="35"></input>\
+                            </td>\
+                        </tr>\
+                    </tbody>\
+                </table>\
+                <input id="log_in" type="submit" value="Log in" name="GoAheadAndLogIn"></input>');
 
         newFormInputs.append(hiddenElements);
         newForm.append(newFormInputs);
@@ -258,30 +264,33 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
         shortDesc.css("display", "none");
         var comment = jQuery('#comment');
         var commit = jQuery('#commit');
+        var hidden = jQuery('#Create>input[type=hidden]');
 
         var createForm = jQuery('\
-            <form id="Create" class="enter_bug_form" onsubmit="return validateEnterBug(this)" enctype="multipart/form-data" action="post_bug.cgi" method="post" name="Create">\
-                <table>\
-                    <tr>\
-                        <td id="CommentCell">\
-                        </td>\
-                    </tr>\
-                    <tr>\
-                        <td id="SubmittCell">\
-                        </td>\
-                    </tr>\
-                </table>\
-            </form>'
+                <form id="Create" class="enter_bug_form" onsubmit="return validateEnterBug(this)" enctype="multipart/form-data" action="post_bug.cgi" method="post" name="Create">\
+                    <table>\
+                        <tr>\
+                            <td id="CommentCell">\
+                            </td>\
+                        </tr>\
+                        <tr>\
+                            <td id="SubmittCell">\
+                            </td>\
+                        </tr>\
+                    </table>\
+                </form>'
         );
 
         createForm.append(componentSelect);
         createForm.append(versionSelect);
         createForm.append(shortDesc);
+        createForm.append(hidden);
         createForm.find('#CommentCell').append(comment);
         createForm.find('#SubmittCell').append(commit);
 
         jQuery("body").empty();
         jQuery("body").css("background-image", "none");
+        comment.attr("rows", 25);
         jQuery("body").append(createForm);
 
     } else if (window.location.pathname == "/show_bug.cgi") {
@@ -293,10 +302,28 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
             var link = jQuery('<a href="' + window.location.href + '">Bug ' + id + ' Created</a>');
             var close = jQuery('<button onclick="javascript:window.close()" type="button">Close Window</button>');
 
+            var createForm = jQuery('\
+                <form id="Create" class="enter_bug_form" onsubmit="return validateEnterBug(this)" enctype="multipart/form-data" action="post_bug.cgi" method="post" name="Create">\
+                    <table>\
+                        <tr>\
+                            <td id="LinkCell">\
+                            </td>\
+                        </tr>\
+                        <tr>\
+                            <td id="CloseCell">\
+                            </td>\
+                        </tr>\
+                    </table>\
+                </form>'
+            );
+
             jQuery("body").empty();
             jQuery("body").css("background-image", "none");
-            jQuery("body").append(link);
-            jQuery("body").append(close);
+
+            jQuery("#LinkCell", createForm).append(link);
+            jQuery("#CloseCell", createForm).append(close);
+            jQuery("body").append(createForm);
+
         }
     } else if (jQuery("#bugzilla-body").length != 0) {
         // something else (maybe product selection)
@@ -305,4 +332,5 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
         jQuery("body").css("background-image", "none");
         jQuery("body").append(bugzillaBody);
     }
+    //}
 }
