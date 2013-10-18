@@ -9,15 +9,22 @@
 // @grant       none
 // ==/UserScript==
 
+var NEW_WINDOW_NAME = "PressZilla";
+
 function logToConsole(message) {
     console.log(message);
 }
 
+logToConsole("Starting PressZilla");
+
 if (window.location.host == "docbuilder.usersys.redhat.com") {
 
-    var height = 300;
-    var width = 400;
+    logToConsole("Detected DocBuilder Window");
+
+    var height = 150;
+    var width = 200;
     var CS_METADATA_NODE = 7;
+
     var BASE_SERVER =  "topika.ecs.eng.bne.redhat.com:8080";
     var SERVER = "http://" + BASE_SERVER + "/pressgang-ccms/rest/1";
 
@@ -40,16 +47,6 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
         return null;
     }
 
-    function openIFrame() {
-        logToConsole("Opening iFrame");
-        var iframeSrc = "https://bugzilla.redhat.com/enter_bug.cgi?product=" + encodeURIComponent(bzProduct) + "&component=" + encodeURIComponent(bzComponent) + "&version=" + encodeURIComponent(bzVersion) + "&short_desc=PressZilla%20Bug";
-        var iFrame = jQuery('<iframe style="width: 100%; height: 100%;" frameBorder="0" src="' + iframeSrc + '"></iframe>');
-        var calloutButtonContents = jQuery('#PressZillaCalloutButtonContents');
-        var calloutContents = jQuery('#PressZillaCalloutContents');
-        calloutButtonContents.remove();
-        calloutContents.append(iFrame);
-    }
-
     function buildBugCallout(top, left, text) {
 
         callout = jQuery('<div id="PressZillaCallout" style="position: absolute; top: ' + top + 'px; left: ' + left + 'px; height: ' + height + 'px; width: ' + width + 'px">\
@@ -67,7 +64,10 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
                 </div>');
         jQuery(document.body).append(callout);
         jQuery('#PressZillaCalloutButton').click(function(event) {
-            openIFrame();
+            var iframeSrc = "https://bugzilla.redhat.com/enter_bug.cgi?product=" + encodeURIComponent(bzProduct) + "&component=" + encodeURIComponent(bzComponent) + "&version=" + encodeURIComponent(bzVersion) + "&short_desc=PressZilla%20Bug&comment=" + encodeURIComponent(text);
+            var newwindow = window.open(iframeSrc, NEW_WINDOW_NAME, 'height=480,width=640');
+            newwindow.focus();
+            removeCallout();
         });
     }
 
@@ -201,7 +201,10 @@ if (window.location.host == "docbuilder.usersys.redhat.com") {
         return;
     });
 
-} else if (false && window.location.host == "bugzilla.redhat.com" && window.top.location.host == "docbuilder.usersys.redhat.com") {
+} else if (NEW_WINDOW_NAME == window.name) {
+
+    logToConsole("Detected Bugzilla Window");
+
     if (jQuery("#Bugzilla_login").length != 0) {
         // logging in
 
