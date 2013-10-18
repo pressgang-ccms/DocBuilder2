@@ -6,7 +6,7 @@
 // @include     http://docbuilder.usersys.redhat.com/*
 // @include     http://docbuilder.ecs.eng.bne.redhat.com/*
 // @require     http://code.jquery.com/jquery-2.0.3.min.js
-// @version     1.2
+// @version     1.3
 // @grant       none
 // ==/UserScript==
 
@@ -68,7 +68,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
             var bzURLRegex = /.*?(&|\?)comment=(.*?)(&|$)/;
             var match = bzURLRegex.exec(iframeSrc);
-            iframeSrc = iframeSrc.replace("comment=" + match[2], "comment=" + encodeURIComponent("Selected Text: \"" + text + "\"\n\nBug Details: ") + "&short_desc=" + encodeURIComponent("PressZilla Bug"));
+            iframeSrc = iframeSrc.replace("comment=" + match[2], "comment=" + encodeURIComponent("Selected Text: \"" + text + "\"\n\nBug Details: ") + "&short_desc==" + encodeURIComponent("PressZilla Bug"));
 
             logToConsole(iframeSrc);
 
@@ -241,9 +241,21 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
         versionSelect.css("display", "none");
         var shortDesc = jQuery('#short_desc');
         shortDesc.css("display", "none");
+
         var comment = jQuery('#comment');
         var commit = jQuery('#commit');
+
         var hidden = jQuery('#Create>input[type=hidden]');
+
+        var assignedTo = jQuery('#assigned_to');
+        assignedTo.css("display", "none");
+
+        var cfBuildId = jQuery('#cf_build_id');
+        cfBuildId.css("display", "none");
+
+        var cfEnvironment = jQuery('#cf_environment');
+        cfEnvironment.css("display", "none");
+
 
         var createForm = jQuery('\
                 <form id="Create" class="enter_bug_form" onsubmit="return validateEnterBug(this)" enctype="multipart/form-data" action="post_bug.cgi" method="post" name="Create">\
@@ -263,6 +275,9 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
         createForm.append(componentSelect);
         createForm.append(versionSelect);
         createForm.append(shortDesc);
+        createForm.append(assignedTo);
+        createForm.append(cfBuildId);
+        createForm.append(cfEnvironment);
         createForm.append(hidden);
         createForm.find('#CommentCell').append(comment);
         createForm.find('#SubmittCell').append(commit);
