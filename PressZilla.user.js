@@ -6,7 +6,7 @@
 // @include     http://docbuilder.usersys.redhat.com/*
 // @include     http://docbuilder.ecs.eng.bne.redhat.com/*
 // @require     http://code.jquery.com/jquery-2.0.3.min.js
-// @version     1
+// @version     1.1
 // @grant       none
 // ==/UserScript==
 
@@ -23,9 +23,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
     var height = 250;
     var width = 200;
-    var CS_METADATA_NODE = 7;
-    var BASE_SERVER =  "topika.ecs.eng.bne.redhat.com:8080";
-    var SERVER = "http://" + BASE_SERVER + "/pressgang-ccms/rest/1";
+    var smallHeight = 150;
 
     var callout = null;
 
@@ -74,13 +72,13 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
             logToConsole(iframeSrc);
 
-            callout = jQuery('<div id="PressZillaCallout" style="position: absolute; top: ' + top + 'px; left: ' + left + 'px; height: ' + height + 'px; width: ' + width + 'px">\
+            callout = jQuery('<div id="PressZillaCallout" style="position: absolute; top: ' + top + 'px; left: ' + left + 'px; height: ' + smallHeight + 'px; width: ' + width + 'px">\
                            <div id="PressZillaCalloutArrowBackground" style="height: 0; width: 0; border-right: 12px solid #ffffff; border-top: 12px dotted transparent; border-bottom: 12px dotted transparent; left: 0px; top: 0px; margin-top: 2px; z-index: 11; float: left">\
                                 <div id="PressZillaCalloutArrowForeground" style="position: relative; left: -10px; top: -12px; height: 0; width: 0; border-right: 10px solid rgb(66, 139, 202); border-top: 10px dotted transparent; border-bottom: 10px dotted transparent; z-index: 10;">\
                                 </div>\
                             </div>\
-                            <div id="PressZillaCalloutContents" style="border: solid 5px rgb(66, 139, 202); position: relative; top: 1px; left: 0; z-index: 3; width: ' + width + 'px; height: ' + height + 'px; padding: 4px; margin: 0">\
-                                <div id="PressZillaCalloutButtonContents" style="display:table-cell; text-align: center; vertical-align:middle; width: ' + (width - 18) + 'px; height: ' + (height - 18) + 'px">\
+                            <div id="PressZillaCalloutContents" style="border: solid 5px rgb(66, 139, 202); position: relative; top: 1px; left: 0; z-index: 3; width: ' + width + 'px; height: ' + smallHeight + 'px; padding: 4px; margin: 0">\
+                                <div id="PressZillaCalloutButtonContents" style="display:table-cell; text-align: center; vertical-align:middle; width: ' + (width - 18) + 'px; height: ' + (smallHeight - 18) + 'px">\
                                     <a id="PressZillaCalloutButton" href="javascript:void" style="text-decoration: none; background-color: rgb(66, 139, 202); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; color: rgb(255, 255, 255); font-family: \'Helvetica Neue\',Helvetica,Arial,sans-serif; font-size: 14px; line-height: 20px; list-style-image: none; list-style-position: outside; list-style-type: none; padding-bottom: 10px; padding-left: 15px; padding-right: 15px; padding-top: 10px; position: relative; text-decoration: none; -moz-box-sizing: border-box; -moz-text-blink: none; -moz-text-decoration-color: rgb(255, 255, 255); -moz-text-decoration-line: none; -moz-text-decoration-style: solid;">\
                                         Create Bug\
                                     </a>\
