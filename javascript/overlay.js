@@ -318,7 +318,7 @@ function createSolutionsPopover(topicId, parent) {
     var popover = createPopover("KCS Solutions", topicId);
     document.body.appendChild(popover);
 
-    popover.innerHTML = '<h3>Coming Soon</h3><div>In the near future this popover will display KCS Solutions matching the keywords in the topic. This will provide an easy way to see if GSS have any related documentation.</div>';
+    popover.popoverContent.innerHTML = '<h3>Coming Soon</h3><div>In the near future this popover will display KCS Solutions matching the keywords in the topic. This will provide an easy way to see if GSS have any related documentation.</div>';
 
     linkDiv.onmouseover=function(){
         openPopover(popover, linkDiv);
@@ -884,7 +884,7 @@ function createPopover(title, topicId) {
     popover.style.width='750px';
     popover.style.display = 'none';
     popover.style.backgroundColor = 'white';
-    popover.style.borderColor = 'blue';
+    popover.style.borderColor = 'rgb(66, 139, 202)';
     popover.style.borderWidth = '2px';
     popover.style.borderStyle = 'solid';
 
@@ -893,7 +893,7 @@ function createPopover(title, topicId) {
     popoverTitle.style.height = "42px";
     popoverTitle.style.paddingLeft = "8px";
     popoverTitle.style.color = "white";
-    popoverTitle.style.backgroundColor = "blue";
+    popoverTitle.style.backgroundColor = "rgb(66, 139, 202)";
     popoverTitle.style.fontWeight = "bold";
     popoverTitle.style.display = "table-cell";
     popoverTitle.style.verticalAlign = "middle";
