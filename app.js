@@ -141,9 +141,11 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 				</div>\n\
 				<div class=\"content\">\n\
 					<div>\n\
-						<img height=\"87\" src=\"pg.png\" width=\"879\">\n\
+						<img height=\"" + deployment.LOGO_HEIGHT + "\" src=\"" + deployment.LOGO + "\" width=\"" + deployment.LOGO_WIDTH + "\">\n\
 					</div>\n\
 					<div style=\"margin-top:1em\">\n\
+						<p><a href=\"http://docbuilder.ecs.eng.bne.redhat.com/\">DocBuilder Next</a> has the latest updates, but will sometimes introduce breaking changes.</p>\n\
+						<p><a href=\"http://docbuilder.lab.eng.pnq.redhat.com/\">DocBuilder</a> is the stable release, and can be used as a fallback for DocBuilder Next.</p>\n\
 						<p>DocBuilder is a service that automatically rebuilds content specifications as they are created or edited.</p>\n\
 						<p>Each content spec has three links: a link to the compiled book itself, a link to the build log, and a link to the publican log.</p>\n\
 						<p>If a book could not be built, first check the build log. This log contains information that may indicate syntax errors in the content specification. You can also view this log to see when the document was last built.</p>\n\
@@ -313,12 +315,12 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 
 				indexHtml += "{\n\
 					idRaw: " + specId + ",\n\
-					id: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + specId + "\" target=\"_top\">" + specId + "</a>',\n\
+					id: '<a href=\"" + deployment.EDIT_LINK.replace(deployment.OPEN_LINK_ID_REPLACE, specId) + "\" target=\"_top\">" + specId + "</a>',\n\
 					versionRaw: '" + fixedSpecDetails.version + "',\n\
-					version: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\" target=\"_top\">" + fixedSpecDetails.version + "</a>',\n\
+					version: '<a href=\"" + deployment.OPEN_LINK.replace(deployment.OPEN_LINK_ID_REPLACE, specId) + "\" target=\"_top\">" + fixedSpecDetails.version + "</a>',\n\
 					productRaw: '" + fixedSpecDetails.product + "',\n\
-					product: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\" target=\"_top\">" + fixedSpecDetails.product + "</a>',\n\
-					titleRaw: '" + fixedSpecDetails.title + "', title: '<a href=\"http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;" + specId + "\"  target=\"_top\">" + fixedSpecDetails.title + "</a>',\n\
+					product: '<a href=\"" + deployment.OPEN_LINK.replace(deployment.OPEN_LINK_ID_REPLACE, specId) + "\" target=\"_top\">" + fixedSpecDetails.product + "</a>',\n\
+					titleRaw: '" + fixedSpecDetails.title + "', title: '<a href=\"" + deployment.OPEN_LINK.replace(deployment.OPEN_LINK_ID_REPLACE, specId) + "\"  target=\"_top\">" + fixedSpecDetails.title + "</a>',\n\
 					remarks: '<a href=\"" + specId + "/remarks\"><button>With Remarks</button></a>',\n\
 					buildlog: '<a href=\"" + specId + "/build.log\"><button>Build Log</button></a>',\n\
 					publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + latestFileFixed + "\"><button>Publican ZIP</button></a>',\n\
@@ -365,7 +367,7 @@ function processSpecs(updatedSpecs) {
                     /*
                         Add the style, scripts and constants required to build the side menu
                      */
-                    var scriptsAndStyleFiles = "<head>\n\
+                    var scriptFiles = "\
                                 <script type='application/javascript'>\n\
                                     var BASE_SERVER = '" + deployment.BASE_SERVER + "';\n\
                                     var SPEC_ID = " + specId + ";\n\
@@ -376,13 +378,18 @@ function processSpecs(updatedSpecs) {
                                 <script type='application/javascript' src='/javascript/raphael-min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/pie.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/overlay.js'></script>\n\
-                                <link href='/css/pressgang.css' rel='stylesheet'>\n\
-                                <link href='/css/bootstrap.min.css' rel='stylesheet'>\n";
+                                </body>\n\
+								</html>";
+
+					var styleFiles = "<head>\n\
+						<link href='/css/pressgang.css' rel='stylesheet'>\n\
+                        <link href='/css/bootstrap.min.css' rel='stylesheet'>\n";
 
                     // Append the custom javascript files to the index.html
                     try {
                         var contents = fs.readFileSync(deployment.APACHE_HTML_DIR + "/" + id + "/index.html").toString();
-                        contents = contents.replace("<head>", scriptsAndStyleFiles);
+                        contents = contents.replace("<head>", styleFiles);
+						contents = contents.replace("</body></html>", scriptFiles);
                         fs.writeFileSync(deployment.APACHE_HTML_DIR + "/" + id + "/index.html", contents);
                     } catch (ex) {
                         console.log("Could not edit and save main HTML file");
@@ -390,7 +397,8 @@ function processSpecs(updatedSpecs) {
 
                     try {
                         var contents = fs.readFileSync(deployment.APACHE_HTML_DIR + "/" + id + "/remarks/index.html").toString();
-                        contents = contents.replace("<head>", scriptsAndStyleFiles);
+						contents = contents.replace("<head>", styleFiles);
+						contents = contents.replace("</body></html>", scriptFiles);
                         fs.writeFileSync(deployment.APACHE_HTML_DIR + "/" + id + "/remarks/index.html", contents);
                     } catch (ex) {
                         console.log("Could not edit and save remarks HTML file");
