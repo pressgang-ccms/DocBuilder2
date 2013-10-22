@@ -895,7 +895,7 @@ function createPopover(title, topicId) {
     popover.style.borderStyle = 'solid';
 
     var popoverTitle = document.createElement("div");
-    popoverTitle.style.width = "742px";
+    popoverTitle.style.width = "746px";
     popoverTitle.style.height = "42px";
     popoverTitle.style.paddingLeft = "8px";
     popoverTitle.style.color = "white";
