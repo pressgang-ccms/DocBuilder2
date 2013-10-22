@@ -32,6 +32,11 @@
  */
 
 /**
+ * The background colour of ui elements.
+ * @type {string}
+ */
+var BACKGROUND_COLOR = "rgb(66, 139, 202)";
+/**
  * The license category
  * @type {number}
  */
@@ -322,6 +327,7 @@ function createSolutionsPopover(topicId, parent) {
 
     linkDiv.onmouseover=function(){
         openPopover(popover, linkDiv);
+        //jQuery(document).trigger();
     };
 
     setupEvents(linkDiv, popover);
@@ -562,7 +568,7 @@ function createHistoryPopover(topicId, parent) {
     var popover = createPopover("History", topicId);
     document.body.appendChild(popover);
 
-	var legend = $("<div style='padding-left: 8px; padding-right:8px; width: 742px; height: 42px; color: white; background-color: blue; display: table-cell; vertical-align: middle; font-weight: bold'><div style='float:left'>History. Last revision edited in&nbsp;</div>\
+	var legend = $("<div style='padding-left: 8px; padding-right:8px; width: 742px; height: 42px; color: white; background-color: " + BACKGROUND_COLOR + "; display: table-cell; vertical-align: middle; font-weight: bold'><div style='float:left'>History. Last revision edited in&nbsp;</div>\
 		<div style='width: 25px; height: 26px; float: left; background-image: url(/images/history-blue.png)'/><div style='float:left'>&nbsp;1 Day,&nbsp;</div> \
 		<div style='width: 25px; height: 26px; float: left; background-image: url(/images/history-green.png)'/><div style='float:left'>&nbsp;1 Week,&nbsp;</div> \
 		<div style='width: 25px; height: 26px; float: left; background-image: url(/images/history-yellow.png)'/><div style='float:left'>&nbsp;1 Month,&nbsp;</div> \
@@ -884,7 +890,7 @@ function createPopover(title, topicId) {
     popover.style.width='750px';
     popover.style.display = 'none';
     popover.style.backgroundColor = 'white';
-    popover.style.borderColor = 'rgb(66, 139, 202)';
+    popover.style.borderColor = BACKGROUND_COLOR;
     popover.style.borderWidth = '2px';
     popover.style.borderStyle = 'solid';
 
@@ -893,7 +899,7 @@ function createPopover(title, topicId) {
     popoverTitle.style.height = "42px";
     popoverTitle.style.paddingLeft = "8px";
     popoverTitle.style.color = "white";
-    popoverTitle.style.backgroundColor = "rgb(66, 139, 202)";
+    popoverTitle.style.backgroundColor = BACKGROUND_COLOR;
     popoverTitle.style.fontWeight = "bold";
     popoverTitle.style.display = "table-cell";
     popoverTitle.style.verticalAlign = "middle";
