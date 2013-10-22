@@ -321,13 +321,13 @@ function createSolutionsPopover(topicId, parent) {
     parent.appendChild(linkDiv);
 
     var popover = createPopover("KCS Solutions", topicId);
-    document.body.appendChild(popover.id);
+    document.body.appendChild(popover);
 
     popover.popoverContent.innerHTML = '<h3>Coming Soon</h3><div>In the near future this popover will display KCS Solutions matching the keywords in the topic. This will provide an easy way to see if GSS have any related documentation.</div>';
 
     linkDiv.onmouseover=function(){
         openPopover(popover, linkDiv);
-        jQuery(window).trigger("solutions_opened", popover);
+        jQuery(window).trigger("solutions_opened", popover.id);
     };
 
     setupEvents(linkDiv, popover);
