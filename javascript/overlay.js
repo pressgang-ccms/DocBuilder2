@@ -279,6 +279,7 @@ function addOverlayIcons(topicId, RoleCreatePara) {
         createUrlsPopover(topicId, bubbleDiv);
         createDescriptionPopover(topicId, bubbleDiv);
         createWebDAVPopover(topicId, bubbleDiv);
+        createSolutionsPopover(topicId, bubbleDiv);
     }
 }
 
@@ -307,7 +308,21 @@ function createWebDAVPopover(topicId, parent) {
         openPopover(popover, linkDiv);
     };
 
+    setupEvents(linkDiv, popover);
+}
 
+function createSolutionsPopover(topicId, parent) {
+    var linkDiv = createIcon("lightbulb", topicId);
+    parent.appendChild(linkDiv);
+
+    var popover = createPopover("KCS Solutions", topicId);
+    document.body.appendChild(popover);
+
+    popover.innerHTML = '<h3>Coming Soon</h3><div>In the near future this popover will display KCS Solutions matching the keywords in the topic. This will provide an easy way to see if GSS have any related documentation.</div>';
+
+    linkDiv.onmouseover=function(){
+        openPopover(popover, linkDiv);
+    };
 
     setupEvents(linkDiv, popover);
 }
