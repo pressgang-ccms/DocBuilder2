@@ -67,7 +67,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
                                 for (var solutionIndex = 0, solutionCount = solutions.solution.length; solutionIndex < solutionCount; ++solutionIndex) {
                                     var solution = solutions.solution[solutionIndex];
-                                    solutionsTable += '<li><a href="' + solution.view_uri + '">[' + solution.id + '] ' + solution.title + '</a></li>';
+                                    solutionsTable += '<li><span style="min-width: 5em; display: inline-block;"><a href="' + solution.view_uri + '">[' + solution.id + ']</a></span><a href="' + solution.view_uri + '">' + solution.title + '</a></li>';
                                 }
 
                                 solutionsTable += "</ul>";
