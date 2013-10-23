@@ -7,7 +7,7 @@
 // @include     http://docbuilder.ecs.eng.bne.redhat.com/*
 // @require     http://code.jquery.com/jquery-2.0.3.min.js
 // @version     1.3
-// @grant       none
+// @grant       GM_xmlhttpRequest
 // ==/UserScript==
 
 var NEW_WINDOW_NAME = "PressZilla";
@@ -17,10 +17,130 @@ function logToConsole(message) {
     console.log(message);
 }
 
+// http://courses.ischool.berkeley.edu/i290-4/f09/resources/gm_jq_xhr.js
+// Author: Ryan Greenberg (ryan@ischool.berkeley.edu)
+// Date: September 3, 2009
+// Version: $Id: gm_jq_xhr.js 240 2009-11-03 17:38:40Z ryan $
+
+// This allows jQuery to make cross-domain XHR by providing
+// a wrapper for GM_xmlhttpRequest. The difference between
+// XMLHttpRequest and GM_xmlhttpRequest is that the Greasemonkey
+// version fires immediately when passed options, whereas the standard
+// XHR does not run until .send() is called. In order to allow jQuery
+// to use the Greasemonkey version, we create a wrapper object, GM_XHR,
+// that stores any parameters jQuery passes it and then creates GM_xmlhttprequest
+// when jQuery calls GM_XHR.send().
+
+// Wrapper function
+function GM_XHR() {
+    this.type = null;
+    this.url = null;
+    this.async = null;
+    this.username = null;
+    this.password = null;
+    this.status = null;
+    this.headers = {};
+    this.readyState = null;
+
+    this.open = function(type, url, async, username, password) {
+        this.type = type ? type : null;
+        this.url = url ? url : null;
+        this.async = async ? async : null;
+        this.username = username ? username : null;
+        this.password = password ? password : null;
+        this.readyState = 1;
+    };
+
+    this.setRequestHeader = function(name, value) {
+        this.headers[name] = value;
+    };
+
+    this.abort = function() {
+        this.readyState = 0;
+    };
+
+    this.getResponseHeader = function(name) {
+        return this.headers[name];
+    };
+
+    this.send = function(data) {
+        this.data = data;
+        var that = this;
+        GM_xmlhttpRequest({
+            method: this.type,
+            url: this.url,
+            headers: this.headers,
+            data: this.data,
+            onload: function(rsp) {
+                // Populate wrapper object with all data returned from GM_XMLHttpRequest
+                for (k in rsp) {
+                    that[k] = rsp[k];
+                }
+            },
+            onerror: function(rsp) {
+                for (k in rsp) {
+                    that[k] = rsp[k];
+                }
+            },
+            onreadystatechange: function(rsp) {
+                for (k in rsp) {
+                    that[k] = rsp[k];
+                }
+            }
+        });
+    };
+};
+
+// Tell jQuery to use the GM_XHR object instead of the standard browser XHR
+$.ajaxSetup({
+    xhr: function(){return new GM_XHR;}
+});
+
 if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.host == "docbuilder.ecs.eng.bne.redhat.com") {
 
     logToConsole("Detected DocBuilder Window");
 
+    /*
+        Here we add listeners for the opening of the various popovers that will be populted with
+        data otherwise unavailable to the browser due to same origin rules.
+     */
+
+    // listen for the kcs popover
+    jQuery(document).bind("solutions_opened", function(event, topicId, popoverId){
+
+        logToConsole("querying topic keywords");
+
+        var topicKeywordUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22keywords%22%7D%7D%5D%7D"
+        /*jQuery.getJSON(topicKeywordUrl, function(topic){
+            var keywords = "";
+            for (var keyword in topic.keywords){
+                if (keywords.length != 0) {
+                   keywords += ",";
+                }
+                keywords += keyword;
+            }
+
+            logToConsole("querying solutions: " + keywords);
+
+            var kcsUrl = "https://api.access.redhat.com/rs/solutions?keyword=" + keywords;
+
+            jQuery.ajax({
+                url: kcsUrl,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    jQuery('#' + popoverId)[0].popoverContent.innerHTML = "success!";
+                },
+                error: function() { console.log("Error contacting access") },
+                beforeSend: function(xhr) {xhr.setRequestHeader('Accept', 'application/json');}
+            });
+        }); */
+
+    });
+
+    /*
+        Build the callout that displays the bug submission link.
+     */
     var height = 250;
     var width = 200;
     var smallHeight = 150;

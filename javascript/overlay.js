@@ -327,7 +327,7 @@ function createSolutionsPopover(topicId, parent) {
 
     linkDiv.onmouseover=function(){
         if (popover.style.display == 'none') {
-            jQuery(window).trigger("solutions_opened", [topicId, popover.id]);
+            jQuery(document).trigger("solutions_opened", [topicId, popover.id]);
             openPopover(popover, linkDiv);
         }
     };
