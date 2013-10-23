@@ -13,6 +13,7 @@
 
 var NEW_WINDOW_NAME = "PressZilla";
 var run = false;
+var solutionsCache = {};
 
 function logToConsole(message) {
     console.log(message);
@@ -29,54 +30,57 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
     // listen for the kcs popover
     jQuery(window).bind("solutions_opened", function(event){
-        logToConsole("querying topic keywords");
-        var topicKeywordUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/" + eventDetails.topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22keywords%22%7D%7D%5D%7D"
+        if (!solutionsCache[eventDetails.topicId]) {
+            var topicKeywordUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/" + eventDetails.topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22keywords%22%7D%7D%5D%7D"
 
-        GM_xmlhttpRequest({
-            method: 'GET',
-            url: topicKeywordUrl,
-            onload: function(topicResponse) {
-                var topic = JSON.parse(topicResponse.responseText);
-                var keywords = "";
-                for (var keyword in topic.keywords){
-                    if (keywords.length != 0) {
-                       keywords += ",";
-                    }
-                    keywords += topic.keywords[keyword];
-                }
-
-                logToConsole("querying solutions: " + keywords);
-
-                var kcsUrl = "https://api.access.redhat.com/rs/solutions?keyword=" + keywords;
-
-                GM_xmlhttpRequest({
-                    method: 'GET',
-                    url: kcsUrl,
-                    headers: {Accept: 'application/json'},
-                    onload: function(solutionsResponse) {
-                        console.log(solutionsResponse);
-
-                        var solutions = JSON.parse(solutionsResponse.responseText);
-
-                        var content = jQuery('#' + eventDetails.popoverId)[0].popoverContent;
-                        jQuery(content).empty();
-
-                        var solutionsTable = "<ul>";
-
-                        for (var solutionIndex = 0, solutionCount = solutions.solution.length; solutionIndex < solutionCount; ++solutionIndex) {
-                            var solution = solutions.solution[solutionIndex];
-                            solutionsTable += '<li><a href="' + solution.view_uri + '">[' + solution.id + '] ' + solution.title + '</a></li>';
+            GM_xmlhttpRequest({
+                method: 'GET',
+                url: topicKeywordUrl,
+                onload: function(topicId) {
+                    return function(topicResponse) {
+                        var topic = JSON.parse(topicResponse.responseText);
+                        var keywords = "";
+                        for (var keyword in topic.keywords){
+                            if (keywords.length != 0) {
+                                keywords += ",";
+                            }
+                            keywords += topic.keywords[keyword];
                         }
 
-                        solutionsTable += "</ul>";
+                        logToConsole("querying solutions: " + keywords);
 
-                        jQuery(content).append(jQuery(solutionsTable));
+                        var kcsUrl = "https://api.access.redhat.com/rs/solutions?keyword=" + keywords;
+
+                        GM_xmlhttpRequest({
+                            method: 'GET',
+                            url: kcsUrl,
+                            headers: {Accept: 'application/json'},
+                            onload: function(solutionsResponse) {
+                                console.log(solutionsResponse);
+
+                                var solutions = JSON.parse(solutionsResponse.responseText);
+
+                                var content = jQuery('#' + eventDetails.popoverId)[0].popoverContent;
+                                jQuery(content).empty();
+
+                                var solutionsTable = "<ul>";
+
+                                for (var solutionIndex = 0, solutionCount = solutions.solution.length; solutionIndex < solutionCount; ++solutionIndex) {
+                                    var solution = solutions.solution[solutionIndex];
+                                    solutionsTable += '<li><a href="' + solution.view_uri + '">[' + solution.id + '] ' + solution.title + '</a></li>';
+                                }
+
+                                solutionsTable += "</ul>";
+
+                                solutionsCache[topicId] = solutionsTable;
+
+                                jQuery(content).append(jQuery(solutionsTable));
+                            }
+                        });
                     }
-                });
-            }
-        });
-
-
+                }(eventDetails.topicId)
+            });
+        }
     });
 
     /*
