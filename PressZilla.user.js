@@ -53,8 +53,24 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                     method: 'GET',
                     url: kcsUrl,
                     headers: {Accept: 'application/json'},
-                    onload: function(data) {
-                        jQuery('#' + eventDetails.popoverId)[0].popoverContent.innerHTML = "success!";
+                    onload: function(solutionsResponse) {
+                        console.log(solutionsResponse);
+
+                        var solutions = JSON.parse(solutionsResponse.responseText);
+
+                        var content = jQuery('#' + eventDetails.popoverId)[0].popoverContent;
+                        jQuery(content).empty();
+
+                        var solutionsTable = "<ul>";
+
+                        for (var solutionIndex = 0, solutionCount = solutions.solution.length; solutionIndex < solutionCount; ++solutionIndex) {
+                            var solution = solutions.solution[solutionIndex];
+                            solutionsTable += '<li><a href="' + solution.view_uri + '">[' + solution.id + '] ' + solution.title + '</a></li>';
+                        }
+
+                        solutionsTable += "</ul>";
+
+                        jQuery(content).append(jQuery(solutionsTable));
                     }
                 });
             }
