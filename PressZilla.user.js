@@ -51,8 +51,8 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
         var kcsUrl = "https://api.access.redhat.com/rs/solutions?limit=10&keyword=" + encodeURIComponent(keywords);
 
-        function handleError() {
-            var buttonId = unsafeWindow.eventDetails.popoverId + 'contentbutton';
+        var handleError = function() {
+            var buttonId = popoverId + 'contentbutton';
             jQuery('#' + buttonId).attr('disabled', 'true');
             jQuery('#' + buttonId).text('Connection Failed');
             jQuery('#' + buttonId).removeClass('btn-primary');
@@ -63,11 +63,11 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
             method: 'GET',
             url: kcsUrl,
             headers: {Accept: 'application/json'},
-            onabort: function() {logToConsole("onabort")},
-            onerror: function() {logToConsole("onerror")},
-            onprogress: function() {logToConsole("onprogress")},
-            onreadystatechange: function() {logToConsole("onreadystatechange")},
-            ontimeout: function() {logToConsole("ontimeout")},
+            onabort: function() {logToConsole("onabort"); handleError();},
+            onerror: function() {logToConsole("onerror"); handleError();},
+            onprogress: function() {logToConsole("onprogress");},
+            onreadystatechange: function() {logToConsole("onreadystatechange");},
+            ontimeout: function() {logToConsole("ontimeout"); handleError();},
             onload: function(topicId, popoverId) {
                 return function(solutionsResponse) {
                     logToConsole(solutionsResponse);
@@ -115,7 +115,13 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
             // make a note that we have started processing this topic
             solutionsCache[unsafeWindow.eventDetails.topicId].fetching = true;
 
-
+            var handleError = function() {
+                var buttonId = popoverId + 'contentbutton';
+                jQuery('#' + buttonId).attr('disabled', 'true');
+                jQuery('#' + buttonId).text('Connection Failed');
+                jQuery('#' + buttonId).removeClass('btn-primary');
+                jQuery('#' + buttonId).addClass('btn-danger');
+            }
 
             var specId = unsafeWindow.getSpecIdFromURL();
             var specProductUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/contentspecnodes/get/json/query;csNodeType=7;contentSpecIds=" + specId + "?expand=" + encodeURIComponent("{\"branches\":[{\"trunk\":{\"name\": \"nodes\"}}]}");
@@ -124,11 +130,11 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                 GM_xmlhttpRequest({
                     method: 'GET',
                     url: specProductUrl,
-                    onabort: function() {logToConsole("onabort")},
-                    onerror: function() {logToConsole("onerror")},
-                    onprogress: function() {logToConsole("onprogress")},
-                    onreadystatechange: function() {logToConsole("onreadystatechange")},
-                    ontimeout: function() {logToConsole("ontimeout")},
+                    onabort: function() {logToConsole("onabort"); handleError(); },
+                    onerror: function() {logToConsole("onerror"); handleError();},
+                    onprogress: function() {logToConsole("onprogress");},
+                    onreadystatechange: function() {logToConsole("onreadystatechange");},
+                    ontimeout: function() {logToConsole("ontimeout"); handleError();},
                     onload: function(topicId, popoverId) {
                         return function(specNodesResponse) {
                             var nodes = JSON.parse(specNodesResponse.responseText);
@@ -143,21 +149,13 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
                             var additionalKeywords = product.split(" ");
 
-                            function handleError() {
-                                var buttonId = unsafeWindow.eventDetails.popoverId + 'contentbutton';
-                                jQuery('#' + buttonId).attr('disabled', 'true');
-                                jQuery('#' + buttonId).text('Connection Failed');
-                                jQuery('#' + buttonId).removeClass('btn-primary');
-                                jQuery('#' + buttonId).addClass('btn-danger');
-                            }
-
                             GM_xmlhttpRequest({
                                 method: 'GET',
                                 url: topicKeywordUrl,
                                 onabort: function() {logToConsole("onabort"); handleError();},
                                 onerror: function() {logToConsole("onerror"); handleError();},
-                                onprogress: function() {logToConsole("onprogress")},
-                                onreadystatechange: function() {logToConsole("onreadystatechange")},
+                                onprogress: function() {logToConsole("onprogress");},
+                                onreadystatechange: function() {logToConsole("onreadystatechange");},
                                 ontimeout: function() {logToConsole("ontimeout"); handleError();},
                                 onload: function(topicResponse) {
                                     var topic = JSON.parse(topicResponse.responseText);
