@@ -30,8 +30,11 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
     // listen for the kcs popover
     jQuery(window).bind("solutions_opened", function(event){
-        if (!solutionsCache[eventDetails.topicId]) {
-            var topicKeywordUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/" + eventDetails.topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22keywords%22%7D%7D%5D%7D"
+        if (!solutionsCache[unsafeWindow.eventDetails.topicId]) {
+
+            logToConsole("Getting topic keywords");
+
+            var topicKeywordUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/" + unsafeWindow.eventDetails.topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22keywords%22%7D%7D%5D%7D"
 
             GM_xmlhttpRequest({
                 method: 'GET',
@@ -79,7 +82,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                             }
                         });
                     }
-                }(eventDetails.topicId)
+                }(unsafeWindow.eventDetails.topicId)
             });
         }
     });
