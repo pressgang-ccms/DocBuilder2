@@ -332,7 +332,7 @@ function createSolutionsPopover(topicId, parent) {
             // does not work.
             var event  = new CustomEvent('solutions_opened', {source: 'solutions', topicId: topicId, popoverId: popover.id});
             event.initEvent ('solutions_opened', false, true);
-            jQuery('#eventGateway')[0].dispatchEvent (event);
+            window.dispatchEvent (event);
 
             openPopover(popover, linkDiv);
         }

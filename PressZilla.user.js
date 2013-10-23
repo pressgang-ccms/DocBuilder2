@@ -107,10 +107,9 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
      */
 
     // listen for the kcs popover
-    var eventGateway = document.getElementById('eventGateway');
-    eventGateway.addEventListener("solutions_opened", function(event){
+    jQuery(window).bind("solutions_opened", function(event){
 
-        logToConsole(event.detail);
+        logToConsole(event);
 
         if (event.detail.source == 'solutions') {
             logToConsole("querying topic keywords");
@@ -141,7 +140,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
             });
         }
 
-    }, true);
+    });
 
     /*
         Build the callout that displays the bug submission link.
