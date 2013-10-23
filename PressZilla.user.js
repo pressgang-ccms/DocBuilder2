@@ -66,28 +66,36 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                                 method: 'GET',
                                 url: kcsUrl,
                                 headers: {Accept: 'application/json'},
-                                onload: function(solutionsResponse) {
-                                    console.log(solutionsResponse);
+                                onload: function(topicId, popoverId) {
+                                    return function(solutionsResponse) {
+                                        logToConsole(solutionsResponse);
 
-                                    var solutions = JSON.parse(solutionsResponse.responseText);
+                                        var solutions = JSON.parse(solutionsResponse.responseText);
 
-                                    var content = jQuery('#' + popoverId)[0].popoverContent;
-                                    jQuery(content).empty();
+                                        logToConsole("parsed");
 
-                                    var solutionsTable = "<ul>";
+                                        var content = jQuery('#' + popoverId + "content");
+                                        content.empty();
 
-                                    for (var solutionIndex = 0, solutionCount = solutions.solution.length; solutionIndex < solutionCount; ++solutionIndex) {
-                                        var solution = solutions.solution[solutionIndex];
-                                        var published = solution.moderation_state == "published";
-                                        solutionsTable += '<li><span style="min-width: 5em; display: inline-block;"><a style="color: ' + (published ? "#5cb85c" : "#d9534f") + '" href="' + solution.view_uri + '">[' + solution.id + ']</a></span><a href="' + solution.view_uri + '">' + solution.title + '</a></li>';
+                                        logToConsole(content);
+
+                                        var solutionsTable = "<ul>";
+
+                                        for (var solutionIndex = 0, solutionCount = solutions.solution.length; solutionIndex < solutionCount; ++solutionIndex) {
+                                            var solution = solutions.solution[solutionIndex];
+                                            var published = solution.moderation_state == "published";
+                                            solutionsTable += '<li><span style="min-width: 5em; display: inline-block;"><a style="color: ' + (published ? "#5cb85c" : "#d9534f") + '" href="' + solution.view_uri + '">[' + solution.id + ']</a></span><a href="' + solution.view_uri + '">' + solution.title + '</a></li>';
+                                        }
+
+                                        solutionsTable += "</ul>";
+
+                                        solutionsCache[topicId] = solutionsTable;
+
+                                        logToConsole("built");
+
+                                        content.append(jQuery(solutionsTable));
                                     }
-
-                                    solutionsTable += "</ul>";
-
-                                    solutionsCache[topicId] = solutionsTable;
-
-                                    jQuery(content).append(jQuery(solutionsTable));
-                                }
+                                }(topicId, popoverId)
                             });
                         }
                     }(unsafeWindow.eventDetails.topicId, unsafeWindow.eventDetails.popoverId)

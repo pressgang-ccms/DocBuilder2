@@ -934,7 +934,7 @@ function createPopover(title, topicId) {
     popover.appendChild(popoverTitle);
 
     var popoverContent = document.createElement("div");
-    popoverTitle.setAttribute("id", topicId + title.replace(/ /g, "") + "content");
+    popoverContent.setAttribute("id", topicId + title.replace(/ /g, "") + "content");
 	popoverContent.style.clear = "both";
 	popoverContent.style.margin = "8px";
     popoverContent.style.height = "242px";
