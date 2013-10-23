@@ -24,9 +24,66 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
     logToConsole("Detected DocBuilder Window");
 
     /*
-        Here we add listeners for the opening of the various popovers that will be populted with
+        Here we add listeners for the opening of the various popovers that will be populated with
         data otherwise unavailable to the browser due to same origin rules.
      */
+
+    function getSolutions(topic, position, topicId, popoverId) {
+        logToConsole("Getting solutions");
+
+        var keywords = "";
+        for (var keywordIndex = 0, keywordCount = topic.keywords.length; keywordIndex < keywordCount; ++keywordIndex){
+            if (keywords.length != 0) {
+                if (keywordIndex / keywordCount * 100 < position) {
+                    keywords += " AND ";
+                } else {
+                    keywords += " OR ";
+                }
+            }
+            keywords += topic.keywords[keywordIndex];
+        }
+
+        logToConsole("querying solutions: " + keywords);
+
+        var kcsUrl = "https://api.access.redhat.com/rs/solutions?keyword=" + encodeURIComponent(keywords);
+
+        GM_xmlhttpRequest({
+            method: 'GET',
+            url: kcsUrl,
+            headers: {Accept: 'application/json'},
+            onload: function(topicId, popoverId) {
+                return function(solutionsResponse) {
+                    logToConsole(solutionsResponse);
+
+                    var solutions = JSON.parse(solutionsResponse.responseText);
+
+                    if (!solutions.solution) {
+                        if (position > 0) {
+                            getSolutions(topic, position - 50, topicId, popoverId);
+                        }
+                    } else {
+                        var content = jQuery('#' + popoverId + "content");
+                        content.empty();
+
+
+                        var solutionsTable = "<ul>";
+
+                        for (var solutionIndex = 0, solutionCount = solutions.solution.length; solutionIndex < solutionCount; ++solutionIndex) {
+                            var solution = solutions.solution[solutionIndex];
+                            var published = solution.moderation_state == "published";
+                            solutionsTable += '<li><span style="min-width: 5em; display: inline-block;"><a style="color: ' + (published ? "#5cb85c" : "#d9534f") + '" href="' + solution.view_uri + '">[' + solution.id + ']</a></span><a href="' + solution.view_uri + '">' + solution.title + '</a></li>';
+                        }
+
+                        solutionsTable += "</ul>";
+
+                        solutionsCache[topicId] = solutionsTable;
+
+                        content.append(jQuery(solutionsTable));
+                    }
+                }
+            }(topicId, popoverId)
+        });
+    }
 
     // listen for the kcs popover
     jQuery(window).bind("solutions_opened", function(event){
@@ -50,47 +107,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                     onload: function(topicId, popoverId) {
                         return function(topicResponse) {
                             var topic = JSON.parse(topicResponse.responseText);
-                            var keywords = "";
-                            for (var keyword in topic.keywords){
-                                if (keywords.length != 0) {
-                                    keywords += ",";
-                                }
-                                keywords += topic.keywords[keyword];
-                            }
-
-                            logToConsole("querying solutions: " + keywords);
-
-                            var kcsUrl = "https://api.access.redhat.com/rs/solutions?keyword=" + keywords;
-
-                            GM_xmlhttpRequest({
-                                method: 'GET',
-                                url: kcsUrl,
-                                headers: {Accept: 'application/json'},
-                                onload: function(topicId, popoverId) {
-                                    return function(solutionsResponse) {
-                                        logToConsole(solutionsResponse);
-
-                                        var solutions = JSON.parse(solutionsResponse.responseText);
-
-                                        var content = jQuery('#' + popoverId + "content");
-                                        content.empty();
-
-                                        var solutionsTable = "<ul>";
-
-                                        for (var solutionIndex = 0, solutionCount = solutions.solution.length; solutionIndex < solutionCount; ++solutionIndex) {
-                                            var solution = solutions.solution[solutionIndex];
-                                            var published = solution.moderation_state == "published";
-                                            solutionsTable += '<li><span style="min-width: 5em; display: inline-block;"><a style="color: ' + (published ? "#5cb85c" : "#d9534f") + '" href="' + solution.view_uri + '">[' + solution.id + ']</a></span><a href="' + solution.view_uri + '">' + solution.title + '</a></li>';
-                                        }
-
-                                        solutionsTable += "</ul>";
-
-                                        solutionsCache[topicId] = solutionsTable;
-
-                                        content.append(jQuery(solutionsTable));
-                                    }
-                                }(topicId, popoverId)
-                            });
+                            getSolutions(topic, 100, topicId, popoverId);
                         }
                     }(unsafeWindow.eventDetails.topicId, unsafeWindow.eventDetails.popoverId)
                 });
