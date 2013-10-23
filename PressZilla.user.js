@@ -32,10 +32,10 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
         data otherwise unavailable to the browser due to same origin rules.
      */
 
-    function getSolutions(topic, position, topicId, popoverId) {
+    function getSolutions(topic, position, topicId, popoverId, product) {
         logToConsole("Getting solutions");
 
-        var keywords = "";
+        var keywords = product;
         for (var keywordIndex = 0, keywordCount = topic.keywords.length; keywordIndex < keywordCount; ++keywordIndex){
             if (keywords.length != 0) {
                 if (keywordIndex / keywordCount * 100 < position) {
@@ -70,7 +70,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
                         if (!solutions.solution) {
                             if (position > 0) {
-                                getSolutions(topic, position - 50, topicId, popoverId);
+                                getSolutions(topic, position - 50, topicId, popoverId, product);
                             }
                         } else {
                             var solutionsTable = "<ul>";
@@ -102,26 +102,54 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
             // make a note that we have started processing this topic
             solutionsCache[unsafeWindow.eventDetails.topicId].fetching = true;
 
-            var topicKeywordUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/" + unsafeWindow.eventDetails.topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22keywords%22%7D%7D%5D%7D"
+            var specId = unsafeWindow.getSpecIdFromURL();
+            var specProductUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/contentspecnodes/get/json/query;csNodeType=7;contentSpecIds=" + specId + "?expand=" + encodeURIComponent("{\"branches\":[{\"trunk\":{\"name\": \"nodes\"}}]}");
 
-            // see http://stackoverflow.com/questions/11007605/gm-xmlhttprequest-why-is-it-never-firing-the-onload-in-firefox
-            // and http://wiki.greasespot.net/0.7.20080121.0_compatibility
             setTimeout(function(){
                 GM_xmlhttpRequest({
                     method: 'GET',
-                    url: topicKeywordUrl,
+                    url: specProductUrl,
                     onabort: function() {logToConsole("onabort")},
                     onerror: function() {logToConsole("onerror")},
                     onprogress: function() {logToConsole("onprogress")},
                     onreadystatechange: function() {logToConsole("onreadystatechange")},
                     ontimeout: function() {logToConsole("ontimeout")},
                     onload: function(topicId, popoverId) {
-                        return function(topicResponse) {
-                            var topic = JSON.parse(topicResponse.responseText);
-                            getSolutions(topic, 100, topicId, popoverId);
+                        return function(specNodesResponse) {
+                            var nodes = JSON.parse(specNodesResponse.responseText);
+                            var product = "";
+                            for (var nodeIndex = 0, nodeCount = nodes.items.length; nodeIndex < nodeCount; ++nodeIndex) {
+                                var node = nodes.items[nodeIndex].item;
+                                if (node.title == "Product") {
+                                    var product = node.additionalText;
+                                    break;
+                                }
+                            }
+
+                            GM_xmlhttpRequest({
+                                method: 'GET',
+                                url: topicKeywordUrl,
+                                onabort: function() {logToConsole("onabort")},
+                                onerror: function() {logToConsole("onerror")},
+                                onprogress: function() {logToConsole("onprogress")},
+                                onreadystatechange: function() {logToConsole("onreadystatechange")},
+                                ontimeout: function() {logToConsole("ontimeout")},
+                                onload: function(topicResponse) {
+                                    var topic = JSON.parse(topicResponse.responseText);
+                                    getSolutions(topic, 100, topicId, popoverId, product);
+                                }
+                            });
                         }
                     }(unsafeWindow.eventDetails.topicId, unsafeWindow.eventDetails.popoverId)
                 });
+            }, 0);
+
+            var topicKeywordUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/" + unsafeWindow.eventDetails.topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22keywords%22%7D%7D%5D%7D"
+
+            // see http://stackoverflow.com/questions/11007605/gm-xmlhttprequest-why-is-it-never-firing-the-onload-in-firefox
+            // and http://wiki.greasespot.net/0.7.20080121.0_compatibility
+            setTimeout(function(){
+
             }, 0);
         }
     }
