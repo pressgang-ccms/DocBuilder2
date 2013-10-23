@@ -328,6 +328,14 @@ function createSolutionsPopover(topicId, parent) {
     var popover = createPopover("KCS Solutions", topicId);
     document.body.appendChild(popover);
 
+    var legend = $("<div style='padding-left: 8px; padding-right:8px; width: 746px; height: 42px; color: white; background-color: " + BACKGROUND_COLOR + "; display: table-cell; vertical-align: middle; font-weight: bold'><div style='float:left'>\K\
+        <span>KCS Solutions </span>\
+		<span style='color: #5cb85c'/>Published</span> \
+		<span style='color: #d9534f'/>Unpublished</span>\
+        </div>");
+
+    $(popover.popoverTitle).replaceWith(legend);
+
     popover.popoverContent.innerHTML = '<h3>Coming Soon</h3><div>In the near future this popover will display KCS Solutions matching the keywords in the topic. This will provide an easy way to see if GSS have any related documentation.</div>';
 
     linkDiv.onmouseover=function(){

@@ -67,7 +67,8 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
                                 for (var solutionIndex = 0, solutionCount = solutions.solution.length; solutionIndex < solutionCount; ++solutionIndex) {
                                     var solution = solutions.solution[solutionIndex];
-                                    solutionsTable += '<li><span style="min-width: 5em; display: inline-block;"><a href="' + solution.view_uri + '">[' + solution.id + ']</a></span><a href="' + solution.view_uri + '">' + solution.title + '</a></li>';
+                                    var published = solution.moderation_state == "published";
+                                    solutionsTable += '<li><span style="min-width: 5em; display: inline-block;"><a style="color: ' + (published ? "#5cb85c" : "#d9534f") + '" href="' + solution.view_uri + '">[' + solution.id + ']</a></span><a href="' + solution.view_uri + '">' + solution.title + '</a></li>';
                                 }
 
                                 solutionsTable += "</ul>";
