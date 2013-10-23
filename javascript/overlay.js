@@ -328,9 +328,9 @@ function createSolutionsPopover(topicId, parent) {
     linkDiv.onmouseover=function(){
         if (popover.style.display == 'none') {
             // This is required to send events from this page to a GreaseMonkey script. The code
-            //      jQuery('#eventGateway').trigger("mouseover", ['solutions', topicId, popover.id]);
+            //      jQuery('window').trigger("mouseover", ['solutions', topicId, popover.id]);
             // does not work.
-            var event  = new CustomEvent('solutions_opened', {source: 'solutions', topicId: topicId, popoverId: popover.id});
+            var event  = new CustomEvent('solutions_opened', {detail: {source: 'solutions', topicId: topicId, popoverId: popover.id}});
             event.initEvent ('solutions_opened', false, true);
             window.dispatchEvent (event);
 
@@ -1655,9 +1655,6 @@ function hideMenu() {
  * Builds the side bar. Each menu is a separate panel that is shown or hidden as the user navigates through.
  */
 function buildMenu() {
-	// This element serves as a event gateway between this page and GreaseMonkey
-    $(document.body).append($('<div id="eventGateway" style="position: absolute; left: -1000px; top: -1000px"></div>'));
-
 	// A place to do off screen rendering, to work around a Rapael bug
 	offscreenRendering = $('<div id="offscreenRendering" style="position: absolute; left: -1000px; top: -1000px"></div>');
 	$(document.body).append(offscreenRendering);
