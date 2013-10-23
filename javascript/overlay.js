@@ -328,14 +328,11 @@ function createSolutionsPopover(topicId, parent) {
     linkDiv.onmouseover=function(){
         if (popover.style.display == 'none') {
             // This is required to send events from this page to a GreaseMonkey script. The code
-            //      jQuery('window').trigger("mouseover", ['solutions', topicId, popover.id]);
+            //      jQuery('window').trigger("solutions_opened", ['solutions', topicId, popover.id]);
             // does not work.
-            var event  = new CustomEvent('solutions_opened', {
-                detail: {source: 'solutions', topicId: topicId, popoverId: popover.id},
-                bubbles: false,
-                cancelable: true
-            });
-            window.dispatchEvent (event);
+            var evt = document.createEvent( 'solutions_opened');
+            evt.initCustomEvent( 'solutions_opened', false, false, {source: 'solutions', topicId: topicId, popoverId: popover.id} );
+            window.dispatchEvent (evt);
 
             openPopover(popover, linkDiv);
         }
