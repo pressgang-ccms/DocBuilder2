@@ -45,7 +45,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
         logToConsole("querying solutions: " + keywords);
 
-        var kcsUrl = "https://api.access.redhat.com/rs/solutions?keyword=" + encodeURIComponent(keywords);
+        var kcsUrl = "https://api.access.redhat.com/rs/solutions?limit=10&keyword=" + encodeURIComponent(keywords);
 
         GM_xmlhttpRequest({
             method: 'GET',
