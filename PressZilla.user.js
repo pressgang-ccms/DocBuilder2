@@ -32,10 +32,10 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
         data otherwise unavailable to the browser due to same origin rules.
      */
 
-    function getSolutions(topic, position, topicId, popoverId, product) {
+    function getSolutions(topic, position, topicId, popoverId) {
         logToConsole("Getting solutions");
 
-        var keywords = product;
+        var keywords = "";
         for (var keywordIndex = 0, keywordCount = topic.keywords.length; keywordIndex < keywordCount; ++keywordIndex){
             if (keywords.length != 0) {
                 if (keywordIndex / keywordCount * 100 < position) {
@@ -70,7 +70,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
                         if (!solutions.solution) {
                             if (position > 0) {
-                                getSolutions(topic, position - 50, topicId, popoverId, product);
+                                getSolutions(topic, position - 25, topicId, popoverId);
                             }
                         } else {
                             var solutionsTable = "<ul>";
@@ -126,6 +126,8 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                                 }
                             }
 
+                            var additionalKeywords = product.split(" ");
+
                             GM_xmlhttpRequest({
                                 method: 'GET',
                                 url: topicKeywordUrl,
@@ -136,6 +138,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                                 ontimeout: function() {logToConsole("ontimeout")},
                                 onload: function(topicResponse) {
                                     var topic = JSON.parse(topicResponse.responseText);
+                                    topic.keywords = additionalKeywords.concat(topic.keywords);
                                     getSolutions(topic, 100, topicId, popoverId, product);
                                 }
                             });
