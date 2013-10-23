@@ -348,8 +348,8 @@ function createSolutionsPopover(topicId, parent) {
     popover.popoverContent.innerHTML = '\
         <div>This popover displays KCS solutions that match the keywords in the topic.</div>\
         <div>To enable this popover you will need to install the <a href="/PressZilla.user.js">PressZilla GreaseMonkey Extension</a>.</div>\
-        <div>Firefox user can install GreaseMonkey from <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">here</a></div>\
-        <div>Chrome / Chromium users can install TamperMonkey from <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en">here</a></div>';
+        <div>Firefox user can install GreaseMonkey from <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">here</a>.</div>\
+        <div>Chrome / Chromium users can install TamperMonkey from <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en">here</a>.</div>';
 
     linkDiv.onmouseover=function(){
         openPopover(popover, linkDiv);
