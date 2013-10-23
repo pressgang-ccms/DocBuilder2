@@ -39,7 +39,12 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
             GM_xmlhttpRequest({
                 method: 'GET',
                 url: topicKeywordUrl,
-                onload: function(topicId) {
+                onabort: function() {logToConsole("onabort");},
+                onerror: function() {logToConsole("onerror");},
+                onprogress: function() {logToConsole("onprogress");},
+                onreadystatechange: function() {logToConsole("onreadystatechange");},
+                ontimeout: function() {logToConsole("ontimeout");},
+                onload: function(topicId, popoverId) {
                     return function(topicResponse) {
                         var topic = JSON.parse(topicResponse.responseText);
                         var keywords = "";
@@ -63,7 +68,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
                                 var solutions = JSON.parse(solutionsResponse.responseText);
 
-                                var content = jQuery('#' + eventDetails.popoverId)[0].popoverContent;
+                                var content = jQuery('#' + popoverId)[0].popoverContent;
                                 jQuery(content).empty();
 
                                 var solutionsTable = "<ul>";
@@ -82,7 +87,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                             }
                         });
                     }
-                }(unsafeWindow.eventDetails.topicId)
+                }(unsafeWindow.eventDetails.topicId, unsafeWindow.eventDetails.popoverId)
             });
         }
     });
