@@ -72,12 +72,8 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
                                         var solutions = JSON.parse(solutionsResponse.responseText);
 
-                                        logToConsole("parsed");
-
                                         var content = jQuery('#' + popoverId + "content");
                                         content.empty();
-
-                                        logToConsole(content);
 
                                         var solutionsTable = "<ul>";
 
@@ -90,8 +86,6 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                                         solutionsTable += "</ul>";
 
                                         solutionsCache[topicId] = solutionsTable;
-
-                                        logToConsole("built");
 
                                         content.append(jQuery(solutionsTable));
                                     }
