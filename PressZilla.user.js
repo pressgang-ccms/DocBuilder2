@@ -9,6 +9,7 @@
 // @version     1.3
 // @grant       GM_xmlhttpRequest
 // @grant       unsafeWindow
+// @downloadURL http://docbuilder.usersys.redhat.com/PressZilla.user.js
 // ==/UserScript==
 
 var NEW_WINDOW_NAME = "PressZilla";
