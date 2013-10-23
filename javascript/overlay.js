@@ -329,8 +329,9 @@ function createSolutionsPopover(topicId, parent) {
     document.body.appendChild(popover);
 
     var legend = $("<div style='padding-left: 8px; padding-right:8px; width: 746px; height: 42px; color: white; background-color: " + BACKGROUND_COLOR + "; display: table-cell; vertical-align: middle; font-weight: bold'><div style='float:left'>\
-        <span>KCS Solutions </span>\
+        <span>KCS Solutions: </span>\
 		<span style='color: #5cb85c'>Published</span> \
+		<span> | </span> \
 		<span style='color: #d9534f'>Unpublished</span>\
         </div>");
 
