@@ -2,6 +2,7 @@
 // @name        PressZilla
 // @namespace   https://www.jboss.org/pressgang
 // @description PressGang BugZilla customization
+// @author      Matthew Casperson
 // @include     https://bugzilla.redhat.com/*
 // @include     http://docbuilder.usersys.redhat.com/*
 // @include     http://docbuilder.ecs.eng.bne.redhat.com/*
@@ -10,4 +11,6 @@
 // @grant       GM_xmlhttpRequest
 // @grant       unsafeWindow
 // @downloadURL http://docbuilder.usersys.redhat.com/PressZilla.user.js
+// @updateURL   http://docbuilder.usersys.redhat.com/PressZilla.meta.js
+// @homepageURL http://docbuilder.usersys.redhat.com
 // ==/UserScript==
