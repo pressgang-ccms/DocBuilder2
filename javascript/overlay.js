@@ -327,7 +327,7 @@ function createSolutionsPopover(topicId, parent) {
 
     linkDiv.onmouseover=function(){
         openPopover(popover, linkDiv);
-        jQuery(window).trigger("solutions_opened", popover.id);
+        jQuery(window).trigger("solutions_opened", [popover.id]);
     };
 
     setupEvents(linkDiv, popover);

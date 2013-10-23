@@ -62,8 +62,6 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
             }
         }
 
-
-
         if (iframeSrc) {
 
             var bzURLRegex = /.*?(&|\?)comment=(.*?)(&|$)/;
