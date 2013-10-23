@@ -260,7 +260,9 @@ $(window).load(function() {secondPass(false, true, false);});
  */
 setTimeout(function() {secondPass(false, false, true);}, SECOND_PASS_TIMEOUT);
 
-
+/**
+ * @returns The id of the content spec as listed in the URL
+ */
 function getSpecIdFromURL() {
 	var urlComponents = window.location.href.split("/");
 	for (var index = urlComponents.length - 1; index >= 0; --index) {
@@ -343,7 +345,10 @@ function createSolutionsPopover(topicId, parent) {
 
     $(popover.popoverTitle).replaceWith(legend);
 
-    popover.popoverContent.innerHTML = '<h3>Coming Soon</h3><div>In the near future this popover will display KCS Solutions matching the keywords in the topic. This will provide an easy way to see if GSS have any related documentation.</div>';
+    popover.popoverContent.innerHTML = '\
+        <div>This popover displays KCS solutions that match the keywords in the topic.</div>\
+        <div>You will be prompted for a username and password. These credentials are the ones that you use to log into the <a href="http://access.redhat.com">Red Hat Customer Portal</a></div>\
+        <div><button type="button" class="btn btn-default">Get Solutions</button></div>';
 
     linkDiv.onmouseover=function(){
         openPopover(popover, linkDiv);

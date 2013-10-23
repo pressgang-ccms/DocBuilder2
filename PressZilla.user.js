@@ -90,14 +90,13 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
         });
     }
 
-    // listen for the kcs popover
-    jQuery(window).bind("solutions_opened", function(event){
-        if (!solutionsCache[unsafeWindow.eventDetails.topicId]) {
+    function fetchKeywords(topicId, popoverId) {
+        if (!solutionsCache[unsafeWindow.eventDetails.topicId].fetching) {
 
             logToConsole("Getting topic keywords");
 
             // make a note that we have started processing this topic
-            solutionsCache[unsafeWindow.eventDetails.topicId] = {text: null};
+            solutionsCache[unsafeWindow.eventDetails.topicId].fetching = true;
 
             var topicKeywordUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/" + unsafeWindow.eventDetails.topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22keywords%22%7D%7D%5D%7D"
 
@@ -120,6 +119,31 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                     }(unsafeWindow.eventDetails.topicId, unsafeWindow.eventDetails.popoverId)
                 });
             }, 0);
+        }
+    }
+
+    // listen for the kcs popover
+    jQuery(window).bind("solutions_opened", function(event){
+        if (!solutionsCache[unsafeWindow.eventDetails.topicId]) {
+
+            solutionsCache[unsafeWindow.eventDetails.topicId] = {contentFixed: true};
+
+            var content = jQuery('#' + unsafeWindow.eventDetails.popoverId + "content");
+            content.empty();
+
+            var buttonId = unsafeWindow.eventDetails.popoverId + 'contentbutton';
+
+            content.append(jQuery('<div>This popover displays KCS solutions that match the keywords in the topic.</div>\
+                <div>You will be prompted for a username and password. These credentials are the ones that you use to log into the <a href="http://access.redhat.com">Red Hat Customer Portal</a></div>\
+                <div style="display:table-cell; text-align: center; vertical-align:middle; width: 746px;">\
+                    <button id="' + buttonId + '" style="margin-top: 32px;" type="button" class="btn btn-primary">Get Solutions</button>\
+                </div>'));
+
+            jQuery('#' + buttonId).click(function() {
+                jQuery('#' + buttonId).attr('disabled', 'true');
+                jQuery('#' + buttonId).text('Getting Solutions');
+                fetchKeywords(unsafeWindow.eventDetails.topicId, unsafeWindow.eventDetails.popoverId);
+            });
         }
     });
 
