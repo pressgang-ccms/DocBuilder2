@@ -35,7 +35,7 @@
  * Time to delay the closing of a popover window.
  * @type {number}
  */
-var POPOVER_DELAY = 350;
+var POPOVER_DELAY = 200;
 
 /**
  * The background colour of ui elements.
@@ -346,17 +346,14 @@ function createSolutionsPopover(topicId, parent) {
     popover.popoverContent.innerHTML = '<h3>Coming Soon</h3><div>In the near future this popover will display KCS Solutions matching the keywords in the topic. This will provide an easy way to see if GSS have any related documentation.</div>';
 
     linkDiv.onmouseover=function(){
-        if (popover.style.display == 'none') {
-            // This is required to send events from this page to a GreaseMonkey script. The code
-            //      jQuery('window').trigger("solutions_opened", ['solutions', topicId, popover.id]);
-            // does not work.
-            var evt = document.createEvent( 'Event');
-            evt.initEvent('solutions_opened', false, false);
-            eventDetails =  {source: 'solutions', topicId: topicId, popoverId: popover.id};
-            window.dispatchEvent (evt);
-
-            openPopover(popover, linkDiv);
-        }
+        openPopover(popover, linkDiv);
+        // This is required to send events from this page to a GreaseMonkey script. The code
+        //      jQuery('window').trigger("solutions_opened", ['solutions', topicId, popover.id]);
+        // does not work.
+        var evt = document.createEvent( 'Event');
+        evt.initEvent('solutions_opened', false, false);
+        eventDetails =  {source: 'solutions', topicId: topicId, popoverId: popover.id};
+        window.dispatchEvent (evt);
     };
 
     setupEvents(linkDiv, popover);
