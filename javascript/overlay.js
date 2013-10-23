@@ -327,7 +327,7 @@ function createSolutionsPopover(topicId, parent) {
 
     linkDiv.onmouseover=function(){
         if (popover.style.display == 'none') {
-            jQuery(document).trigger("solutions_opened", [topicId, popover.id]);
+            jQuery('#eventGateway').trigger("mouseover", ['solutions', topicId, popover.id]);
             openPopover(popover, linkDiv);
         }
     };
@@ -1649,6 +1649,9 @@ function hideMenu() {
  * Builds the side bar. Each menu is a separate panel that is shown or hidden as the user navigates through.
  */
 function buildMenu() {
+	// This element serves as a event gateway between this page and GreaseMonkey
+    $(document.body).append($('<div id="eventGateway" style="position: absolute; left: -1000px; top: -1000px"></div>'));
+
 	// A place to do off screen rendering, to work around a Rapael bug
 	offscreenRendering = $('<div id="offscreenRendering" style="position: absolute; left: -1000px; top: -1000px"></div>');
 	$(document.body).append(offscreenRendering);

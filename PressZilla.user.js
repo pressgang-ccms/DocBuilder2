@@ -8,6 +8,7 @@
 // @require     http://code.jquery.com/jquery-2.0.3.min.js
 // @version     1.3
 // @grant       GM_xmlhttpRequest
+// @grant       unsafeWindow
 // ==/UserScript==
 
 var NEW_WINDOW_NAME = "PressZilla";
@@ -106,7 +107,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
      */
 
     // listen for the kcs popover
-    jQuery(document).bind("solutions_opened", function(event, topicId, popoverId){
+    document.addEventListener("solutions_opened", function(event, topicId, popoverId){
 
         logToConsole("querying topic keywords");
 
@@ -136,7 +137,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
             });
         }); */
 
-    });
+    }, true);
 
     /*
         Build the callout that displays the bug submission link.
