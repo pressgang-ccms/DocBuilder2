@@ -92,6 +92,9 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
             logToConsole("Getting topic keywords");
 
+            // make a note that we have started processing this topic
+            solutionsCache[unsafeWindow.eventDetails.topicId] = {text: null};
+
             var topicKeywordUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/" + unsafeWindow.eventDetails.topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22keywords%22%7D%7D%5D%7D"
 
             // see http://stackoverflow.com/questions/11007605/gm-xmlhttprequest-why-is-it-never-firing-the-onload-in-firefox
@@ -108,8 +111,6 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                     onload: function(topicId, popoverId) {
                         return function(topicResponse) {
                             var topic = JSON.parse(topicResponse.responseText);
-                            // make a note that we have started processing this topic
-                            solutionsCache[topicId] = {text: null};
                             getSolutions(topic, 100, topicId, popoverId);
                         }
                     }(unsafeWindow.eventDetails.topicId, unsafeWindow.eventDetails.popoverId)
