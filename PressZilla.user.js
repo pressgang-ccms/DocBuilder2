@@ -36,59 +36,63 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
             var topicKeywordUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/" + unsafeWindow.eventDetails.topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22keywords%22%7D%7D%5D%7D"
 
-            GM_xmlhttpRequest({
-                method: 'GET',
-                url: topicKeywordUrl,
-                onabort: function() {logToConsole("onabort");},
-                onerror: function() {logToConsole("onerror");},
-                onprogress: function() {logToConsole("onprogress");},
-                onreadystatechange: function() {logToConsole("onreadystatechange");},
-                ontimeout: function() {logToConsole("ontimeout");},
-                onload: function(topicId, popoverId) {
-                    return function(topicResponse) {
-                        var topic = JSON.parse(topicResponse.responseText);
-                        var keywords = "";
-                        for (var keyword in topic.keywords){
-                            if (keywords.length != 0) {
-                                keywords += ",";
-                            }
-                            keywords += topic.keywords[keyword];
-                        }
-
-                        logToConsole("querying solutions: " + keywords);
-
-                        var kcsUrl = "https://api.access.redhat.com/rs/solutions?keyword=" + keywords;
-
-                        GM_xmlhttpRequest({
-                            method: 'GET',
-                            url: kcsUrl,
-                            headers: {Accept: 'application/json'},
-                            onload: function(solutionsResponse) {
-                                console.log(solutionsResponse);
-
-                                var solutions = JSON.parse(solutionsResponse.responseText);
-
-                                var content = jQuery('#' + popoverId)[0].popoverContent;
-                                jQuery(content).empty();
-
-                                var solutionsTable = "<ul>";
-
-                                for (var solutionIndex = 0, solutionCount = solutions.solution.length; solutionIndex < solutionCount; ++solutionIndex) {
-                                    var solution = solutions.solution[solutionIndex];
-                                    var published = solution.moderation_state == "published";
-                                    solutionsTable += '<li><span style="min-width: 5em; display: inline-block;"><a style="color: ' + (published ? "#5cb85c" : "#d9534f") + '" href="' + solution.view_uri + '">[' + solution.id + ']</a></span><a href="' + solution.view_uri + '">' + solution.title + '</a></li>';
+            // see http://stackoverflow.com/questions/11007605/gm-xmlhttprequest-why-is-it-never-firing-the-onload-in-firefox
+            // and http://wiki.greasespot.net/0.7.20080121.0_compatibility
+            setTimeout(function(){
+                GM_xmlhttpRequest({
+                    method: 'GET',
+                    url: topicKeywordUrl,
+                    onabort: function() {logToConsole("onabort")},
+                    onerror: function() {logToConsole("onerror")},
+                    onprogress: function() {logToConsole("onprogress")},
+                    onreadystatechange: function() {logToConsole("onreadystatechange")},
+                    ontimeout: function() {logToConsole("ontimeout")},
+                    onload: function(topicId, popoverId) {
+                        return function(topicResponse) {
+                            var topic = JSON.parse(topicResponse.responseText);
+                            var keywords = "";
+                            for (var keyword in topic.keywords){
+                                if (keywords.length != 0) {
+                                    keywords += ",";
                                 }
-
-                                solutionsTable += "</ul>";
-
-                                solutionsCache[topicId] = solutionsTable;
-
-                                jQuery(content).append(jQuery(solutionsTable));
+                                keywords += topic.keywords[keyword];
                             }
-                        });
-                    }
-                }(unsafeWindow.eventDetails.topicId, unsafeWindow.eventDetails.popoverId)
-            });
+
+                            logToConsole("querying solutions: " + keywords);
+
+                            var kcsUrl = "https://api.access.redhat.com/rs/solutions?keyword=" + keywords;
+
+                            GM_xmlhttpRequest({
+                                method: 'GET',
+                                url: kcsUrl,
+                                headers: {Accept: 'application/json'},
+                                onload: function(solutionsResponse) {
+                                    console.log(solutionsResponse);
+
+                                    var solutions = JSON.parse(solutionsResponse.responseText);
+
+                                    var content = jQuery('#' + popoverId)[0].popoverContent;
+                                    jQuery(content).empty();
+
+                                    var solutionsTable = "<ul>";
+
+                                    for (var solutionIndex = 0, solutionCount = solutions.solution.length; solutionIndex < solutionCount; ++solutionIndex) {
+                                        var solution = solutions.solution[solutionIndex];
+                                        var published = solution.moderation_state == "published";
+                                        solutionsTable += '<li><span style="min-width: 5em; display: inline-block;"><a style="color: ' + (published ? "#5cb85c" : "#d9534f") + '" href="' + solution.view_uri + '">[' + solution.id + ']</a></span><a href="' + solution.view_uri + '">' + solution.title + '</a></li>';
+                                    }
+
+                                    solutionsTable += "</ul>";
+
+                                    solutionsCache[topicId] = solutionsTable;
+
+                                    jQuery(content).append(jQuery(solutionsTable));
+                                }
+                            });
+                        }
+                    }(unsafeWindow.eventDetails.topicId, unsafeWindow.eventDetails.popoverId)
+                });
+            }, 0);
         }
     });
 
