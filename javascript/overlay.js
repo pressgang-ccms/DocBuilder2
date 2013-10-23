@@ -330,8 +330,8 @@ function createSolutionsPopover(topicId, parent) {
             // This is required to send events from this page to a GreaseMonkey script. The code
             //      jQuery('#eventGateway').trigger("mouseover", ['solutions', topicId, popover.id]);
             // does not work.
-            var mouseEvent  = document.createEvent ('MouseEvents');
-            mouseEvent.initEvent ('mouseover', false, true, {source: 'solutions', topicId: topicId, popoverId: popover.id});
+            var mouseEvent  = document.createEvent ('MouseEvents', {source: 'solutions', topicId: topicId, popoverId: popover.id});
+            mouseEvent.initEvent ('mouseover', false, true);
             jQuery('#eventGateway')[0].dispatchEvent (mouseEvent);
 
             openPopover(popover, linkDiv);

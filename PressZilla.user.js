@@ -110,11 +110,12 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
     var eventGateway = document.getElementById('eventGateway');
     eventGateway.addEventListener("mouseover", function(event){
 
-        logToConsole("querying topic keywords");
+        logToConsole(event.detail);
 
-        if (evt.detail.source == 'solutions') {
-        var topicKeywordUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22keywords%22%7D%7D%5D%7D"
-            /*jQuery.getJSON(topicKeywordUrl, function(topic){
+        if (event.detail.source == 'solutions') {
+            logToConsole("querying topic keywords");
+            var topicKeywordUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22keywords%22%7D%7D%5D%7D"
+            jQuery.getJSON(topicKeywordUrl, function(topic){
                 var keywords = "";
                 for (var keyword in topic.keywords){
                     if (keywords.length != 0) {
@@ -137,7 +138,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                     error: function() { console.log("Error contacting access") },
                     beforeSend: function(xhr) {xhr.setRequestHeader('Accept', 'application/json');}
                 });
-            }); */
+            });
         }
 
     }, true);
