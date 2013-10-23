@@ -344,8 +344,8 @@ function createSolutionsPopover(topicId, parent) {
             // This is required to send events from this page to a GreaseMonkey script. The code
             //      jQuery('window').trigger("solutions_opened", ['solutions', topicId, popover.id]);
             // does not work.
-            var evt = document.createEvent( 'CustomEvent');
-            evt.initCustomEvent( 'solutions_opened', false, false);
+            var evt = document.createEvent( 'Event');
+            evt.initEvent('solutions_opened', false, false);
             eventDetails =  {source: 'solutions', topicId: topicId, popoverId: popover.id};
             window.dispatchEvent (evt);
 
