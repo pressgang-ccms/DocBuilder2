@@ -76,7 +76,8 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
                         solutionsTable += "</ul>";
 
-                        solutionsCache[topicId] = solutionsTable;
+                        // keep a copy of the results
+                        solutionsCache[topicId].text = solutionsTable;
 
                         content.append(jQuery(solutionsTable));
                     }
@@ -107,6 +108,8 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                     onload: function(topicId, popoverId) {
                         return function(topicResponse) {
                             var topic = JSON.parse(topicResponse.responseText);
+                            // make a note that we have started processing this topic
+                            solutionsCache[topicId] = {text: null};
                             getSolutions(topic, 100, topicId, popoverId);
                         }
                     }(unsafeWindow.eventDetails.topicId, unsafeWindow.eventDetails.popoverId)
