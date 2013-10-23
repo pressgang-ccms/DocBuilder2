@@ -108,7 +108,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
     // listen for the kcs popover
     var eventGateway = document.getElementById('eventGateway');
-    eventGateway.addEventListener("mouseover", function(event){
+    eventGateway.addEventListener("solutions_opened", function(event){
 
         logToConsole(event.detail);
 
