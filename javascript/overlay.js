@@ -231,6 +231,11 @@ var specHistoryDone = false;
  * @type {Array}
  */
 var sideMenus = [];
+/**
+ * Contains the event details, since we can't pass details via events to GreaseMonkey
+ * @type {null}
+ */
+var eventDetails = null;
 
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
@@ -331,7 +336,8 @@ function createSolutionsPopover(topicId, parent) {
             //      jQuery('window').trigger("solutions_opened", ['solutions', topicId, popover.id]);
             // does not work.
             var evt = document.createEvent( 'CustomEvent');
-            evt.initCustomEvent( 'solutions_opened', false, false, {source: 'solutions', topicId: topicId, popoverId: popover.id} );
+            evt.initCustomEvent( 'solutions_opened', false, false);
+            eventDetails =  {source: 'solutions', topicId: topicId, popoverId: popover.id};
             window.dispatchEvent (evt);
 
             openPopover(popover, linkDiv);
