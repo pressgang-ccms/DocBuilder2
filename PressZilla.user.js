@@ -55,31 +55,35 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                 return function(solutionsResponse) {
                     logToConsole(solutionsResponse);
 
-                    var solutions = JSON.parse(solutionsResponse.responseText);
+                    var content = jQuery('#' + popoverId + "content");
+                    content.empty();
 
-                    if (!solutions.solution) {
-                        if (position > 0) {
-                            getSolutions(topic, position - 50, topicId, popoverId);
+                    if (solutionsResponse.status == 401) {
+                        content.append(jQuery("<div>The credentials you entered were incorrect. Please confirm that the username and password you entered are valid for the <a href='http://access.redhat.com'>Red Hat Customer Portal</a>.</div>"));
+                        delete solutionsCache[topicId];
+                    } else if (solutionsResponse.status == 200) {
+                        var solutions = JSON.parse(solutionsResponse.responseText);
+
+                        if (!solutions.solution) {
+                            if (position > 0) {
+                                getSolutions(topic, position - 50, topicId, popoverId);
+                            }
+                        } else {
+                            var solutionsTable = "<ul>";
+
+                            for (var solutionIndex = 0, solutionCount = solutions.solution.length; solutionIndex < solutionCount; ++solutionIndex) {
+                                var solution = solutions.solution[solutionIndex];
+                                var published = solution.moderation_state == "published";
+                                solutionsTable += '<li><span style="min-width: 5em; display: inline-block;"><a style="color: ' + (published ? "#5cb85c" : "#d9534f") + '" href="' + solution.view_uri + '">[' + solution.id + ']</a></span><a href="' + solution.view_uri + '">' + solution.title + '</a></li>';
+                            }
+
+                            solutionsTable += "</ul>";
+
+                            // keep a copy of the results
+                            solutionsCache[topicId].text = solutionsTable;
+
+                            content.append(jQuery(solutionsTable));
                         }
-                    } else {
-                        var content = jQuery('#' + popoverId + "content");
-                        content.empty();
-
-
-                        var solutionsTable = "<ul>";
-
-                        for (var solutionIndex = 0, solutionCount = solutions.solution.length; solutionIndex < solutionCount; ++solutionIndex) {
-                            var solution = solutions.solution[solutionIndex];
-                            var published = solution.moderation_state == "published";
-                            solutionsTable += '<li><span style="min-width: 5em; display: inline-block;"><a style="color: ' + (published ? "#5cb85c" : "#d9534f") + '" href="' + solution.view_uri + '">[' + solution.id + ']</a></span><a href="' + solution.view_uri + '">' + solution.title + '</a></li>';
-                        }
-
-                        solutionsTable += "</ul>";
-
-                        // keep a copy of the results
-                        solutionsCache[topicId].text = solutionsTable;
-
-                        content.append(jQuery(solutionsTable));
                     }
                 }
             }(topicId, popoverId)

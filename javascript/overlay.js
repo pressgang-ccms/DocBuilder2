@@ -32,6 +32,12 @@
  */
 
 /**
+ * Time to delay the closing of a popover window.
+ * @type {number}
+ */
+var POPOVER_DELAY = 350;
+
+/**
  * The background colour of ui elements.
  * @type {string}
  */
@@ -788,7 +794,7 @@ function setupEvents(linkDiv, popover) {
 
             popover.timeout = setTimeout(function() {
                 popover.style.display = 'none';
-            }, 200);
+            }, POPOVER_DELAY);
         }
     }(popover);
 
@@ -811,7 +817,7 @@ function setupEvents(linkDiv, popover) {
 
             popover.timeout = setTimeout(function() {
                 popover.style.display = 'none';
-            }, 200);
+            }, POPOVER_DELAY);
         }
     }(popover);
 }
