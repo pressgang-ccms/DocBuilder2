@@ -7,7 +7,7 @@
 // @include     http://docbuilder.usersys.redhat.com/*
 // @include     http://docbuilder.ecs.eng.bne.redhat.com/*
 // @require     http://code.jquery.com/jquery-2.0.3.min.js
-// @version     1.6
+// @version     1.7
 // @grant       GM_xmlhttpRequest
 // @grant       unsafeWindow
 // @downloadURL http://docbuilder.usersys.redhat.com/PressZilla.user.js
@@ -32,6 +32,17 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
         data otherwise unavailable to the browser due to same origin rules.
      */
 
+    function addClickFunction(buttonId, topicId, popoverId) {
+        jQuery('#' + buttonId).click(function() {
+            jQuery('#' + buttonId).attr('disabled', 'true');
+            jQuery('#' + buttonId).text('Getting Solutions');
+            jQuery('#' + buttonId).removeClass('btn-primary');
+            jQuery('#' + buttonId).removeClass('btn-danger');
+            jQuery('#' + buttonId).addClass('btn-primary');
+            fetchKeywords(topicId, popoverId);
+        });
+    }
+
     function getSolutions(topic, position, topicId, popoverId) {
         logToConsole("Getting solutions");
 
@@ -51,8 +62,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
         var kcsUrl = "https://api.access.redhat.com/rs/solutions?limit=10&keyword=" + encodeURIComponent(keywords);
 
-        var handleError = function() {
-            var buttonId = popoverId + 'contentbutton';
+        var handleError = function(buttonId) {
             jQuery('#' + buttonId).attr('disabled', 'true');
             jQuery('#' + buttonId).text('Connection Failed');
             jQuery('#' + buttonId).removeClass('btn-primary');
@@ -76,8 +86,18 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                     content.empty();
 
                     if (solutionsResponse.status == 401) {
-                        content.append(jQuery("<div>The credentials you entered were incorrect. Please confirm that the username and password you entered are valid for the <a href='http://access.redhat.com'>Red Hat Customer Portal</a>.</div>"));
-                        delete solutionsCache[topicId];
+
+                        solutionsCache[unsafeWindow.eventDetails.topicId].fetching = false;
+
+                        var buttonId = popoverId + 'contentbutton';
+
+                        content.append(jQuery('<p>If you are running Chrome, you will need to log into the <a href="http://access.redhat.com">Red Hat Customer Portal</a>.</p>\
+                            <p>If you are running Firefox, then the credentials you entered were incorrect. Please confirm that the username and password you entered are valid for the <a href="http://access.redhat.com">Red Hat Customer Portal</a>.</p>\
+                            <div style="display:table-cell; text-align: center; vertical-align:middle; width: 746px;">\
+                                <button id="' + buttonId + '" style="margin-top: 32px;" type="button" class="btn btn-danger">Try Again</button>\
+                            </div>'));
+
+                        addClickFunction(buttonId, topicId, popoverId);
                     } else if (solutionsResponse.status == 200) {
                         var solutions = JSON.parse(solutionsResponse.responseText);
 
@@ -132,8 +152,8 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                     url: specProductUrl,
                     onabort: function() {logToConsole("onabort"); handleError(); },
                     onerror: function() {logToConsole("onerror"); handleError();},
-                    onprogress: function() {logToConsole("onprogress");},
-                    onreadystatechange: function() {logToConsole("onreadystatechange");},
+                    //onprogress: function() {logToConsole("onprogress");},
+                    //onreadystatechange: function() {logToConsole("onreadystatechange");},
                     ontimeout: function() {logToConsole("ontimeout"); handleError();},
                     onload: function(topicId, popoverId) {
                         return function(specNodesResponse) {
@@ -154,8 +174,8 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
                                 url: topicKeywordUrl,
                                 onabort: function() {logToConsole("onabort"); handleError();},
                                 onerror: function() {logToConsole("onerror"); handleError();},
-                                onprogress: function() {logToConsole("onprogress");},
-                                onreadystatechange: function() {logToConsole("onreadystatechange");},
+                                //onprogress: function() {logToConsole("onprogress");},
+                                //onreadystatechange: function() {logToConsole("onreadystatechange");},
                                 ontimeout: function() {logToConsole("ontimeout"); handleError();},
                                 onload: function(topicResponse) {
                                     var topic = JSON.parse(topicResponse.responseText);
@@ -189,17 +209,14 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
 
             var buttonId = unsafeWindow.eventDetails.popoverId + 'contentbutton';
 
-            content.append(jQuery('<div>This popover displays KCS solutions that match the keywords in the topic.</div>\
-                <div>You may be prompted for a username and password. These credentials are the ones that you use to log into the <a href="http://access.redhat.com">Red Hat Customer Portal</a></div>\
+            content.append(jQuery('<p>This popover displays KCS solutions that match the keywords in the topic.</p>\
+                <p>If you are running Chrome, you first need to log into into the <a href="http://access.redhat.com">Red Hat Customer Portal</a>.</p>\
+                <p>If you are running Firefox, you may be prompted for a username and password. These credentials are the ones that you use to log into the <a href="http://access.redhat.com">Red Hat Customer Portal</a></p>\
                 <div style="display:table-cell; text-align: center; vertical-align:middle; width: 746px;">\
                     <button id="' + buttonId + '" style="margin-top: 32px;" type="button" class="btn btn-primary">Get Solutions</button>\
                 </div>'));
 
-            jQuery('#' + buttonId).click(function() {
-                jQuery('#' + buttonId).attr('disabled', 'true');
-                jQuery('#' + buttonId).text('Getting Solutions');
-                fetchKeywords(unsafeWindow.eventDetails.topicId, unsafeWindow.eventDetails.popoverId);
-            });
+            addClickFunction(buttonId, unsafeWindow.eventDetails.topicId, unsafeWindow.eventDetails.popoverId);
         }
     });
 
