@@ -190,7 +190,7 @@ if (window.location.host == "docbuilder.usersys.redhat.com" || window.location.h
             var buttonId = unsafeWindow.eventDetails.popoverId + 'contentbutton';
 
             content.append(jQuery('<div>This popover displays KCS solutions that match the keywords in the topic.</div>\
-                <div>You will be prompted for a username and password. These credentials are the ones that you use to log into the <a href="http://access.redhat.com">Red Hat Customer Portal</a></div>\
+                <div>You may be prompted for a username and password. These credentials are the ones that you use to log into the <a href="http://access.redhat.com">Red Hat Customer Portal</a></div>\
                 <div style="display:table-cell; text-align: center; vertical-align:middle; width: 746px;">\
                     <button id="' + buttonId + '" style="margin-top: 32px;" type="button" class="btn btn-primary">Get Solutions</button>\
                 </div>'));
