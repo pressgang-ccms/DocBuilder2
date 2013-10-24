@@ -1,3 +1,5 @@
+var topicCache = {};
+
 /**
  * Gets the keywords for a topic
  * @param topicId The topic id
@@ -5,12 +7,45 @@
  * @param failureCallback The function to call if the topic could not be retrieved
  */
 function fetchKeywords(topicId, successCallback, failureCallback) {
-    if (!solutionsCache[topicId].fetchingKeywords) {
+
+    // the topic has been found already
+    if (topicCache[topicId].topic) {
+        successCallback(topicCache[topicId].topic);
+    }
+
+    /**
+     * Handle any REST call that failed.
+     * @param message The reason why the REST call failed
+     */
+    function handleFailure(message) {
+        topicCache[topicId].fetchingKeywords = false;
+
+        for (var callbackIndex = 0, callbackCount = topicCache[topicId].failureCallbacks.length; callbackIndex < callbackCount; ++callbackIndex) {
+            topicCache[topicId].failureCallbacks[callbackIndex](message);
+        }
+
+        topicCache[topicId].successCallbacks = [];
+        topicCache[topicId].failureCallbacks = [];
+    }
+
+    // Create the callback arrays
+    if (!topicCache[topicId].successCallbacks) {
+        topicCache[topicId].successCallbacks = [];
+        topicCache[topicId].failureCallbacks = [];
+    }
+
+    // Add the callbacks to the array.
+    topicCache[topicId].successCallbacks.push(successCallback);
+    topicCache[topicId].failureCallbacks.push(failureCallback);
+
+    // Make sure that we are not already processing this topic. If we are, the callbacks will be
+    // called when the existing REST call completes.
+    if (!topicCache[topicId].fetchingKeywords) {
 
         logToConsole("Getting topic keywords");
 
         // make a note that we have started processing this topic
-        solutionsCache[topicId].fetchingKeywords = true;
+        topicCache[topicId].fetchingKeywords = true;
 
         var specId = unsafeWindow.getSpecIdFromURL();
         var specProductUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/contentspecnodes/get/json/query;csNodeType=7;contentSpecIds=" + specId + "?expand=" + encodeURIComponent("{\"branches\":[{\"trunk\":{\"name\": \"nodes\"}}]}");
@@ -21,11 +56,11 @@ function fetchKeywords(topicId, successCallback, failureCallback) {
             GM_xmlhttpRequest({
                 method: 'GET',
                 url: specProductUrl,
-                onabort: function() {failureCallback("onabort"); },
-                onerror: function() {failureCallback("onerror");},
+                onabort: function() {handleFailure("onabort"); },
+                onerror: function() {handleFailure("onerror");},
                 //onprogress: function() {logToConsole("onprogress");},
                 //onreadystatechange: function() {logToConsole("onreadystatechange");},
-                ontimeout: function() {failureCallback("ontimeout");},
+                ontimeout: function() {handleFailure("ontimeout");},
                 onload: function(specNodesResponse) {
                     var nodes = JSON.parse(specNodesResponse.responseText);
                     var product = "";
@@ -44,15 +79,22 @@ function fetchKeywords(topicId, successCallback, failureCallback) {
                     GM_xmlhttpRequest({
                         method: 'GET',
                         url: topicKeywordUrl,
-                        onabort: function() {failureCallback("onabort"); },
-                        onerror: function() {failureCallback("onerror");},
+                        onabort: function() {handleFailure("onabort"); },
+                        onerror: function() {handleFailure("onerror");},
                         //onprogress: function() {logToConsole("onprogress");},
                         //onreadystatechange: function() {logToConsole("onreadystatechange");},
-                        ontimeout: function() {failureCallback("ontimeout");},
+                        ontimeout: function() {handleFailure("ontimeout");},
                         onload: function(topicResponse) {
                             var topic = JSON.parse(topicResponse.responseText);
                             topic.keywords = additionalKeywords.concat(topic.keywords);
-                            successCallback(topic);
+                            topicCache[topicId].topic = topic;
+
+                            for (var callbackIndex = 0, callbackCount = topicCache[topicId].successCallbacks.length; callbackIndex < callbackCount; ++callbackIndex) {
+                                topicCache[topicId].successCallbacks[callbackIndex](topic);
+                            }
+
+                            topicCache[topicId].successCallbacks = [];
+                            topicCache[topicId].failureCallbacks = [];
                         }
                     });
                 }

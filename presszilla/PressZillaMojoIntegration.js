@@ -1,5 +1,5 @@
 /*
-    This file contains the logic for searching the KBase for solutions based on the keywords in a topic.
+ This file contains the logic for searching the KBase for solutions based on the keywords in a topic.
  */
 (function() {
     if (isDocbuilderWindow()) {
@@ -9,12 +9,11 @@
         function addClickFunction(buttonId, topicId, popoverId) {
             jQuery('#' + buttonId).click(function() {
                 jQuery('#' + buttonId).attr('disabled', 'true');
-                jQuery('#' + buttonId).text('Getting Solutions');
+                jQuery('#' + buttonId).text('Getting Documents');
                 jQuery('#' + buttonId).removeClass('btn-primary');
                 jQuery('#' + buttonId).removeClass('btn-danger');
                 jQuery('#' + buttonId).addClass('btn-primary');
-
-                fetchKeywords(topicId, function(topic) {
+                fetchKeywords(topicId, function(topic){
                     getSolutions(topic, 100, topicId, popoverId);
                 }, function () {
                     handleError(popoverId);

@@ -10,7 +10,7 @@
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaKeywordExtraction.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaIntegration.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaSolutionsIntegration.js
-// @version     1.8
+// @version     1.9
 // @grant       GM_xmlhttpRequest
 // @grant       unsafeWindow
 // @downloadURL http://docbuilder.usersys.redhat.com/PressZilla.user.js
