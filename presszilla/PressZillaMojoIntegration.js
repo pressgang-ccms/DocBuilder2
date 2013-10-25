@@ -81,7 +81,8 @@
 
                             addClickFunction(buttonId, topicId, popoverId);
                         } else if (solutionsResponse.status == 200) {
-                            var documents = JSON.parse(solutionsResponse.responseText);
+                            //https://developers.jivesoftware.com/community/message/5127#5127
+                            var documents = JSON.parse(solutionsResponse.responseText.replace(/^throw [^;]*;/, ''));
 
                             var documentsTable = "<ul>";
 
