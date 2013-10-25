@@ -73,8 +73,7 @@
 
                             var buttonId = popoverId + 'contentbutton';
 
-                            content.append(jQuery('<p>If you are running Chrome, you will need to log into, or log out of and log back into, the <a href="http://access.redhat.com">Red Hat Customer Portal</a>.</p>\
-                                    <p>If you are running Firefox, then the credentials you entered were incorrect. Please confirm that the username and password you entered are valid for the <a href="http://access.redhat.com">Red Hat Customer Portal</a>.</p>\
+                            content.append(jQuery('<p>You need to be logged into <a href="http://mojo.redhat.com">Mojo</a> for this menu to work.</p>\
                                     <div style="display:table-cell; text-align: center; vertical-align:middle; width: 746px;">\
                                         <button id="' + buttonId + '" style="margin-top: 32px;" type="button" class="btn btn-danger">Try Again</button>\
                                     </div>'));
@@ -119,8 +118,7 @@
                 var buttonId = unsafeWindow.eventDetails.popoverId + 'contentbutton';
 
                 content.append(jQuery('<p>This popover displays Mojo documents that match the keywords in the topic.</p>\
-                        <p>If you are running Chrome, you first need to log into into <a href="http://mojo.redhat.com">Mojo</a>.</p>\
-                        <p>If you are running Firefox, you may be prompted for a username and password. These credentials are the ones that you use to log into <a href="http://mojo.redhat.com">Mojo</a>.</p>\
+                        <p>To use this menu you first need to log into into <a href="http://mojo.redhat.com">Mojo</a>.</p>\
                         <div style="display:table-cell; text-align: center; vertical-align:middle; width: 746px;">\
                             <button id="' + buttonId + '" style="margin-top: 32px;" type="button" class="btn btn-primary">Get Documents</button>\
                         </div>'));
