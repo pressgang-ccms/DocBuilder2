@@ -90,7 +90,7 @@
                                 var document = documents.list[documentIndex];
                                 if (document.type == "document") {
                                     var views = '(' + document.viewCount  + (document.viewCount == 1 ? ' view' : ' views') + ')';
-                                    documentsTable += '<li><a href="' + document.resources.html + '">' + document.subject + ' - ' + document.author.name.givenName + ' ' + document.author.name.familyName + ' ' + views + '</a></li>';
+                                    documentsTable += '<li><a href="' + document.resources.html.ref + '">' + document.subject + ' - ' + document.author.name.givenName + ' ' + document.author.name.familyName + ' ' + views + '</a></li>';
                                 }
                             }
 

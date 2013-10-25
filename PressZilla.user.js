@@ -11,7 +11,7 @@
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaKeywordExtraction_v2.1.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaIntegration_v2.1.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaSolutionsIntegration_v2.1.js
-// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaMojoIntegration_v2.1.1.js
+// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaMojoIntegration_v2.1.2.js
 // @version     2.1
 // @grant       GM_xmlhttpRequest
 // @grant       unsafeWindow
