@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZilla.meta.js" afterPath="$PROJECT_DIR$/PressZilla.meta.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/PressZilla.meta.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZilla.user.js" afterPath="$PROJECT_DIR$/PressZilla.user.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382668409039" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382669353313" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1381524834070" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -207,21 +207,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZilla.user.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PressZilla.user.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="1219" vertical-scroll-proportion="-0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PressZilla.meta.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/PressZilla.meta.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="18" selection-start="1219" selection-end="1219" vertical-scroll-proportion="0.49751243">
+            <state line="22" column="18" selection-start="1335" selection-end="1335" vertical-scroll-proportion="0.57093424">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -287,8 +276,8 @@
         <option value="$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.1.2.js" />
         <option value="$PROJECT_DIR$/copy_js_files.sh" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.1.js" />
-        <option value="$PROJECT_DIR$/PressZilla.user.js" />
         <option value="$PROJECT_DIR$/PressZilla.meta.js" />
+        <option value="$PROJECT_DIR$/PressZilla.user.js" />
       </list>
     </option>
   </component>
@@ -1398,7 +1387,11 @@
       <created>1382668410448</created>
       <updated>1382668410448</updated>
     </task>
-    <option name="localTasksCounter" value="219" />
+    <task id="LOCAL-00219" summary="Working on mojo integration">
+      <created>1382669354728</created>
+      <updated>1382669354728</updated>
+    </task>
+    <option name="localTasksCounter" value="220" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1755,16 +1748,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="1219" vertical-scroll-proportion="-0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PressZilla.meta.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="18" selection-start="1219" selection-end="1219" vertical-scroll-proportion="0.49751243">
+        <state line="22" column="18" selection-start="1335" selection-end="1335" vertical-scroll-proportion="0.57093424">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
