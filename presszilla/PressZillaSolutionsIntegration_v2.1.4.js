@@ -72,14 +72,16 @@
                         return function(solutionsResponse) {
                             logToConsole(solutionsResponse);
 
-                            var content = jQuery('#' + popoverId + "content");
-                            content.empty();
+
 
                             if (solutionsResponse.status == 401) {
 
                                 solutionsCache[topicId].fetchingSolutions = false;
 
                                 var buttonId = popoverId + 'contentbutton';
+
+                                var content = jQuery('#' + popoverId + "content");
+                                content.empty();
 
                                 content.append(jQuery('<p>If you are running Chrome, you will need to log into, or log out of and log back into, the <a href="http://access.redhat.com">Red Hat Customer Portal</a>.</p>\
                                         <p>If you are running Firefox, then the credentials you entered were incorrect. Please confirm that the username and password you entered are valid for the <a href="http://access.redhat.com">Red Hat Customer Portal</a>.</p>\
@@ -113,6 +115,9 @@
 
                                     // keep a copy of the results
                                     solutionsCache[topicId].text = solutionsTable;
+
+                                    var content = jQuery('#' + popoverId + "content");
+                                    content.empty();
 
                                     content.append(jQuery(solutionsTable));
                                 }
