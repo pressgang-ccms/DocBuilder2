@@ -30,7 +30,7 @@ function fetchKeywords(topicId, successCallback, failureCallback) {
 
     // Create the callback arrays
     if (!topicCache[topicId]) {
-        topicCache[topicId] = {successCallbacks: [], failureCallbacks: []};
+        topicCache[topicId] = {successCallbacks: [], failureCallbacks: [], fetchingKeywords: false};
     }
 
     // Add the callbacks to the array.
@@ -60,43 +60,47 @@ function fetchKeywords(topicId, successCallback, failureCallback) {
                 //onprogress: function() {logToConsole("onprogress");},
                 //onreadystatechange: function() {logToConsole("onreadystatechange");},
                 ontimeout: function() {handleFailure("ontimeout");},
-                onload: function(specNodesResponse) {
-                    var nodes = JSON.parse(specNodesResponse.responseText);
-                    var product = "";
-                    for (var nodeIndex = 0, nodeCount = nodes.items.length; nodeIndex < nodeCount; ++nodeIndex) {
-                        var node = nodes.items[nodeIndex].item;
-                        if (node.title == "Product") {
-                            var product = node.additionalText;
-                            break;
-                        }
-                    }
-
-                    var additionalKeywords = product.split(" ");
-
-                    var topicKeywordUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22keywords%22%7D%7D%5D%7D"
-
-                    GM_xmlhttpRequest({
-                        method: 'GET',
-                        url: topicKeywordUrl,
-                        onabort: function() {handleFailure("onabort"); },
-                        onerror: function() {handleFailure("onerror");},
-                        //onprogress: function() {logToConsole("onprogress");},
-                        //onreadystatechange: function() {logToConsole("onreadystatechange");},
-                        ontimeout: function() {handleFailure("ontimeout");},
-                        onload: function(topicResponse) {
-                            var topic = JSON.parse(topicResponse.responseText);
-                            topic.keywords = additionalKeywords.concat(topic.keywords);
-                            topicCache[topicId].topic = topic;
-
-                            for (var callbackIndex = 0, callbackCount = topicCache[topicId].successCallbacks.length; callbackIndex < callbackCount; ++callbackIndex) {
-                                topicCache[topicId].successCallbacks[callbackIndex](topic);
+                onload: function(topicId) {
+                        return function(specNodesResponse) {
+                        var nodes = JSON.parse(specNodesResponse.responseText);
+                        var product = "";
+                        for (var nodeIndex = 0, nodeCount = nodes.items.length; nodeIndex < nodeCount; ++nodeIndex) {
+                            var node = nodes.items[nodeIndex].item;
+                            if (node.title == "Product") {
+                                var product = node.additionalText;
+                                break;
                             }
-
-                            topicCache[topicId].successCallbacks = [];
-                            topicCache[topicId].failureCallbacks = [];
                         }
-                    });
-                }
+
+                        var additionalKeywords = product.split(" ");
+
+                        var topicKeywordUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22keywords%22%7D%7D%5D%7D"
+
+                        GM_xmlhttpRequest({
+                            method: 'GET',
+                            url: topicKeywordUrl,
+                            onabort: function() {handleFailure("onabort"); },
+                            onerror: function() {handleFailure("onerror");},
+                            //onprogress: function() {logToConsole("onprogress");},
+                            //onreadystatechange: function() {logToConsole("onreadystatechange");},
+                            ontimeout: function() {handleFailure("ontimeout");},
+                            onload: function(topicId) {
+                                return function(topicResponse) {
+                                    var topic = JSON.parse(topicResponse.responseText);
+                                    topic.keywords = additionalKeywords.concat(topic.keywords);
+                                    topicCache[topicId].topic = topic;
+
+                                    for (var callbackIndex = 0, callbackCount = topicCache[topicId].successCallbacks.length; callbackIndex < callbackCount; ++callbackIndex) {
+                                        topicCache[topicId].successCallbacks[callbackIndex](topic);
+                                    }
+
+                                    topicCache[topicId].successCallbacks = [];
+                                    topicCache[topicId].failureCallbacks = [];
+                                }
+                            }(topicId)
+                        });
+                    }
+                }(topicId)
             });
         }, 0);
     }
