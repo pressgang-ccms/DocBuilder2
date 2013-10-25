@@ -29,9 +29,8 @@ function fetchKeywords(topicId, successCallback, failureCallback) {
     }
 
     // Create the callback arrays
-    if (!topicCache[topicId] || !topicCache[topicId].successCallbacks) {
-        topicCache[topicId].successCallbacks = [];
-        topicCache[topicId].failureCallbacks = [];
+    if (!topicCache[topicId]) {
+        topicCache[topicId] = {successCallbacks: [], failureCallbacks: []};
     }
 
     // Add the callbacks to the array.
