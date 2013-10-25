@@ -89,7 +89,8 @@
                             for (var documentIndex = 0, documentCount = documents.list.length; documentIndex < documentCount; ++documentIndex) {
                                 var document = documents.list[documentIndex];
                                 if (document.type == "document") {
-                                    documentsTable += '<li><a href="' + document.resources.html + '">' + document.subject + '</a></li>';
+                                    var views = '(' + document.viewCount  + (document.viewCount == 1 ? 'view' : 'views') + ')';
+                                    documentsTable += '<li><a href="' + document.resources.html + '">' + document.subject + ' - ' + document.author.givenName + ' ' + document.author.familyName + ' ' + views + '</a></li>';
                                 }
                             }
 

@@ -7,7 +7,7 @@
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382665877451" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382666496798" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1381524834070" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -125,7 +125,7 @@
     <file path="/TopicRevisionsView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382583261218" ignored="false" />
     <file path="/README" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382655877376" ignored="false" />
     <file path="/PressZillaKeywordExtraction.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382663612656" ignored="false" />
-    <file path="/PressZillaMojoIntegration.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382662607177" ignored="false" />
+    <file path="/PressZillaMojoIntegration.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382666997999" ignored="false" />
     <file path="/PressZillaBugzillaIntegration.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382657662505" ignored="false" />
     <file path="/PressZillaSolutionsIntegration.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382664646361" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -200,15 +200,14 @@
       <file leaf-file-name="PressZillaMojoIntegration.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/presszilla/PressZillaMojoIntegration.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="89" column="56" selection-start="4836" selection-end="4836" vertical-scroll-proportion="0.7271187">
+            <state line="92" column="201" selection-start="5254" selection-end="5254" vertical-scroll-proportion="0.45132744">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#919#1231#0" expanded="false" />
-                <element signature="e#1241#1678#0" expanded="false" />
-                <marker date="1382666350168" expanded="true" signature="3938:4014" placeholder="..." />
-                <marker date="1382666350168" expanded="true" signature="4015:4069" placeholder="..." />
-                <marker date="1382666350168" expanded="true" signature="6438:6514" placeholder="..." />
-                <marker date="1382666350168" expanded="true" signature="6515:6557" placeholder="..." />
+                <marker date="1382667056659" expanded="true" signature="3938:4014" placeholder="..." />
+                <marker date="1382667056659" expanded="true" signature="4015:4069" placeholder="..." />
+                <marker date="1382667056659" expanded="true" signature="6651:6727" placeholder="..." />
+                <marker date="1382667056659" expanded="true" signature="6728:6770" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -1343,7 +1342,15 @@
       <created>1382665878639</created>
       <updated>1382665878639</updated>
     </task>
-    <option name="localTasksCounter" value="211" />
+    <task id="LOCAL-00211" summary="Working on mojo integration">
+      <created>1382666354949</created>
+      <updated>1382666354949</updated>
+    </task>
+    <task id="LOCAL-00212" summary="Working on mojo integration">
+      <created>1382666497523</created>
+      <updated>1382666497523</updated>
+    </task>
+    <option name="localTasksCounter" value="213" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1700,15 +1707,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/presszilla/PressZillaMojoIntegration.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="56" selection-start="4836" selection-end="4836" vertical-scroll-proportion="0.7271187">
+        <state line="92" column="201" selection-start="5254" selection-end="5254" vertical-scroll-proportion="0.45132744">
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="e#919#1231#0" expanded="false" />
-            <element signature="e#1241#1678#0" expanded="false" />
-            <marker date="1382666350168" expanded="true" signature="3938:4014" placeholder="..." />
-            <marker date="1382666350168" expanded="true" signature="4015:4069" placeholder="..." />
-            <marker date="1382666350168" expanded="true" signature="6438:6514" placeholder="..." />
-            <marker date="1382666350168" expanded="true" signature="6515:6557" placeholder="..." />
+            <marker date="1382667056659" expanded="true" signature="3938:4014" placeholder="..." />
+            <marker date="1382667056659" expanded="true" signature="4015:4069" placeholder="..." />
+            <marker date="1382667056659" expanded="true" signature="6651:6727" placeholder="..." />
+            <marker date="1382667056659" expanded="true" signature="6728:6770" placeholder="..." />
           </folding>
         </state>
       </provider>
