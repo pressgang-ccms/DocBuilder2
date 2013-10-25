@@ -298,6 +298,7 @@ function addOverlayIcons(topicId, RoleCreatePara) {
         createDescriptionPopover(topicId, bubbleDiv);
         createWebDAVPopover(topicId, bubbleDiv);
         createSolutionsPopover(topicId, bubbleDiv);
+        createMojoPopover(topicId, bubbleDiv);
     }
 }
 
