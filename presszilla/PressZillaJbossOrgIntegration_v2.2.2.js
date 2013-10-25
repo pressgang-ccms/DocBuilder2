@@ -14,7 +14,7 @@
                 jQuery('#' + buttonId).removeClass('btn-danger');
                 jQuery('#' + buttonId).addClass('btn-primary');
                 fetchKeywords(topicId, function(topic){
-                    getSolutions(topic, topicId, popoverId);
+                    getSolutions(topic, 100, topicId, popoverId);
                 }, function () {
                     handleError(popoverId);
                 });
@@ -35,13 +35,17 @@
          * @param topicId The topic id
          * @param popoverId The popover id
          */
-        function getSolutions(topic, topicId, popoverId) {
+        function getSolutions(topic, position, topicId, popoverId) {
             if (!cache[topicId].fetchingDocuments) {
 
                 cache[topicId].fetchingDocuments = true;
 
                 var keywords = "";
                 for (var keywordIndex = 0, keywordCount = topic.keywords.length; keywordIndex < keywordCount; ++keywordIndex){
+                    if (keywordIndex / keywordCount * 100 > position) {
+                        break;
+                    }
+
                     if (keywords.length != 0) {
                             keywords += ",";
                     }
@@ -62,14 +66,14 @@
                     onload: function(solutionsResponse) {
                         logToConsole(solutionsResponse);
 
-                        var content = jQuery('#' + popoverId + "content");
-                        content.empty();
-
                         if (solutionsResponse.status == 401) {
 
                             cache[topicId].fetchingDocuments = false;
 
                             var buttonId = popoverId + 'contentbutton';
+
+                            var content = jQuery('#' + popoverId + "content");
+                            content.empty();
 
                             content.append(jQuery('<p>You need to be logged into <a href="http://community.jboss.org">Jboss.org</a> for this menu to work.</p>\
                                     <div style="display:table-cell; text-align: center; vertical-align:middle; width: 746px;">\
@@ -81,23 +85,40 @@
                             //https://developers.jivesoftware.com/community/message/5127#5127
                             var documents = JSON.parse(solutionsResponse.responseText.replace(/^throw [^;]*;/, ''));
 
-                            var documentsTable = "<ul>";
+                            if (!documents.list.length == 0) {
+                                logToConsole("Empty results returned");
 
-                            for (var documentIndex = 0, documentCount = documents.list.length; documentIndex < documentCount; ++documentIndex) {
-                                var document = documents.list[documentIndex];
-                                if (document.type == "document" || document.type == "message") {
-                                    var views = '(' + document.viewCount  + (document.viewCount == 1 ? ' view' : ' views') + ')';
-                                    documentsTable += '<li><a href="' + document.resources.html.ref + '">' + document.subject + ' - ' + document.author.name.givenName + ' ' + document.author.name.familyName + ' ' + views + '</a></li>';
+                                if (position > 0) {
+                                    logToConsole("Searching with fewer mandatory keywords");
+                                    getSolutions(topic, position - 25, topicId, popoverId, true);
+                                } else {
+                                    var content = jQuery('#' + popoverId + "content");
+                                    content.empty();
+
+                                    content.append(jQuery('<p>No results found.</p>'));
                                 }
+                            } else {
+
+                                var documentsTable = "<ul>";
+
+                                for (var documentIndex = 0, documentCount = documents.list.length; documentIndex < documentCount; ++documentIndex) {
+                                    var document = documents.list[documentIndex];
+                                    if (document.type == "document" || document.type == "message") {
+                                        var views = '(' + document.viewCount  + (document.viewCount == 1 ? ' view' : ' views') + ')';
+                                        documentsTable += '<li><a href="' + document.resources.html.ref + '">' + document.subject + ' - ' + document.author.name.givenName + ' ' + document.author.name.familyName + ' ' + views + '</a></li>';
+                                    }
+                                }
+
+                                documentsTable += "</ul>";
+
+                                // keep a copy of the results
+                                cache[topicId].text = documentsTable;
+
+                                var content = jQuery('#' + popoverId + "content");
+                                content.empty();
+
+                                content.append(jQuery(documentsTable));
                             }
-
-                            documentsTable += "</ul>";
-
-                            // keep a copy of the results
-                            cache[topicId].text = documentsTable;
-
-                            content.append(jQuery(documentsTable));
-
                         }
                     }
                 });
