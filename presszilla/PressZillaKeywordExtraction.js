@@ -9,9 +9,12 @@ var topicCache = {};
 function fetchKeywords(topicId, successCallback, failureCallback) {
 
     // the topic has been found already
+    console.log("1");
     if (topicCache[topicId] && topicCache[topicId].topic) {
         successCallback(topicCache[topicId].topic);
     }
+
+    console.log("2");
 
     /**
      * Handle any REST call that failed.
@@ -88,6 +91,8 @@ function fetchKeywords(topicId, successCallback, failureCallback) {
                                 return function(topicResponse) {
                                     var topic = JSON.parse(topicResponse.responseText);
                                     topic.keywords = additionalKeywords.concat(topic.keywords);
+
+                                    console.log("3");
                                     topicCache[topicId].topic = topic;
 
                                     for (var callbackIndex = 0, callbackCount = topicCache[topicId].successCallbacks.length; callbackIndex < callbackCount; ++callbackIndex) {
