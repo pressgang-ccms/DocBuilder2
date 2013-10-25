@@ -973,8 +973,10 @@ function updateCount(linkDiv, count) {
  * @returns The popover element
  */
 function createPopover(title, topicId) {
+    var fixedTitle = title.replace(/ /g, "").replace(/\./g, "");
+
     var popover = document.createElement("div");
-    popover.setAttribute("id", topicId + title.replace(/ /g, "").replace(/\./g, ""));
+    popover.setAttribute("id", topicId + fixedTitle);
     popover.style.position="absolute";
     popover.style.height='300px';
     popover.style.width='750px';
@@ -985,7 +987,7 @@ function createPopover(title, topicId) {
     popover.style.borderStyle = 'solid';
 
     var popoverTitle = document.createElement("div");
-    popoverTitle.setAttribute("id", topicId + title.replace(/ /g, "") + "title");
+    popoverTitle.setAttribute("id", topicId + fixedTitle + "title");
     popoverTitle.style.width = "746px";
     popoverTitle.style.height = "42px";
     popoverTitle.style.paddingLeft = "8px";
@@ -1001,7 +1003,7 @@ function createPopover(title, topicId) {
     popover.appendChild(popoverTitle);
 
     var popoverContent = document.createElement("div");
-    popoverContent.setAttribute("id", topicId + title.replace(/ /g, "") + "content");
+    popoverContent.setAttribute("id", topicId + fixedTitle + "content");
 	popoverContent.style.clear = "both";
 	popoverContent.style.margin = "8px";
     popoverContent.style.height = "242px";
