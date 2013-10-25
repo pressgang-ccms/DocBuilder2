@@ -55,7 +55,7 @@
                     keywords += topic.keywords[keywordIndex];
                 }
 
-                logToConsole("querying solutions: " + keywords);
+                logToConsole("Querying solutions: " + keywords);
 
                 var kcsUrl = "https://api.access.redhat.com/rs/solutions?limit=10&keyword=" + encodeURIComponent(keywords);
 
@@ -92,7 +92,10 @@
                                 var solutions = JSON.parse(solutionsResponse.responseText);
 
                                 if (!solutions.solution) {
+                                    logToConsole("Empty results returned");
+
                                     if (position > 0) {
+                                        logToConsole("Searching with fewer mandatory keywords");
                                         getSolutions(topic, position - 25, topicId, popoverId, true);
                                     }
                                 } else {
@@ -116,7 +119,7 @@
                     }(topicId, popoverId)
                 });
             } else {
-                logToConsole("Already searching for solutions")
+                logToConsole("Already searching for solutions");
             }
         }
 
