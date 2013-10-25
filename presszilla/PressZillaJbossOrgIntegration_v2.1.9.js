@@ -116,9 +116,9 @@
                 var buttonId = unsafeWindow.eventDetails.popoverId + 'contentbutton';
 
                 content.append(jQuery('<p>This popover displays Mojo documents that match the keywords in the topic.</p>\
-                        <p>To use this menu you first need to log into into <a href="http://community.jboss.org">Mojo</a>.</p>\
+                        <p>To use this menu you first need to log into into <a href="http://community.jboss.org">Jboss.org</a>.</p>\
                         <div style="display:table-cell; text-align: center; vertical-align:middle; width: 746px;">\
-                            <button id="' + buttonId + '" style="margin-top: 32px;" type="button" class="btn btn-primary">Get Documents</button>\
+                            <button id="' + buttonId + '" style="margin-top: 32px;" type="button" class="btn btn-primary">Get Content</button>\
                         </div>'));
 
                 addClickFunction(buttonId, unsafeWindow.eventDetails.topicId, unsafeWindow.eventDetails.popoverId);
