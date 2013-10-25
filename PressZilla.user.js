@@ -12,12 +12,12 @@
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaIntegration_v2.1.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaSolutionsIntegration_v2.1.4.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaMojoIntegration_v2.1.3.js
-// @version     2.1.4
+// @version     2.1.5
 // @grant       GM_xmlhttpRequest
 // @grant       unsafeWindow
-// @downloadURL http://docbuilder.usersys.redhat.com/PressZilla.user.js
-// @updateURL   http://docbuilder.usersys.redhat.com/PressZilla.meta.js
-// @homepageURL http://docbuilder.usersys.redhat.com
+// @downloadURL https://docbuilder.usersys.redhat.com/PressZilla.user.js
+// @updateURL   https://docbuilder.usersys.redhat.com/PressZilla.meta.js
+// @homepageURL https://docbuilder.usersys.redhat.com
 // ==/UserScript==
 
 logToConsole("PressZilla Started");
