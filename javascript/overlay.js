@@ -974,7 +974,7 @@ function updateCount(linkDiv, count) {
  */
 function createPopover(title, topicId) {
     var popover = document.createElement("div");
-    popover.setAttribute("id", topicId + title.replace(/ /g, ""));
+    popover.setAttribute("id", topicId + title.replace(/ /g, "").replace(/\./g, ""));
     popover.style.position="absolute";
     popover.style.height='300px';
     popover.style.width='750px';
