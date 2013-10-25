@@ -105,7 +105,7 @@
         }
 
         // listen for the kcs popover
-        jQuery(window).bind("mojo_opened", function(event){
+        jQuery(window).bind("jboss_opened", function(event){
             if (!cache[unsafeWindow.eventDetails.topicId]) {
 
                 cache[unsafeWindow.eventDetails.topicId] = {contentFixed: true};
