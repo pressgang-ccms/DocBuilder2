@@ -7,10 +7,10 @@
 // @include     http://docbuilder.usersys.redhat.com/*
 // @include     http://docbuilder.ecs.eng.bne.redhat.com/*
 // @require     http://code.jquery.com/jquery-2.0.3.min.js
+// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaCommonUtils.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaKeywordExtraction.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaIntegration.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaSolutionsIntegration.js
-// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaMojoIntegration.js
 // @version     1.9
 // @grant       GM_xmlhttpRequest
 // @grant       unsafeWindow
@@ -19,10 +19,5 @@
 // @homepageURL http://docbuilder.usersys.redhat.com
 // ==/UserScript==
 
-function logToConsole(message) {
-    console.log(message);
-}
+logToConsole("PressZilla Started");
 
-function isDocbuilderWindow() {
-    return window.location.host == "docbuilder.usersys.redhat.com" || window.location.host == "docbuilder.ecs.eng.bne.redhat.com";
-};
