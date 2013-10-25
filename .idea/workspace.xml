@@ -2,17 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/jboss.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.1.7.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/#Untitled-2#" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.1.3.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.1.7.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZilla.user.js" afterPath="$PROJECT_DIR$/PressZilla.user.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript/overlay.js" afterPath="$PROJECT_DIR$/javascript/overlay.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/copy_js_files.sh" afterPath="$PROJECT_DIR$/copy_js_files.sh" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382669555004" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382671218997" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1381524834070" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -221,10 +216,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="overlay.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="overlay.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="404" column="41" selection-start="14490" selection-end="14490" vertical-scroll-proportion="0.38305086">
+            <state line="404" column="41" selection-start="14490" selection-end="14490" vertical-scroll-proportion="0.0">
               <folding>
                 <marker date="1382671210985" expanded="false" signature="11187:11285" placeholder="..." />
                 <marker date="1382671210985" expanded="false" signature="11387:11397" placeholder="..." />
@@ -341,10 +336,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="copy_js_files.sh" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="copy_js_files.sh" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="30" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0">
+            <state line="2" column="38" selection-start="128" selection-end="128" vertical-scroll-proportion="0.049751244">
               <folding />
             </state>
           </provider>
@@ -394,13 +389,13 @@
         <option value="$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.1.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.1.1.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.1.2.js" />
-        <option value="$PROJECT_DIR$/copy_js_files.sh" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.1.js" />
         <option value="$PROJECT_DIR$/PressZilla.meta.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.1.3.js" />
         <option value="$PROJECT_DIR$/PressZilla.user.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.1.7.js" />
         <option value="$PROJECT_DIR$/javascript/overlay.js" />
+        <option value="$PROJECT_DIR$/copy_js_files.sh" />
       </list>
     </option>
   </component>
@@ -482,20 +477,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="javascript" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DocBuilder2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DocBuilder2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="images" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1533,7 +1514,11 @@
       <created>1382669557454</created>
       <updated>1382669557454</updated>
     </task>
-    <option name="localTasksCounter" value="221" />
+    <task id="LOCAL-00221" summary="Working on mojo integration">
+      <created>1382671221109</created>
+      <updated>1382671221109</updated>
+    </task>
+    <option name="localTasksCounter" value="222" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1741,13 +1726,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="30" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.1.4.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="119" column="52" selection-start="6525" selection-end="6525" vertical-scroll-proportion="0.0">
@@ -1798,7 +1776,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="404" column="41" selection-start="14490" selection-end="14490" vertical-scroll-proportion="0.38305086">
+        <state line="404" column="41" selection-start="14490" selection-end="14490" vertical-scroll-proportion="0.0">
           <folding>
             <marker date="1382671210985" expanded="false" signature="11187:11285" placeholder="..." />
             <marker date="1382671210985" expanded="false" signature="11387:11397" placeholder="..." />
@@ -1897,6 +1875,13 @@
             <marker date="1382671210985" expanded="true" signature="85022:85406" placeholder="..." />
             <marker date="1382671210985" expanded="true" signature="85103:85394" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="38" selection-start="128" selection-end="128" vertical-scroll-proportion="0.049751244">
+          <folding />
         </state>
       </provider>
     </entry>
