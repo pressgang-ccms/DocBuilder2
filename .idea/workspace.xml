@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.2.4.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.2.5.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZilla.user.js" afterPath="$PROJECT_DIR$/PressZilla.user.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.2.5.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.2.5.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382673153920" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382673275585" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1381524834070" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -211,26 +210,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZilla.user.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PressZilla.user.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="104" selection-start="1136" selection-end="1136" vertical-scroll-proportion="0.4152249">
+            <state line="16" column="104" selection-start="1136" selection-end="1136" vertical-scroll-proportion="-9.6">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaJbossOrgIntegration_v2.2.5.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PressZillaJbossOrgIntegration_v2.2.5.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.2.5.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="106" column="160" selection-start="5448" selection-end="5448" vertical-scroll-proportion="0.0">
+            <state line="106" column="76" selection-start="5364" selection-end="5364" vertical-scroll-proportion="0.33050847">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#918#1230#0" expanded="false" />
-                <marker date="1382673256804" expanded="true" signature="3535:3611" placeholder="..." />
-                <marker date="1382673256804" expanded="true" signature="3612:3666" placeholder="..." />
-                <marker date="1382673256804" expanded="true" signature="7031:7107" placeholder="..." />
-                <marker date="1382673256804" expanded="true" signature="7108:7150" placeholder="..." />
+                <marker date="1382673293518" expanded="true" signature="3535:3611" placeholder="..." />
+                <marker date="1382673293518" expanded="true" signature="3612:3666" placeholder="..." />
+                <marker date="1382673293518" expanded="true" signature="7032:7108" placeholder="..." />
+                <marker date="1382673293518" expanded="true" signature="7109:7151" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -280,7 +279,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.1.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.1.1.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.1.2.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.1.js" />
@@ -296,6 +294,7 @@
         <option value="$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.2.3.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.2.4.js" />
         <option value="$PROJECT_DIR$/PressZilla.user.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.2.5.js" />
       </list>
     </option>
   </component>
@@ -1458,7 +1457,11 @@
       <created>1382673155141</created>
       <updated>1382673155141</updated>
     </task>
-    <option name="localTasksCounter" value="232" />
+    <task id="LOCAL-00232" summary="Working on jboss.org integration">
+      <created>1382673277249</created>
+      <updated>1382673277249</updated>
+    </task>
+    <option name="localTasksCounter" value="233" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1703,20 +1706,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.2.5.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="106" column="160" selection-start="5448" selection-end="5448" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#918#1230#0" expanded="false" />
-            <marker date="1382673256804" expanded="true" signature="3535:3611" placeholder="..." />
-            <marker date="1382673256804" expanded="true" signature="3612:3666" placeholder="..." />
-            <marker date="1382673256804" expanded="true" signature="7031:7107" placeholder="..." />
-            <marker date="1382673256804" expanded="true" signature="7108:7150" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1005" column="58" selection-start="36342" selection-end="36342" vertical-scroll-proportion="0.35929203">
@@ -1823,8 +1812,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="104" selection-start="1136" selection-end="1136" vertical-scroll-proportion="0.4152249">
+        <state line="16" column="104" selection-start="1136" selection-end="1136" vertical-scroll-proportion="-9.6">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.2.5.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="106" column="76" selection-start="5364" selection-end="5364" vertical-scroll-proportion="0.33050847">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#918#1230#0" expanded="false" />
+            <marker date="1382673293518" expanded="true" signature="3535:3611" placeholder="..." />
+            <marker date="1382673293518" expanded="true" signature="3612:3666" placeholder="..." />
+            <marker date="1382673293518" expanded="true" signature="7032:7108" placeholder="..." />
+            <marker date="1382673293518" expanded="true" signature="7109:7151" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
