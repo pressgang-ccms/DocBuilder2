@@ -86,7 +86,7 @@
 
                             var documentsTable = "<ul>";
 
-                            for (var documentIndex = 0, documentCount = solutions.list.length; documentIndex < documentCount; ++documentIndex) {
+                            for (var documentIndex = 0, documentCount = documents.list.length; documentIndex < documentCount; ++documentIndex) {
                                 var document = documents.list[documentIndex];
                                 if (document.type == "document") {
                                     documentsTable += '<li><a href="' + document.resources.html + '">' + document.subject + '</a></li>';
