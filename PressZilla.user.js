@@ -10,6 +10,7 @@
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaKeywordExtraction.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaIntegration.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaSolutionsIntegration.js
+// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaMojoIntegration.js
 // @version     1.9
 // @grant       GM_xmlhttpRequest
 // @grant       unsafeWindow

@@ -38,35 +38,30 @@
          * @param popoverId The popover id
          */
         function getSolutions(topic, position, topicId, popoverId) {
-            logToConsole("Getting solutions");
+            if (!mojoCache[topicId].fetchingDocuments) {
 
-            var keywords = "";
-            for (var keywordIndex = 0, keywordCount = topic.keywords.length; keywordIndex < keywordCount; ++keywordIndex){
-                if (keywords.length != 0) {
-                    if (keywordIndex / keywordCount * 100 < position) {
-                        keywords += " AND ";
-                    } else {
-                        keywords += " OR ";
+                mojoCache[topicId].fetchingDocuments = true;
+
+                var keywords = "";
+                for (var keywordIndex = 0, keywordCount = topic.keywords.length; keywordIndex < keywordCount; ++keywordIndex){
+                    if (keywords.length != 0) {
+                            keywords += ",";
                     }
+                    keywords += topic.keywords[keywordIndex];
                 }
-                keywords += topic.keywords[keywordIndex];
-            }
 
-            logToConsole("querying solutions: " + keywords);
+                var kcsUrl = "https://mojo.redhat.com/api/core/v3/search/contents?filter=search(" + encodeURIComponent(keywords) + ")";
 
-            var kcsUrl = "https://api.access.redhat.com/rs/solutions?limit=10&keyword=" + encodeURIComponent(keywords);
-
-            GM_xmlhttpRequest({
-                method: 'GET',
-                url: kcsUrl,
-                headers: {Accept: 'application/json'},
-                onabort: function() {logToConsole("onabort"); handleError(popoverId);},
-                onerror: function() {logToConsole("onerror"); handleError(popoverId);},
-                onprogress: function() {logToConsole("onprogress");},
-                onreadystatechange: function() {logToConsole("onreadystatechange");},
-                ontimeout: function() {logToConsole("ontimeout"); handleError(popoverId);},
-                onload: function(topicId, popoverId) {
-                    return function(solutionsResponse) {
+                GM_xmlhttpRequest({
+                    method: 'GET',
+                    url: kcsUrl,
+                    headers: {Accept: 'application/json'},
+                    onabort: function() {logToConsole("onabort"); handleError(popoverId);},
+                    onerror: function() {logToConsole("onerror"); handleError(popoverId);},
+                    onprogress: function() {logToConsole("onprogress");},
+                    onreadystatechange: function() {logToConsole("onreadystatechange");},
+                    ontimeout: function() {logToConsole("ontimeout"); handleError(popoverId);},
+                    onload: function(solutionsResponse) {
                         logToConsole(solutionsResponse);
 
                         var content = jQuery('#' + popoverId + "content");
@@ -74,7 +69,7 @@
 
                         if (solutionsResponse.status == 401) {
 
-                            mojoCache[topicId].fetching = false;
+                            mojoCache[topicId].fetchingDocuments = false;
 
                             var buttonId = popoverId + 'contentbutton';
 
@@ -86,32 +81,28 @@
 
                             addClickFunction(buttonId, topicId, popoverId);
                         } else if (solutionsResponse.status == 200) {
-                            var solutions = JSON.parse(solutionsResponse.responseText);
+                            var documents = JSON.parse(solutionsResponse.responseText);
 
-                            if (!solutions.solution) {
-                                if (position > 0) {
-                                    getSolutions(topic, position - 25, topicId, popoverId);
+                            var documentsTable = "<ul>";
+
+                            for (var documentIndex = 0, documentCount = solutions.list.length; documentIndex < documentCount; ++documentIndex) {
+                                var document = solutions.list[documentIndex];
+                                if (document.type == "document") {
+                                    documentsTable += '<li><a href="' + document.resources.html + '">' + document.subject + '</a></li>';
                                 }
-                            } else {
-                                var solutionsTable = "<ul>";
-
-                                for (var solutionIndex = 0, solutionCount = solutions.solution.length; solutionIndex < solutionCount; ++solutionIndex) {
-                                    var solution = solutions.solution[solutionIndex];
-                                    var published = solution.moderation_state == "published";
-                                    solutionsTable += '<li><span style="min-width: 5em; display: inline-block;"><a style="color: ' + (published ? "#5cb85c" : "#d9534f") + '" href="' + solution.view_uri + '">[' + solution.id + ']</a></span><a href="' + solution.view_uri + '">' + solution.title + '</a></li>';
-                                }
-
-                                solutionsTable += "</ul>";
-
-                                // keep a copy of the results
-                                mojoCache[topicId].text = solutionsTable;
-
-                                content.append(jQuery(solutionsTable));
                             }
+
+                            documentsTable += "</ul>";
+
+                            // keep a copy of the results
+                            mojoCache[topicId].text = documentsTable;
+
+                            content.append(jQuery(documentsTable));
+
                         }
                     }
-                }(topicId, popoverId)
-            });
+                });
+            }
         }
 
         // listen for the kcs popover
