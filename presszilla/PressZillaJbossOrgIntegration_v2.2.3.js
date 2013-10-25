@@ -85,7 +85,7 @@
                             //https://developers.jivesoftware.com/community/message/5127#5127
                             var documents = JSON.parse(solutionsResponse.responseText.replace(/^throw [^;]*;/, ''));
 
-                            if (!documents.list.length == 0) {
+                            if (documents.list.length == 0) {
                                 logToConsole("Empty results returned");
 
                                 if (position > 0) {
