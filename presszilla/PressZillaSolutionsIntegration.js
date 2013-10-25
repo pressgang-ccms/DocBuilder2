@@ -89,6 +89,8 @@
 
                                 addClickFunction(buttonId, topicId, popoverId);
                             } else if (solutionsResponse.status == 200) {
+                                logToConsole("Result returned");
+
                                 var solutions = JSON.parse(solutionsResponse.responseText);
 
                                 if (!solutions.solution) {
