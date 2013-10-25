@@ -9,7 +9,7 @@ var topicCache = {};
 function fetchKeywords(topicId, successCallback, failureCallback) {
 
     // the topic has been found already
-    if (topicCache[topicId].topic) {
+    if (topicCache[topicId] && topicCache[topicId].topic) {
         successCallback(topicCache[topicId].topic);
     }
 
@@ -74,7 +74,7 @@ function fetchKeywords(topicId, successCallback, failureCallback) {
 
                     var additionalKeywords = product.split(" ");
 
-                    var topicKeywordUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/" + unsafeWindow.eventDetails.topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22keywords%22%7D%7D%5D%7D"
+                    var topicKeywordUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/topic/get/json/" + topicId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22keywords%22%7D%7D%5D%7D"
 
                     GM_xmlhttpRequest({
                         method: 'GET',
