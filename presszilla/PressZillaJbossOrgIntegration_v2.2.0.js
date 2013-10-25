@@ -4,12 +4,12 @@
 (function() {
     if (isDocbuilderWindow()) {
 
-        var cache = {};
+        var mojoCache = {};
 
         function addClickFunction(buttonId, topicId, popoverId) {
             jQuery('#' + buttonId).click(function() {
                 jQuery('#' + buttonId).attr('disabled', 'true');
-                jQuery('#' + buttonId).text('Getting Content');
+                jQuery('#' + buttonId).text('Getting Documents');
                 jQuery('#' + buttonId).removeClass('btn-primary');
                 jQuery('#' + buttonId).removeClass('btn-danger');
                 jQuery('#' + buttonId).addClass('btn-primary');
@@ -36,19 +36,19 @@
          * @param popoverId The popover id
          */
         function getSolutions(topic, topicId, popoverId) {
-            if (!cache[topicId].fetchingDocuments) {
+            if (!mojoCache[topicId].fetchingDocuments) {
 
-                cache[topicId].fetchingDocuments = true;
+                mojoCache[topicId].fetchingDocuments = true;
 
                 var keywords = "";
                 for (var keywordIndex = 0, keywordCount = topic.keywords.length; keywordIndex < keywordCount; ++keywordIndex){
                     if (keywords.length != 0) {
-                            keywords += ",";
+                        keywords += ",";
                     }
                     keywords += topic.keywords[keywordIndex];
                 }
 
-                var kcsUrl = "https://community.jboss.org/api/core/v3/search/contents?filter=search(" + encodeURIComponent(keywords) + ")";
+                var kcsUrl = "https://mojo.redhat.com/api/core/v3/search/contents?filter=search(" + encodeURIComponent(keywords) + ")";
 
                 GM_xmlhttpRequest({
                     method: 'GET',
@@ -67,11 +67,11 @@
 
                         if (solutionsResponse.status == 401) {
 
-                            cache[topicId].fetchingDocuments = false;
+                            mojoCache[topicId].fetchingDocuments = false;
 
                             var buttonId = popoverId + 'contentbutton';
 
-                            content.append(jQuery('<p>You need to be logged into <a href="http://community.jboss.org">Jboss.org</a> for this menu to work.</p>\
+                            content.append(jQuery('<p>You need to be logged into <a href="http://mojo.redhat.com">Mojo</a> for this menu to work.</p>\
                                     <div style="display:table-cell; text-align: center; vertical-align:middle; width: 746px;">\
                                         <button id="' + buttonId + '" style="margin-top: 32px;" type="button" class="btn btn-danger">Try Again</button>\
                                     </div>'));
@@ -85,7 +85,7 @@
 
                             for (var documentIndex = 0, documentCount = documents.list.length; documentIndex < documentCount; ++documentIndex) {
                                 var document = documents.list[documentIndex];
-                                if (document.type == "document" || document.type == "message") {
+                                if (document.type == "document") {
                                     var views = '(' + document.viewCount  + (document.viewCount == 1 ? ' view' : ' views') + ')';
                                     documentsTable += '<li><a href="' + document.resources.html.ref + '">' + document.subject + ' - ' + document.author.name.givenName + ' ' + document.author.name.familyName + ' ' + views + '</a></li>';
                                 }
@@ -94,7 +94,7 @@
                             documentsTable += "</ul>";
 
                             // keep a copy of the results
-                            cache[topicId].text = documentsTable;
+                            mojoCache[topicId].text = documentsTable;
 
                             content.append(jQuery(documentsTable));
 
@@ -106,9 +106,9 @@
 
         // listen for the kcs popover
         jQuery(window).bind("jboss_opened", function(event){
-            if (!cache[unsafeWindow.eventDetails.topicId]) {
+            if (!mojoCache[unsafeWindow.eventDetails.topicId]) {
 
-                cache[unsafeWindow.eventDetails.topicId] = {contentFixed: true};
+                mojoCache[unsafeWindow.eventDetails.topicId] = {contentFixed: true};
 
                 var content = jQuery('#' + unsafeWindow.eventDetails.popoverId + "content");
                 content.empty();
@@ -116,9 +116,9 @@
                 var buttonId = unsafeWindow.eventDetails.popoverId + 'contentbutton';
 
                 content.append(jQuery('<p>This popover displays Mojo documents that match the keywords in the topic.</p>\
-                        <p>To use this menu you first need to log into into <a href="http://community.jboss.org">Jboss.org</a>.</p>\
+                        <p>To use this menu you first need to log into into <a href="http://mojo.redhat.com">Mojo</a>.</p>\
                         <div style="display:table-cell; text-align: center; vertical-align:middle; width: 746px;">\
-                            <button id="' + buttonId + '" style="margin-top: 32px;" type="button" class="btn btn-primary">Get Content</button>\
+                            <button id="' + buttonId + '" style="margin-top: 32px;" type="button" class="btn btn-primary">Get Documents</button>\
                         </div>'));
 
                 addClickFunction(buttonId, unsafeWindow.eventDetails.topicId, unsafeWindow.eventDetails.popoverId);
