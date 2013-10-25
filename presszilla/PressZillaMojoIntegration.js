@@ -4,7 +4,7 @@
 (function() {
     if (isDocbuilderWindow()) {
 
-        var solutionsCache = {};
+        var mojoCache = {};
 
         function addClickFunction(buttonId, topicId, popoverId) {
             jQuery('#' + buttonId).click(function() {
@@ -74,7 +74,7 @@
 
                         if (solutionsResponse.status == 401) {
 
-                            solutionsCache[topicId].fetching = false;
+                            mojoCache[topicId].fetching = false;
 
                             var buttonId = popoverId + 'contentbutton';
 
@@ -104,7 +104,7 @@
                                 solutionsTable += "</ul>";
 
                                 // keep a copy of the results
-                                solutionsCache[topicId].text = solutionsTable;
+                                mojoCache[topicId].text = solutionsTable;
 
                                 content.append(jQuery(solutionsTable));
                             }
@@ -115,21 +115,21 @@
         }
 
         // listen for the kcs popover
-        jQuery(window).bind("solutions_opened", function(event){
-            if (!solutionsCache[unsafeWindow.eventDetails.topicId]) {
+        jQuery(window).bind("mojo_opened", function(event){
+            if (!mojoCache[unsafeWindow.eventDetails.topicId]) {
 
-                solutionsCache[unsafeWindow.eventDetails.topicId] = {contentFixed: true};
+                mojoCache[unsafeWindow.eventDetails.topicId] = {contentFixed: true};
 
                 var content = jQuery('#' + unsafeWindow.eventDetails.popoverId + "content");
                 content.empty();
 
                 var buttonId = unsafeWindow.eventDetails.popoverId + 'contentbutton';
 
-                content.append(jQuery('<p>This popover displays KCS solutions that match the keywords in the topic.</p>\
-                        <p>If you are running Chrome, you first need to log into into the <a href="http://access.redhat.com">Red Hat Customer Portal</a>.</p>\
-                        <p>If you are running Firefox, you may be prompted for a username and password. These credentials are the ones that you use to log into the <a href="http://access.redhat.com">Red Hat Customer Portal</a></p>\
+                content.append(jQuery('<p>This popover displays Mojo documents that match the keywords in the topic.</p>\
+                        <p>If you are running Chrome, you first need to log into into <a href="http://mojo.redhat.com">Mojo</a>.</p>\
+                        <p>If you are running Firefox, you may be prompted for a username and password. These credentials are the ones that you use to log into <a href="http://mojo.redhat.com">Mojo</a>.</p>\
                         <div style="display:table-cell; text-align: center; vertical-align:middle; width: 746px;">\
-                            <button id="' + buttonId + '" style="margin-top: 32px;" type="button" class="btn btn-primary">Get Solutions</button>\
+                            <button id="' + buttonId + '" style="margin-top: 32px;" type="button" class="btn btn-primary">Get Documents</button>\
                         </div>'));
 
                 addClickFunction(buttonId, unsafeWindow.eventDetails.topicId, unsafeWindow.eventDetails.popoverId);
