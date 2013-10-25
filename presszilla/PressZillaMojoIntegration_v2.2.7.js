@@ -66,8 +66,6 @@
                     onload: function(solutionsResponse) {
                         logToConsole(solutionsResponse);
 
-
-
                         if (solutionsResponse.status == 401) {
 
                             mojoCache[topicId].fetchingDocuments = false;
@@ -103,10 +101,8 @@
 
                                 for (var documentIndex = 0, documentCount = documents.list.length; documentIndex < documentCount; ++documentIndex) {
                                     var document = documents.list[documentIndex];
-                                    if (document.type == "document") {
-                                        var views = '(' + document.viewCount  + (document.viewCount == 1 ? ' view' : ' views') + ')';
-                                        documentsTable += '<li><a href="' + document.resources.html.ref + '">' + document.subject + ' - ' + document.author.name.givenName + ' ' + document.author.name.familyName + ' ' + views + '</a></li>';
-                                    }
+                                    var views = document.viewCount ? (' (' + document.viewCount  + (document.viewCount == 1 ? ' view' : ' views') + ')') : '';
+                                    documentsTable += '<li><a href="' + document.resources.html.ref + '">' + document.subject + ' - ' + document.author.name.givenName + ' ' + document.author.name.familyName + views + '</a></li>';
                                 }
 
                                 documentsTable += "</ul>";
