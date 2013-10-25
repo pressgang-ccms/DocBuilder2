@@ -115,6 +115,8 @@
                         }
                     }(topicId, popoverId)
                 });
+            } else {
+                logToConsole("Already searching for solutions")
             }
         }
 
