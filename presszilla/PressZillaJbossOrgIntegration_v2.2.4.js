@@ -14,7 +14,7 @@
                 jQuery('#' + buttonId).removeClass('btn-danger');
                 jQuery('#' + buttonId).addClass('btn-primary');
                 fetchKeywords(topicId, function(topic){
-                    getSolutions(topic, 100, topicId, popoverId);
+                    getSolutions(topic, 100, topicId, popoverId, false);
                 }, function () {
                     handleError(popoverId);
                 });
@@ -35,8 +35,8 @@
          * @param topicId The topic id
          * @param popoverId The popover id
          */
-        function getSolutions(topic, position, topicId, popoverId) {
-            if (!cache[topicId].fetchingDocuments) {
+        function getSolutions(topic, position, topicId, popoverId, resend) {
+            if (!cache[topicId].fetchingDocuments || resend) {
 
                 cache[topicId].fetchingDocuments = true;
 
