@@ -42,12 +42,12 @@
 
                 var keywords = "";
                 for (var keywordIndex = 0, keywordCount = topic.keywords.length; keywordIndex < keywordCount; ++keywordIndex){
-                    if (keywordIndex / keywordCount * 100 > position) {
-                        break;
-                    }
-
                     if (keywords.length != 0) {
-                            keywords += ",";
+                        if (keywordIndex / keywordCount * 100 < position) {
+                            keywords += " AND ";
+                        } else {
+                            keywords += " OR ";
+                        }
                     }
                     keywords += topic.keywords[keywordIndex];
                 }

@@ -14,7 +14,7 @@
                 jQuery('#' + buttonId).removeClass('btn-danger');
                 jQuery('#' + buttonId).addClass('btn-primary');
                 fetchKeywords(topicId, function(topic){
-                    getSolutions(topic, topicId, popoverId);
+                    getSolutions(topic, 100, topicId, popoverId, false);
                 }, function () {
                     handleError(popoverId);
                 });
@@ -35,15 +35,19 @@
          * @param topicId The topic id
          * @param popoverId The popover id
          */
-        function getSolutions(topic, topicId, popoverId) {
-            if (!mojoCache[topicId].fetchingDocuments) {
+        function getSolutions(topic, position, topicId, popoverId, resend) {
+            if (!mojoCache[topicId].fetchingDocuments || resend) {
 
                 mojoCache[topicId].fetchingDocuments = true;
 
                 var keywords = "";
                 for (var keywordIndex = 0, keywordCount = topic.keywords.length; keywordIndex < keywordCount; ++keywordIndex){
                     if (keywords.length != 0) {
-                            keywords += ",";
+                        if (keywordIndex / keywordCount * 100 < position) {
+                            keywords += " AND ";
+                        } else {
+                            keywords += " OR ";
+                        }
                     }
                     keywords += topic.keywords[keywordIndex];
                 }
@@ -62,14 +66,16 @@
                     onload: function(solutionsResponse) {
                         logToConsole(solutionsResponse);
 
-                        var content = jQuery('#' + popoverId + "content");
-                        content.empty();
+
 
                         if (solutionsResponse.status == 401) {
 
                             mojoCache[topicId].fetchingDocuments = false;
 
                             var buttonId = popoverId + 'contentbutton';
+
+                            var content = jQuery('#' + popoverId + "content");
+                            content.empty();
 
                             content.append(jQuery('<p>You need to be logged into <a href="http://mojo.redhat.com">Mojo</a> for this menu to work.</p>\
                                     <div style="display:table-cell; text-align: center; vertical-align:middle; width: 746px;">\
@@ -80,23 +86,39 @@
                         } else if (solutionsResponse.status == 200) {
                             //https://developers.jivesoftware.com/community/message/5127#5127
                             var documents = JSON.parse(solutionsResponse.responseText.replace(/^throw [^;]*;/, ''));
+                            if (documents.list.length == 0) {
+                                logToConsole("Empty results returned");
 
-                            var documentsTable = "<ul>";
+                                if (position > 0) {
+                                    logToConsole("Searching with fewer mandatory keywords");
+                                    getSolutions(topic, position - 25, topicId, popoverId, true);
+                                } else {
+                                    var content = jQuery('#' + popoverId + "content");
+                                    content.empty();
 
-                            for (var documentIndex = 0, documentCount = documents.list.length; documentIndex < documentCount; ++documentIndex) {
-                                var document = documents.list[documentIndex];
-                                if (document.type == "document") {
-                                    var views = '(' + document.viewCount  + (document.viewCount == 1 ? ' view' : ' views') + ')';
-                                    documentsTable += '<li><a href="' + document.resources.html.ref + '">' + document.subject + ' - ' + document.author.name.givenName + ' ' + document.author.name.familyName + ' ' + views + '</a></li>';
+                                    content.append(jQuery('<p>No results found.</p>'));
                                 }
+                            } else {
+                                var documentsTable = "<ul>";
+
+                                for (var documentIndex = 0, documentCount = documents.list.length; documentIndex < documentCount; ++documentIndex) {
+                                    var document = documents.list[documentIndex];
+                                    if (document.type == "document") {
+                                        var views = '(' + document.viewCount  + (document.viewCount == 1 ? ' view' : ' views') + ')';
+                                        documentsTable += '<li><a href="' + document.resources.html.ref + '">' + document.subject + ' - ' + document.author.name.givenName + ' ' + document.author.name.familyName + ' ' + views + '</a></li>';
+                                    }
+                                }
+
+                                documentsTable += "</ul>";
+
+                                // keep a copy of the results
+                                mojoCache[topicId].text = documentsTable;
+
+                                var content = jQuery('#' + popoverId + "content");
+                                content.empty();
+
+                                content.append(jQuery(documentsTable));
                             }
-
-                            documentsTable += "</ul>";
-
-                            // keep a copy of the results
-                            mojoCache[topicId].text = documentsTable;
-
-                            content.append(jQuery(documentsTable));
 
                         }
                     }
