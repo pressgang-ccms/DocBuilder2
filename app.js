@@ -749,46 +749,61 @@ function getListOfSpecsToBuild() {
  * @param done a function to call when the latest file is found
  */
 function getLatestFile (dir, filter, done) {
-	fs.readdir(dir, function (error, list) {
-		if (error) {
-			return done(error);
-		}
+	try {
+        fs.readdir(dir, function (error, list) {
+            if (error) {
+                return done(error);
+            }
 
-		var i = 0;
+            var i = 0;
 
-		(function next (latest, latestFile) {
-			var file = list[i++];
+            (function next (latest, latestFile, allFiles) {
+                var file = list[i++];
+                var fullFile = dir + '/' + file;
 
-			if (!file) {
-				return done(null, latest, latestFile);
-			}
+                if (!file) {
+                    /*
+                        Clear out any old files
+                     */
+                    for (var allFilesIndex = 0, allFilesCount = allFiles.length; allFilesIndex < allFilesCount; ++allFilesIndex) {
+                        var bookFile = allFiles[allFilesIndex];
+                        if (bookFile.path != fullFile &&
+                            bookFile.modified.isBefore(moment().subtract(1, 'd'))) {
+                            fs.unlinkSync(bookFile);
+                        }
+                    }
 
-			if (file.toString().match(filter)) {
+                    return done(null, latest, latestFile);
+                }
 
-				var fullFile = dir + '/' + file;
+                if (file.toString().match(filter)) {
 
-				fs.stat(fullFile, function (error, stat) {
+                    fs.stat(fullFile, function (error, stat) {
 
-					if (stat && stat.isDirectory()) {
-						walk(file, function (error) {
-							next();
-						});
-					} else {
+                        if (stat && stat.isDirectory()) {
+                            walk(file, function (error) {
+                                next(latest, latestFile);
+                            });
+                        } else {
+                            var lastModified = moment(stat.mtime);
+                            allFiles.push({path: fullFile, modified: lastModified});
 
-						var lastModified = moment(stat.mtime);
-						if (!latest || lastModified.isAfter(latest)) {
-							latest = lastModified;
-							latestFile = file;
-						}
+                            if (!latest || lastModified.isAfter(latest)) {
+                                latest = lastModified;
+                                latestFile = file;
+                            }
 
-						next(latest, latestFile);
-					}
-				});
-			} else {
-				next(latest, latestFile);
-			}
-		})();
-	});
+                            next(latest, latestFile);
+                        }
+                    });
+                } else {
+                    next(latest, latestFile);
+                }
+            })(null, null, []);
+        });
+    } catch (ex) {
+        return done(ex);
+    }
 };
 
 getListOfSpecsToBuild();
