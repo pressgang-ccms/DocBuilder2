@@ -118,7 +118,7 @@
                                         <ul class="dropdown-menu" role="menu">\
                                             <li><a href="' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '">Open in Bugzilla</a></li>';
 
-                                if (topicId) {
+                                if (topicId && unsafeWindow.topicSections[topicId]) {
                                     link += '<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">View Topic</a></li>'
                                 }
                                 link += '</ul>\
