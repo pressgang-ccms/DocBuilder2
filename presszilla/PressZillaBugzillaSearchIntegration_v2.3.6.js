@@ -121,16 +121,16 @@
                                 jQuery('#releasePendingBugzillaBugsItems').append(jQuery(link));
                             }
 
-                            $('#newBugzillaBugs').append($('<span class="badge pull-right">' + newCount + '</span>'));
-                            $('#assignedBugzillaBugs').append($('<span class="badge pull-right">' + assignedCount + '</span>'));
-                            $('#postBugzillaBugs').append($('<span class="badge pull-right">' + postCount + '</span>'));
-                            $('#modifiedBugzillaBugs').append($('<span class="badge pull-right">' + modifiedCount + '</span>'));
-                            $('#onqaBugzillaBugs').append($('<span class="badge pull-right">' + onqaCount + '</span>'));
-                            $('#verifiedBugzillaBugs').append($('<span class="badge pull-right">' + verifiedCount + '</span>'));
-                            $('#closedBugzillaBugs').append($('<span class="badge pull-right">' + closedCount + '</span>'));
-                            $('#releasePendingBugzillaBugs').append($('<span class="badge pull-right">' + releasePendingCount + '</span>'));
-
                         }
+
+                        $('#newBugzillaBugs').append($('<span class="badge pull-right">' + newCount + '</span>'));
+                        $('#assignedBugzillaBugs').append($('<span class="badge pull-right">' + assignedCount + '</span>'));
+                        $('#postBugzillaBugs').append($('<span class="badge pull-right">' + postCount + '</span>'));
+                        $('#modifiedBugzillaBugs').append($('<span class="badge pull-right">' + modifiedCount + '</span>'));
+                        $('#onqaBugzillaBugs').append($('<span class="badge pull-right">' + onqaCount + '</span>'));
+                        $('#verifiedBugzillaBugs').append($('<span class="badge pull-right">' + verifiedCount + '</span>'));
+                        $('#closedBugzillaBugs').append($('<span class="badge pull-right">' + closedCount + '</span>'));
+                        $('#releasePendingBugzillaBugs').append($('<span class="badge pull-right">' + releasePendingCount + '</span>'));
                     }
                 });
 
