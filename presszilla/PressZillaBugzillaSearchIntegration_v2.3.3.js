@@ -68,6 +68,7 @@
                     onload: function(response) {
 
                         logToConsole("Got Bugzilla bugs");
+                        logToConsole(response);
 
                         var responseJson = JSON.parse(response.responseText);
                         var bugs = responseJson.result.bugs;
