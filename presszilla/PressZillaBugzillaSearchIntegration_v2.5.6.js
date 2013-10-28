@@ -257,8 +257,13 @@
             content.append(jQuery('<p>This popover displays Bugzilla bugs raised against this topic.</p>\
                         <p>The list of bugs is still being retrieved. Please try again in a few seconds.</p>'));
         } else {
-            for (var bugIndex = 0, bugCount = cache[topicId].length; bugIndex < bugCount; ++bugIndex) {
-                content.append(jQuery('<a style="display: block" href="' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '">[' + bug.id + '] ' + bug.summary + '</a>'));
+            if (cache[topicId].length == 0) {
+                content.append(jQuery('<p>No bugs found.</p>'));
+            } else {
+                for (var bugIndex = 0, bugCount = cache[topicId].length; bugIndex < bugCount; ++bugIndex) {
+                    var bug = cache[topicId][bugIndex];
+                    content.append(jQuery('<a style="display: block" href="' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '">[' + bug.id + '] ' + bug.summary + '</a>'));
+                }
             }
         }
     });
