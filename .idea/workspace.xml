@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.2.8.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.2.9.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZilla.user.js" afterPath="$PROJECT_DIR$/PressZilla.user.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.2.9.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.3.0.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382927459581" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382927721730" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382927000748" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -137,7 +136,7 @@
     <file path="/PressZillaJbossOrgIntegration_v2.2.1.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382673253554" ignored="false" />
     <file path="/PressZillaMojoIntegration_v2.1.7.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382674059811" ignored="false" />
     <file path="/PressZillaJbossOrgIntegration_v2.2.6.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382674460936" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSVisualisation/.idea/workspace.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382927718663" ignored="false" />
+    <file path="$PROJECT_DIR$/../PressGangCCMSVisualisation/.idea/workspace.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382927831094" ignored="false" />
     <file path="/PressZillaBugzillaSearchIntegration_v2.2.8.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382927371582" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -225,7 +224,7 @@
       <file leaf-file-name="PressZilla.user.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="21" selection-start="1277" selection-end="1277" vertical-scroll-proportion="0.30337077">
+            <state line="17" column="107" selection-start="1249" selection-end="1252" vertical-scroll-proportion="0.28651685">
               <folding />
             </state>
           </provider>
@@ -391,10 +390,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaBugzillaSearchIntegration_v2.2.9.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.2.9.js">
+      <file leaf-file-name="PressZillaBugzillaSearchIntegration_v2.3.0.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.3.0.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="29" selection-start="143" selection-end="143" vertical-scroll-proportion="0.0">
+            <state line="69" column="55" selection-start="2744" selection-end="2744" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -468,7 +467,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.1.7.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.1.8.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.1.9.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.2.1.js" />
@@ -484,6 +482,7 @@
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.2.8.js" />
         <option value="$PROJECT_DIR$/PressZilla.user.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.2.9.js" />
       </list>
     </option>
   </component>
@@ -1696,7 +1695,11 @@
       <created>1382927461529</created>
       <updated>1382927461529</updated>
     </task>
-    <option name="localTasksCounter" value="239" />
+    <task id="LOCAL-00239" summary="Working on Bugzilla searching in PressZilla">
+      <created>1382927722968</created>
+      <updated>1382927722968</updated>
+    </task>
+    <option name="localTasksCounter" value="240" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2052,9 +2055,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.2.9.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.3.0.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="29" selection-start="143" selection-end="143" vertical-scroll-proportion="0.0">
+        <state line="69" column="55" selection-start="2744" selection-end="2744" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -2063,7 +2066,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="21" selection-start="1277" selection-end="1277" vertical-scroll-proportion="0.30337077">
+        <state line="17" column="107" selection-start="1249" selection-end="1252" vertical-scroll-proportion="0.28651685">
           <folding />
         </state>
       </provider>

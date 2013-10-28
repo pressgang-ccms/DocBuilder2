@@ -23,6 +23,9 @@
         ontimeout: function() {handleFailure("ontimeout");},
         onload: function(topicId) {
             return function(specNodesResponse) {
+
+                logToConsole("Got spec nodes");
+
                 var nodes = JSON.parse(specNodesResponse.responseText);
                 var bzProduct = "";
                 var bzComponent = "";
@@ -63,6 +66,9 @@
                     onerror: function() {handleFailure("onerror");},
                     ontimeout: function() {handleFailure("ontimeout");},
                     onload: function(response) {
+
+                        logToConsole("Got Bugzilla bugs");
+
                         var responseJson = JSON.parse(response.responseText);
                         var bugs = responseJson.result.bugs;
 
