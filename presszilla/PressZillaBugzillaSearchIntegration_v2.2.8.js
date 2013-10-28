@@ -36,7 +36,21 @@
                     }
                 }
 
-                var data = '{"method":"Bug.search","params":[{"product": "PressGang CCMS", "component":"Documentation"}], "id":1}';
+                var data = '{"method":"Bug.search","params":[{';
+
+                if (bzProduct != "") {
+                    data += '"product": "' + bzProduct + '"';
+                }
+
+                if (bzComponent != "") {
+                    data += '"component": "' + bzComponent + '"';
+                }
+
+                if (bzVersion != "") {
+                    data += '"version": "' + bzVersion + '"';
+                }
+
+                data = ', "id":1}';
 
                 GM_xmlhttpRequest({
                     method: 'POST',
