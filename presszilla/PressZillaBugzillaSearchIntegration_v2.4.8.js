@@ -123,7 +123,6 @@
                                     }
                                     link += '</ul>\
                                     </div>';
-                                    var link = '<li><a href="' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '">' + bug.summary + '</a></li>';
                                     jQuery('#newBugzillaBugsItems').append(jQuery(link));
                                 } else if (bug.status == "ASSIGNED") {
                                     ++assignedCount;
