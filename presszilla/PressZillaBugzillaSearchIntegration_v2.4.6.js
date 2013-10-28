@@ -15,15 +15,6 @@
     var bugzillaBaseUrl = "https://bugzilla.redhat.com/"
     var bugzillaApiUrl = bugzillaBaseUrl + "jsonrpc.cgi";
 
-    jQuery('#newBugzillaBugsPlaceholder').remove();
-    jQuery('#assignedBugzillaBugsPlaceholder').remove();
-    jQuery('#modifiedBugzillaBugsPlaceholder').remove();
-    jQuery('#postBugzillaBugsPlaceholder').remove();
-    jQuery('#onqaBugzillaBugsPlaceholder').remove();
-    jQuery('#verifiedBugzillaBugsPlaceholder').remove();
-    jQuery('#releasePendingBugzillaBugsPlaceholder').remove();
-    jQuery('#closedBugzillaBugsPlaceholder').remove();
-
     setTimeout(function() {
         GM_xmlhttpRequest({
             method: 'GET',
@@ -88,6 +79,15 @@
 
                             logToConsole("Got Bugzilla bugs");
                             logToConsole(response);
+
+                            jQuery('#newBugzillaBugsPlaceholder').remove();
+                            jQuery('#assignedBugzillaBugsPlaceholder').remove();
+                            jQuery('#modifiedBugzillaBugsPlaceholder').remove();
+                            jQuery('#postBugzillaBugsPlaceholder').remove();
+                            jQuery('#onqaBugzillaBugsPlaceholder').remove();
+                            jQuery('#verifiedBugzillaBugsPlaceholder').remove();
+                            jQuery('#releasePendingBugzillaBugsPlaceholder').remove();
+                            jQuery('#closedBugzillaBugsPlaceholder').remove();
 
                             var responseJson = JSON.parse(response.responseText);
                             var bugs = responseJson.result.bugs;
