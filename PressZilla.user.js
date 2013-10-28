@@ -10,11 +10,12 @@
 // @include     https://docbuilder.ecs.eng.bne.redhat.com/*
 // @require     http://code.jquery.com/jquery-2.0.3.min.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaCommonUtils_v2.1.js
-// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaKeywordExtraction_v2.1.js
+// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaKeywordExtraction_v2.2.8.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaIntegration_v2.1.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaSolutionsIntegration_v2.1.4.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaMojoIntegration_v2.2.7.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaJbossOrgIntegration_v2.2.7.js
+// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaSearchIntegration_v2.2.8.js
 // @version     2.2.7
 // @grant       GM_xmlhttpRequest
 // @grant       unsafeWindow

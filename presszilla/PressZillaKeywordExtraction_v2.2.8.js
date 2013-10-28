@@ -67,7 +67,7 @@ function fetchKeywords(topicId, successCallback, failureCallback) {
                         for (var nodeIndex = 0, nodeCount = nodes.items.length; nodeIndex < nodeCount; ++nodeIndex) {
                             var node = nodes.items[nodeIndex].item;
                             if (node.title == "Product") {
-                                var product = node.additionalText;
+                                product = node.additionalText;
                                 break;
                             }
                         }

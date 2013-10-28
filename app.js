@@ -782,7 +782,7 @@ function getLatestFile (dir, filter, done) {
 
                         if (stat && stat.isDirectory()) {
                             walk(file, function (error) {
-                                next(latest, latestFile);
+                                next(latest, latestFile, allFiles);
                             });
                         } else {
                             var lastModified = moment(stat.mtime);
@@ -793,11 +793,11 @@ function getLatestFile (dir, filter, done) {
                                 latestFile = file;
                             }
 
-                            next(latest, latestFile);
+                            next(latest, latestFile, allFiles);
                         }
                     });
                 } else {
-                    next(latest, latestFile);
+                    next(latest, latestFile, allFiles);
                 }
             })(null, null, []);
         });
