@@ -115,7 +115,7 @@
 
                                 var link = '<div class="btn-group" style="margin-bottom: 8px;">\
                                         <button type="button" class="btn ' + style + '" style="width:230px; white-space: normal;" onclick="javascript:window.open(\'' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '\')">' + bug.summary + '</button>\
-                                        <button type="button" class="btn ' + style + 'dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
+                                        <button type="button" class="btn ' + style + ' dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
                                             <span class="caret"></span>\
                                         </button>\
                                         <ul class="dropdown-menu" role="menu">\
