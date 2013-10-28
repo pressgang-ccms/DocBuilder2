@@ -301,7 +301,6 @@ function addOverlayIcons(topicId, RoleCreatePara) {
         createSolutionsPopover(topicId, bubbleDiv);
         createMojoPopover(topicId, bubbleDiv);
         createJBossPopover(topicId, bubbleDiv);
-        createBugzillaPopover(topicId, bubbleDiv);
     }
 }
 
