@@ -4,7 +4,7 @@
 
 (function() {
 
-    logToConsole("Searching Bugzilla");
+    var cache = {};
 
     function handleFailure(message) {
 
@@ -111,6 +111,12 @@
                                 if (matches) {
                                     topicId = matches[1];
                                     style = "btn-info";
+
+                                    if (!cache[topicId]) {
+                                        cache[topicId] = [];
+                                    }
+
+                                    cache[topicId].push(bug);
                                 }
 
                                 var link = '<div class="btn-group" style="margin-bottom: 8px;">\
@@ -126,6 +132,7 @@
                                 }
                                 link += '</ul>\
                                     </div>';
+
 
                                 if (bug.status == "NEW") {
                                     ++newCount;
@@ -234,9 +241,26 @@
                         }
                     });
                 }
-
             }
         });
     }, 0);
+
+    // listen for the bug popover
+    jQuery(window).bind("bugzilla_opened", function(event){
+        var topicId = unsafeWindow.eventDetails.topicId;
+        var popoverId = unsafeWindow.eventDetails.popoverId;
+
+        var content = jQuery('#' + popoverId + "content");
+        content.empty();
+
+        if (!cache[topicId]) {
+            content.append(jQuery('<p>This popover displays Bugzilla bugs raised against this topic.</p>\
+                        <p>The list of bugs is still being retrieved. Please try again in a few seconds.</p>'));
+        } else {
+            for (var bugIndex = 0, bugCount = cache[topicId].length; bugIndex < bugCount; ++bugIndex) {
+                content.append(jQuery('<a style="display: block" href="' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '">[' + bug.id + '] ' + bug.summary + '</a>'));
+            }
+        }
+    });
 
 })();
