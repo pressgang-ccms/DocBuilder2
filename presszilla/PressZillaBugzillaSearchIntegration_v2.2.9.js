@@ -4,6 +4,8 @@
 
 (function() {
 
+    logToConsole("Searching Bugzilla");
+
     function handleFailure(message) {
 
     }
