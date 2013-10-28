@@ -103,16 +103,19 @@
                                     Find the topic id from the environment field
                                  */
                                 var topicId = null;
+                                var style = "btn-default";
 
                                 var matches = /Topic ID: (\d+)/.exec(bug.cf_environment);
 
+
                                 if (matches) {
                                     topicId = matches[1];
+                                    style = "btn-info";
                                 }
 
                                 var link = '<div class="btn-group" style="margin-bottom: 8px;">\
-                                        <button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:window.open(\'' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '\')">' + bug.summary + '</button>\
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
+                                        <button type="button" class="btn ' + style + '" style="width:230px; white-space: normal;" onclick="javascript:window.open(\'' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '\')">' + bug.summary + '</button>\
+                                        <button type="button" class="btn ' + style + 'dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
                                             <span class="caret"></span>\
                                         </button>\
                                         <ul class="dropdown-menu" role="menu">\
