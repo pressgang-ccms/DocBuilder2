@@ -140,7 +140,15 @@
                         $('#releasePendingBugzillaBugs').append($('<span class="badge pull-right">' + releasePendingCount + '</span>'));
 
                         var labels = ["New", "Assigned", "Post", "Modified", "On QA", "Verified", "Closed", "Release Pending"];
-                        var colors = [Raphael.rgb(255, 0, 0), Raphael.rgb(255, 153, 102), Raphael.rgb(102, 255, 102), Raphael.rgb(0, 204, 153), Raphael.rgb(0, 102, 255), Raphael.rgb(0, 102, 255), Raphael.rgb(0, 0, 0), Raphael.rgb(102, 0, 102)];
+
+                        var colors = [Raphael.rgb(255, 0, 0),
+                            Raphael.rgb(255, 153, 102),
+                            Raphael.rgb(102, 255, 102),
+                            Raphael.rgb(0, 204, 153),
+                            Raphael.rgb(0, 102, 255),
+                            Raphael.rgb(0, 102, 255),
+                            Raphael.rgb(0, 0, 0),
+                            Raphael.rgb(102, 0, 102)];
 
                         var values = [
                             newCount ,
@@ -152,13 +160,14 @@
                             closedCount,
                             releasePendingCount];
 
-                        var offscreenDiv = $('<div id="bugzillaBugsChart"></div>');
+                        var offscreenDiv = jQuery('<div id="bugzillaBugsChart"></div>');
                         offscreenDiv.appendTo(jQuery('#offscreenRendering'));
 
                         setTimeout(function(offscreenDiv, values, labels, colors) {
                             return function(){
+                                logToConsole("Building Bugzilla chart");
                                 unsafeWindow.Raphael("bugzillaBugsChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 30, 30, 16, "#fff");
-                                $(offscreenDiv).appendTo($("#bugzillaBugsPanel"));
+                                offscreenDiv.appendTo(jQuery("#bugzillaBugsPanel"));
                             }
                         }(offscreenDiv, values, labels, colors), 0);
                     }
