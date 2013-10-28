@@ -2051,14 +2051,14 @@ function buildMenu() {
 				<div class="panel-body ">\
 		            <ul id="bugzillaBugsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); newBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'newBugzillaBugs\');">New</a></li>\
-						<li><a href="javascript:hideAllMenus(); assignedBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'assignedBugzillaBugs\');">Assigned</a></li>\
-						<li><a href="javascript:hideAllMenus(); postBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'postBugzillaBugs\');">Post</a></li>\
-						<li><a href="javascript:hideAllMenus(); modifiedBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'modifiedBugzillaBugs\');">Modified</a></li>\
-						<li><a href="javascript:hideAllMenus(); onqaBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'onqaBugzillaBugs\');">On QA</a></li>\
-						<li><a href="javascript:hideAllMenus(); verifiedBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'verifiedBugzillaBugs\');">Verified</a></li>\
-						<li><a href="javascript:hideAllMenus(); releasePendingBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'releasePendingBugzillaBugs\');">Release Pending</a></li>\
-						<li><a href="javascript:hideAllMenus(); closedBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'closedBugzillaBugs\');">Closed</a></li>\
+						<li><a id="newBugzillaBugs" href="javascript:hideAllMenus(); newBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'newBugzillaBugs\');">New</a></li>\
+						<li><a id="assignedBugzillaBugs" href="javascript:hideAllMenus(); assignedBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'assignedBugzillaBugs\');">Assigned</a></li>\
+						<li><a id="postBugzillaBugs" href="javascript:hideAllMenus(); postBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'postBugzillaBugs\');">Post</a></li>\
+						<li><a id="modifiedBugzillaBugs" href="javascript:hideAllMenus(); modifiedBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'modifiedBugzillaBugs\');">Modified</a></li>\
+						<li><a id="onqaBugzillaBugs" href="javascript:hideAllMenus(); onqaBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'onqaBugzillaBugs\');">On QA</a></li>\
+						<li><a id="verifiedBugzillaBugs" href="javascript:hideAllMenus(); verifiedBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'verifiedBugzillaBugs\');">Verified</a></li>\
+						<li><a id="releasePendingBugzillaBugs" href="javascript:hideAllMenus(); releasePendingBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'releasePendingBugzillaBugs\');">Release Pending</a></li>\
+						<li><a id="closedBugzillaBugs" href="javascript:hideAllMenus(); closedBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'closedBugzillaBugs\');">Closed</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -2080,6 +2080,111 @@ function buildMenu() {
 		</div>');
     $(document.body).append(newBugzillaBugs);
     sideMenus.push(newBugzillaBugs);
+
+    assignedBugzillaBugs = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Assigned Bugzilla Bugs</div>\
+				<div class="panel-body ">\
+		            <ul id="assignedBugzillaBugsItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">&lt;- Bugzilla Bugs</a></li>\
+						<li><a id="assignedBugzillaBugsPlaceholder" href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>');
+    $(document.body).append(assignedBugzillaBugs);
+    sideMenus.push(assignedBugzillaBugs);
+
+    postBugzillaBugs = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Post Bugzilla Bugs</div>\
+				<div class="panel-body ">\
+		            <ul id="postBugzillaBugsItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">&lt;- Bugzilla Bugs</a></li>\
+						<li><a id="postBugzillaBugsPlaceholder" href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>');
+    $(document.body).append(postBugzillaBugs);
+    sideMenus.push(postBugzillaBugs);
+
+    modifiedBugzillaBugs = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Modified Bugzilla Bugs</div>\
+				<div class="panel-body ">\
+		            <ul id="modifiedBugzillaBugsItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">&lt;- Bugzilla Bugs</a></li>\
+						<li><a id="modifiedBugzillaBugsPlaceholder" href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>');
+    $(document.body).append(modifiedBugzillaBugs);
+    sideMenus.push(modifiedBugzillaBugs);
+
+    onqaBugzillaBugs = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">On QA Bugzilla Bugs</div>\
+				<div class="panel-body ">\
+		            <ul id="onqaBugzillaBugsItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">&lt;- Bugzilla Bugs</a></li>\
+						<li><a id="onqaBugzillaBugsPlaceholder" href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>');
+    $(document.body).append(onqaBugzillaBugs);
+    sideMenus.push(onqaBugzillaBugs);
+
+    verifiedBugzillaBugs = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Verified Bugzilla Bugs</div>\
+				<div class="panel-body ">\
+		            <ul id="verifiedBugzillaBugsItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">&lt;- Bugzilla Bugs</a></li>\
+						<li><a id="verifiedBugzillaBugsPlaceholder" href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>');
+    $(document.body).append(verifiedBugzillaBugs);
+    sideMenus.push(verifiedBugzillaBugs);
+
+    closedBugzillaBugs = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">New Bugzilla Bugs</div>\
+				<div class="panel-body ">\
+		            <ul id="closedBugzillaBugsItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">&lt;- Bugzilla Bugs</a></li>\
+						<li><a id="closedBugzillaBugsPlaceholder" href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>');
+    $(document.body).append(closedBugzillaBugs);
+    sideMenus.push(closedBugzillaBugs);
+
+    releasePendingBugzillaBugs = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Release Pending Bugzilla Bugs</div>\
+				<div class="panel-body ">\
+		            <ul id="releasePendingBugzillaBugsItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">&lt;- Bugzilla Bugs</a></li>\
+						<li><a id="releasePendingBugzillaBugsPlaceholder" href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>');
+    $(document.body).append(releasePendingBugzillaBugs);
+    sideMenus.push(releasePendingBugzillaBugs);
 
 	hideAllMenus();
 
@@ -2152,7 +2257,28 @@ function buildMenu() {
     } else if (lastMenu == "newBugzillaBugs") {
         newBugzillaBugs.show();
         showMenu();
-    } else {
+    } else if (lastMenu == "assignedBugzillaBugs") {
+        assignedBugzillaBugs.show();
+        showMenu();
+    }else if (lastMenu == "postBugzillaBugs") {
+        postBugzillaBugs.show();
+        showMenu();
+    }else if (lastMenu == "modifiedBugzillaBugs") {
+        modifiedBugzillaBugs.show();
+        showMenu();
+    }else if (lastMenu == "onqaBugzillaBugs") {
+        onqaBugzillaBugs.show();
+        showMenu();
+    }else if (lastMenu == "verifiedBugzillaBugs") {
+        verifiedBugzillaBugs.show();
+        showMenu();
+    }else if (lastMenu == "closedBugzillaBugs") {
+        closedBugzillaBugs.show();
+        showMenu();
+    }else if (lastMenu == "releasePendingBugzillaBugs") {
+        releasePendingBugzillaBugs.show();
+        showMenu();
+    }else {
 		menuIcon.show();
 		hideMenu();
 	}
