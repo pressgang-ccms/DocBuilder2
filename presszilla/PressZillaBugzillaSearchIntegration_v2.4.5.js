@@ -148,7 +148,7 @@
                             unsafeWindow.Raphael.rgb(102, 255, 102),
                             unsafeWindow.Raphael.rgb(0, 204, 153),
                             unsafeWindow.Raphael.rgb(0, 102, 255),
-                            unsafeWindow.Raphael.rgb(0, 102, 255),
+                            unsafeWindow.Raphael.rgb(255,102,255),
                             unsafeWindow.Raphael.rgb(0, 0, 0),
                             unsafeWindow.Raphael.rgb(102, 0, 102)];
 
