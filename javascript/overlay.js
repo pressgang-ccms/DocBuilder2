@@ -297,6 +297,7 @@ function addOverlayIcons(topicId, RoleCreatePara) {
         createUrlsPopover(topicId, bubbleDiv);
         createDescriptionPopover(topicId, bubbleDiv);
         createWebDAVPopover(topicId, bubbleDiv);
+        createBugzillaPopover(topicId, bubbleDiv);
         createSolutionsPopover(topicId, bubbleDiv);
         createMojoPopover(topicId, bubbleDiv);
         createJBossPopover(topicId, bubbleDiv);
