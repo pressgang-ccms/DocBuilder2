@@ -165,6 +165,8 @@
                         var offscreenDiv = jQuery('<div id="bugzillaBugsChart"></div>');
                         offscreenDiv.appendTo(jQuery('#offscreenRendering'));
 
+                        logToConsole("Added offscreen rendering element");
+
                         setTimeout(function(offscreenDiv, values, labels, colors) {
                             return function(){
                                 logToConsole("Building chart with Raphael");
