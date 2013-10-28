@@ -82,10 +82,10 @@
 
                         jQuery('#newBugzillaBugsPlaceholder').remove();
 
+                        var newCount = 0, assignedCount = 0, modifiedCount = 0, onqaCount = 0, verifiedCount = 0, closedCount = 0, postCount = 0, releasePendingCount = 0;
+
                         for (var bugIndex = 0, bugCount = bugs.length; bugIndex < bugCount; ++bugIndex) {
                             var bug = bugs[bugIndex];
-
-                            var newCount = 0, assignedCount = 0, modifiedCount = 0, onqaCount = 0, verifiedCount = 0, closedCount = 0, postCount = 0, releasePendingCount = 0;
 
                             if (bug.status == "NEW") {
                                 ++newCount;
