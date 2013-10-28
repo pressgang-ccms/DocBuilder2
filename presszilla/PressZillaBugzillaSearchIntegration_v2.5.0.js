@@ -97,14 +97,14 @@
                             for (var bugIndex = 0, bugCount = bugs.length; bugIndex < bugCount; ++bugIndex) {
                                 var bug = bugs[bugIndex];
 
-                                logToConsole(bug.cd_environment);
+                                logToConsole(bug.cf_environment);
 
                                 /*
                                     Find the topic id from the environment field
                                  */
                                 var topicId = null;
 
-                                var matches = /Topic ID: (\d+)/.exec(bug.cd_environment);
+                                var matches = /Topic ID: (\d+)/.exec(bug.cf_environment);
 
                                 if (matches) {
                                     topicId = matches[1];
@@ -113,7 +113,7 @@
                                 if (bug.status == "NEW") {
                                     ++newCount;
                                     var link = '<div class="btn-group" style="margin-bottom: 8px;">\
-                                        <button type="button" class="btn btn-default" style="width:230px; white-space: normal;">' + bug.summary + '</button>\
+                                        <button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:window.open(\'' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '\')">' + bug.summary + '</button>\
                                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
                                             <span class="caret"></span>\
                                         </button>\
