@@ -97,6 +97,8 @@
                             for (var bugIndex = 0, bugCount = bugs.length; bugIndex < bugCount; ++bugIndex) {
                                 var bug = bugs[bugIndex];
 
+                                logToConsole(bug.cd_environment);
+
                                 /*
                                     Find the topic id from the environment field
                                  */
@@ -110,9 +112,9 @@
 
                                 if (bug.status == "NEW") {
                                     ++newCount;
-                                    var link = '<div class="btn-group">\
-                                        <button type="button" class="btn btn-danger">' + bug.summary + '</button>\
-                                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">\
+                                    var link = '<div class="btn-group" style="margin-bottom: 8px;">\
+                                        <button type="button" class="btn btn-default" style="width:230px; white-space: normal;">' + bug.summary + '</button>\
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
                                             <span class="caret"></span>\
                                         </button>\
                                         <ul class="dropdown-menu" role="menu">\
