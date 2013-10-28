@@ -97,8 +97,32 @@
                             for (var bugIndex = 0, bugCount = bugs.length; bugIndex < bugCount; ++bugIndex) {
                                 var bug = bugs[bugIndex];
 
+                                /*
+                                    Find the topic id from the environment field
+                                 */
+                                var topicId = null;
+
+                                var matches = /Topic ID: (\d+)/.exec(bug.cd_environment);
+
+                                if (matches) {
+                                    topicId = matches[1];
+                                }
+
                                 if (bug.status == "NEW") {
                                     ++newCount;
+                                    var link = '<div class="btn-group">\
+                                        <button type="button" class="btn btn-danger">' + bug.summary + '</button>\
+                                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">\
+                                            <span class="caret"></span>\
+                                        </button>\
+                                        <ul class="dropdown-menu" role="menu">\
+                                            <li><a href="' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '">Open in Bugzilla</a></li>';
+
+                                    if (topicId) {
+                                        link += '<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">View Topic</a></li>'
+                                    }
+                                    link += '</ul>\
+                                    </div>';
                                     var link = '<li><a href="' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '">' + bug.summary + '</a></li>';
                                     jQuery('#newBugzillaBugsItems').append(jQuery(link));
                                 } else if (bug.status == "ASSIGNED") {
