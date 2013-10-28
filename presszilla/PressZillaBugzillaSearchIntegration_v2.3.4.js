@@ -42,20 +42,27 @@
                 }
 
                 var data = '{"method":"Bug.search","params":[{';
+                var params = "";
 
                 if (bzProduct != "") {
-                    data += '"product": "' + bzProduct + '"';
+                    params += '"product": "' + bzProduct + '"';
                 }
 
                 if (bzComponent != "") {
-                    data += '"component": "' + bzComponent + '"';
+                    if (params.length != 0) {
+                        params += ",";
+                    }
+                    params += '"component": "' + bzComponent + '"';
                 }
 
                 if (bzVersion != "") {
-                    data += '"version": "' + bzVersion + '"';
+                    if (params.length != 0) {
+                        params += ",";
+                    }
+                    params += '"version": "' + bzVersion + '"';
                 }
 
-                data = '}], "id":1}';
+                data += params + '}], "id":1}';
 
                 GM_xmlhttpRequest({
                     method: 'POST',
