@@ -139,6 +139,8 @@
                         $('#closedBugzillaBugs').append($('<span class="badge pull-right">' + closedCount + '</span>'));
                         $('#releasePendingBugzillaBugs').append($('<span class="badge pull-right">' + releasePendingCount + '</span>'));
 
+                        logToConsole("Started Building Bugzilla chart");
+
                         var labels = ["New", "Assigned", "Post", "Modified", "On QA", "Verified", "Closed", "Release Pending"];
 
                         var colors = [Raphael.rgb(255, 0, 0),
@@ -165,7 +167,7 @@
 
                         setTimeout(function(offscreenDiv, values, labels, colors) {
                             return function(){
-                                logToConsole("Building Bugzilla chart");
+                                logToConsole("Building chart with Raphael");
                                 unsafeWindow.Raphael("bugzillaBugsChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 30, 30, 16, "#fff");
                                 offscreenDiv.appendTo(jQuery("#bugzillaBugsPanel"));
                             }
