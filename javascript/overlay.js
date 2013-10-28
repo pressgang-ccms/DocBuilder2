@@ -2158,7 +2158,7 @@ function buildMenu() {
 
     closedBugzillaBugs = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">New Bugzilla Bugs</div>\
+			<div class="panel-heading">Closed Bugzilla Bugs</div>\
 				<div class="panel-body ">\
 		            <ul id="closedBugzillaBugsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\

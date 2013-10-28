@@ -81,6 +81,13 @@
                         var bugs = responseJson.result.bugs;
 
                         jQuery('#newBugzillaBugsPlaceholder').remove();
+                        jQuery('#assignedBugzillaBugsPlaceholder').remove();
+                        jQuery('#modifiedBugzillaBugsPlaceholder').remove();
+                        jQuery('#postBugzillaBugsPlaceholder').remove();
+                        jQuery('#onqaBugzillaBugsPlaceholder').remove();
+                        jQuery('#verifiedBugzillaBugsPlaceholder').remove();
+                        jQuery('#releasePendingBugzillaBugsPlaceholder').remove();
+                        jQuery('#closedBugzillaBugsPlaceholder').remove();
 
                         var newCount = 0, assignedCount = 0, modifiedCount = 0, onqaCount = 0, verifiedCount = 0, closedCount = 0, postCount = 0, releasePendingCount = 0;
 
