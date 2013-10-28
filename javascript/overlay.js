@@ -300,6 +300,7 @@ function addOverlayIcons(topicId, RoleCreatePara) {
         createSolutionsPopover(topicId, bubbleDiv);
         createMojoPopover(topicId, bubbleDiv);
         createJBossPopover(topicId, bubbleDiv);
+        createBugzillaPopover(topicId, bubbleDiv);
     }
 }
 
@@ -349,9 +350,10 @@ function createSolutionsPopover(topicId, parent) {
 
     popover.popoverContent.innerHTML = '\
         <p>This popover displays KCS solutions that match the keywords in the topic.</p>\
+        <p>This window is only active if the latest version of PressZilla is installed.</p>\
         <p>Firefox user can install GreaseMonkey from <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">here</a>.</p>\
         <p>Chrome / Chromium users can install TamperMonkey from <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en">here</a>.</p>\
-        <p>With GreaseMonkey/TamperMonkey installed, you will need to install the <a href="/PressZilla.user.js">PressZilla GreaseMonkey Extension</a>.</p>';
+        <p>With GreaseMonkey/TamperMonkey installed, you can install the <a href="/PressZilla.user.js">PressZilla GreaseMonkey Extension</a>.</p>';
 
     linkDiv.onmouseover=function(){
         openPopover(popover, linkDiv);
@@ -376,9 +378,10 @@ function createMojoPopover(topicId, parent) {
 
     popover.popoverContent.innerHTML = '\
         <p>This popover displays Mojo documents that match the keywords in the topic.</p>\
+        <p>This window is only active if the latest version of PressZilla is installed.</p>\
         <p>Firefox user can install GreaseMonkey from <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">here</a>.</p>\
         <p>Chrome / Chromium users can install TamperMonkey from <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en">here</a>.</p>\
-        <p>With GreaseMonkey/TamperMonkey installed, you will need to install the <a href="/PressZilla.user.js">PressZilla GreaseMonkey Extension</a>.</p>';
+        <p>With GreaseMonkey/TamperMonkey installed, you can install the <a href="/PressZilla.user.js">PressZilla GreaseMonkey Extension</a>.</p>';
 
 
     linkDiv.onmouseover=function(){
@@ -389,6 +392,35 @@ function createMojoPopover(topicId, parent) {
         var evt = document.createEvent( 'Event');
         evt.initEvent('mojo_opened', false, false);
         eventDetails =  {source: 'mojo', topicId: topicId, popoverId: popover.id};
+        window.dispatchEvent (evt);
+    };
+
+    setupEvents(linkDiv, popover);
+}
+
+function createBugzillaPopover(topicId, parent) {
+    var linkDiv = createIcon("bug", topicId);
+    parent.appendChild(linkDiv);
+
+    var popover = createPopover("Bugzilla Bugs", topicId);
+    document.body.appendChild(popover);
+
+    popover.popoverContent.innerHTML = '\
+        <p>This popover displays Bugzilla bugs raised against this topic.</p>\
+        <p>This window is only active if the latest version of PressZilla is installed.</p>\
+        <p>Firefox user can install GreaseMonkey from <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">here</a>.</p>\
+        <p>Chrome / Chromium users can install TamperMonkey from <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en">here</a>.</p>\
+        <p>With GreaseMonkey/TamperMonkey installed, you can install the <a href="/PressZilla.user.js">PressZilla GreaseMonkey Extension</a>.</p>';
+
+
+    linkDiv.onmouseover=function(){
+        openPopover(popover, linkDiv);
+        // This is required to send events from this page to a GreaseMonkey script. The code
+        //      jQuery('window').trigger("solutions_opened", ['solutions', topicId, popover.id]);
+        // does not work.
+        var evt = document.createEvent( 'Event');
+        evt.initEvent('bugzilla_opened', false, false);
+        eventDetails =  {source: 'bugzilla', topicId: topicId, popoverId: popover.id};
         window.dispatchEvent (evt);
     };
 
