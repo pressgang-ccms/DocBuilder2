@@ -152,8 +152,7 @@
                             Raphael.rgb(0, 0, 0),
                             Raphael.rgb(102, 0, 102)];
 
-                        var values = [
-                            newCount ,
+                        var values = [newCount,
                             assignedCount,
                             postCount,
                             modifiedCount,
@@ -161,6 +160,8 @@
                             verifiedCount,
                             closedCount,
                             releasePendingCount];
+
+                        logToConsole("Building offscreen rendering element");
 
                         var offscreenDiv = jQuery('<div id="bugzillaBugsChart"></div>');
                         offscreenDiv.appendTo(jQuery('#offscreenRendering'));
