@@ -162,6 +162,12 @@
 
                             }
 
+                            // setup the number bubble on the bug icon
+                            for (var topic in cache) {
+                                var bugs = cache[topic];
+                                unsafeWindow.updateCount(topic + "bugIcon", bugs.length);
+                            }
+
                             $('#newBugzillaBugs').append($('<span class="badge pull-right">' + newCount + '</span>'));
                             $('#assignedBugzillaBugs').append($('<span class="badge pull-right">' + assignedCount + '</span>'));
                             $('#postBugzillaBugs').append($('<span class="badge pull-right">' + postCount + '</span>'));
@@ -262,7 +268,7 @@
             } else {
                 for (var bugIndex = 0, bugCount = cache[topicId].length; bugIndex < bugCount; ++bugIndex) {
                     var bug = cache[topicId][bugIndex];
-                    content.append(jQuery('<a style="display: block" href="' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '">[' + bug.id + '] ' + bug.summary + '</a>'));
+                    content.append(jQuery('<div><a href="' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '">[' + bug.id + '] ' + bug.summary + '</a></div>'));
                 }
             }
         }
