@@ -94,6 +94,21 @@
 
                             var newCount = 0, assignedCount = 0, modifiedCount = 0, onqaCount = 0, verifiedCount = 0, closedCount = 0, postCount = 0, releasePendingCount = 0;
 
+                            function buildLink(style, additionalLink) {
+                                return '<div class="btn-group" style="margin-bottom: 8px;">\
+                                        <button type="button" class="btn ' + style + '" style="width:230px; white-space: normal;" onclick="javascript:window.open(\'' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '\')">' + bug.summary + '</button>\
+                                        <button type="button" class="btn ' + style + ' dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
+                                            <span class="caret"></span>\
+                                        </button>\
+                                        <ul class="dropdown-menu" role="menu">\
+                                            <li><a href="' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '">Open in Bugzilla</a></li>\
+                                            ' + additionalLink + '\
+                                        </ul>\
+                                    </div>';
+                            }
+
+                            // List the bugs that are assigned against this sepc first
+
                             for (var bugIndex = 0, bugCount = bugs.length; bugIndex < bugCount; ++bugIndex) {
                                 var bug = bugs[bugIndex];
 
@@ -108,84 +123,82 @@
 
                                 if (matches) {
                                     topicId = matches[1];
-                                    style = "btn-info";
 
                                     if (!cache[topicId]) {
                                         cache[topicId] = [];
                                     }
 
                                     cache[topicId].push(bug);
-                                }
-
-                                var link = '<div class="btn-group" style="margin-bottom: 8px;">\
-                                        <button type="button" class="btn ' + style + '" style="width:230px; white-space: normal;" onclick="javascript:window.open(\'' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '\')">' + bug.summary + '</button>\
-                                        <button type="button" class="btn ' + style + ' dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
-                                            <span class="caret"></span>\
-                                        </button>\
-                                        <ul class="dropdown-menu" role="menu">\
-                                            <li><a href="' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '">Open in Bugzilla</a></li>';
-
-                                if (topicId && unsafeWindow.topicSections[topicId]) {
-                                    link += '<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">View Topic</a></li>'
-                                }
-                                link += '</ul>\
-                                    </div>';
 
 
-                                if (bug.status == "NEW") {
-                                    ++newCount;
-                                    if (topicId) {
-                                        jQuery('#newBugzillaBugsItems').prepend(jQuery(link));
-                                    } else {
+                                     var link = buildLink("btn-info", '<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">View Topic</a></li>');
+
+                                    if (bug.status == "NEW") {
+                                        ++newCount;
                                         jQuery('#newBugzillaBugsItems').append(jQuery(link));
-                                    }
-                                } else if (bug.status == "ASSIGNED") {
-                                    ++assignedCount;
-                                    if (topicId) {
-                                        jQuery('#assignedBugzillaBugsItems').prepend(jQuery(link));
-                                    } else {
+                                    } else if (bug.status == "ASSIGNED") {
+                                        ++assignedCount;
                                         jQuery('#assignedBugzillaBugsItems').append(jQuery(link));
-                                    }
-                                } else if (bug.status == "POST") {
-                                    ++postCount;
-                                    if (topicId) {
-                                        jQuery('#postBugzillaBugsItems').prepend(jQuery(link));
-                                    } else {
+                                    } else if (bug.status == "POST") {
+                                        ++postCount;
                                         jQuery('#postBugzillaBugsItems').append(jQuery(link));
-                                    }
-                                } else if (bug.status == "MODIFIED") {
-                                    ++modifiedCount;
-                                    if (topicId) {
-                                        jQuery('#modifiedBugzillaBugsItems').prepend(jQuery(link));
-                                    } else {
+                                    } else if (bug.status == "MODIFIED") {
+                                        ++modifiedCount;
                                         jQuery('#modifiedBugzillaBugsItems').append(jQuery(link));
-                                    }
-                                } else if (bug.status == "ON_QA") {
-                                    ++onqaCount;
-                                    if (topicId) {
-                                        jQuery('#onqaBugzillaBugsItems').prepend(jQuery(link));
-                                    } else {
+                                    } else if (bug.status == "ON_QA") {
+                                        ++onqaCount;
                                         jQuery('#onqaBugzillaBugsItems').append(jQuery(link));
-                                    }
-                                } else if (bug.status == "VERIFIED") {
-                                    ++verifiedCount;
-                                    if (topicId) {
-                                        jQuery('#verifiedBugzillaBugsItems').prepend(jQuery(link));
-                                    } else {
+                                    } else if (bug.status == "VERIFIED") {
+                                        ++verifiedCount;
                                         jQuery('#verifiedBugzillaBugsItems').append(jQuery(link));
-                                    }
-                                } else if (bug.status == "CLOSED") {
-                                    ++closedCount;
-                                    if (topicId) {
-                                        jQuery('#closedBugzillaBugsItems').prepend(jQuery(link));
-                                    } else {
+                                    } else if (bug.status == "CLOSED") {
+                                        ++closedCount;
                                         jQuery('#closedBugzillaBugsItems').append(jQuery(link));
+                                    } else if (bug.status == "RELEASE_PENDING") {
+                                        ++releasePendingCount;
+                                        jQuery('#releasePendingBugzillaBugsItems').append(jQuery(link));
                                     }
-                                } else if (bug.status == "RELEASE_PENDING") {
-                                    ++releasePendingCount;
-                                    if (topicId) {
-                                        jQuery('#releasePendingBugzillaBugsItems').prepend(jQuery(link));
-                                    } else {
+                                }
+
+                            }
+
+                            // List the bugs that are not assigned against this sepc last
+
+                            for (var bugIndex = 0, bugCount = bugs.length; bugIndex < bugCount; ++bugIndex) {
+                                var bug = bugs[bugIndex];
+
+                                /*
+                                 Find the topic id from the environment field
+                                 */
+                                var matches = /Topic ID: (\d+)/.exec(bug.cf_environment);
+
+                                if (!matches) {
+
+                                    var link = buildLink("btn-default", '<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">View Topic</a></li>');
+
+                                    if (bug.status == "NEW") {
+                                        ++newCount;
+                                        jQuery('#newBugzillaBugsItems').append(jQuery(link));
+                                    } else if (bug.status == "ASSIGNED") {
+                                        ++assignedCount;
+                                        jQuery('#assignedBugzillaBugsItems').append(jQuery(link));
+                                    } else if (bug.status == "POST") {
+                                        ++postCount;
+                                        jQuery('#postBugzillaBugsItems').append(jQuery(link));
+                                    } else if (bug.status == "MODIFIED") {
+                                        ++modifiedCount;
+                                        jQuery('#modifiedBugzillaBugsItems').append(jQuery(link));
+                                    } else if (bug.status == "ON_QA") {
+                                        ++onqaCount;
+                                        jQuery('#onqaBugzillaBugsItems').append(jQuery(link));
+                                    } else if (bug.status == "VERIFIED") {
+                                        ++verifiedCount;
+                                        jQuery('#verifiedBugzillaBugsItems').append(jQuery(link));
+                                    } else if (bug.status == "CLOSED") {
+                                        ++closedCount;
+                                        jQuery('#closedBugzillaBugsItems').append(jQuery(link));
+                                    } else if (bug.status == "RELEASE_PENDING") {
+                                        ++releasePendingCount;
                                         jQuery('#releasePendingBugzillaBugsItems').append(jQuery(link));
                                     }
                                 }
