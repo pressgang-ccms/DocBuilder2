@@ -769,7 +769,7 @@ function getLatestFile (dir, filter, done) {
                         var bookFile = allFiles[allFilesIndex];
                         if (bookFile.path != fullFile &&
                             bookFile.modified.isBefore(moment().subtract(1, 'd'))) {
-                            fs.unlinkSync(bookFile);
+                            fs.unlinkSync(bookFile.path);
                         }
                     }
 
