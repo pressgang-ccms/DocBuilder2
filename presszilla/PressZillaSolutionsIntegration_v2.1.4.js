@@ -15,7 +15,7 @@
                 jQuery('#' + buttonId).addClass('btn-primary');
 
                 fetchKeywords(topicId, function(topic) {
-                    getSolutions(topic, 100, topicId, popoverId, false);
+                    getSolutions(topic, topicId, popoverId, false);
                 }, function () {
                     handleError(popoverId);
                 });
@@ -33,12 +33,10 @@
         /**
          * Query the KBase for solutions.
          * @param topic The topic with an expanded set of keywords
-         * @param position How many of the keywords, in percent, will be ANDed in the query. 100 means all keywords are ANDed.
-         *                 30 means that the top 30% of the keywords are ANDed, and bottom 70% are ORed
          * @param topicId The topic id
          * @param popoverId The popover id
          */
-        function getSolutions(topic, position, topicId, popoverId, recall) {
+        function getSolutions(topic, topicId, popoverId, recall) {
             if (!solutionsCache[topicId].fetchingSolutions || recall) {
 
                 solutionsCache[topicId].fetchingSolutions = true;
@@ -46,13 +44,9 @@
                 var keywords = "";
                 for (var keywordIndex = 0, keywordCount = topic.keywords.length; keywordIndex < keywordCount; ++keywordIndex){
                     if (keywords.length != 0) {
-                        if (keywordIndex / keywordCount * 100 < position) {
-                            keywords += " AND ";
-                        } else {
-                            keywords += " OR ";
-                        }
+                        keywords += " OR ";
                     }
-                    keywords += topic.keywords[keywordIndex];
+                    keywords += topic.keywords[keywordIndex] + "^" + keywordCount - keywordIndex;
                 }
 
                 logToConsole("Querying solutions: " + keywords);
@@ -72,16 +66,14 @@
                         return function(solutionsResponse) {
                             logToConsole(solutionsResponse);
 
-
+                            var content = jQuery('#' + popoverId + "content");
+                            content.empty();
 
                             if (solutionsResponse.status == 401) {
 
                                 solutionsCache[topicId].fetchingSolutions = false;
 
                                 var buttonId = popoverId + 'contentbutton';
-
-                                var content = jQuery('#' + popoverId + "content");
-                                content.empty();
 
                                 content.append(jQuery('<p>If you are running Chrome, you will need to log into, or log out of and log back into, the <a href="http://access.redhat.com">Red Hat Customer Portal</a>.</p>\
                                         <p>If you are running Firefox, then the credentials you entered were incorrect. Please confirm that the username and password you entered are valid for the <a href="http://access.redhat.com">Red Hat Customer Portal</a>.</p>\
@@ -99,8 +91,7 @@
                                     logToConsole("Empty results returned");
 
                                     if (position > 0) {
-                                        logToConsole("Searching with fewer mandatory keywords");
-                                        getSolutions(topic, position - 25, topicId, popoverId, true);
+                                        content.append(jQuery('<p>No solutions were found</p>'));
                                     }
                                 } else {
                                     var solutionsTable = "<ul>";
@@ -115,9 +106,6 @@
 
                                     // keep a copy of the results
                                     solutionsCache[topicId].text = solutionsTable;
-
-                                    var content = jQuery('#' + popoverId + "content");
-                                    content.empty();
 
                                     content.append(jQuery(solutionsTable));
                                 }
