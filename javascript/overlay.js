@@ -297,6 +297,7 @@ function addOverlayIcons(topicId, RoleCreatePara) {
         createUrlsPopover(topicId, bubbleDiv);
         createDescriptionPopover(topicId, bubbleDiv);
         createWebDAVPopover(topicId, bubbleDiv);
+        createBugzillaPopover(topicId, bubbleDiv);
         createSolutionsPopover(topicId, bubbleDiv);
         createMojoPopover(topicId, bubbleDiv);
         createJBossPopover(topicId, bubbleDiv);
@@ -349,9 +350,10 @@ function createSolutionsPopover(topicId, parent) {
 
     popover.popoverContent.innerHTML = '\
         <p>This popover displays KCS solutions that match the keywords in the topic.</p>\
+        <p>This window is only active if the latest version of PressZilla is installed.</p>\
         <p>Firefox user can install GreaseMonkey from <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">here</a>.</p>\
         <p>Chrome / Chromium users can install TamperMonkey from <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en">here</a>.</p>\
-        <p>With GreaseMonkey/TamperMonkey installed, you will need to install the <a href="/PressZilla.user.js">PressZilla GreaseMonkey Extension</a>.</p>';
+        <p>With GreaseMonkey/TamperMonkey installed, you can install the <a href="/PressZilla.user.js">PressZilla GreaseMonkey Extension</a>.</p>';
 
     linkDiv.onmouseover=function(){
         openPopover(popover, linkDiv);
@@ -376,9 +378,10 @@ function createMojoPopover(topicId, parent) {
 
     popover.popoverContent.innerHTML = '\
         <p>This popover displays Mojo documents that match the keywords in the topic.</p>\
+        <p>This window is only active if the latest version of PressZilla is installed.</p>\
         <p>Firefox user can install GreaseMonkey from <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">here</a>.</p>\
         <p>Chrome / Chromium users can install TamperMonkey from <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en">here</a>.</p>\
-        <p>With GreaseMonkey/TamperMonkey installed, you will need to install the <a href="/PressZilla.user.js">PressZilla GreaseMonkey Extension</a>.</p>';
+        <p>With GreaseMonkey/TamperMonkey installed, you can install the <a href="/PressZilla.user.js">PressZilla GreaseMonkey Extension</a>.</p>';
 
 
     linkDiv.onmouseover=function(){
@@ -389,6 +392,35 @@ function createMojoPopover(topicId, parent) {
         var evt = document.createEvent( 'Event');
         evt.initEvent('mojo_opened', false, false);
         eventDetails =  {source: 'mojo', topicId: topicId, popoverId: popover.id};
+        window.dispatchEvent (evt);
+    };
+
+    setupEvents(linkDiv, popover);
+}
+
+function createBugzillaPopover(topicId, parent) {
+    var linkDiv = createIcon("bug", topicId);
+    parent.appendChild(linkDiv);
+
+    var popover = createPopover("Bugzilla Bugs", topicId);
+    document.body.appendChild(popover);
+
+    popover.popoverContent.innerHTML = '\
+        <p>This popover displays Bugzilla bugs raised against this topic.</p>\
+        <p>This window is only active if the latest version of PressZilla is installed.</p>\
+        <p>Firefox user can install GreaseMonkey from <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">here</a>.</p>\
+        <p>Chrome / Chromium users can install TamperMonkey from <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en">here</a>.</p>\
+        <p>With GreaseMonkey/TamperMonkey installed, you can install the <a href="/PressZilla.user.js">PressZilla GreaseMonkey Extension</a>.</p>';
+
+
+    linkDiv.onmouseover=function(){
+        openPopover(popover, linkDiv);
+        // This is required to send events from this page to a GreaseMonkey script. The code
+        //      jQuery('window').trigger("solutions_opened", ['solutions', topicId, popover.id]);
+        // does not work.
+        var evt = document.createEvent( 'Event');
+        evt.initEvent('bugzilla_opened', false, false);
+        eventDetails =  {source: 'bugzilla', topicId: topicId, popoverId: popover.id};
         window.dispatchEvent (evt);
     };
 
@@ -469,7 +501,7 @@ function createSpecsPopover(topicId, parent) {
 							specCache[topicId].data.push(specs[spec]);
 						}
 
-						updateCount(linkDiv, specCache[topicId].data.length);
+						updateCount(linkDiv.id, specCache[topicId].data.length);
 						renderSpecs(topicId);
 
 					}
@@ -532,7 +564,7 @@ function createTagsPopover(topicId, parent) {
                                 id: data.tags.items[tagIndex].item.id
                             });
 						}
-						updateCount(linkDiv, tagsCache[topicId].data.length);
+						updateCount(linkDiv.id, tagsCache[topicId].data.length);
 						renderTags(topicId);
 					}
 				}(popover));
@@ -609,7 +641,7 @@ function createUrlsPopover(topicId, parent) {
 							}
 						}
 
-						updateCount(linkDiv, urlCache[topicId].data.length);
+						updateCount(linkDiv.id, urlCache[topicId].data.length);
 						renderUrls(topicId);
 					}
 				}(popover));
@@ -687,7 +719,7 @@ function createHistoryPopover(topicId, parent) {
 
 						renderHistory(topicId);
 						updateHistoryIcon(topicId);
-						updateCount(linkDiv, historyCache[topicId].data.length);
+						updateCount(linkDiv.id, historyCache[topicId].data.length);
 					}
 				}(popover));
 		} else {
@@ -699,7 +731,7 @@ function createHistoryPopover(topicId, parent) {
 }
 
 /**
- * Renderes the list of topic revisions revisions
+ * Renders the list of topic revisions revisions
  * @param topicId The topic whose revisions popup is being generated.
  */
 function renderHistory(topicId) {
@@ -953,17 +985,22 @@ function createIcon(img, topicId) {
 
 /**
  * Sets the number icon in the bottom right hand corner
- * @param linkDiv The icon to be edited
+ * @param linkDivId The id of the icon to be edited
  * @param count The number to be displayed
  */
-function updateCount(linkDiv, count) {
-	if (count >= 1 && count <= 10) {
-		linkDiv.countMarker.style.backgroundImage = "url(/images/" + count + ".png)";
-	} else if (count > 10) {
-		linkDiv.countMarker.style.backgroundImage = "url(/images/10plus.png)";
-	} else {
-		linkDiv.countMarker.style.backgroundImage = null;
-	}
+function updateCount(linkDivId, count) {
+
+    var linkDivs = jQuery('#' + linkDivId);
+    if (linkDivs.length != 0) {
+        var linkDiv = linkDivs[0];
+        if (count >= 1 && count <= 10) {
+            linkDiv.countMarker.style.backgroundImage = "url(/images/" + count + ".png)";
+        } else if (count > 10) {
+            linkDiv.countMarker.style.backgroundImage = "url(/images/10plus.png)";
+        } else {
+            linkDiv.countMarker.style.backgroundImage = null;
+        }
+    }
 }
 
 /**
@@ -1493,10 +1530,10 @@ function doSecondPassQuery(topicIdsString) {
 
 				updateHistoryIcon(topic.id, topic.title);
 
-				updateCount($("#" + topic.id + "historyIcon")[0], historyCache[topic.id].data.length);
-				updateCount($("#" + topic.id + "urlsIcon")[0], urlCache[topic.id].data.length);
-				updateCount($("#" + topic.id + "tagsIcon")[0], tagsCache[topic.id].data.length);
-				updateCount($("#" + topic.id + "bookIcon")[0], specCache[topic.id].data.length);
+				updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
+				updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
+				updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
+				updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
 			}
 		} else {
 			console.log("Bad request");
