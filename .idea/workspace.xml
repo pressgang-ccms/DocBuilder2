@@ -2,12 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
+      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.4.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.5.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZilla.user.js" afterPath="$PROJECT_DIR$/PressZilla.user.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383020980638" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383021067637" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382927000748" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -210,24 +211,31 @@
       <file leaf-file-name="PressZilla.user.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="21" selection-start="1277" selection-end="1277" vertical-scroll-proportion="0.30786774">
+            <state line="17" column="110" selection-start="1252" selection-end="1252" vertical-scroll-proportion="0.29076397">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaBugzillaSearchIntegration_v2.6.4.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.4.js">
+      <file leaf-file-name="PressZillaBugzillaSearchIntegration_v2.6.5.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.5.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="173" column="0" selection-start="8890" selection-end="8890" vertical-scroll-proportion="0.0">
+            <state line="176" column="73" selection-start="9013" selection-end="9013" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1383020966856" expanded="true" signature="4378:4397" placeholder="..." />
-                <marker date="1383020966856" expanded="true" signature="4398:4473" placeholder="..." />
-                <marker date="1383020966856" expanded="true" signature="5028:5087" placeholder="..." />
-                <marker date="1383020966856" expanded="true" signature="19981:20045" placeholder="..." />
+                <marker date="1383026944645" expanded="true" signature="4378:4397" placeholder="..." />
+                <marker date="1383026944645" expanded="true" signature="4398:4473" placeholder="..." />
+                <marker date="1383026944645" expanded="true" signature="5028:5087" placeholder="..." />
+                <marker date="1383026944645" expanded="true" signature="19889:19953" placeholder="..." />
               </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pg-next.png" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pg-next.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
           </provider>
         </entry>
       </file>
@@ -405,7 +413,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.4.9.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.5.0.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.5.1.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.5.2.js" />
@@ -420,6 +427,7 @@
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.1.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.2.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.3.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.4.js" />
         <option value="$PROJECT_DIR$/PressZilla.user.js" />
       </list>
     </option>
@@ -1732,7 +1740,11 @@
       <created>1383020981635</created>
       <updated>1383020981635</updated>
     </task>
-    <option name="localTasksCounter" value="266" />
+    <task id="LOCAL-00266" summary="Working on Bugzilla searching in PressZilla">
+      <created>1383021069140</created>
+      <updated>1383021069140</updated>
+    </task>
+    <option name="localTasksCounter" value="267" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1841,11 +1853,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/jquery/node_modules/xmlhttprequest/tests/test-events.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="4" selection-start="0" selection-end="1241" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/presszilla/README">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="85" selection-start="202" selection-end="202" vertical-scroll-proportion="0.0" />
@@ -2045,22 +2052,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.4.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.5.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="173" column="0" selection-start="8890" selection-end="8890" vertical-scroll-proportion="0.0">
+        <state line="176" column="73" selection-start="9013" selection-end="9013" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1383020966856" expanded="true" signature="4378:4397" placeholder="..." />
-            <marker date="1383020966856" expanded="true" signature="4398:4473" placeholder="..." />
-            <marker date="1383020966856" expanded="true" signature="5028:5087" placeholder="..." />
-            <marker date="1383020966856" expanded="true" signature="19981:20045" placeholder="..." />
+            <marker date="1383026944645" expanded="true" signature="4378:4397" placeholder="..." />
+            <marker date="1383026944645" expanded="true" signature="4398:4473" placeholder="..." />
+            <marker date="1383026944645" expanded="true" signature="5028:5087" placeholder="..." />
+            <marker date="1383026944645" expanded="true" signature="19889:19953" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pg-next.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="21" selection-start="1277" selection-end="1277" vertical-scroll-proportion="0.30786774">
+        <state line="17" column="110" selection-start="1252" selection-end="1252" vertical-scroll-proportion="0.29076397">
           <folding />
         </state>
       </provider>

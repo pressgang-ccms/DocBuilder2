@@ -174,7 +174,7 @@
 
                                 if (!matches) {
 
-                                    var link = buildLink("btn-default", '<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">View Topic</a></li>');
+                                    var link = buildLink("btn-default", '');
 
                                     if (bug.status == "NEW") {
                                         ++newCount;
