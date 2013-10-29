@@ -130,33 +130,35 @@
 
                                     cache[topicId].push(bug);
 
+                                    if (unsafeWindow.topicSections[topicId]) {
 
-                                     var link = buildLink("btn-info", '<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">View Topic</a></li>');
+                                        var link = buildLink("btn-info", '<li><a href="javascript:topicSections[' + topicId + '].scrollIntoView()">View Topic</a></li>');
 
-                                    if (bug.status == "NEW") {
-                                        ++newCount;
-                                        jQuery('#newBugzillaBugsItems').append(jQuery(link));
-                                    } else if (bug.status == "ASSIGNED") {
-                                        ++assignedCount;
-                                        jQuery('#assignedBugzillaBugsItems').append(jQuery(link));
-                                    } else if (bug.status == "POST") {
-                                        ++postCount;
-                                        jQuery('#postBugzillaBugsItems').append(jQuery(link));
-                                    } else if (bug.status == "MODIFIED") {
-                                        ++modifiedCount;
-                                        jQuery('#modifiedBugzillaBugsItems').append(jQuery(link));
-                                    } else if (bug.status == "ON_QA") {
-                                        ++onqaCount;
-                                        jQuery('#onqaBugzillaBugsItems').append(jQuery(link));
-                                    } else if (bug.status == "VERIFIED") {
-                                        ++verifiedCount;
-                                        jQuery('#verifiedBugzillaBugsItems').append(jQuery(link));
-                                    } else if (bug.status == "CLOSED") {
-                                        ++closedCount;
-                                        jQuery('#closedBugzillaBugsItems').append(jQuery(link));
-                                    } else if (bug.status == "RELEASE_PENDING") {
-                                        ++releasePendingCount;
-                                        jQuery('#releasePendingBugzillaBugsItems').append(jQuery(link));
+                                        if (bug.status == "NEW") {
+                                            ++newCount;
+                                            jQuery('#newBugzillaBugsItems').append(jQuery(link));
+                                        } else if (bug.status == "ASSIGNED") {
+                                            ++assignedCount;
+                                            jQuery('#assignedBugzillaBugsItems').append(jQuery(link));
+                                        } else if (bug.status == "POST") {
+                                            ++postCount;
+                                            jQuery('#postBugzillaBugsItems').append(jQuery(link));
+                                        } else if (bug.status == "MODIFIED") {
+                                            ++modifiedCount;
+                                            jQuery('#modifiedBugzillaBugsItems').append(jQuery(link));
+                                        } else if (bug.status == "ON_QA") {
+                                            ++onqaCount;
+                                            jQuery('#onqaBugzillaBugsItems').append(jQuery(link));
+                                        } else if (bug.status == "VERIFIED") {
+                                            ++verifiedCount;
+                                            jQuery('#verifiedBugzillaBugsItems').append(jQuery(link));
+                                        } else if (bug.status == "CLOSED") {
+                                            ++closedCount;
+                                            jQuery('#closedBugzillaBugsItems').append(jQuery(link));
+                                        } else if (bug.status == "RELEASE_PENDING") {
+                                            ++releasePendingCount;
+                                            jQuery('#releasePendingBugzillaBugsItems').append(jQuery(link));
+                                        }
                                     }
                                 }
 
@@ -172,7 +174,7 @@
                                  */
                                 var matches = /Topic ID: (\d+)/.exec(bug.cf_environment);
 
-                                if (!matches) {
+                                if (!matches || !unsafeWindow.topicSections[topicId]) {
 
                                     var link = buildLink("btn-default", '');
 

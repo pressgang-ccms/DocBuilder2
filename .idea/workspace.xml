@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.4.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.5.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.5.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.6.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZilla.user.js" afterPath="$PROJECT_DIR$/PressZilla.user.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383021067637" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383029178325" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382927000748" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -148,6 +148,7 @@
     <file path="/PressZillaBugzillaSearchIntegration_v2.5.8.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383005166886" ignored="false" />
     <file path="/PressZillaBugzillaSearchIntegration_v2.6.0.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383006826077" ignored="false" />
     <file path="/PressZillaBugzillaSearchIntegration_v2.6.3.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383020791831" ignored="false" />
+    <file path="/PressZillaBugzillaSearchIntegration_v2.6.5.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383029253090" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,22 +212,22 @@
       <file leaf-file-name="PressZilla.user.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="110" selection-start="1252" selection-end="1252" vertical-scroll-proportion="0.29076397">
+            <state line="17" column="110" selection-start="1252" selection-end="1252" vertical-scroll-proportion="0.24661508">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaBugzillaSearchIntegration_v2.6.5.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.5.js">
+      <file leaf-file-name="PressZillaBugzillaSearchIntegration_v2.6.6.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.6.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="176" column="73" selection-start="9013" selection-end="9013" vertical-scroll-proportion="0.0">
+            <state line="176" column="84" selection-start="9195" selection-end="9195" vertical-scroll-proportion="-32.48">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1383026944645" expanded="true" signature="4378:4397" placeholder="..." />
-                <marker date="1383026944645" expanded="true" signature="4398:4473" placeholder="..." />
-                <marker date="1383026944645" expanded="true" signature="5028:5087" placeholder="..." />
-                <marker date="1383026944645" expanded="true" signature="19889:19953" placeholder="..." />
+                <marker date="1383029273530" expanded="false" signature="4378:4397" placeholder="..." />
+                <marker date="1383029273530" expanded="true" signature="4398:4473" placeholder="..." />
+                <marker date="1383029273530" expanded="true" signature="5028:5087" placeholder="..." />
+                <marker date="1383029273530" expanded="false" signature="20149:20213" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -413,7 +414,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.5.0.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.5.1.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.5.2.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.5.3.js" />
@@ -428,15 +428,16 @@
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.2.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.3.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.4.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.5.js" />
         <option value="$PROJECT_DIR$/PressZilla.user.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-2" />
+    <option name="x" value="1918" />
     <option name="y" value="-3" />
     <option name="width" value="1924" />
-    <option name="height" value="1052" />
+    <option name="height" value="1207" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -488,6 +489,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -523,7 +525,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -539,8 +540,8 @@
     <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -568,7 +569,17 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="$PROJECT_DIR$">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -599,17 +610,7 @@
       <listeners />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="$PROJECT_DIR$">
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -1744,11 +1745,15 @@
       <created>1383021069140</created>
       <updated>1383021069140</updated>
     </task>
-    <option name="localTasksCounter" value="267" />
+    <task id="LOCAL-00267" summary="Working on Bugzilla searching in PressZilla">
+      <created>1383026967280</created>
+      <updated>1383026967280</updated>
+    </task>
+    <option name="localTasksCounter" value="268" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-2" y="-3" width="1924" height="1052" extended-state="6" />
+    <frame x="1918" y="-3" width="1924" height="1207" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32979852" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1762,7 +1767,6 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32837406" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1776,6 +1780,7 @@
       <window_info id="TunnelliJ" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -2052,27 +2057,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.5.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="176" column="73" selection-start="9013" selection-end="9013" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1383026944645" expanded="true" signature="4378:4397" placeholder="..." />
-            <marker date="1383026944645" expanded="true" signature="4398:4473" placeholder="..." />
-            <marker date="1383026944645" expanded="true" signature="5028:5087" placeholder="..." />
-            <marker date="1383026944645" expanded="true" signature="19889:19953" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pg-next.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.6.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="176" column="84" selection-start="9195" selection-end="9195" vertical-scroll-proportion="-32.48">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1383029273530" expanded="false" signature="4378:4397" placeholder="..." />
+            <marker date="1383029273530" expanded="true" signature="4398:4473" placeholder="..." />
+            <marker date="1383029273530" expanded="true" signature="5028:5087" placeholder="..." />
+            <marker date="1383029273530" expanded="false" signature="20149:20213" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="110" selection-start="1252" selection-end="1252" vertical-scroll-proportion="0.29076397">
+        <state line="17" column="110" selection-start="1252" selection-end="1252" vertical-scroll-proportion="0.24661508">
           <folding />
         </state>
       </provider>
