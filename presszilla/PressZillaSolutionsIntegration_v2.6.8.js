@@ -46,7 +46,9 @@
                     if (keywords.length != 0) {
                         keywords += " OR ";
                     }
-                    keywords += topic.keywords[keywordIndex] + "^" + keywordCount - keywordIndex;
+
+                    // http://lucene.apache.org/core/2_9_4/queryparsersyntax.html#Boosting a Term
+                    keywords += topic.keywords[keywordIndex] + "^" + (keywordCount - keywordIndex);
                 }
 
                 logToConsole("Querying solutions: " + keywords);
