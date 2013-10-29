@@ -164,6 +164,48 @@
                             for (var topic in cache) {
                                 var bugs = cache[topic];
                                 unsafeWindow.updateCount(topic + "bugIcon", bugs.length);
+
+                                var icon = jQuery('#' + topic + "bugIcon");
+
+                                var foundIcon = false;
+
+                                for (var bugIndex = 0, bugCount = bugs.length; bugIndex < bugCount; ++bugIndex) {
+                                    var bug = bugs[bugIndex];
+
+                                    if (bug.status == "NEW" || bug.status == "ASSIGNED") {
+                                        icon.css('backgroundImage', "url(/images/bug-red.png)");
+                                        foundIcon = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!foundIcon) {
+                                    for (var bugIndex = 0, bugCount = bugs.length; bugIndex < bugCount; ++bugIndex) {
+                                        var bug = bugs[bugIndex];
+
+                                        if (bug.status == "MODIFIED" || bug.status == "ON_QA") {
+                                            icon.css('backgroundImage', "url(/images/bug-orange.png)");
+                                            foundIcon = true;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if (!foundIcon) {
+                                    for (var bugIndex = 0, bugCount = bugs.length; bugIndex < bugCount; ++bugIndex) {
+                                        var bug = bugs[bugIndex];
+
+                                        if (bug.status == "VERIFIED") {
+                                            icon.css('backgroundImage', "url(/images/bug-green.png)");
+                                            foundIcon = true;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if (!foundIcon) {
+                                    icon.css('backgroundImage', "url(/images/bug-blue.png)");
+                                }
                             }
 
                             $('#newBugzillaBugs').append($('<span class="badge pull-right">' + newCount + '</span>'));
@@ -266,7 +308,20 @@
             } else {
                 for (var bugIndex = 0, bugCount = cache[topicId].length; bugIndex < bugCount; ++bugIndex) {
                     var bug = cache[topicId][bugIndex];
-                    content.append(jQuery('<div><a href="' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '">[' + bug.id + ' - ' + bug.status + '] ' + bug.summary + '</a></div>'));
+
+                    var icon = "";
+
+                    if (bug.status == "NEW" || bug.status == "ASSIGNED") {
+                        icon = 'url(/images/bug-red.png)';
+                    } else if (bug.status == "MODIFIED" || bug.status == "ON_QA") {
+                        icon = 'url(/images/bug-orange.png)';
+                    } else if (bug.status == "VERIFIED") {
+                        icon = 'url(/images/bug-green.png)';
+                    }  else {
+                        icon = 'url(/images/bug-blue.png)';
+                    }
+
+                    content.append(jQuery('<div><a href="' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '"><div style="width: 16px; height: 16px; margin-right: 8px; background-image: ' + icon + '; background-size: contain; float: left"></div>[' + bug.id + ' - ' + bug.status + '] ' + bug.summary + '</a></div>'));
                 }
             }
         }

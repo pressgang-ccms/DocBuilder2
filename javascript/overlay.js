@@ -731,7 +731,7 @@ function createHistoryPopover(topicId, parent) {
 }
 
 /**
- * Renderes the list of topic revisions revisions
+ * Renders the list of topic revisions revisions
  * @param topicId The topic whose revisions popup is being generated.
  */
 function renderHistory(topicId) {
