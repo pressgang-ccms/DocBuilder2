@@ -97,8 +97,6 @@
                             for (var bugIndex = 0, bugCount = bugs.length; bugIndex < bugCount; ++bugIndex) {
                                 var bug = bugs[bugIndex];
 
-                                logToConsole(bug.cf_environment);
-
                                 /*
                                     Find the topic id from the environment field
                                  */
@@ -268,7 +266,7 @@
             } else {
                 for (var bugIndex = 0, bugCount = cache[topicId].length; bugIndex < bugCount; ++bugIndex) {
                     var bug = cache[topicId][bugIndex];
-                    content.append(jQuery('<div><a href="' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '">[' + bug.id + '] ' + bug.summary + '</a></div>'));
+                    content.append(jQuery('<div><a href="' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '">[' + bug.id + ' - ' + bug.status + '] ' + bug.summary + '</a></div>'));
                 }
             }
         }

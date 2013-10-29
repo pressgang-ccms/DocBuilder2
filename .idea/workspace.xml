@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.5.8.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.5.9.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript/overlay.js" afterPath="$PROJECT_DIR$/javascript/overlay.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.5.9.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.0.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383005105449" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383005355970" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382927000748" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -142,7 +141,7 @@
     <file path="/PressZillaBugzillaSearchIntegration_v2.4.6.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382998705584" ignored="false" />
     <file path="/PressZillaBugzillaSearchIntegration_v2.4.8.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382997722478" ignored="false" />
     <file path="/PressZillaBugzillaSearchIntegration_v2.4.9.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382997899594" ignored="false" />
-    <file path="/PressZillaBugzillaSearchIntegration_v2.5.4.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383005172856" ignored="false" />
+    <file path="/PressZillaBugzillaSearchIntegration_v2.5.4.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383005768902" ignored="false" />
     <file path="/PressZillaBugzillaSearchIntegration_v2.5.5.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383004448600" ignored="false" />
     <file path="/PressZillaBugzillaSearchIntegration_v2.5.7.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383005021873" ignored="false" />
     <file path="/PressZillaBugzillaSearchIntegration_v2.5.8.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383005166886" ignored="false" />
@@ -217,19 +216,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaBugzillaSearchIntegration_v2.5.9.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.5.9.js">
+      <file leaf-file-name="PressZillaBugzillaSearchIntegration_v2.6.0.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.0.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="167" column="89" selection-start="8568" selection-end="8568" vertical-scroll-proportion="0.484789">
+            <state line="268" column="148" selection-start="14483" selection-end="14483" vertical-scroll-proportion="0.8233562">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1383005340276" expanded="true" signature="5362:5381" placeholder="..." />
-                <marker date="1383005340276" expanded="true" signature="5382:5548" placeholder="..." />
-                <marker date="1383005340276" expanded="true" signature="5382:5457" placeholder="..." />
-                <marker date="1383005340276" expanded="true" signature="5480:5513" placeholder="..." />
-                <marker date="1383005340276" expanded="true" signature="5771:5807" placeholder="..." />
-                <marker date="1383005340276" expanded="true" signature="5808:5932" placeholder="..." />
-                <marker date="1383005340276" expanded="true" signature="6012:6071" placeholder="..." />
+                <marker date="1383005772642" expanded="true" signature="5295:5314" placeholder="..." />
+                <marker date="1383005772642" expanded="true" signature="5315:5481" placeholder="..." />
+                <marker date="1383005772642" expanded="true" signature="5315:5390" placeholder="..." />
+                <marker date="1383005772642" expanded="true" signature="5413:5446" placeholder="..." />
+                <marker date="1383005772642" expanded="true" signature="5704:5740" placeholder="..." />
+                <marker date="1383005772642" expanded="true" signature="5741:5865" placeholder="..." />
+                <marker date="1383005772642" expanded="true" signature="5945:6004" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -1718,7 +1717,11 @@
       <created>1383005106249</created>
       <updated>1383005106249</updated>
     </task>
-    <option name="localTasksCounter" value="258" />
+    <task id="LOCAL-00258" summary="Working on Bugzilla searching in PressZilla">
+      <created>1383005357353</created>
+      <updated>1383005357353</updated>
+    </task>
+    <option name="localTasksCounter" value="259" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1744,7 +1747,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20917822" sideWeight="0.6713881" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20917822" sideWeight="0.6713881" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32873806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -2048,18 +2051,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.5.9.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.0.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="167" column="89" selection-start="8568" selection-end="8568" vertical-scroll-proportion="0.484789">
+        <state line="268" column="148" selection-start="14483" selection-end="14483" vertical-scroll-proportion="0.8233562">
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1383005340276" expanded="true" signature="5362:5381" placeholder="..." />
-            <marker date="1383005340276" expanded="true" signature="5382:5548" placeholder="..." />
-            <marker date="1383005340276" expanded="true" signature="5382:5457" placeholder="..." />
-            <marker date="1383005340276" expanded="true" signature="5480:5513" placeholder="..." />
-            <marker date="1383005340276" expanded="true" signature="5771:5807" placeholder="..." />
-            <marker date="1383005340276" expanded="true" signature="5808:5932" placeholder="..." />
-            <marker date="1383005340276" expanded="true" signature="6012:6071" placeholder="..." />
+            <marker date="1383005772642" expanded="true" signature="5295:5314" placeholder="..." />
+            <marker date="1383005772642" expanded="true" signature="5315:5481" placeholder="..." />
+            <marker date="1383005772642" expanded="true" signature="5315:5390" placeholder="..." />
+            <marker date="1383005772642" expanded="true" signature="5413:5446" placeholder="..." />
+            <marker date="1383005772642" expanded="true" signature="5704:5740" placeholder="..." />
+            <marker date="1383005772642" expanded="true" signature="5741:5865" placeholder="..." />
+            <marker date="1383005772642" expanded="true" signature="5945:6004" placeholder="..." />
           </folding>
         </state>
       </provider>
