@@ -5,6 +5,7 @@
 (function() {
 
     var cache = {};
+    var foundBugs = false;
 
     function handleFailure(message) {
 
@@ -77,8 +78,7 @@
                         ontimeout: function() {handleFailure("ontimeout");},
                         onload: function(response) {
 
-                            logToConsole("Got Bugzilla bugs");
-                            logToConsole(response);
+                            foundBugs = true;
 
                             jQuery('#newBugzillaBugsPlaceholder').remove();
                             jQuery('#assignedBugzillaBugsPlaceholder').remove();
@@ -299,11 +299,11 @@
         var content = jQuery('#' + popoverId + "content");
         content.empty();
 
-        if (!cache[topicId]) {
+        if (!foundBugs) {
             content.append(jQuery('<p>This popover displays Bugzilla bugs raised against this topic.</p>\
                         <p>The list of bugs is still being retrieved. Please try again in a few seconds.</p>'));
         } else {
-            if (cache[topicId].length == 0) {
+            if (!cache[topicId] || cache[topicId].length == 0) {
                 content.append(jQuery('<p>No bugs found.</p>'));
             } else {
                 for (var bugIndex = 0, bugCount = cache[topicId].length; bugIndex < bugCount; ++bugIndex) {
