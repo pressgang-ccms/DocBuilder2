@@ -134,28 +134,60 @@
 
                                 if (bug.status == "NEW") {
                                     ++newCount;
-                                    jQuery('#newBugzillaBugsItems').append(jQuery(link));
+                                    if (topicId) {
+                                        jQuery('#newBugzillaBugsItems').prepend(jQuery(link));
+                                    } else {
+                                        jQuery('#newBugzillaBugsItems').append(jQuery(link));
+                                    }
                                 } else if (bug.status == "ASSIGNED") {
                                     ++assignedCount;
-                                    jQuery('#assignedBugzillaBugsItems').append(jQuery(link));
+                                    if (topicId) {
+                                        jQuery('#assignedBugzillaBugsItems').prepend(jQuery(link));
+                                    } else {
+                                        jQuery('#assignedBugzillaBugsItems').append(jQuery(link));
+                                    }
                                 } else if (bug.status == "POST") {
                                     ++postCount;
-                                    jQuery('#postBugzillaBugsItems').append(jQuery(link));
+                                    if (topicId) {
+                                        jQuery('#postBugzillaBugsItems').prepend(jQuery(link));
+                                    } else {
+                                        jQuery('#postBugzillaBugsItems').append(jQuery(link));
+                                    }
                                 } else if (bug.status == "MODIFIED") {
                                     ++modifiedCount;
-                                    jQuery('#modifiedBugzillaBugsItems').append(jQuery(link));
+                                    if (topicId) {
+                                        jQuery('#modifiedBugzillaBugsItems').prepend(jQuery(link));
+                                    } else {
+                                        jQuery('#modifiedBugzillaBugsItems').append(jQuery(link));
+                                    }
                                 } else if (bug.status == "ON_QA") {
                                     ++onqaCount;
-                                    jQuery('#onqaBugzillaBugsItems').append(jQuery(link));
+                                    if (topicId) {
+                                        jQuery('#onqaBugzillaBugsItems').prepend(jQuery(link));
+                                    } else {
+                                        jQuery('#onqaBugzillaBugsItems').append(jQuery(link));
+                                    }
                                 } else if (bug.status == "VERIFIED") {
                                     ++verifiedCount;
-                                    jQuery('#verifiedBugzillaBugsItems').append(jQuery(link));
+                                    if (topicId) {
+                                        jQuery('#verifiedBugzillaBugsItems').prepend(jQuery(link));
+                                    } else {
+                                        jQuery('#verifiedBugzillaBugsItems').append(jQuery(link));
+                                    }
                                 } else if (bug.status == "CLOSED") {
                                     ++closedCount;
-                                    jQuery('#closedBugzillaBugsItems').append(jQuery(link));
+                                    if (topicId) {
+                                        jQuery('#closedBugzillaBugsItems').prepend(jQuery(link));
+                                    } else {
+                                        jQuery('#closedBugzillaBugsItems').append(jQuery(link));
+                                    }
                                 } else if (bug.status == "RELEASE_PENDING") {
                                     ++releasePendingCount;
-                                    jQuery('#releasePendingBugzillaBugsItems').append(jQuery(link));
+                                    if (topicId) {
+                                        jQuery('#releasePendingBugzillaBugsItems').prepend(jQuery(link));
+                                    } else {
+                                        jQuery('#releasePendingBugzillaBugsItems').append(jQuery(link));
+                                    }
                                 }
 
                             }
