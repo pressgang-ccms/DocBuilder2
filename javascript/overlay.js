@@ -501,7 +501,7 @@ function createSpecsPopover(topicId, parent) {
 							specCache[topicId].data.push(specs[spec]);
 						}
 
-						updateCount(linkDiv, specCache[topicId].data.length);
+						updateCount(linkDiv.id, specCache[topicId].data.length);
 						renderSpecs(topicId);
 
 					}
@@ -564,7 +564,7 @@ function createTagsPopover(topicId, parent) {
                                 id: data.tags.items[tagIndex].item.id
                             });
 						}
-						updateCount(linkDiv, tagsCache[topicId].data.length);
+						updateCount(linkDiv.id, tagsCache[topicId].data.length);
 						renderTags(topicId);
 					}
 				}(popover));
@@ -641,7 +641,7 @@ function createUrlsPopover(topicId, parent) {
 							}
 						}
 
-						updateCount(linkDiv, urlCache[topicId].data.length);
+						updateCount(linkDiv.id, urlCache[topicId].data.length);
 						renderUrls(topicId);
 					}
 				}(popover));
@@ -719,7 +719,7 @@ function createHistoryPopover(topicId, parent) {
 
 						renderHistory(topicId);
 						updateHistoryIcon(topicId);
-						updateCount(linkDiv, historyCache[topicId].data.length);
+						updateCount(linkDiv.id, historyCache[topicId].data.length);
 					}
 				}(popover));
 		} else {
@@ -985,17 +985,22 @@ function createIcon(img, topicId) {
 
 /**
  * Sets the number icon in the bottom right hand corner
- * @param linkDiv The icon to be edited
+ * @param linkDivId The id of the icon to be edited
  * @param count The number to be displayed
  */
-function updateCount(linkDiv, count) {
-	if (count >= 1 && count <= 10) {
-		linkDiv.countMarker.style.backgroundImage = "url(/images/" + count + ".png)";
-	} else if (count > 10) {
-		linkDiv.countMarker.style.backgroundImage = "url(/images/10plus.png)";
-	} else {
-		linkDiv.countMarker.style.backgroundImage = null;
-	}
+function updateCount(linkDivId, count) {
+
+    var linkDivs = jQuery('#' + linkDivId);
+    if (linkDivs.length != 0) {
+        var linkDiv = linkDivs[0];
+        if (count >= 1 && count <= 10) {
+            linkDiv.countMarker.style.backgroundImage = "url(/images/" + count + ".png)";
+        } else if (count > 10) {
+            linkDiv.countMarker.style.backgroundImage = "url(/images/10plus.png)";
+        } else {
+            linkDiv.countMarker.style.backgroundImage = null;
+        }
+    }
 }
 
 /**
@@ -1525,10 +1530,10 @@ function doSecondPassQuery(topicIdsString) {
 
 				updateHistoryIcon(topic.id, topic.title);
 
-				updateCount($("#" + topic.id + "historyIcon")[0], historyCache[topic.id].data.length);
-				updateCount($("#" + topic.id + "urlsIcon")[0], urlCache[topic.id].data.length);
-				updateCount($("#" + topic.id + "tagsIcon")[0], tagsCache[topic.id].data.length);
-				updateCount($("#" + topic.id + "bookIcon")[0], specCache[topic.id].data.length);
+				updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
+				updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
+				updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
+				updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
 			}
 		} else {
 			console.log("Bad request");
