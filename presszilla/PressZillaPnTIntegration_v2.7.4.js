@@ -105,7 +105,7 @@
                                     entries.each(function(index, value) {
                                         var title = jQuery(value).find('title');
                                         var content = jQuery(value).find('content');
-                                        solutionsTable += '<li><a href="' + title + '">' + content.attr('src') + '</a></li>';
+                                        solutionsTable += '<li><a href="' + content.attr('src') + '">' + title.text() + '</a></li>';
                                     });
 
 
