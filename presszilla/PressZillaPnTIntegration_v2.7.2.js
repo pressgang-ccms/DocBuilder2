@@ -47,8 +47,7 @@
                         keywords += " ";
                     }
 
-                    // http://lucene.apache.org/core/2_9_4/queryparsersyntax.html#Boosting a Term
-                    keywords += topic.keywords[keywordIndex] + "^" + (keywordCount - keywordIndex);
+                    keywords += topic.keywords[keywordIndex];
                 }
 
                 logToConsole("Querying solutions: " + keywords);
