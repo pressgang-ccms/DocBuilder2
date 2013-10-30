@@ -765,9 +765,12 @@ function getLatestFile (dir, filter, done) {
                     /*
                         Clear out any old files
                      */
+
+                    var latestFilePath = dir + '/' + latestFile;
+
                     for (var allFilesIndex = 0, allFilesCount = allFiles.length; allFilesIndex < allFilesCount; ++allFilesIndex) {
                         var bookFile = allFiles[allFilesIndex];
-                        if (bookFile.path != fullFile &&
+                        if (bookFile.path != latestFilePath &&
                             bookFile.modified.isBefore(moment().subtract(1, 'd'))) {
                             fs.unlinkSync(bookFile.path);
                         }
@@ -777,27 +780,27 @@ function getLatestFile (dir, filter, done) {
                 }
 
                 if (file.toString().match(filter)) {
-
-                    fs.stat(fullFile, function(fullFile) {
-                            return function (error, stat) {
-
-                                if (stat && stat.isDirectory()) {
-                                    walk(file, function (error) {
-                                        next(latest, latestFile, allFiles);
-                                    });
-                                } else {
-                                    var lastModified = moment(stat.mtime);
-                                    allFiles.push({path: fullFile, modified: lastModified});
-
-                                    if (!latest || lastModified.isAfter(latest)) {
-                                        latest = lastModified;
-                                        latestFile = file;
-                                    }
-
+                    fs.stat(fullFile, function (error, stat) {
+                        if (error) {
+                            next(latest, latestFile, allFiles);
+                        } else {
+                            if (stat && stat.isDirectory()) {
+                                walk(file, function (error) {
                                     next(latest, latestFile, allFiles);
+                                });
+                            } else {
+                                var lastModified = moment(stat.mtime);
+                                allFiles.push({path: fullFile, modified: lastModified});
+
+                                if (!latest || lastModified.isAfter(latest)) {
+                                    latest = lastModified;
+                                    latestFile = file;
                                 }
+
+                                next(latest, latestFile, allFiles);
                             }
-                        }(fullFile));
+                        }
+                    });
                 } else {
                     next(latest, latestFile, allFiles);
                 }
