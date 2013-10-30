@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZilla.user.js" afterPath="$PROJECT_DIR$/PressZilla.user.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383097690173" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383097809891" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383091890651" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -143,6 +142,7 @@
     <file path="/PressZillaSolutionsIntegration_v2.1.4.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383082916104" ignored="false" />
     <file path="/PressZillaPnTIntegration_v2.6.9.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383097680031" ignored="false" />
     <file path="/PressZillaPnTIntegration_v2.7.0.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383096685672" ignored="false" />
+    <file path="/PressZillaPnTIntegration_v2.7.4.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383097832636" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,11 +226,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZilla.user.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PressZilla.user.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="21" selection-start="1377" selection-end="1377" vertical-scroll-proportion="0.48969072">
-              <folding />
+            <state line="27" column="35" selection-start="0" selection-end="1661" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -282,15 +284,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaPnTIntegration_v2.7.4.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PressZillaPnTIntegration_v2.7.4.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="107" column="117" selection-start="5533" selection-end="5533" vertical-scroll-proportion="-13.96">
+            <state line="139" column="57" selection-start="6761" selection-end="6791" vertical-scroll-proportion="0.6415441">
               <folding>
-                <marker date="1383097681817" expanded="false" signature="3975:4051" placeholder="..." />
-                <marker date="1383097681817" expanded="true" signature="4052:4110" placeholder="..." />
-                <marker date="1383097681817" expanded="true" signature="7155:7231" placeholder="..." />
-                <marker date="1383097681817" expanded="true" signature="7232:7274" placeholder="..." />
+                <marker date="1383097917302" expanded="false" signature="3975:4051" placeholder="..." />
+                <marker date="1383097917302" expanded="true" signature="4052:4110" placeholder="..." />
+                <marker date="1383097917302" expanded="true" signature="7155:7231" placeholder="..." />
+                <marker date="1383097917302" expanded="true" signature="7232:7274" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -541,7 +543,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.4.4.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.4.5.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.4.6.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.1.4.js" />
@@ -557,6 +558,7 @@
         <option value="$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.2.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.3.js" />
         <option value="$PROJECT_DIR$/PressZilla.user.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js" />
       </list>
     </option>
   </component>
@@ -1901,7 +1903,11 @@
       <created>1383097691366</created>
       <updated>1383097691366</updated>
     </task>
-    <option name="localTasksCounter" value="272" />
+    <task id="LOCAL-00272" summary="Working on PnT integration">
+      <created>1383097811355</created>
+      <updated>1383097811356</updated>
+    </task>
+    <option name="localTasksCounter" value="273" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2332,22 +2338,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js">
+    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="107" column="117" selection-start="5533" selection-end="5533" vertical-scroll-proportion="-13.96">
+        <state line="27" column="35" selection-start="0" selection-end="1661" vertical-scroll-proportion="0.0">
           <folding>
-            <marker date="1383097681817" expanded="false" signature="3975:4051" placeholder="..." />
-            <marker date="1383097681817" expanded="true" signature="4052:4110" placeholder="..." />
-            <marker date="1383097681817" expanded="true" signature="7155:7231" placeholder="..." />
-            <marker date="1383097681817" expanded="true" signature="7232:7274" placeholder="..." />
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="21" selection-start="1377" selection-end="1377" vertical-scroll-proportion="0.48969072">
-          <folding />
+        <state line="139" column="57" selection-start="6761" selection-end="6791" vertical-scroll-proportion="0.6415441">
+          <folding>
+            <marker date="1383097917302" expanded="false" signature="3975:4051" placeholder="..." />
+            <marker date="1383097917302" expanded="true" signature="4052:4110" placeholder="..." />
+            <marker date="1383097917302" expanded="true" signature="7155:7231" placeholder="..." />
+            <marker date="1383097917302" expanded="true" signature="7232:7274" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
