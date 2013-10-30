@@ -9,13 +9,13 @@
         function addClickFunction(buttonId, topicId, popoverId) {
             jQuery('#' + buttonId).click(function() {
                 jQuery('#' + buttonId).attr('disabled', 'true');
-                jQuery('#' + buttonId).text('Getting Solutions');
+                jQuery('#' + buttonId).text('Getting Content');
                 jQuery('#' + buttonId).removeClass('btn-primary');
                 jQuery('#' + buttonId).removeClass('btn-danger');
                 jQuery('#' + buttonId).addClass('btn-primary');
 
                 fetchKeywords(topicId, function(topic) {
-                    getSolutions(topic, topicId, popoverId, false);
+                    getSolutions(topic, topicId, popoverId);
                 }, function () {
                     handleError(popoverId);
                 });
@@ -36,15 +36,15 @@
          * @param topicId The topic id
          * @param popoverId The popover id
          */
-        function getSolutions(topic, topicId, popoverId, recall) {
-            if (!solutionsCache[topicId].fetchingSolutions || recall) {
+        function getSolutions(topic, topicId, popoverId) {
+            if (!solutionsCache[topicId].fetchingSolutions) {
 
                 solutionsCache[topicId].fetchingSolutions = true;
 
                 var keywords = "";
                 for (var keywordIndex = 0, keywordCount = topic.keywords.length; keywordIndex < keywordCount; ++keywordIndex){
                     if (keywords.length != 0) {
-                        keywords += " OR ";
+                        keywords += " ";
                     }
 
                     // http://lucene.apache.org/core/2_9_4/queryparsersyntax.html#Boosting a Term
@@ -53,12 +53,13 @@
 
                 logToConsole("Querying solutions: " + keywords);
 
-                var kcsUrl = "https://api.access.redhat.com/rs/solutions?limit=10&keyword=" + encodeURIComponent(keywords);
+                var url = "https://engineering.redhat.com/alfresco/service/cmis/query?q=SELECT%20cmis%3Aname%20FROM%20cmis%3Adocument%20WHERE%20CONTAINS(%27" + encodeURIComponent(keywords) + "%27)";
+
+                logToConsole(url);
 
                 GM_xmlhttpRequest({
                     method: 'GET',
-                    url: kcsUrl,
-                    headers: {Accept: 'application/json'},
+                    url: url,
                     onabort: function() {logToConsole("onabort"); handleError(popoverId);},
                     onerror: function() {logToConsole("onerror"); handleError(popoverId);},
                     onprogress: function() {logToConsole("onprogress");},
@@ -72,6 +73,7 @@
                             content.empty();
 
                             if (solutionsResponse.status == 401) {
+                                logToConsole("401 returned");
 
                                 solutionsCache[topicId].fetchingSolutions = false;
 
@@ -85,24 +87,25 @@
 
                                 addClickFunction(buttonId, topicId, popoverId);
                             } else if (solutionsResponse.status == 200) {
-                                logToConsole("Result returned");
+                                logToConsole("200 returned");
 
-                                var solutions = JSON.parse(solutionsResponse.responseText);
+                                var xmlDoc = jQuery.parseXML( solutionsResponse.responseText );
+                                var xml = jQuery( xmlDoc );
+                                var entries = jQuery(xml).find('entry');
 
-                                if (!solutions.solution) {
+                                if (entries.length == 0) {
                                     logToConsole("Empty results returned");
 
-                                    if (position > 0) {
-                                        content.append(jQuery('<p>No solutions were found</p>'));
-                                    }
+                                    content.append(jQuery('<p>No content were found</p>'));
                                 } else {
                                     var solutionsTable = "<ul>";
 
-                                    for (var solutionIndex = 0, solutionCount = solutions.solution.length; solutionIndex < solutionCount; ++solutionIndex) {
-                                        var solution = solutions.solution[solutionIndex];
-                                        var published = solution.moderation_state == "published";
-                                        solutionsTable += '<li><span style="min-width: 5em; display: inline-block;"><a style="color: ' + (published ? "#5cb85c" : "#d9534f") + '" href="' + solution.view_uri + '">[' + solution.id + ']</a></span><a href="' + solution.view_uri + '">' + solution.title + '</a></li>';
-                                    }
+                                    entries.each(function(index, value) {
+                                        var title = value.find('title');
+                                        var content = value.find('content');
+                                        solutionsTable += '<li><a href="' + title + '">' + content.attr('src') + '</a></li>';
+                                    });
+
 
                                     solutionsTable += "</ul>";
 
@@ -116,12 +119,12 @@
                     }(topicId, popoverId)
                 });
             } else {
-                logToConsole("Already searching for solutions");
+                logToConsole("Already searching for content");
             }
         }
 
         // listen for the kcs popover
-        jQuery(window).bind("solutions_opened", function(event){
+        jQuery(window).bind("pnt_opened", function(event){
             if (!solutionsCache[unsafeWindow.eventDetails.topicId]) {
 
                 solutionsCache[unsafeWindow.eventDetails.topicId] = {contentFixed: true};
@@ -131,11 +134,11 @@
 
                 var buttonId = unsafeWindow.eventDetails.popoverId + 'contentbutton';
 
-                content.append(jQuery('<p>This popover displays KCS solutions that match the keywords in the topic.</p>\
-                        <p>If you are running Chrome, you first need to log into into the <a href="http://access.redhat.com">Red Hat Customer Portal</a>.</p>\
-                        <p>If you are running Firefox, you may be prompted for a username and password. These credentials are the ones that you use to log into the <a href="http://access.redhat.com">Red Hat Customer Portal</a></p>\
+                content.append(jQuery('<p>This popover displays PnT content that match the keywords in the topic.</p>\
+                        <p>If you are running Chrome, you first need to log into into the <a href="https://engineering.redhat.com/pnt">PNT Portal</a>.</p>\
+                        <p>If you are running Firefox, you may be prompted for a username and password. These credentials are the ones that you use to log into the <a href="https://engineering.redhat.com/pnt">PNT Portal</a></p>\
                         <div style="display:table-cell; text-align: center; vertical-align:middle; width: 746px;">\
-                            <button id="' + buttonId + '" style="margin-top: 32px;" type="button" class="btn btn-primary">Get Solutions</button>\
+                            <button id="' + buttonId + '" style="margin-top: 32px;" type="button" class="btn btn-primary">Get Content</button>\
                         </div>'));
 
                 addClickFunction(buttonId, unsafeWindow.eventDetails.topicId, unsafeWindow.eventDetails.popoverId);

@@ -12,7 +12,7 @@
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaCommonUtils_v2.1.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaKeywordExtraction_v2.2.8.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaIntegration_v2.1.js
-// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaSolutionsIntegration_v2.6.8.js
+// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaSolutionsIntegration_v2.7.1.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaMojoIntegration_v2.6.8.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaSearchIntegration_v2.6.6.js
