@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/money.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.6.9.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript/overlay.js" afterPath="$PROJECT_DIR$/javascript/overlay.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.6.9.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.0.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383091922082" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383096430824" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383091890651" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -230,7 +228,7 @@
       <file leaf-file-name="PressZilla.user.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="27" selection-start="1561" selection-end="1561" vertical-scroll-proportion="0.0">
+            <state line="26" column="0" selection-start="1561" selection-end="1561" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -285,15 +283,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaPnTIntegration_v2.6.9.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.6.9.js">
+      <file leaf-file-name="PressZillaPnTIntegration_v2.7.0.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.0.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="55" selection-start="1506" selection-end="1506" vertical-scroll-proportion="-0.24080883">
+            <state line="93" column="56" selection-start="4829" selection-end="4829" vertical-scroll-proportion="0.44852942">
               <folding>
-                <marker date="1383096397286" expanded="false" signature="4111:4187" placeholder="..." />
-                <marker date="1383096397286" expanded="true" signature="4188:4246" placeholder="..." />
-                <marker date="1383096397286" expanded="true" signature="7243:7319" placeholder="..." />
-                <marker date="1383096397286" expanded="true" signature="7320:7362" placeholder="..." />
+                <marker date="1383096618459" expanded="false" signature="4111:4187" placeholder="..." />
+                <marker date="1383096618459" expanded="true" signature="4188:4246" placeholder="..." />
+                <marker date="1383096618459" expanded="true" signature="7242:7318" placeholder="..." />
+                <marker date="1383096618459" expanded="true" signature="7319:7361" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -1826,7 +1824,11 @@
       <created>1383091923649</created>
       <updated>1383091923649</updated>
     </task>
-    <option name="localTasksCounter" value="266" />
+    <task id="LOCAL-00266" summary="Working on PnT integration">
+      <created>1383096433064</created>
+      <updated>1383096433064</updated>
+    </task>
+    <option name="localTasksCounter" value="267" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1851,7 +1853,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21771611" sideWeight="0.67199147" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21771611" sideWeight="0.67199147" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32873806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1903,7 +1905,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing docbook zip file deletion" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working on PnT integration" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1928,6 +1930,7 @@
     <MESSAGE value="Merge branch 'master' of github.com:pressgang-ccms/DocBuilder2&#10;&#10;Conflicts:&#10;&#9;.idea/workspace.xml&#10;" />
     <MESSAGE value="Working on new lucene query" />
     <MESSAGE value="Fixing docbook zip file deletion" />
+    <MESSAGE value="Working on PnT integration" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2032,7 +2035,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="27" selection-start="1561" selection-end="1561" vertical-scroll-proportion="0.0">
+        <state line="26" column="0" selection-start="1561" selection-end="1561" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -2216,14 +2219,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.6.9.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.0.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="55" selection-start="1506" selection-end="1506" vertical-scroll-proportion="-0.24080883">
+        <state line="93" column="56" selection-start="4829" selection-end="4829" vertical-scroll-proportion="0.44852942">
           <folding>
-            <marker date="1383096397286" expanded="false" signature="4111:4187" placeholder="..." />
-            <marker date="1383096397286" expanded="true" signature="4188:4246" placeholder="..." />
-            <marker date="1383096397286" expanded="true" signature="7243:7319" placeholder="..." />
-            <marker date="1383096397286" expanded="true" signature="7320:7362" placeholder="..." />
+            <marker date="1383096618459" expanded="false" signature="4111:4187" placeholder="..." />
+            <marker date="1383096618459" expanded="true" signature="4188:4246" placeholder="..." />
+            <marker date="1383096618459" expanded="true" signature="7242:7318" placeholder="..." />
+            <marker date="1383096618459" expanded="true" signature="7319:7361" placeholder="..." />
           </folding>
         </state>
       </provider>

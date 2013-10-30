@@ -91,7 +91,7 @@
 
                                 var xmlDoc = jQuery.parseXML( solutionsResponse.responseText );
                                 var xml = jQuery( xmlDoc );
-                                var entries = jQuery(data).find('entry');
+                                var entries = jQuery(xml).find('entry');
 
                                 if (entries.length == 0) {
                                     logToConsole("Empty results returned");
