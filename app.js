@@ -778,24 +778,26 @@ function getLatestFile (dir, filter, done) {
 
                 if (file.toString().match(filter)) {
 
-                    fs.stat(fullFile, function (error, stat) {
+                    fs.stat(fullFile, function(fullFile) {
+                            return function (error, stat) {
 
-                        if (stat && stat.isDirectory()) {
-                            walk(file, function (error) {
-                                next(latest, latestFile, allFiles);
-                            });
-                        } else {
-                            var lastModified = moment(stat.mtime);
-                            allFiles.push({path: fullFile, modified: lastModified});
+                                if (stat && stat.isDirectory()) {
+                                    walk(file, function (error) {
+                                        next(latest, latestFile, allFiles);
+                                    });
+                                } else {
+                                    var lastModified = moment(stat.mtime);
+                                    allFiles.push({path: fullFile, modified: lastModified});
 
-                            if (!latest || lastModified.isAfter(latest)) {
-                                latest = lastModified;
-                                latestFile = file;
+                                    if (!latest || lastModified.isAfter(latest)) {
+                                        latest = lastModified;
+                                        latestFile = file;
+                                    }
+
+                                    next(latest, latestFile, allFiles);
+                                }
                             }
-
-                            next(latest, latestFile, allFiles);
-                        }
-                    });
+                        }(fullFile));
                 } else {
                     next(latest, latestFile, allFiles);
                 }
