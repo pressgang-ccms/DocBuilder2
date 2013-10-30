@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383097809891" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383097927955" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383091890651" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -142,7 +143,7 @@
     <file path="/PressZillaSolutionsIntegration_v2.1.4.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383082916104" ignored="false" />
     <file path="/PressZillaPnTIntegration_v2.6.9.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383097680031" ignored="false" />
     <file path="/PressZillaPnTIntegration_v2.7.0.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383096685672" ignored="false" />
-    <file path="/PressZillaPnTIntegration_v2.7.4.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383097832636" ignored="false" />
+    <file path="/PressZillaPnTIntegration_v2.7.4.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383097973900" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -287,12 +288,12 @@
       <file leaf-file-name="PressZillaPnTIntegration_v2.7.4.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="139" column="57" selection-start="6761" selection-end="6791" vertical-scroll-proportion="0.6415441">
+            <state line="100" column="76" selection-start="5053" selection-end="5053" vertical-scroll-proportion="0.7242647">
               <folding>
-                <marker date="1383097917302" expanded="false" signature="3975:4051" placeholder="..." />
-                <marker date="1383097917302" expanded="true" signature="4052:4110" placeholder="..." />
-                <marker date="1383097917302" expanded="true" signature="7155:7231" placeholder="..." />
-                <marker date="1383097917302" expanded="true" signature="7232:7274" placeholder="..." />
+                <marker date="1383097974848" expanded="false" signature="3975:4051" placeholder="..." />
+                <marker date="1383097974848" expanded="true" signature="4052:4110" placeholder="..." />
+                <marker date="1383097974848" expanded="true" signature="7154:7230" placeholder="..." />
+                <marker date="1383097974848" expanded="true" signature="7231:7273" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -1907,7 +1908,11 @@
       <created>1383097811355</created>
       <updated>1383097811356</updated>
     </task>
-    <option name="localTasksCounter" value="273" />
+    <task id="LOCAL-00273" summary="Working on PnT integration">
+      <created>1383097929609</created>
+      <updated>1383097929610</updated>
+    </task>
+    <option name="localTasksCounter" value="274" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2349,12 +2354,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="139" column="57" selection-start="6761" selection-end="6791" vertical-scroll-proportion="0.6415441">
+        <state line="100" column="76" selection-start="5053" selection-end="5053" vertical-scroll-proportion="0.7242647">
           <folding>
-            <marker date="1383097917302" expanded="false" signature="3975:4051" placeholder="..." />
-            <marker date="1383097917302" expanded="true" signature="4052:4110" placeholder="..." />
-            <marker date="1383097917302" expanded="true" signature="7155:7231" placeholder="..." />
-            <marker date="1383097917302" expanded="true" signature="7232:7274" placeholder="..." />
+            <marker date="1383097974848" expanded="false" signature="3975:4051" placeholder="..." />
+            <marker date="1383097974848" expanded="true" signature="4052:4110" placeholder="..." />
+            <marker date="1383097974848" expanded="true" signature="7154:7230" placeholder="..." />
+            <marker date="1383097974848" expanded="true" signature="7231:7273" placeholder="..." />
           </folding>
         </state>
       </provider>

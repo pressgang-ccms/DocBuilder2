@@ -98,7 +98,7 @@
                                 if (entries.length == 0) {
                                     logToConsole("Empty results returned");
 
-                                    content.append(jQuery('<p>No content were found</p>'));
+                                    content.append(jQuery('<p>No content was found</p>'));
                                 } else {
                                     var solutionsTable = "<ul>";
 
