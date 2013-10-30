@@ -87,10 +87,13 @@
                                 addClickFunction(buttonId, topicId, popoverId);
                             } else if (solutionsResponse.status == 200) {
                                 logToConsole("200 returned");
+                                logToConsole(solutionsResponse.responseText);
 
                                 var xmlDoc = jQuery.parseXML( solutionsResponse.responseText );
                                 var xml = jQuery( xmlDoc );
                                 var entries = jQuery(xml).find('entry');
+
+                                logToConsole(xml);
 
                                 if (entries.length == 0) {
                                     logToConsole("Empty results returned");
@@ -100,8 +103,8 @@
                                     var solutionsTable = "<ul>";
 
                                     entries.each(function(index, value) {
-                                        var title = value.find('title');
-                                        var content = value.find('content');
+                                        var title = jQuery(value).find('title');
+                                        var content = jQuery(value).find('content');
                                         solutionsTable += '<li><a href="' + title + '">' + content.attr('src') + '</a></li>';
                                     });
 
