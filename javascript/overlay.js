@@ -301,6 +301,7 @@ function addOverlayIcons(topicId, RoleCreatePara) {
         createSolutionsPopover(topicId, bubbleDiv);
         createMojoPopover(topicId, bubbleDiv);
         createJBossPopover(topicId, bubbleDiv);
+        createPnTPopover(topicId, bubbleDiv);
     }
 }
 
@@ -363,6 +364,36 @@ function createSolutionsPopover(topicId, parent) {
         var evt = document.createEvent( 'Event');
         evt.initEvent('solutions_opened', false, false);
         eventDetails =  {source: 'solutions', topicId: topicId, popoverId: popover.id};
+        window.dispatchEvent (evt);
+    };
+
+    setupEvents(linkDiv, popover);
+}
+
+
+function createPnTPopover(topicId, parent) {
+    var linkDiv = createIcon("money", topicId);
+    parent.appendChild(linkDiv);
+
+    var popover = createPopover("PnT Content", topicId);
+    document.body.appendChild(popover);
+
+    popover.popoverContent.innerHTML = '\
+        <p>This popover displays PnT content that match the keywords in the topic.</p>\
+        <p>This window is only active if the latest version of PressZilla is installed.</p>\
+        <p>Firefox user can install GreaseMonkey from <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">here</a>.</p>\
+        <p>Chrome / Chromium users can install TamperMonkey from <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en">here</a>.</p>\
+        <p>With GreaseMonkey/TamperMonkey installed, you can install the <a href="/PressZilla.user.js">PressZilla GreaseMonkey Extension</a>.</p>';
+
+
+    linkDiv.onmouseover=function(){
+        openPopover(popover, linkDiv);
+        // This is required to send events from this page to a GreaseMonkey script. The code
+        //      jQuery('window').trigger("solutions_opened", ['solutions', topicId, popover.id]);
+        // does not work.
+        var evt = document.createEvent( 'Event');
+        evt.initEvent('pnt_opened', false, false);
+        eventDetails =  {source: 'pnt', topicId: topicId, popoverId: popover.id};
         window.dispatchEvent (evt);
     };
 
