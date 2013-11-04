@@ -146,7 +146,7 @@
                     var textElement = timelineChart.text(x + 25, h + 10, dtext).attr({"font": '9px "Arial"', stroke: "none", fill: "#aaa"});
 
                     if (dt < today) {
-                        textElement = dtext;
+                        textElement = textElement;
                     }
 
                     x += 100;
