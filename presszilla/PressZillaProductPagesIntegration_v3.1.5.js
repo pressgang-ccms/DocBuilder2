@@ -195,7 +195,7 @@
                                     }
                                     a();
                                 }
-                            }(clr, this)
+                            }(clr, pathes[i].p)
                         }
                     );
 
