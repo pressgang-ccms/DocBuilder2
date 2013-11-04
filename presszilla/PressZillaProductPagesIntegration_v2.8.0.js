@@ -111,16 +111,7 @@
                 for (var i in pathes) {
                     //labels[i] = timelineChart.set();
 
-                    var hash = hashCode(json.processes[i].name);
-                    var mask = parseInt("11111111", 2);
-
-                    red += (hash & mask) / mask;
-                    hash = hash << 2;
-                    green += (hash & mask) / mask;
-                    hash = hash << 2;
-                    blue += (hash & mask) / mask;
-
-                    var clr = Raphael.getRGB("rgb(" + (red * 255) + "," + (green * 255) + "," + (blue * 255) + ")");
+                    var clr = pathes[i].color;
 
                     logToConsole(clr);
 
@@ -210,7 +201,19 @@
                             if (!processId) {
                                 processId = maxId;
                                 ++maxId;
-                                data.processes[processId] = schedule.name;
+
+                                var hash = hashCode(schedule.name);
+                                var mask = parseInt("11111111", 2);
+
+                                red += (hash & mask) / mask;
+                                hash = hash << 2;
+                                green += (hash & mask) / mask;
+                                hash = hash << 2;
+                                blue += (hash & mask) / mask;
+
+                                var clr = Raphael.getRGB("rgb(" + (red * 255) + "," + (green * 255) + "," + (blue * 255) + ")");
+
+                                data.processes[processId] = {name: schedule.name, color: clr};
                             }
 
                             var startDate = new Date(schedule.start.actual.timet * 1000);
