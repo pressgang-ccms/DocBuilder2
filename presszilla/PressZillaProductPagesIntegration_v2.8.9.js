@@ -87,6 +87,8 @@
                         if (!isin) {
                             json.buckets[j].processes.push(i);
                         }
+
+                        json.buckets[j].processes.sort();
                     }
                 }
             }
