@@ -221,6 +221,7 @@
                                 var bucket = data.buckets[bucketIndex];
                                 if (bucket.date.getTime() == startDate.getTime()) {
                                     startBucket = bucket;
+                                    break;
                                 }
                             }
 
@@ -236,13 +237,14 @@
                                 var bucket = data.buckets[bucketIndex];
                                 if (bucket.date.getTime() == endDate.getTime()) {
                                     endBucket = bucket;
+                                    break;
                                 }
                             }
 
                             if (!endBucket) {
                                 data.buckets.push({date: endDate, processes: [processId]});
                             } else {
-                                if (!jQuery.inArray(processId, endBucket.processes)) {
+                                if (jQuery.inArray(processId, endBucket.processes) == -1) {
                                     endBucket.processes.push(processId);
                                 }
                             }
