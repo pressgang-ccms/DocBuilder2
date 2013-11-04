@@ -21,8 +21,8 @@ var process = function (json) {
             // look for the last bucket (buckets have to be sorted by date)
             for (var j = json.buckets.length - 1; j >= 0; j--) {
                 var isin = false;
-                for (var k = 0, kk = json.buckets[j].i.length; k < kk; k++) {
-                    isin = isin || (json.buckets[j].i[k][0] == i);
+                for (var k = 0, kk = json.buckets[j].processes.length; k < kk; k++) {
+                    isin = isin || (json.buckets[j].processes[k][0] == i);
                 }
                 if (isin) {
                     end = j;
@@ -33,8 +33,8 @@ var process = function (json) {
             // look for the first bucket
             for (var j = 0, jj = json.buckets.length; j < jj; j++) {
                 var isin = false;
-                for (var k = 0, kk = json.buckets[j].i.length; k < kk; k++) {
-                    isin = isin || (json.buckets[j].i[k][0] == i);
+                for (var k = 0, kk = json.buckets[j].processes.length; k < kk; k++) {
+                    isin = isin || (json.buckets[j].processes[k][0] == i);
                 };
                 if (isin) {
                     start = j;
@@ -45,11 +45,11 @@ var process = function (json) {
             // add the author to every bucket inbetween if not already present
             for (var j = start, jj = end; j < jj; j++) {
                 var isin = false;
-                for (var k = 0, kk = json.buckets[j].i.length; k < kk; k++) {
-                    isin = isin || (json.buckets[j].i[k][0] == i);
+                for (var k = 0, kk = json.buckets[j].processes.length; k < kk; k++) {
+                    isin = isin || (json.buckets[j].processes[k][0] == i);
                 }
                 if (!isin) {
-                    json.buckets[j].i.push([i, 0]);
+                    json.buckets[j].processes.push(i);
                 }
             }
         }
@@ -58,21 +58,21 @@ var process = function (json) {
         var p, h;
         finishes();
         for (var j = 0, jj = json.buckets.length; j < jj; j++) {
-            var users = json.buckets[j].i;
+            var processes = json.buckets[j].processes;
             h = 0;
-            for (var i = 0, ii = users.length; i < ii; i++) {
-                p = pathes[users[i][0]];
+            for (var i = 0, ii = processes.length; i < ii; i++) {
+                p = pathes[processes[i]];
                 if (!p) {
-                    p = pathes[users[i][0]] = {f:[], b:[]};
+                    p = pathes[processes[i]] = {f:[], b:[]};
                 }
                 // push an array with x (x pos), h (height) and the number of commits
-                p.f.push([x, h, users[i][1]]);
+                p.f.push([x, h, 1]);
                 // add the x (x pos) and a height based on the number of commits to the start of the array
                 p.b.unshift([x, h += PRESSGANG_TIMELINE_ITEM_HEIGHT]);
                 h += 2;
             }
             // get date from milliseconds
-            var dt = new Date(json.buckets[j].d * 1000);
+            var dt = json.buckets[j].date;
             var dtext = dt.getDate() + " " + ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"][dt.getMonth()] + " " + dt.getFullYear();
             r.text(x + 25, h + 10, dtext).attr({"font": '9px "Arial"', stroke: "none", fill: "#aaa"});
             x += 100;
