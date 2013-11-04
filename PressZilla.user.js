@@ -12,11 +12,12 @@
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaCommonUtils_v2.1.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaKeywordExtraction_v2.2.8.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaIntegration_v2.1.js
-// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaSolutionsIntegration_v2.1.4.js
-// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaMojoIntegration_v2.2.7.js
-// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaJbossOrgIntegration_v2.2.7.js
+// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaSolutionsIntegration_v2.7.1.js
+// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaMojoIntegration_v2.6.8.js
+// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaSearchIntegration_v2.6.6.js
-// @version     2.6.6
+// @require		http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaPnTIntegration_v2.7.4.js
+// @version     2.7.4
 // @grant       GM_xmlhttpRequest
 // @grant       unsafeWindow
 // @downloadURL https://docbuilder.usersys.redhat.com/PressZilla.user.js
