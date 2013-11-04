@@ -166,6 +166,20 @@
                     var clr = json.processes[i].color;
 
                     pathes[i].p = timelineChart.path().attr({fill: clr, stroke: clr});
+
+                    pathes[i].p.onclick(function(element) {
+                            return function(event) {
+                                if (element.scaled) {
+                                    element.scaled = false;
+                                    element.scale(1.0);
+                                } else {
+                                    element.scaled = true;
+                                    element.scale(1.2);
+                                }
+                            }
+                        }(pathes[i].p)
+                    );
+
                     var path = "M".concat(pathes[i].f[0][0], ",", pathes[i].f[0][1], "L", pathes[i].f[0][0] + 50, ",", pathes[i].f[0][1]);
                     var th = Math.round(pathes[i].f[0][1] + (pathes[i].b[pathes[i].b.length - 1][1] - pathes[i].f[0][1]) / 2 + 3);
                     //labels[i].push(timelineChart.text(pathes[i].f[0][0] + 25, th, pathes[i].f[0][2]).attr(textattr));
