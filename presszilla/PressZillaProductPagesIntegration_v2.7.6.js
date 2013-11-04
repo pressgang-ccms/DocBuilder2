@@ -187,7 +187,7 @@
                 onload: function(response) {
                     logToConsole(response);
 
-                    var responseJson = JSON.parse(response);
+                    var responseJson = JSON.parse(response.responseText);
 
                     if (responseJson.length != 0 && responseJson[0].schedule) {
 

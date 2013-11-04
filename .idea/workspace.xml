@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
+      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v2.7.5.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v2.7.6.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383538601071" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383538719034" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383091890651" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -144,10 +145,10 @@
     <file path="/PressZillaPnTIntegration_v2.7.0.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383096685672" ignored="false" />
     <file path="/PressZillaPnTIntegration_v2.7.4.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383097973900" ignored="false" />
     <file path="/impact.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383537506341" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v2.7.5.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383538389375" ignored="false" />
+    <file path="/PressZillaProductPagesIntegration_v2.7.5.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383538837062" ignored="false" />
     <file path="$PROJECT_DIR$/../PressGangCCMSVisulaisationClient/javascript/PressGangCCMSVisualisationClient.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383536917260" ignored="false" />
     <file path="$PROJECT_DIR$/../PressGangCCMSVisulaisationClient/index.html" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383536917260" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSVisulaisationClient/.idea/workspace.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383538659523" ignored="false" />
+    <file path="$PROJECT_DIR$/../PressGangCCMSVisulaisationClient/.idea/workspace.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383538838766" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +212,7 @@
       <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="777" column="59" selection-start="28692" selection-end="28692" vertical-scroll-proportion="0.0">
+            <state line="777" column="0" selection-start="28692" selection-end="28692" vertical-scroll-proportion="0.0">
               <folding>
                 <marker date="1383533692385" expanded="true" signature="3699:4670" placeholder="..." />
                 <marker date="1383533692385" expanded="true" signature="3711:4024" placeholder="..." />
@@ -255,21 +256,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="impact.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/javascript/impact.js">
+      <file leaf-file-name="PressZillaProductPagesIntegration_v2.7.6.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v2.7.6.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="2" selection-end="2" vertical-scroll-proportion="-1.2">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PressZillaProductPagesIntegration_v2.7.5.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v2.7.5.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="85" column="16" selection-start="3316" selection-end="3340" vertical-scroll-proportion="-0.6862385">
+            <state line="189" column="71" selection-start="8814" selection-end="8814" vertical-scroll-proportion="0.6841216">
               <folding>
-                <marker date="1383538592451" expanded="true" signature="508:567" placeholder="..." />
+                <marker date="1383538838071" expanded="false" signature="508:567" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -278,7 +270,7 @@
       <file leaf-file-name="PressZillaSolutionsIntegration_v2.7.1.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="114" column="20" selection-start="2368" selection-end="6108" vertical-scroll-proportion="0.0">
+            <state line="89" column="89" selection-start="4616" selection-end="4628" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <marker date="1383533692440" expanded="false" signature="4030:4106" placeholder="..." />
@@ -477,7 +469,7 @@
       <file leaf-file-name="PressZillaBugzillaSearchIntegration_v2.6.6.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.6.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="297" column="125" selection-start="15848" selection-end="16599" vertical-scroll-proportion="0.0">
+            <state line="297" column="123" selection-start="15848" selection-end="16599" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <marker date="1383533692420" expanded="false" signature="4378:4397" placeholder="..." />
@@ -500,7 +492,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="devel" />
       </map>
     </option>
   </component>
@@ -1920,7 +1912,11 @@
       <created>1383538603188</created>
       <updated>1383538603188</updated>
     </task>
-    <option name="localTasksCounter" value="284" />
+    <task id="LOCAL-00284" summary="Working on product pages integration">
+      <created>1383538719460</created>
+      <updated>1383538719460</updated>
+    </task>
+    <option name="localTasksCounter" value="285" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2049,7 +2045,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="777" column="59" selection-start="28692" selection-end="28692" vertical-scroll-proportion="0.0">
+        <state line="777" column="0" selection-start="28692" selection-end="28692" vertical-scroll-proportion="0.0">
           <folding>
             <marker date="1383533692385" expanded="true" signature="3699:4670" placeholder="..." />
             <marker date="1383533692385" expanded="true" signature="3711:4024" placeholder="..." />
@@ -2089,28 +2085,6 @@
             <marker date="1383533692385" expanded="true" signature="14763:14822" placeholder="..." />
             <marker date="1383533692385" expanded="true" signature="15753:15895" placeholder="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="114" column="20" selection-start="2368" selection-end="6108" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1383533692440" expanded="false" signature="4030:4106" placeholder="..." />
-            <marker date="1383533692440" expanded="true" signature="4107:4165" placeholder="..." />
-            <marker date="1383533692440" expanded="false" signature="5391:5429" placeholder="..." />
-            <marker date="1383533692440" expanded="false" signature="5441:5448" placeholder="..." />
-            <marker date="1383533692440" expanded="false" signature="7247:7323" placeholder="..." />
-            <marker date="1383533692440" expanded="true" signature="7324:7366" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/impact.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="2" selection-end="2" vertical-scroll-proportion="-1.2">
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2294,7 +2268,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v2.6.6.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="297" column="125" selection-start="15848" selection-end="16599" vertical-scroll-proportion="0.0">
+        <state line="297" column="123" selection-start="15848" selection-end="16599" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <marker date="1383533692420" expanded="false" signature="4378:4397" placeholder="..." />
@@ -2305,11 +2279,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v2.7.5.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="16" selection-start="3316" selection-end="3340" vertical-scroll-proportion="-0.6862385">
+        <state line="89" column="89" selection-start="4616" selection-end="4628" vertical-scroll-proportion="0.0">
           <folding>
-            <marker date="1383538592451" expanded="true" signature="508:567" placeholder="..." />
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1383533692440" expanded="false" signature="4030:4106" placeholder="..." />
+            <marker date="1383533692440" expanded="true" signature="4107:4165" placeholder="..." />
+            <marker date="1383533692440" expanded="false" signature="5391:5429" placeholder="..." />
+            <marker date="1383533692440" expanded="false" signature="5441:5448" placeholder="..." />
+            <marker date="1383533692440" expanded="false" signature="7247:7323" placeholder="..." />
+            <marker date="1383533692440" expanded="true" signature="7324:7366" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v2.7.6.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="189" column="71" selection-start="8814" selection-end="8814" vertical-scroll-proportion="0.6841216">
+          <folding>
+            <marker date="1383538838071" expanded="false" signature="508:567" placeholder="..." />
           </folding>
         </state>
       </provider>
