@@ -245,13 +245,15 @@
 
     };
 
-    var solutionsUrl = "https://pp.engineering.redhat.com/pp/action/explorer/fedora-20/all/cpe,schedule/";
-    function getSchedule(count) {
+
+    function getSchedule(id, count) {
         if (count >= PRODUCT_PAGES_RETRY) {
             // handle error
         } else {
 
             logToConsole("Getting Schedules");
+
+            var solutionsUrl = "https://pp.engineering.redhat.com/pp/action/explorer/" + id + "/all/cpe,schedule/";
 
             GM_xmlhttpRequest({
                 method: 'GET',
@@ -259,8 +261,6 @@
                 headers: {Accept: 'application/json'},
                 onabort: function() {logToConsole("onabort"); getSchedule(++count);},
                 onerror: function() {logToConsole("onerror"); getSchedule(++count);},
-                onprogress: function() {logToConsole("onprogress");},
-                onreadystatechange: function() {logToConsole("onreadystatechange");},
                 ontimeout: function() {logToConsole("ontimeout"); getSchedule(++count);},
                 onload: function(response) {
                     logToConsole(response);
@@ -358,6 +358,35 @@
         }
     }
 
-    getSchedule(0);
+    // Get the product pages id from the current spec
+    var specId = unsafeWindow.getSpecIdFromURL();
 
+    // 6 is the comment node type
+    var specProductUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/contentspecnodes/get/json/query;csNodeType=6;contentSpecIds=" + specId + "?expand=" + encodeURIComponent("{\"branches\":[{\"trunk\":{\"name\": \"nodes\"}}]}");
+
+    // see http://stackoverflow.com/questions/11007605/gm-xmlhttprequest-why-is-it-never-firing-the-onload-in-firefox
+    // and http://wiki.greasespot.net/0.7.20080121.0_compatibility
+    setTimeout(function(){
+        GM_xmlhttpRequest({
+            method: 'GET',
+            url: specProductUrl,
+            onabort: function() {handleFailure("onabort"); },
+            onerror: function() {handleFailure("onerror");},
+            ontimeout: function() {handleFailure("ontimeout");},
+            onload: function(specNodesResponse) {
+                var nodes = JSON.parse(specNodesResponse.responseText);
+                for (var nodeIndex = 0, nodeCount = nodes.items.length; nodeIndex < nodeCount; ++nodeIndex) {
+                    var node = nodes.items[nodeIndex].item;
+                    if (node.additionalText.indexOf("#ProductPagesID = ") == 0) {
+                        var id = node.additionalText.replace("#ProductPagesID = ", "");
+                        logToConsole("Found ID: " + id);
+                        getSchedule(id, 0);
+                        return;
+                    }
+                }
+
+                logToConsole("Could not find ID");
+            }
+        });
+    }, 0);
 })();
