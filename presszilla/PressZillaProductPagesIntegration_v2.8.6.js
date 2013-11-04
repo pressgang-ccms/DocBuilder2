@@ -49,7 +49,7 @@
                     for (var j = json.buckets.length - 1; j >= 0; j--) {
                         var isin = false;
                         for (var k = 0, kk = json.buckets[j].processes.length; k < kk; k++) {
-                            isin = isin || (json.buckets[j].processes[k][0] == i);
+                            isin = isin || (json.buckets[j].processes[k] == i);
                         }
                         if (isin) {
                             end = j;
@@ -61,7 +61,7 @@
                     for (var j = 0, jj = json.buckets.length; j < jj; j++) {
                         var isin = false;
                         for (var k = 0, kk = json.buckets[j].processes.length; k < kk; k++) {
-                            isin = isin || (json.buckets[j].processes[k][0] == i);
+                            isin = isin || (json.buckets[j].processes[k] == i);
                         };
                         if (isin) {
                             start = j;
@@ -73,7 +73,7 @@
                     for (var j = start, jj = end; j < jj; j++) {
                         var isin = false;
                         for (var k = 0, kk = json.buckets[j].processes.length; k < kk; k++) {
-                            isin = isin || (json.buckets[j].processes[k][0] == i);
+                            isin = isin || (json.buckets[j].processes[k] == i);
                         }
                         if (!isin) {
                             json.buckets[j].processes.push(i);
