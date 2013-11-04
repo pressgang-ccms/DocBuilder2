@@ -13,11 +13,16 @@
     // Edited from http://raphaeljs.com/github/impact-code.js
     var process = function (json) {
 
+        logToConsole("Creating offscreen rendering area");
+
         var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:0; left: 0; right: 0; height: 150px"></div>');
         timelineChartDiv.appendTo(jQuery('#offscreenRendering'));
 
+        // raphael charts need to be drawn in an element attached to the DOM
+        setTimeout(function() {
 
-        setTimeout(function(){
+            logToConsole("Creating timeline graph");
+
             timelineChartDiv.appendTo(jQuery("body"));
 
             var x = 0,
@@ -33,6 +38,8 @@
             }
 
             function finishes() {
+
+                logToConsole("finishes()");
 
                 // look for the first and last time an author is mentioned in a bucket
                 for (var i in json.processes) {
@@ -75,6 +82,9 @@
                 }
             }
             function block() {
+
+                logToConsole("block()");
+
                 var p, h;
                 finishes();
                 for (var j = 0, jj = json.buckets.length; j < jj; j++) {
@@ -149,11 +159,9 @@
                     })(i);
                 }
             }
-            if (json.error) {
-                alert("Project not found. Try again.");
-            } else {
-                block();
-            }
+
+            block();
+
         }, 0);
 
 
@@ -164,6 +172,9 @@
         if (count >= PRODUCT_PAGES_RETRY) {
             // handle error
         } else {
+
+            logToConsole("Getting Schedules");
+
             GM_xmlhttpRequest({
                 method: 'GET',
                 url: solutionsUrl,
@@ -174,6 +185,8 @@
                 onreadystatechange: function() {logToConsole("onreadystatechange");},
                 ontimeout: function() {logToConsole("ontimeout"); getSchedule(++count);},
                 onload: function(response) {
+                    logToConsole(response);
+
                     var responseJson = JSON.parse(response);
 
                     if (responseJson.length != 0 && responseJson[0].schedule) {
