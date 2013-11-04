@@ -2,12 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v2.7.5.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v2.7.5.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript/impact.js" afterPath="$PROJECT_DIR$/javascript/impact.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383536769309" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383537516505" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383091890651" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -144,8 +145,11 @@
     <file path="/PressZillaPnTIntegration_v2.6.9.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383097680031" ignored="false" />
     <file path="/PressZillaPnTIntegration_v2.7.0.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383096685672" ignored="false" />
     <file path="/PressZillaPnTIntegration_v2.7.4.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383097973900" ignored="false" />
-    <file path="/impact.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383536741611" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v2.7.5.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383536310668" ignored="false" />
+    <file path="/impact.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383537506341" ignored="false" />
+    <file path="/PressZillaProductPagesIntegration_v2.7.5.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383537779843" ignored="false" />
+    <file path="$PROJECT_DIR$/../PressGangCCMSVisulaisationClient/javascript/PressGangCCMSVisualisationClient.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383536917260" ignored="false" />
+    <file path="$PROJECT_DIR$/../PressGangCCMSVisulaisationClient/index.html" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383536917260" ignored="false" />
+    <file path="$PROJECT_DIR$/../PressGangCCMSVisulaisationClient/.idea/workspace.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383537782828" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -253,19 +257,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="impact.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="impact.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/javascript/impact.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="10" selection-start="248" selection-end="248" vertical-scroll-proportion="0.26455027">
+            <state line="2" column="0" selection-start="2" selection-end="2" vertical-scroll-proportion="-1.2">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaProductPagesIntegration_v2.7.5.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PressZillaProductPagesIntegration_v2.7.5.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v2.7.5.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="74" column="51" selection-start="3670" selection-end="3679" vertical-scroll-proportion="0.0">
+            <state line="233" column="38" selection-start="10866" selection-end="10866" vertical-scroll-proportion="0.6706081">
               <folding />
             </state>
           </provider>
@@ -334,8 +338,8 @@
         <option value="$PROJECT_DIR$/PressZilla.user.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js" />
         <option value="$PROJECT_DIR$/app.js" />
-        <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v2.7.5.js" />
         <option value="$PROJECT_DIR$/javascript/impact.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v2.7.5.js" />
       </list>
     </option>
   </component>
@@ -1708,7 +1712,15 @@
       <created>1383536770910</created>
       <updated>1383536770910</updated>
     </task>
-    <option name="localTasksCounter" value="279" />
+    <task id="LOCAL-00279" summary="Working on product pages integration">
+      <created>1383536886118</created>
+      <updated>1383536886118</updated>
+    </task>
+    <task id="LOCAL-00280" summary="Working on product pages integration">
+      <created>1383537519819</created>
+      <updated>1383537519819</updated>
+    </task>
+    <option name="localTasksCounter" value="281" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1902,16 +1914,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v2.7.5.js">
+    <entry file="file://$PROJECT_DIR$/javascript/impact.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="51" selection-start="3670" selection-end="3679" vertical-scroll-proportion="0.0">
+        <state line="2" column="0" selection-start="2" selection-end="2" vertical-scroll-proportion="-1.2">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/impact.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v2.7.5.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="10" selection-start="248" selection-end="248" vertical-scroll-proportion="0.26455027">
+        <state line="233" column="38" selection-start="10866" selection-end="10866" vertical-scroll-proportion="0.6706081">
           <folding />
         </state>
       </provider>
