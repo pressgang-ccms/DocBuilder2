@@ -216,11 +216,11 @@
                             var endBucket = null;
                             for (var bucketIndex = 0, bucketCount = data.buckets.length; bucketIndex < bucketCount; ++bucketIndex) {
                                 var bucket = data.buckets[bucketIndex];
-                                if (bucket.date == startDate) {
+                                if (bucket.date.getTime() == startDate.getTime()) {
                                     startBucket = bucket;
                                 }
 
-                                if (bucket.date == endDate) {
+                                if (bucket.date.getTime() == endDate.getTime()) {
                                     endBucket = bucket;
                                 }
 
