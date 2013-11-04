@@ -10,6 +10,10 @@
      */
     var PRODUCT_PAGES_RETRY = 5;
 
+    function hashCode(s) {
+        return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
+    }
+
     // Edited from http://raphaeljs.com/github/impact-code.js
     var process = function (json) {
 
@@ -32,10 +36,6 @@
                 pathes = {},
                 lgnd2 = $("#legend2")[0],
                 usrnm2 = $("#username2")[0];
-
-            function hashCode(s) {
-                return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
-            }
 
             function finishes() {
 
