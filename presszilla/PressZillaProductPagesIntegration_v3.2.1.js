@@ -9,7 +9,7 @@
      * The height of a process in the timeline
      * @type {number}
      */
-    var TIMELINE_ITEM_HEIGHT = 22;
+    var TIMELINE_ITEM_HEIGHT = 20;
 
     /**
      * The margine above the timeline
@@ -21,7 +21,7 @@
      * The width of a given date in the timeline
      * @type {number}
      */
-    var TIMELINE_ITEM_WIDTH = 110;
+    var TIMELINE_ITEM_WIDTH = 100;
 
     /**
      * The number of times to retry the product pages API
