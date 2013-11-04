@@ -12,6 +12,12 @@
     var TIMELINE_TOTAL_HEIGHT = 500;
 
     /**
+     * The width of the timeline graph
+     * @type {number}
+     */
+    var TIMELINE_TOTAL_WIDTH = 5000;
+
+    /**
      * The number of times to retry the product pages API
      * @type {number}
      */
@@ -38,7 +44,7 @@
             jQuery("body").css("margin-top", TIMELINE_TOTAL_HEIGHT + "px");
 
             var x = 0,
-                timelineChart = Raphael("timelineChartDiv", 3000, TIMELINE_TOTAL_HEIGHT),
+                timelineChart = Raphael("timelineChartDiv", TIMELINE_TOTAL_WIDTH, TIMELINE_TOTAL_HEIGHT),
             //labels = {},
             //textattr = {"font": '9px "Arial"', stroke: "none", fill: "#fff"},
                 pathes = {},
