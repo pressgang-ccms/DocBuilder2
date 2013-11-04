@@ -189,7 +189,7 @@
                                     element.attr({fill: clr});
                                 } else {
                                     function a() {
-                                        element.effect = element.animate({fill : '#000'}, 1000, b);
+                                        element.effect = element.animate({fill : '#FFF'}, 1000, b);
                                     }
                                     function b() {
                                         element.effect = element.animate({fill : clr}, 1000, a);
@@ -222,7 +222,7 @@
                     pathes[i].p.attr({path: path + "z"});
                     //labels[i].hide();
                     var current = null;
-                    (function (i) {
+                    (function (i, clr) {
                         pathes[i].p.mouseover(function () {
                             if (current != null) {
                                 //labels[current].hide();
@@ -232,9 +232,9 @@
                             pathes[i].p.toFront();
                             //labels[i].toFront();
                             usrnm2[0].innerHTML = json.processes[i].name;
-                            lgnd2[0].style.backgroundColor = pathes[i].p.attr("fill");
+                            lgnd2[0].style.backgroundColor = clr;
                         });
-                    })(i);
+                    })(i, clr);
                 }
             }
 
