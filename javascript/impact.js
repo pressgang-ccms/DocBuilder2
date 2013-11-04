@@ -1,3 +1,9 @@
+/**
+ * The height of each process in the timeline
+ * @type {number}
+ */
+var PRESSGANG_TIMELINE_ITEM_HEIGHT = 10;
+
 var process = function (json) {
     var x = 0,
         r = Raphael("chart", window.innerWidth, 150),
@@ -9,10 +15,10 @@ var process = function (json) {
     function finishes() {
 
         // look for the first and last time an author is mentioned in a bucket
-        for (var i in json.authors) {
+        for (var i in json.processes) {
             var start, end;
 
-            // look for the last bucket
+            // look for the last bucket (buckets have to be sorted by date)
             for (var j = json.buckets.length - 1; j >= 0; j--) {
                 var isin = false;
                 for (var k = 0, kk = json.buckets[j].i.length; k < kk; k++) {
@@ -62,7 +68,7 @@ var process = function (json) {
                 // push an array with x (x pos), h (height) and the number of commits
                 p.f.push([x, h, users[i][1]]);
                 // add the x (x pos) and a height based on the number of commits to the start of the array
-                p.b.unshift([x, h += Math.max(Math.round(Math.log(users[i][1]) * 5), 1)]);
+                p.b.unshift([x, h += PRESSGANG_TIMELINE_ITEM_HEIGHT]);
                 h += 2;
             }
             // get date from milliseconds
