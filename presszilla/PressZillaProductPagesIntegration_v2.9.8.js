@@ -9,7 +9,7 @@
      * The height of a process in the timeline
      * @type {number}
      */
-    var TIMELINE_ITEM_HEIGHT = 25;
+    var TIMELINE_ITEM_HEIGHT = 23;
 
     /**
      * The margine above the timeline
@@ -51,7 +51,7 @@
         var timelineHeight = (maxProcesses * TIMELINE_ITEM_HEIGHT);
         var timelineWidth = json.buckets.length * TIMELINE_ITEM_WIDTH;
 
-        var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: 316px; right: 0; height: ' + timelineHeight + 'px; overflow-x: auto"></div>');
+        var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: 316px; right: 0; height: ' + timelineHeight + 'px; overflow-x: auto; overflow-y: "></div>');
         timelineChartDiv.appendTo(jQuery('#offscreenRendering'));
 
         // raphael charts need to be drawn in an element attached to the DOM
