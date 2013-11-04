@@ -9,7 +9,7 @@
      * The height of a process in the timeline
      * @type {number}
      */
-    var TIMELINE_ITEM_HEIGHT = 30;
+    var TIMELINE_ITEM_HEIGHT = 14;
 
     /**
      * The margine above the timeline
@@ -21,7 +21,7 @@
      * The width of a given date in the timeline
      * @type {number}
      */
-    var TIMELINE_ITEM_WITH = 78;
+    var TIMELINE_ITEM_WIDTH = 78;
 
     /**
      * The number of times to retry the product pages API
@@ -49,15 +49,13 @@
         // allow some extra rows for the date and some padding
         maxProcesses += 3;
         var timelineHeight = (maxProcesses * TIMELINE_ITEM_HEIGHT);
-        var timelineWidth = json.buckets.length * TIMELINE_ITEM_WITH;
+        var timelineWidth = json.buckets.length * TIMELINE_ITEM_WIDTH;
 
         var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: 316px; right: 0; height: ' + timelineHeight + 'px; overflow: auto"></div>');
         timelineChartDiv.appendTo(jQuery('#offscreenRendering'));
 
         // raphael charts need to be drawn in an element attached to the DOM
         setTimeout(function() {
-
-            logToConsole("Creating timeline graph");
 
             timelineChartDiv.appendTo(jQuery("body"));
             jQuery("body").css("margin-top", (timelineHeight + TIMELINE_VERTICAL_OFFSET) + "px");
@@ -253,18 +251,19 @@
                             }
 
                             var startDate = new Date(schedule.start.actual.timet * 1000);
+                            var fixedStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
                             var startBucket = null;
 
                             for (var bucketIndex = 0, bucketCount = data.buckets.length; bucketIndex < bucketCount; ++bucketIndex) {
                                 var bucket = data.buckets[bucketIndex];
-                                if (bucket.date.getTime() == startDate.getTime()) {
+                                if (bucket.date.getTime() == fixedStartDate.getTime()) {
                                     startBucket = bucket;
                                     break;
                                 }
                             }
 
                             if (!startBucket) {
-                                data.buckets.push({date: startDate, processes: [processId]});
+                                data.buckets.push({date: fixedStartDate, processes: [processId]});
                             } else {
                                 if (jQuery.inArray(processId, startBucket.processes) == -1) {
                                     startBucket.processes.push(processId);
@@ -272,17 +271,18 @@
                             }
 
                             var endDate = new Date(schedule.end.actual.timet * 1000);
+                            var fixedEndDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
                             var endBucket = null;
                             for (var bucketIndex = 0, bucketCount = data.buckets.length; bucketIndex < bucketCount; ++bucketIndex) {
                                 var bucket = data.buckets[bucketIndex];
-                                if (bucket.date.getTime() == endDate.getTime()) {
+                                if (bucket.date.getTime() == fixedEndDate.getTime()) {
                                     endBucket = bucket;
                                     break;
                                 }
                             }
 
                             if (!endBucket) {
-                                data.buckets.push({date: endDate, processes: [processId]});
+                                data.buckets.push({date: fixedEndDate, processes: [processId]});
                             } else {
                                 if (jQuery.inArray(processId, endBucket.processes) == -1) {
                                     endBucket.processes.push(processId);
