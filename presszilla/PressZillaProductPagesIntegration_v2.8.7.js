@@ -19,7 +19,7 @@
 
         logToConsole("Creating offscreen rendering area");
 
-        var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:0; left: 0; right: 0; height: 150px"></div>');
+        var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:0; left: 0; right: 0; height: 250px; overflow: auto"></div>');
         timelineChartDiv.appendTo(jQuery('#offscreenRendering'));
 
         // raphael charts need to be drawn in an element attached to the DOM
@@ -30,7 +30,7 @@
             timelineChartDiv.appendTo(jQuery("body"));
 
             var x = 0,
-                timelineChart = Raphael("timelineChartDiv", window.innerWidth, 150),
+                timelineChart = Raphael("timelineChartDiv", 3000, 250),
             //labels = {},
             //textattr = {"font": '9px "Arial"', stroke: "none", fill: "#fff"},
                 pathes = {},
