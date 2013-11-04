@@ -192,25 +192,21 @@
                     if (responseJson.length != 0 && responseJson[0].schedule) {
 
                         var data = {buckets: [], processes: {}};
+                        var maxId = 0;
 
                         for (var scheduleIndex = 0, scheduleCount = responseJson[0].schedule.length; scheduleIndex < scheduleCount; ++scheduleIndex) {
                             var schedule = responseJson[0].schedule[scheduleIndex];
-                            var foundSchedule = false;
-                            var maxId = null;
                             var processId = null;
                             for (var scheduleDetails in data.processes) {
                                 if (data.processes[scheduleDetails] == schedule.name) {
-                                    foundSchedule = true;
                                     processId = scheduleDetails;
-                                }
-
-                                if (!maxId || maxId < scheduleDetails) {
-                                    maxId = scheduleDetails;
+                                    break;
                                 }
                             }
 
-                            if (!foundSchedule) {
-                                processId = maxId ? 0 : maxId + 1;
+                            if (!processId) {
+                                processId = maxId;
+                                ++maxId;
                                 data.processes[processId] = schedule.name;
                             }
 
