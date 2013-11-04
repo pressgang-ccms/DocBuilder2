@@ -9,7 +9,7 @@
      * The height of a process in the timeline
      * @type {number}
      */
-    var TIMELINE_ITEM_HEIGHT = 20;
+    var TIMELINE_ITEM_HEIGHT = 21;
 
     /**
      * The margine above the timeline
