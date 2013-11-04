@@ -111,7 +111,7 @@
                 for (var i in pathes) {
                     //labels[i] = timelineChart.set();
 
-                    var clr = pathes[i].color;
+                    var clr = json.processes[i].color;
 
                     logToConsole(clr);
 
