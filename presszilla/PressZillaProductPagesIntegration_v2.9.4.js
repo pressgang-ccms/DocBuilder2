@@ -6,10 +6,10 @@
     var PRESSGANG_TIMELINE_ITEM_HEIGHT = 10;
 
     /**
-     * The height of the timeline graph
+     * The height of a process in the timeline
      * @type {number}
      */
-    var TIMELINE_TOTAL_HEIGHT = 600;
+    var TIMELINE_ITEM_HEIGHT = 30;
 
     /**
      * The margine above the timeline
@@ -18,10 +18,10 @@
     var TIMELINE_VERTICAL_OFFSET = 32;
 
     /**
-     * The width of the timeline graph
+     * The width of a given date in the timeline
      * @type {number}
      */
-    var TIMELINE_TOTAL_WIDTH = 15000;
+    var TIMELINE_ITEM_WITH = 78;
 
     /**
      * The number of times to retry the product pages API
@@ -38,7 +38,20 @@
 
         logToConsole("Creating offscreen rendering area");
 
-        var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: 316px; right: 0; height: ' + TIMELINE_TOTAL_HEIGHT + 'px; overflow: auto"></div>');
+        var maxProcesses = 0;
+        for (var bucketIndex = 0, bucketCount = json.buckets.length; bucketIndex < bucketCount; ++bucketIndex) {
+            var numProcesses = json.buckets[bucketIndex].processes.length;
+            if (maxProcesses < numProcesses)  {
+                maxProcesses = numProcesses;
+            }
+        }
+
+        // allow some extra rows for the date and some padding
+        maxProcesses += 3;
+        var timelineHeight = (maxProcesses * TIMELINE_ITEM_HEIGHT);
+        var timelineWidth = json.buckets.length * TIMELINE_ITEM_WITH;
+
+        var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: 316px; right: 0; height: ' + timelineHeight + 'px; overflow: auto"></div>');
         timelineChartDiv.appendTo(jQuery('#offscreenRendering'));
 
         // raphael charts need to be drawn in an element attached to the DOM
@@ -47,10 +60,10 @@
             logToConsole("Creating timeline graph");
 
             timelineChartDiv.appendTo(jQuery("body"));
-            jQuery("body").css("margin-top", (TIMELINE_TOTAL_HEIGHT + TIMELINE_VERTICAL_OFFSET) + "px");
+            jQuery("body").css("margin-top", (timelineHeight + TIMELINE_VERTICAL_OFFSET) + "px");
 
             var x = 0,
-                timelineChart = Raphael("timelineChartDiv", TIMELINE_TOTAL_WIDTH, TIMELINE_TOTAL_HEIGHT),
+                timelineChart = Raphael("timelineChartDiv", timelineWidth, timelineHeight),
                 //labels = {},
                 //textattr = {"font": '9px "Arial"', stroke: "none", fill: "#fff"},
                 pathes = {},
