@@ -15,7 +15,7 @@
      * The margine above the timeline
      * @type {number}
      */
-    var TIMELINE_VERTICAL_OFFSET = 32;
+    var TIMELINE_VERTICAL_OFFSET = 40;
 
     /**
      * The width of a given date in the timeline
@@ -65,8 +65,8 @@
                 //labels = {},
                 //textattr = {"font": '9px "Arial"', stroke: "none", fill: "#fff"},
                 pathes = {},
-                lgnd2 = jQuery('<div style="position: absolute; top: 0; left: 316px; width: 24px; height: 24px;"></div>'),
-                usrnm2 = jQuery('<div style="position: absolute; top: 0; left: 348px"></div>');
+                lgnd2 = jQuery('<div style="position: absolute; top: 8px; left: 316px; width: 24px; height: 24px;"></div>'),
+                usrnm2 = jQuery('<div style="position: absolute; top: 8px; left: 348px"></div>');
 
             jQuery("body").append(lgnd2);
             jQuery("body").append(usrnm2);
@@ -119,10 +119,12 @@
             }
             function block() {
 
-                logToConsole("block()");
-
                 var p, h;
                 finishes();
+
+                var today = new Date();
+                var todayOnGraph = null;
+
                 for (var j = 0, jj = json.buckets.length; j < jj; j++) {
                     var processes = json.buckets[j].processes;
                     h = 0;
@@ -140,9 +142,19 @@
                     // get date from milliseconds
                     var dt = json.buckets[j].date;
                     var dtext = dt.getDate() + " " + ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"][dt.getMonth()] + " " + dt.getFullYear();
+
+                    if (dt < today) {
+                        todayOnGraph = dtext;
+                    }
+
                     timelineChart.text(x + 25, h + 10, dtext).attr({"font": '9px "Arial"', stroke: "none", fill: "#aaa"});
                     x += 100;
                 }
+
+                if (todayOnGraph) {
+                    todayOnGraph.scrollIntoView();
+                }
+
                 var c = 0;
                 for (var i in pathes) {
                     //labels[i] = timelineChart.set();
