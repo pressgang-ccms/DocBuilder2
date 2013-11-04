@@ -255,6 +255,8 @@
                             return 0;
                         });
 
+                        logToConsole(data);
+
                         process(data);
                     }
                 }
