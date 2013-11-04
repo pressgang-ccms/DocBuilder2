@@ -187,11 +187,14 @@
                                     this.effect = null;
                                     this.attr({fill: clr});
                                 } else {
+
+                                    var element = this;
+
                                     function a() {
-                                        this.effect = this.animate({fill : '#000'}, 1000, b);
+                                        element.effect = element.animate({fill : '#000'}, 1000, b);
                                     }
                                     function b() {
-                                        this.effect = this.animate({fill : clr}, 1000, a);
+                                        element.effect = element.animate({fill : clr}, 1000, a);
                                     }
                                     a();
                                 }
