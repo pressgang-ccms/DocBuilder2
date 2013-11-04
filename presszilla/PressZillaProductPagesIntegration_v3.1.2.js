@@ -180,19 +180,22 @@
 
                     pathes[i].p = timelineChart.path().attr({fill: clr, stroke: clr});
 
-                    pathes[i].p.click(function(event) {
-                            if (this.effect) {
-                                this.effect.stop();
-                                this.effect = null;
-                            } else {
-                                function a() {
-                                    this.effect = this.animate({fill : '#000'}, 1000, b);
+                    pathes[i].p.click(function(clr) {
+                            return function(event) {
+                                if (this.effect) {
+                                    this.effect.stop();
+                                    this.effect = null;
+                                    this.attr({fill: clr});
+                                } else {
+                                    function a() {
+                                        this.effect = this.animate({fill : '#000'}, 1000, b);
+                                    }
+                                    function b() {
+                                        this.effect = this.animate({fill : clr}, 1000, a);
+                                    }
+                                    a();
                                 }
-                                function b() {
-                                    this.effect = this.animate({fill : clr}, 1000, a);
-                                }
-                                a();
-                            }
+                            }(clr)
                         }
                     );
 
