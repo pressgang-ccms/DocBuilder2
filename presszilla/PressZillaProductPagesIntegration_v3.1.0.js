@@ -29,6 +29,12 @@
      */
     var PRODUCT_PAGES_RETRY = 5;
 
+    /**
+     * The scale to apply when a path is clicked
+     * @type {number}
+     */
+    var CLICK_SCALE = 1.2;
+
     function hashCode(s) {
         return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
     }
@@ -171,10 +177,10 @@
                             return function(event) {
                                 if (element.scaled) {
                                     element.scaled = false;
-                                    element.scale(1.0);
+                                    element.scale(1.0, 1.0 / CLICK_SCALE);
                                 } else {
                                     element.scaled = true;
-                                    element.scale(1.2);
+                                    element.scale(1.0, CLICK_SCALE);
                                 }
                             }
                         }(pathes[i].p)
