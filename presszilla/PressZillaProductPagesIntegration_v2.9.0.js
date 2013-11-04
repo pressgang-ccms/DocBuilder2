@@ -9,7 +9,7 @@
      * The height of the timeline graph
      * @type {number}
      */
-    var TIMELINE_TOTAL_HEIGHT = 600;
+    var TIMELINE_TOTAL_HEIGHT = 500;
 
     /**
      * The number of times to retry the product pages API
@@ -26,7 +26,7 @@
 
         logToConsole("Creating offscreen rendering area");
 
-        var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:0; left: 0; right: 0; height: ' + TIMELINE_TOTAL_HEIGHT + 'px; overflow: auto"></div>');
+        var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:0; left: 316px; right: 0; height: ' + TIMELINE_TOTAL_HEIGHT + 'px; overflow: auto"></div>');
         timelineChartDiv.appendTo(jQuery('#offscreenRendering'));
 
         // raphael charts need to be drawn in an element attached to the DOM
@@ -36,7 +36,6 @@
 
             timelineChartDiv.appendTo(jQuery("body"));
             jQuery("body").css("margin-top", TIMELINE_TOTAL_HEIGHT + "px");
-            jQuery(".pressgangMenu").css("margin-top", TIMELINE_TOTAL_HEIGHT + "px");
 
             var x = 0,
                 timelineChart = Raphael("timelineChartDiv", 3000, TIMELINE_TOTAL_HEIGHT),
