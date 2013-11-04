@@ -12,6 +12,12 @@
     var TIMELINE_TOTAL_HEIGHT = 600;
 
     /**
+     * The margine above the timeline
+     * @type {number}
+     */
+    var TIMELINE_VERTICAL_OFFSET = 32;
+
+    /**
      * The width of the timeline graph
      * @type {number}
      */
@@ -32,7 +38,7 @@
 
         logToConsole("Creating offscreen rendering area");
 
-        var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:32px; left: 316px; right: 0; height: ' + TIMELINE_TOTAL_HEIGHT + 'px; overflow: auto"></div>');
+        var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: 316px; right: 0; height: ' + TIMELINE_TOTAL_HEIGHT + 'px; overflow: auto"></div>');
         timelineChartDiv.appendTo(jQuery('#offscreenRendering'));
 
         // raphael charts need to be drawn in an element attached to the DOM
@@ -41,7 +47,7 @@
             logToConsole("Creating timeline graph");
 
             timelineChartDiv.appendTo(jQuery("body"));
-            jQuery("body").css("margin-top", TIMELINE_TOTAL_HEIGHT + "px");
+            jQuery("body").css("margin-top", (TIMELINE_TOTAL_HEIGHT + TIMELINE_VERTICAL_OFFSET) + "px");
 
             var x = 0,
                 timelineChart = Raphael("timelineChartDiv", TIMELINE_TOTAL_WIDTH, TIMELINE_TOTAL_HEIGHT),
