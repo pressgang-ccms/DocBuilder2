@@ -205,11 +205,11 @@
                                 var hash = hashCode(schedule.name);
                                 var mask = parseInt("11111111", 2);
 
-                                red += (hash & mask) / mask;
+                                var red = (hash & mask) / mask;
                                 hash = hash << 2;
-                                green += (hash & mask) / mask;
+                                var green = (hash & mask) / mask;
                                 hash = hash << 2;
-                                blue += (hash & mask) / mask;
+                                var blue = (hash & mask) / mask;
 
                                 var clr = Raphael.getRGB("rgb(" + (red * 255) + "," + (green * 255) + "," + (blue * 255) + ")");
 
