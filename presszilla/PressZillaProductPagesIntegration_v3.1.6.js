@@ -178,7 +178,8 @@
 
                     var clr = json.processes[i].color;
 
-                    pathes[i].p = timelineChart.path().attr({fill: clr, stroke: clr});
+                    var path = timelineChart.path().attr({fill: clr, stroke: clr});
+                    pathes[i].p = path;
 
                     pathes[i].p.click(function(clr, element) {
                             return function(event) {
@@ -195,8 +196,8 @@
                                     }
                                     a();
                                 }
-                            }(clr, pathes[i].p)
-                        }
+                            }
+                        } (clr, path)
                     );
 
                     var path = "M".concat(pathes[i].f[0][0], ",", pathes[i].f[0][1], "L", pathes[i].f[0][0] + 50, ",", pathes[i].f[0][1]);
