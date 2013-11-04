@@ -9,13 +9,13 @@
      * The height of the timeline graph
      * @type {number}
      */
-    var TIMELINE_TOTAL_HEIGHT = 500;
+    var TIMELINE_TOTAL_HEIGHT = 600;
 
     /**
      * The width of the timeline graph
      * @type {number}
      */
-    var TIMELINE_TOTAL_WIDTH = 5000;
+    var TIMELINE_TOTAL_WIDTH = 15000;
 
     /**
      * The number of times to retry the product pages API
@@ -32,7 +32,7 @@
 
         logToConsole("Creating offscreen rendering area");
 
-        var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:0; left: 316px; right: 0; height: ' + TIMELINE_TOTAL_HEIGHT + 'px; overflow: auto"></div>');
+        var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:32px; left: 316px; right: 0; height: ' + TIMELINE_TOTAL_HEIGHT + 'px; overflow: auto"></div>');
         timelineChartDiv.appendTo(jQuery('#offscreenRendering'));
 
         // raphael charts need to be drawn in an element attached to the DOM
@@ -45,11 +45,11 @@
 
             var x = 0,
                 timelineChart = Raphael("timelineChartDiv", TIMELINE_TOTAL_WIDTH, TIMELINE_TOTAL_HEIGHT),
-            //labels = {},
-            //textattr = {"font": '9px "Arial"', stroke: "none", fill: "#fff"},
+                //labels = {},
+                //textattr = {"font": '9px "Arial"', stroke: "none", fill: "#fff"},
                 pathes = {},
-                lgnd2 = $("#legend2")[0],
-                usrnm2 = $("#username2")[0];
+                lgnd2 = jQuery('<div style="position: absolute; top: 0; left: 316px; width: 24px; height: 24px;"></div>'),
+                usrnm2 = jQuery('<div style="position: absolute; top: 0; left: 348px"></div>');
 
             function finishes() {
 
@@ -161,8 +161,8 @@
                             //labels[i].show();
                             pathes[i].p.toFront();
                             //labels[i].toFront();
-                            //usrnm2.innerHTML = json.processes[i].name;
-                            //lgnd2.style.backgroundColor = pathes[i].p.attr("fill");
+                            usrnm2[0].innerHTML = json.processes[i].name;
+                            lgnd2[0].style.backgroundColor = pathes[i].p.attr("fill");
                         });
                     })(i);
                 }
@@ -244,7 +244,9 @@
                             if (!startBucket) {
                                 data.buckets.push({date: startDate, processes: [processId]});
                             } else {
-                                startBucket.processes.push(processId);
+                                if (jQuery.inArray(processId, startBucket.processes) == -1) {
+                                    startBucket.processes.push(processId);
+                                }
                             }
 
                             var endDate = new Date(schedule.end.actual.timet * 1000);
