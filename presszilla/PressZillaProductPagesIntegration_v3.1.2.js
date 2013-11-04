@@ -39,6 +39,9 @@
         return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
     }
 
+    //the 'colors' argument is an array of colors
+    var exampleColorList = ['red', 'blue', 'yellow'];
+
     // Edited from http://raphaeljs.com/github/impact-code.js
     var process = function (json) {
 
@@ -179,10 +182,16 @@
 
                     pathes[i].p.click(function(event) {
                             if (this.effect) {
-                                this.remove(this.effect);
+                                this.effect.stop();
                                 this.effect = null;
                             } else {
-                                this.effect = this.glow({color: "#FF0000", width: 5});
+                                function a() {
+                                    this.effect = this.animate({fill : '#000'}, 1000, b);
+                                }
+                                function b() {
+                                    this.effect = this.animate({fill : clr}, 1000, a);
+                                }
+                                a();
                             }
                         }
                     );
