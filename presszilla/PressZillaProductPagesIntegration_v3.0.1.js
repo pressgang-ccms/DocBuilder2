@@ -143,11 +143,12 @@
                     var dt = json.buckets[j].date;
                     var dtext = dt.getDate() + " " + ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"][dt.getMonth()] + " " + dt.getFullYear();
 
+                    var textElement = timelineChart.text(x + 25, h + 10, dtext).attr({"font": '9px "Arial"', stroke: "none", fill: "#aaa"});
+
                     if (dt < today) {
-                        todayOnGraph = dtext;
+                        textElement = dtext;
                     }
 
-                    timelineChart.text(x + 25, h + 10, dtext).attr({"font": '9px "Arial"', stroke: "none", fill: "#aaa"});
                     x += 100;
                 }
 
