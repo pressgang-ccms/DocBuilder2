@@ -121,6 +121,9 @@
                     blue += (hash & mask) / mask;
 
                     var clr = Raphael.getRGB("rgb(" + (red * 255) + "," + (green * 255) + "," + (blue * 255) + ")");
+
+                    logToConsole(clr);
+
                     pathes[i].p = timelineChart.path().attr({fill: clr, stroke: clr});
                     var path = "M".concat(pathes[i].f[0][0], ",", pathes[i].f[0][1], "L", pathes[i].f[0][0] + 50, ",", pathes[i].f[0][1]);
                     var th = Math.round(pathes[i].f[0][1] + (pathes[i].b[pathes[i].b.length - 1][1] - pathes[i].f[0][1]) / 2 + 3);
@@ -211,21 +214,12 @@
                             }
 
                             var startDate = new Date(schedule.start.actual.timet * 1000);
-                            var endDate = new Date(schedule.end.actual.timet * 1000);
                             var startBucket = null;
-                            var endBucket = null;
+
                             for (var bucketIndex = 0, bucketCount = data.buckets.length; bucketIndex < bucketCount; ++bucketIndex) {
                                 var bucket = data.buckets[bucketIndex];
                                 if (bucket.date.getTime() == startDate.getTime()) {
                                     startBucket = bucket;
-                                }
-
-                                if (bucket.date.getTime() == endDate.getTime()) {
-                                    endBucket = bucket;
-                                }
-
-                                if (startBucket && endBucket) {
-                                    break;
                                 }
                             }
 
@@ -233,6 +227,15 @@
                                 data.buckets.push({date: startDate, processes: [processId]});
                             } else {
                                 startBucket.processes.push(processId);
+                            }
+
+                            var endDate = new Date(schedule.end.actual.timet * 1000);
+                            var endBucket = null;
+                            for (var bucketIndex = 0, bucketCount = data.buckets.length; bucketIndex < bucketCount; ++bucketIndex) {
+                                var bucket = data.buckets[bucketIndex];
+                                if (bucket.date.getTime() == endDate.getTime()) {
+                                    endBucket = bucket;
+                                }
                             }
 
                             if (!endBucket) {
