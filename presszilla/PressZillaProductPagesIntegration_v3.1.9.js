@@ -377,8 +377,8 @@
                 var nodes = JSON.parse(specNodesResponse.responseText);
                 for (var nodeIndex = 0, nodeCount = nodes.items.length; nodeIndex < nodeCount; ++nodeIndex) {
                     var node = nodes.items[nodeIndex].item;
-                    if (node.additionalText.indexOf("#ProductPagesID = ") == 0) {
-                        var id = node.additionalText.replace("#ProductPagesID = ", "");
+                    if (node.title.indexOf("#ProductPagesID = ") == 0) {
+                        var id = node.title.replace("#ProductPagesID = ", "");
                         logToConsole("Found ID: " + id);
                         getSchedule(id, 0);
                         return;
