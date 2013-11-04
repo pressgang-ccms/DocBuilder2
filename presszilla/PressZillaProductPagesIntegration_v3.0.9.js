@@ -167,7 +167,7 @@
 
                     pathes[i].p = timelineChart.path().attr({fill: clr, stroke: clr});
 
-                    pathes[i].p.onclick(function(element) {
+                    pathes[i].p.click(function(element) {
                             return function(event) {
                                 if (element.scaled) {
                                     element.scaled = false;
