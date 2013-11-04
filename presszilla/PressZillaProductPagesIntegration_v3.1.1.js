@@ -165,6 +165,10 @@
                     todayOnGraph.attr({fill: "#FF0000"});
                 }
 
+                var anim = Raphael.animation({
+                    opacity: 1
+                }, 500);
+
                 var c = 0;
                 for (var i in pathes) {
                     //labels[i] = timelineChart.set();
@@ -173,17 +177,14 @@
 
                     pathes[i].p = timelineChart.path().attr({fill: clr, stroke: clr});
 
-                    pathes[i].p.click(function(element) {
-                            return function(event) {
-                                if (element.scaled) {
-                                    element.scaled = false;
-                                    element.scale(1.0, 1.0 / CLICK_SCALE);
-                                } else {
-                                    element.scaled = true;
-                                    element.scale(1.0, CLICK_SCALE);
-                                }
+                    pathes[i].p.click(function(event) {
+                            if (this.effect) {
+                                this.remove(this.effect);
+                                this.effect = null;
+                            } else {
+                                this.effect = this.glow({color: "#FF0000", width: 5});
                             }
-                        }(pathes[i].p)
+                        }
                     );
 
                     var path = "M".concat(pathes[i].f[0][0], ",", pathes[i].f[0][1], "L", pathes[i].f[0][0] + 50, ",", pathes[i].f[0][1]);
