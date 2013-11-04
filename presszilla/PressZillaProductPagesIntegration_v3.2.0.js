@@ -375,6 +375,7 @@
             ontimeout: function() {handleFailure("ontimeout");},
             onload: function(specNodesResponse) {
                 var nodes = JSON.parse(specNodesResponse.responseText);
+                logToConsole(nodes);
                 for (var nodeIndex = 0, nodeCount = nodes.items.length; nodeIndex < nodeCount; ++nodeIndex) {
                     var node = nodes.items[nodeIndex].item;
                     if (node.title.indexOf("#ProductPagesID = ") == 0) {
