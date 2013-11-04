@@ -113,8 +113,6 @@
 
                     var clr = json.processes[i].color;
 
-                    logToConsole(clr);
-
                     pathes[i].p = timelineChart.path().attr({fill: clr, stroke: clr});
                     var path = "M".concat(pathes[i].f[0][0], ",", pathes[i].f[0][1], "L", pathes[i].f[0][0] + 50, ",", pathes[i].f[0][1]);
                     var th = Math.round(pathes[i].f[0][1] + (pathes[i].b[pathes[i].b.length - 1][1] - pathes[i].f[0][1]) / 2 + 3);
@@ -147,8 +145,8 @@
                             //labels[i].show();
                             pathes[i].p.toFront();
                             //labels[i].toFront();
-                            usrnm2.innerHTML = json.processes[i].name;
-                            lgnd2.style.backgroundColor = pathes[i].p.attr("fill");
+                            //usrnm2.innerHTML = json.processes[i].name;
+                            //lgnd2.style.backgroundColor = pathes[i].p.attr("fill");
                         });
                     })(i);
                 }
@@ -244,7 +242,9 @@
                             if (!endBucket) {
                                 data.buckets.push({date: endDate, processes: [processId]});
                             } else {
-                                endBucket.processes.push(processId);
+                                if (!jQuery.inArray(processId, endBucket.processes)) {
+                                    endBucket.processes.push(processId);
+                                }
                             }
                         }
 
