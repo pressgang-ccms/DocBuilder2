@@ -156,7 +156,7 @@
 
                 if (scrollToToday) {
                     timelineChartDiv.scrollLeft(scrollToToday - timelineChartDiv.width() / 2);
-                    textElement.attr({fill: "#FF0000"});
+                    todayOnGraph.attr({fill: "#FF0000"});
                 }
 
                 var c = 0;
