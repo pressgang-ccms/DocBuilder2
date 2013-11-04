@@ -146,14 +146,14 @@
                     var textElement = timelineChart.text(x + 25, h + 10, dtext).attr({"font": '9px "Arial"', stroke: "none", fill: "#aaa"});
 
                     if (dt < today) {
-                        todayOnGraph = textElement;
+                        todayOnGraph = x;
                     }
 
                     x += 100;
                 }
 
                 if (todayOnGraph) {
-                    todayOnGraph.scrollIntoView();
+                    timelineChartDiv.scrollLeft(todayOnGraph);
                 }
 
                 var c = 0;
