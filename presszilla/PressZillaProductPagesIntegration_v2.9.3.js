@@ -51,6 +51,9 @@
                 lgnd2 = jQuery('<div style="position: absolute; top: 0; left: 316px; width: 24px; height: 24px;"></div>'),
                 usrnm2 = jQuery('<div style="position: absolute; top: 0; left: 348px"></div>');
 
+            jQuery("body").append(lgnd2);
+            jQuery("body").append(usrnm2);
+
             function finishes() {
 
                 logToConsole("finishes()");
