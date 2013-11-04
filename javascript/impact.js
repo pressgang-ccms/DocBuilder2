@@ -12,6 +12,11 @@ var process = function (json) {
         pathes = {},
         lgnd2 = $("#legend2")[0],
         usrnm2 = $("#username2")[0];
+
+    function hashCode(s) {
+        return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
+    }
+
     function finishes() {
 
         // look for the first and last time an author is mentioned in a bucket
@@ -80,7 +85,17 @@ var process = function (json) {
         var c = 0;
         for (var i in pathes) {
             //labels[i] = r.set();
-            var clr = Raphael.getColor();
+
+            var hash = hashCode(json.processes[i].name);
+            var mask = parseInt("11111111", 2);
+
+            red += (hash & mask) / mask;
+            hash = hash << 2;
+            green += (hash & mask) / mask;
+            hash = hash << 2;
+            blue += (hash & mask) / mask;
+
+            var clr = Raphael.getRGB("rgb(" + (red * 255) + "," + (green * 255) + "," + (blue * 255) + ")");
             pathes[i].p = r.path().attr({fill: clr, stroke: clr});
             var path = "M".concat(pathes[i].f[0][0], ",", pathes[i].f[0][1], "L", pathes[i].f[0][0] + 50, ",", pathes[i].f[0][1]);
             var th = Math.round(pathes[i].f[0][1] + (pathes[i].b[pathes[i].b.length - 1][1] - pathes[i].f[0][1]) / 2 + 3);
@@ -113,7 +128,7 @@ var process = function (json) {
                     //labels[i].show();
                     pathes[i].p.toFront();
                     //labels[i].toFront();
-                    usrnm2.innerHTML = json.authors[i].n + " <em>(" + json.authors[i].c + " commits, " + json.authors[i].a + " additions, " + json.authors[i].d + " deletions)</em>";
+                    usrnm2.innerHTML = json.processes[i].name;
                     lgnd2.style.backgroundColor = pathes[i].p.attr("fill");
                 });
             })(i);
