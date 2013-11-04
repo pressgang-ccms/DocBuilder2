@@ -153,7 +153,7 @@
                 }
 
                 if (todayOnGraph) {
-                    timelineChartDiv.scrollLeft(todayOnGraph);
+                    timelineChartDiv.scrollLeft(todayOnGraph - timelineChartDiv.width() / 2);
                 }
 
                 var c = 0;
