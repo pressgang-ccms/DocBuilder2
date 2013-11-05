@@ -3,13 +3,13 @@
      * The height of each process in the timeline
      * @type {number}
      */
-    var PRESSGANG_TIMELINE_ITEM_HEIGHT = 10;
+    var PRESSGANG_TIMELINE_ITEM_HEIGHT = 20;
 
     /**
      * The height of a process in the timeline
      * @type {number}
      */
-    var TIMELINE_ITEM_HEIGHT = 23;
+    var TIMELINE_ITEM_HEIGHT = 33;
 
     /**
      * The margine above the timeline
@@ -64,6 +64,7 @@
         // properly positioned.
         unsafeWindow.scheduleHeight = timelineHeight + TIMELINE_VERTICAL_OFFSET;
 
+        // is the menu open?
         var leftSide = jQuery("#openpressgangmenu").css("display") == "none" ? 72 : 316;
 
         var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: ' + leftSide + 'px; right: 8px; height: ' + timelineHeight + 'px; overflow-x: auto; overflow-y: hidden"></div>');
@@ -78,7 +79,7 @@
             var x = 0,
                 timelineChart = Raphael("timelineChartDiv", timelineWidth, timelineHeight),
                 //labels = {},
-                //textattr = {"font": '9px "Arial"', stroke: "none", fill: "#fff"},
+                textattr = {"font": '9px "Arial"', stroke: "none", fill: "#fff"},
                 pathes = {},
                 lgnd2 = jQuery('<div id="pressgangschedulelegend" style="position: absolute; top: 8px; left: 316px; width: 24px; height: 24px;"></div>'),
                 usrnm2 = jQuery('<div id="pressgangscheduleprocessname" style="position: absolute; top: 8px; left: 348px"></div>'),
@@ -184,6 +185,7 @@
                     //labels[i] = timelineChart.set();
 
                     var clr = json.processes[i].color;
+                    var idSplit = json.processes[i].name.split(".");
 
                     var path = timelineChart.path().attr({fill: clr, stroke: clr});
                     pathes[i].p = path;
@@ -210,6 +212,7 @@
                     var path = "M".concat(pathes[i].f[0][0], ",", pathes[i].f[0][1], "L", pathes[i].f[0][0] + 50, ",", pathes[i].f[0][1]);
                     var th = Math.round(pathes[i].f[0][1] + (pathes[i].b[pathes[i].b.length - 1][1] - pathes[i].f[0][1]) / 2 + 3);
                     //labels[i].push(timelineChart.text(pathes[i].f[0][0] + 25, th, pathes[i].f[0][2]).attr(textattr));
+                    timelineChart.text(pathes[i].f[0][0] + 25, th, idSplit[0]).attr(textattr);
                     var X = pathes[i].f[0][0] + 50,
                         Y = pathes[i].f[0][1];
                     for (var j = 1, jj = pathes[i].f.length; j < jj; j++) {
@@ -220,6 +223,7 @@
                         th = Math.round(Y + (pathes[i].b[pathes[i].b.length - 1 - j][1] - Y) / 2 + 3);
                         if (th - 9 > Y) {
                             //labels[i].push(timelineChart.text(X - 25, th, pathes[i].f[j][2]).attr(textattr));
+                            //timelineChart.text(X - 25, th, idSplit[0]).attr(textattr);
                         }
                     }
                     path = path.concat("L", pathes[i].b[0][0] + 50, ",", pathes[i].b[0][1], ",", pathes[i].b[0][0], ",", pathes[i].b[0][1]);
