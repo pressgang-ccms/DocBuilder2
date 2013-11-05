@@ -1805,6 +1805,7 @@ function showMenu() {
     jQuery("#productpagestodaybutton").css("right", "8px");
     jQuery("#pressgangschedulelegend").css("left", "316px");
     jQuery("#pressgangscheduleprocessname").css("left", "316px");
+    jQuery("#openpressgangmenu").css("display", "none");
 }
 
 /**
@@ -1817,6 +1818,7 @@ function hideMenu() {
     jQuery("#pressgangschedulelegend").css("left", "72px");
     jQuery("#pressgangscheduleprocessname").css("left", "72px");
     jQuery("#productpagestodaybutton").css("right", "72px");
+    jQuery("#openpressgangmenu").css("display", "");
 }
 
 /**
