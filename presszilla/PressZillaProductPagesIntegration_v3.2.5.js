@@ -75,10 +75,12 @@
                 //textattr = {"font": '9px "Arial"', stroke: "none", fill: "#fff"},
                 pathes = {},
                 lgnd2 = jQuery('<div style="position: absolute; top: 8px; left: 316px; width: 24px; height: 24px;"></div>'),
-                usrnm2 = jQuery('<div style="position: absolute; top: 8px; left: 348px"></div>');
+                usrnm2 = jQuery('<div style="position: absolute; top: 8px; left: 348px"></div>'),
+                today = jQuery('<button type="button" style="position: absolute; top: 8px; right: 8px" class="btn btn-default btn-xs">Show Today</button>');
 
             jQuery("body").append(lgnd2);
             jQuery("body").append(usrnm2);
+            jQuery("body").append(today);
 
             function finishes() {
 
@@ -166,6 +168,9 @@
                 if (scrollToToday) {
                     timelineChartDiv.scrollLeft(scrollToToday - timelineChartDiv.width() / 2);
                     todayOnGraph.attr({fill: "#FF0000"});
+                    today.click(function(){
+                        timelineChartDiv.scrollLeft(scrollToToday - timelineChartDiv.width() / 2);
+                    });
                 }
 
                 var anim = Raphael.animation({
