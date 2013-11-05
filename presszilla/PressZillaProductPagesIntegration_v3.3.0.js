@@ -281,9 +281,10 @@
 
                             for (var scheduleIndex = 0, scheduleCount = responseJson[scheduleGroupIndex].schedule.length; scheduleIndex < scheduleCount; ++scheduleIndex) {
                                 var schedule = responseJson[scheduleGroupIndex].schedule[scheduleIndex];
+                                var scheduleDisplayedName = schedule.name + " (" + schedule.id + ")";
                                 var processId = null;
                                 for (var scheduleDetails in data.processes) {
-                                    if (data.processes[scheduleDetails] == schedule.name) {
+                                    if (data.processes[scheduleDetails] == scheduleDisplayedName) {
                                         processId = scheduleDetails;
                                         break;
                                     }
@@ -293,7 +294,7 @@
                                     processId = maxId;
                                     ++maxId;
 
-                                    var hash = hashCode(schedule.name);
+                                    var hash = hashCode(scheduleDisplayedName);
                                     var mask = parseInt("11111111", 2);
 
                                     var red = (hash & mask) / mask;
@@ -304,7 +305,7 @@
 
                                     var clr = Raphael.getRGB("rgb(" + (red * 255) + "," + (green * 255) + "," + (blue * 255) + ")");
 
-                                    data.processes[processId] = {name: schedule.name, color: clr};
+                                    data.processes[processId] = {name: scheduleDisplayedName, color: clr};
                                 }
 
                                 var startDate = new Date(schedule.start.actual.timet * 1000);
