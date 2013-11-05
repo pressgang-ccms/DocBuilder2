@@ -64,7 +64,7 @@
         // properly positioned.
         unsafeWindow.scheduleHeight = timelineHeight + TIMELINE_VERTICAL_OFFSET;
 
-        var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: 316px; right: 0; height: ' + timelineHeight + 'px; overflow-x: auto; overflow-y: hidden"></div>');
+        var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: 316px; right: 8px; height: ' + timelineHeight + 'px; overflow-x: auto; overflow-y: hidden"></div>');
         timelineChartDiv.appendTo(jQuery('#offscreenRendering'));
 
         // raphael charts need to be drawn in an element attached to the DOM
