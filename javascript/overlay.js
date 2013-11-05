@@ -1804,7 +1804,7 @@ function showMenu() {
     jQuery("#timelineChartDiv").css("right", "8px");
     jQuery("#productpagestodaybutton").css("right", "8px");
     jQuery("#pressgangschedulelegend").css("left", "316px");
-    jQuery("#pressgangscheduleprocessname").css("left", "316px");
+    jQuery("#pressgangscheduleprocessname").css("left", "348px");
     jQuery("#openpressgangmenu").css("display", "none");
 }
 
@@ -1816,7 +1816,7 @@ function hideMenu() {
     jQuery("#timelineChartDiv").css("left", "72px");
     jQuery("#timelineChartDiv").css("right", "72px");
     jQuery("#pressgangschedulelegend").css("left", "72px");
-    jQuery("#pressgangscheduleprocessname").css("left", "72px");
+    jQuery("#pressgangscheduleprocessname").css("left", "80px");
     jQuery("#productpagestodaybutton").css("right", "72px");
     jQuery("#openpressgangmenu").css("display", "");
 }
