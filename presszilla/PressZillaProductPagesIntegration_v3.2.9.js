@@ -274,10 +274,10 @@
 
                     if (responseJson.length != 0) {
 
-                        for (var scheduleGroupIndex = 0, scheduleGroupCount = responseJson.length; scheduleGroupIndex < scheduleGroupCount; ++scheduleGroupIndex) {
+                        var data = {buckets: [], processes: {}};
+                        var maxId = 0;
 
-                            var data = {buckets: [], processes: {}};
-                            var maxId = 0;
+                        for (var scheduleGroupIndex = 0, scheduleGroupCount = responseJson.length; scheduleGroupIndex < scheduleGroupCount; ++scheduleGroupIndex) {
 
                             for (var scheduleIndex = 0, scheduleCount = responseJson[scheduleGroupIndex].schedule.length; scheduleIndex < scheduleCount; ++scheduleIndex) {
                                 var schedule = responseJson[scheduleGroupIndex].schedule[scheduleIndex];
