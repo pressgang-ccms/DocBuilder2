@@ -1799,14 +1799,14 @@ function buildTopicEditedInChart() {
  * appears to the right of the menu.
  */
 function showMenu() {
-    document.body.style.margin = scheduleHeight + " auto auto 350px";
+    document.body.style.margin = scheduleHeight + "px auto auto 350px";
 }
 
 /**
  * When the menu is hidden, we reset the margins to the defulats used by Publican.
  */
 function hideMenu() {
-	document.body.style.margin = scheduleHeight + " auto";
+	document.body.style.margin = scheduleHeight + "px auto";
 }
 
 /**
