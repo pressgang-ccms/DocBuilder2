@@ -68,7 +68,7 @@
         var leftSide = jQuery("#openpressgangmenu").css("display") == "none" ? 316 : 72;
         var rightside = jQuery("#openpressgangmenu").css("display") == "none" ? 8 : 72;
 
-        var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: ' + leftSide + 'px; right: 8px; height: ' + timelineHeight + 'px; overflow-x: auto; overflow-y: hidden"></div>');
+        var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: ' + leftSide + 'px; right: ' + rightside + 'px; height: ' + timelineHeight + 'px; overflow-x: auto; overflow-y: hidden"></div>');
         timelineChartDiv.appendTo(jQuery('#offscreenRendering'));
 
         // raphael charts need to be drawn in an element attached to the DOM
