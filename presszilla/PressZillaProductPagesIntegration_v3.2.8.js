@@ -272,75 +272,78 @@
 
                     var responseJson = JSON.parse(response.responseText);
 
-                    if (responseJson.length != 0 && responseJson[0].schedule) {
+                    if (responseJson.length != 0) {
 
-                        var data = {buckets: [], processes: {}};
-                        var maxId = 0;
+                        for (var scheduleGroupIndex = 0, scheduleGroupCount = responseJson.length; scheduleGroupIndex < scheduleGroupCount; ++scheduleGroupIndex) {
 
-                        for (var scheduleIndex = 0, scheduleCount = responseJson[0].schedule.length; scheduleIndex < scheduleCount; ++scheduleIndex) {
-                            var schedule = responseJson[0].schedule[scheduleIndex];
-                            var processId = null;
-                            for (var scheduleDetails in data.processes) {
-                                if (data.processes[scheduleDetails] == schedule.name) {
-                                    processId = scheduleDetails;
-                                    break;
+                            var data = {buckets: [], processes: {}};
+                            var maxId = 0;
+
+                            for (var scheduleIndex = 0, scheduleCount = responseJson[scheduleGroupIndex].schedule.length; scheduleIndex < scheduleCount; ++scheduleIndex) {
+                                var schedule = responseJson[scheduleGroupIndex].schedule[scheduleIndex];
+                                var processId = null;
+                                for (var scheduleDetails in data.processes) {
+                                    if (data.processes[scheduleDetails] == schedule.name) {
+                                        processId = scheduleDetails;
+                                        break;
+                                    }
                                 }
-                            }
 
-                            if (!processId) {
-                                processId = maxId;
-                                ++maxId;
+                                if (!processId) {
+                                    processId = maxId;
+                                    ++maxId;
 
-                                var hash = hashCode(schedule.name);
-                                var mask = parseInt("11111111", 2);
+                                    var hash = hashCode(schedule.name);
+                                    var mask = parseInt("11111111", 2);
 
-                                var red = (hash & mask) / mask;
-                                hash = hash << 2;
-                                var green = (hash & mask) / mask;
-                                hash = hash << 2;
-                                var blue = (hash & mask) / mask;
+                                    var red = (hash & mask) / mask;
+                                    hash = hash << 2;
+                                    var green = (hash & mask) / mask;
+                                    hash = hash << 2;
+                                    var blue = (hash & mask) / mask;
 
-                                var clr = Raphael.getRGB("rgb(" + (red * 255) + "," + (green * 255) + "," + (blue * 255) + ")");
+                                    var clr = Raphael.getRGB("rgb(" + (red * 255) + "," + (green * 255) + "," + (blue * 255) + ")");
 
-                                data.processes[processId] = {name: schedule.name, color: clr};
-                            }
-
-                            var startDate = new Date(schedule.start.actual.timet * 1000);
-                            var fixedStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
-                            var startBucket = null;
-
-                            for (var bucketIndex = 0, bucketCount = data.buckets.length; bucketIndex < bucketCount; ++bucketIndex) {
-                                var bucket = data.buckets[bucketIndex];
-                                if (bucket.date.getTime() == fixedStartDate.getTime()) {
-                                    startBucket = bucket;
-                                    break;
+                                    data.processes[processId] = {name: schedule.name, color: clr};
                                 }
-                            }
 
-                            if (!startBucket) {
-                                data.buckets.push({date: fixedStartDate, processes: [processId]});
-                            } else {
-                                if (jQuery.inArray(processId, startBucket.processes) == -1) {
-                                    startBucket.processes.push(processId);
+                                var startDate = new Date(schedule.start.actual.timet * 1000);
+                                var fixedStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+                                var startBucket = null;
+
+                                for (var bucketIndex = 0, bucketCount = data.buckets.length; bucketIndex < bucketCount; ++bucketIndex) {
+                                    var bucket = data.buckets[bucketIndex];
+                                    if (bucket.date.getTime() == fixedStartDate.getTime()) {
+                                        startBucket = bucket;
+                                        break;
+                                    }
                                 }
-                            }
 
-                            var endDate = new Date(schedule.end.actual.timet * 1000);
-                            var fixedEndDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
-                            var endBucket = null;
-                            for (var bucketIndex = 0, bucketCount = data.buckets.length; bucketIndex < bucketCount; ++bucketIndex) {
-                                var bucket = data.buckets[bucketIndex];
-                                if (bucket.date.getTime() == fixedEndDate.getTime()) {
-                                    endBucket = bucket;
-                                    break;
+                                if (!startBucket) {
+                                    data.buckets.push({date: fixedStartDate, processes: [processId]});
+                                } else {
+                                    if (jQuery.inArray(processId, startBucket.processes) == -1) {
+                                        startBucket.processes.push(processId);
+                                    }
                                 }
-                            }
 
-                            if (!endBucket) {
-                                data.buckets.push({date: fixedEndDate, processes: [processId]});
-                            } else {
-                                if (jQuery.inArray(processId, endBucket.processes) == -1) {
-                                    endBucket.processes.push(processId);
+                                var endDate = new Date(schedule.end.actual.timet * 1000);
+                                var fixedEndDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+                                var endBucket = null;
+                                for (var bucketIndex = 0, bucketCount = data.buckets.length; bucketIndex < bucketCount; ++bucketIndex) {
+                                    var bucket = data.buckets[bucketIndex];
+                                    if (bucket.date.getTime() == fixedEndDate.getTime()) {
+                                        endBucket = bucket;
+                                        break;
+                                    }
+                                }
+
+                                if (!endBucket) {
+                                    data.buckets.push({date: fixedEndDate, processes: [processId]});
+                                } else {
+                                    if (jQuery.inArray(processId, endBucket.processes) == -1) {
+                                        endBucket.processes.push(processId);
+                                    }
                                 }
                             }
                         }
