@@ -185,7 +185,7 @@
                     //labels[i] = timelineChart.set();
 
                     var clr = json.processes[i].color;
-                    var idSplit = json.processes[i].name.split(".");
+                    var idSplit = json.processes[i].id.split(".");
 
                     var path = timelineChart.path().attr({fill: clr, stroke: clr});
                     pathes[i].p = path;
@@ -315,7 +315,7 @@
 
                                         var clr = Raphael.getRGB("rgb(" + (red * 255) + "," + (green * 255) + "," + (blue * 255) + ")");
 
-                                        data.processes[processId] = {name: scheduleDisplayedName, color: clr};
+                                        data.processes[processId] = {name: scheduleDisplayedName, id: schedule.id, color: clr};
                                     }
 
                                     var startDate = new Date(schedule.start.actual.timet * 1000);
