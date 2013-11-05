@@ -243,6 +243,12 @@ var sideMenus = [];
  */
 var eventDetails = null;
 
+/**
+ * The height of the schedule if displayed by PressZilla
+ * @type {boolean}
+ */
+var scheduleHeight = 0;
+
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
  */
@@ -1793,14 +1799,14 @@ function buildTopicEditedInChart() {
  * appears to the right of the menu.
  */
 function showMenu() {
-	document.body.style.margin = "0 auto auto 350px";
+    document.body.style.margin = scheduleHeight + " auto auto 350px";
 }
 
 /**
  * When the menu is hidden, we reset the margins to the defulats used by Publican.
  */
 function hideMenu() {
-	document.body.style.margin = "0 auto";
+	document.body.style.margin = scheduleHeight + " auto";
 }
 
 /**

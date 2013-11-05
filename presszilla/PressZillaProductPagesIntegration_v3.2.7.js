@@ -60,6 +60,10 @@
         var timelineHeight = (maxProcesses * TIMELINE_ITEM_HEIGHT);
         var timelineWidth = json.buckets.length * TIMELINE_ITEM_WIDTH;
 
+        // if the main javascript file opens and closes the side menu, it will need this info to keep the body
+        // properly positioned.
+        unsafeWindow.scheduleHeight = timelineHeight + TIMELINE_VERTICAL_OFFSET;
+
         var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: 316px; right: 0; height: ' + timelineHeight + 'px; overflow-x: auto; overflow-y: hidden"></div>');
         timelineChartDiv.appendTo(jQuery('#offscreenRendering'));
 
@@ -172,10 +176,6 @@
                         timelineChartDiv.scrollLeft(scrollToToday - timelineChartDiv.width() / 2);
                     });
                 }
-
-                var anim = Raphael.animation({
-                    opacity: 1
-                }, 500);
 
                 var c = 0;
                 for (var i in pathes) {
