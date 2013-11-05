@@ -17,8 +17,8 @@
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaSearchIntegration_v2.6.6.js
 // @require		http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaPnTIntegration_v2.7.4.js
-// @require		http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaProductPagesIntegration_v3.3.7.js
-// @version     3.3.7
+// @require		http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaProductPagesIntegration_v3.3.8.js
+// @version     3.3.8
 // @grant       GM_xmlhttpRequest
 // @grant       unsafeWindow
 // @downloadURL https://docbuilder.usersys.redhat.com/PressZilla.user.js

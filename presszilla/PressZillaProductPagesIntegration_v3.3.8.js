@@ -66,6 +66,7 @@
 
         // is the menu open?
         var leftSide = jQuery("#openpressgangmenu").css("display") == "none" ? 316 : 72;
+        var rightside = jQuery("#openpressgangmenu").css("display") == "none" ? 8 : 72;
 
         var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: ' + leftSide + 'px; right: 8px; height: ' + timelineHeight + 'px; overflow-x: auto; overflow-y: hidden"></div>');
         timelineChartDiv.appendTo(jQuery('#offscreenRendering'));
@@ -81,9 +82,9 @@
                 //labels = {},
                 textattr = {"font": '9px "Arial"', stroke: "none", fill: "#fff"},
                 pathes = {},
-                lgnd2 = jQuery('<div id="pressgangschedulelegend" style="position: absolute; top: 8px; left: 316px; width: 24px; height: 24px;"></div>'),
-                usrnm2 = jQuery('<div id="pressgangscheduleprocessname" style="position: absolute; top: 8px; left: 348px"></div>'),
-                today = jQuery('<button id="productpagestodaybutton" type="button" style="position: absolute; top: 8px; right: 8px" class="btn btn-default btn-xs">Show Today</button>');
+                lgnd2 = jQuery('<div id="pressgangschedulelegend" style="position: absolute; top: 8px; left: ' + leftSide + 'px; width: 24px; height: 24px;"></div>'),
+                usrnm2 = jQuery('<div id="pressgangscheduleprocessname" style="position: absolute; top: 8px; left: ' + (leftSide + 32) + 'px"></div>'),
+                today = jQuery('<button id="productpagestodaybutton" type="button" style="position: absolute; top: 8px; right: ' + rightside + 'px" class="btn btn-default btn-xs">Show Today</button>');
 
             jQuery("body").append(lgnd2);
             jQuery("body").append(usrnm2);
