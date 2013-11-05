@@ -79,7 +79,7 @@
 
             var x = 0,
                 timelineChart = Raphael("timelineChartDiv", timelineWidth, timelineHeight),
-                //labels = {},
+                labels = {},
                 textattr = {"font": '9px "Arial"', stroke: "none", fill: "#fff"},
                 pathes = {},
                 lgnd2 = jQuery('<div id="pressgangschedulelegend" style="position: absolute; top: 8px; left: ' + leftSide + 'px; width: 24px; height: 24px;"></div>'),
@@ -212,8 +212,7 @@
 
                     var path = "M".concat(pathes[i].f[0][0], ",", pathes[i].f[0][1], "L", pathes[i].f[0][0] + 50, ",", pathes[i].f[0][1]);
                     var th = Math.round(pathes[i].f[0][1] + (pathes[i].b[pathes[i].b.length - 1][1] - pathes[i].f[0][1]) / 2 + 3);
-                    //labels[i].push(timelineChart.text(pathes[i].f[0][0] + 25, th, pathes[i].f[0][2]).attr(textattr));
-                    timelineChart.text(pathes[i].f[0][0] + 25, th, idSplit[0]).attr(textattr);
+                    labels[i].push(timelineChart.text(pathes[i].f[0][0] + 25, th, idSplit[0]).attr(textattr));
                     var X = pathes[i].f[0][0] + 50,
                         Y = pathes[i].f[0][1];
                     for (var j = 1, jj = pathes[i].f.length; j < jj; j++) {
@@ -242,7 +241,7 @@
                             current = i;
                             //labels[i].show();
                             pathes[i].p.toFront();
-                            //labels[i].toFront();
+                            labels[i].toFront();
                             usrnm2[0].innerHTML = json.processes[i].name;
                             lgnd2[0].style.backgroundColor = clr;
                         });

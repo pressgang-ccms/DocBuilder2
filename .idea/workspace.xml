@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.3.8.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.3.9.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZilla.user.js" afterPath="$PROJECT_DIR$/PressZilla.user.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.3.9.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.4.0.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383622197089" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383622297303" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382927000748" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -218,18 +217,18 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PressZillaProductPagesIntegration_v3.3.9.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.3.9.js">
+      <file leaf-file-name="PressZillaProductPagesIntegration_v3.4.0.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.4.0.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="70" column="183" selection-start="2324" selection-end="2324" vertical-scroll-proportion="-9.16">
+            <state line="243" column="28" selection-start="11216" selection-end="11216" vertical-scroll-proportion="0.7394366">
               <folding>
-                <marker date="1383622259986" expanded="true" signature="2214:2238" placeholder="..." />
-                <marker date="1383622259986" expanded="true" signature="3071:3153" placeholder="..." />
-                <marker date="1383622259986" expanded="true" signature="3071:3107" placeholder="..." />
-                <marker date="1383622259986" expanded="true" signature="3244:3305" placeholder="..." />
-                <marker date="1383622259986" expanded="true" signature="3244:3280" placeholder="..." />
-                <marker date="1383622259986" expanded="true" signature="3407:3463" placeholder="..." />
-                <marker date="1383622259986" expanded="true" signature="3407:3444" placeholder="..." />
+                <marker date="1383625120718" expanded="true" signature="2214:2238" placeholder="..." />
+                <marker date="1383625120718" expanded="true" signature="3069:3151" placeholder="..." />
+                <marker date="1383625120718" expanded="true" signature="3069:3105" placeholder="..." />
+                <marker date="1383625120718" expanded="true" signature="3242:3303" placeholder="..." />
+                <marker date="1383625120718" expanded="true" signature="3242:3278" placeholder="..." />
+                <marker date="1383625120718" expanded="true" signature="3405:3461" placeholder="..." />
+                <marker date="1383625120718" expanded="true" signature="3405:3442" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -244,10 +243,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZilla.user.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PressZilla.user.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="108" selection-start="1461" selection-end="1461" vertical-scroll-proportion="0.2761628">
+            <state line="19" column="108" selection-start="1461" selection-end="1461" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -410,7 +409,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.2.5.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.2.6.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.2.7.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.2.8.js" />
@@ -426,6 +424,7 @@
         <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.3.7.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.3.8.js" />
         <option value="$PROJECT_DIR$/PressZilla.user.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.3.9.js" />
       </list>
     </option>
   </component>
@@ -1939,7 +1938,11 @@
       <created>1383622197858</created>
       <updated>1383622197858</updated>
     </task>
-    <option name="localTasksCounter" value="313" />
+    <task id="LOCAL-00313" summary="Working on product pages integration">
+      <created>1383622298265</created>
+      <updated>1383622298265</updated>
+    </task>
+    <option name="localTasksCounter" value="314" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1964,7 +1967,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20917822" sideWeight="0.67295" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20917822" sideWeight="0.67295" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32873806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -2050,17 +2053,17 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.3.9.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.4.0.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding>
-            <marker date="1383622259986" expanded="true" signature="2214:2238" placeholder="..." />
-            <marker date="1383622259986" expanded="true" signature="3071:3153" placeholder="..." />
-            <marker date="1383622259986" expanded="true" signature="3071:3107" placeholder="..." />
-            <marker date="1383622259986" expanded="true" signature="3244:3305" placeholder="..." />
-            <marker date="1383622259986" expanded="true" signature="3244:3280" placeholder="..." />
-            <marker date="1383622259986" expanded="true" signature="3407:3463" placeholder="..." />
-            <marker date="1383622259986" expanded="true" signature="3407:3444" placeholder="..." />
+            <marker date="1383625120718" expanded="true" signature="2214:2238" placeholder="..." />
+            <marker date="1383625120718" expanded="true" signature="3069:3151" placeholder="..." />
+            <marker date="1383625120718" expanded="true" signature="3069:3105" placeholder="..." />
+            <marker date="1383625120718" expanded="true" signature="3242:3303" placeholder="..." />
+            <marker date="1383625120718" expanded="true" signature="3242:3278" placeholder="..." />
+            <marker date="1383625120718" expanded="true" signature="3405:3461" placeholder="..." />
+            <marker date="1383625120718" expanded="true" signature="3405:3442" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -2374,25 +2377,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.3.9.js">
+    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="183" selection-start="2324" selection-end="2324" vertical-scroll-proportion="-9.16">
-          <folding>
-            <marker date="1383622259986" expanded="true" signature="2214:2238" placeholder="..." />
-            <marker date="1383622259986" expanded="true" signature="3071:3153" placeholder="..." />
-            <marker date="1383622259986" expanded="true" signature="3071:3107" placeholder="..." />
-            <marker date="1383622259986" expanded="true" signature="3244:3305" placeholder="..." />
-            <marker date="1383622259986" expanded="true" signature="3244:3280" placeholder="..." />
-            <marker date="1383622259986" expanded="true" signature="3407:3463" placeholder="..." />
-            <marker date="1383622259986" expanded="true" signature="3407:3444" placeholder="..." />
-          </folding>
+        <state line="19" column="108" selection-start="1461" selection-end="1461" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.4.0.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="108" selection-start="1461" selection-end="1461" vertical-scroll-proportion="0.2761628">
-          <folding />
+        <state line="243" column="28" selection-start="11216" selection-end="11216" vertical-scroll-proportion="0.7394366">
+          <folding>
+            <marker date="1383625120718" expanded="true" signature="2214:2238" placeholder="..." />
+            <marker date="1383625120718" expanded="true" signature="3069:3151" placeholder="..." />
+            <marker date="1383625120718" expanded="true" signature="3069:3105" placeholder="..." />
+            <marker date="1383625120718" expanded="true" signature="3242:3303" placeholder="..." />
+            <marker date="1383625120718" expanded="true" signature="3242:3278" placeholder="..." />
+            <marker date="1383625120718" expanded="true" signature="3405:3461" placeholder="..." />
+            <marker date="1383625120718" expanded="true" signature="3405:3442" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
