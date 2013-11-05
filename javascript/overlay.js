@@ -1816,7 +1816,7 @@ function hideMenu() {
     jQuery("#timelineChartDiv").css("left", "72px");
     jQuery("#timelineChartDiv").css("right", "72px");
     jQuery("#pressgangschedulelegend").css("left", "72px");
-    jQuery("#pressgangscheduleprocessname").css("left", "80px");
+    jQuery("#pressgangscheduleprocessname").css("left", "104px");
     jQuery("#productpagestodaybutton").css("right", "72px");
     jQuery("#openpressgangmenu").css("display", "");
 }
