@@ -1802,6 +1802,9 @@ function showMenu() {
     document.body.style.margin = scheduleHeight + "px auto auto 350px";
     jQuery("#timelineChartDiv").css("left", "316px");
     jQuery("#timelineChartDiv").css("right", "8px");
+    jQuery("#productpagestodaybutton").css("right", "8px");
+    jQuery("#pressgangschedulelegend").css("left", "316px");
+    jQuery("#pressgangscheduleprocessname").css("left", "316px");
 }
 
 /**
@@ -1811,6 +1814,9 @@ function hideMenu() {
 	document.body.style.margin = scheduleHeight + "px auto";
     jQuery("#timelineChartDiv").css("left", "72px");
     jQuery("#timelineChartDiv").css("right", "72px");
+    jQuery("#pressgangschedulelegend").css("left", "72px");
+    jQuery("#pressgangscheduleprocessname").css("left", "72px");
+    jQuery("#productpagestodaybutton").css("right", "72px");
 }
 
 /**

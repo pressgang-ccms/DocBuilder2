@@ -78,8 +78,8 @@
                 //labels = {},
                 //textattr = {"font": '9px "Arial"', stroke: "none", fill: "#fff"},
                 pathes = {},
-                lgnd2 = jQuery('<div style="position: absolute; top: 8px; left: 316px; width: 24px; height: 24px;"></div>'),
-                usrnm2 = jQuery('<div style="position: absolute; top: 8px; left: 348px"></div>'),
+                lgnd2 = jQuery('<div id="pressgangschedulelegend" style="position: absolute; top: 8px; left: 316px; width: 24px; height: 24px;"></div>'),
+                usrnm2 = jQuery('<div id="pressgangscheduleprocessname" style="position: absolute; top: 8px; left: 348px"></div>'),
                 today = jQuery('<button id="productpagestodaybutton" type="button" style="position: absolute; top: 8px; right: 8px" class="btn btn-default btn-xs">Show Today</button>');
 
             jQuery("body").append(lgnd2);
