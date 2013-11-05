@@ -183,7 +183,7 @@
 
                 var c = 0;
                 for (var i in pathes) {
-                    //labels[i] = timelineChart.set();
+                    labels[i] = timelineChart.set();
 
                     var clr = json.processes[i].color;
                     var idSplit = json.processes[i].id.split(".");
