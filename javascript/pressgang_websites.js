@@ -856,21 +856,21 @@ pressgang_website_callback = function(data) {
                 for (var j = 0, elementsLength = elements.length; j < elementsLength; ++j) {
                     var element = elements[j];
 
-                    // the element being promoted is directly attached to the body
-                    if (element.parentNode == window.document) {
-                        var computedStyle = window.getComputedStyle(element);
-                        if (computedStyle.position == "static") {
-                            element.style.position = "relative";
-                            changedPositionFromStatic.push(element);
-                        } else if (computedStyle.position == "") {
-                            element.style.position = "relative";
-                            changedPositionFromDefault.push(element);
-                        }
+                    var computedStyle = window.getComputedStyle(element);
+                    if (computedStyle.position == "static") {
+                        element.style.position = "relative";
+                        changedPositionFromStatic.push(element);
+                    } else if (computedStyle.position == "") {
+                        element.style.position = "relative";
+                        changedPositionFromDefault.push(element);
+                    }
 
+                    // the element being promoted is directly attached to the body
+                    if (element.parentNode == document.body) {
                         element.style.zIndex += zIndexDiff;
                     } else {
                         var topMostParent = element.parentNode;
-                        while (topMostParent.parentNode != window.document) {
+                        while (topMostParent.parentNode != document.body) {
                             topMostParent = topMostParent.parentNode;
                         }
 
@@ -896,6 +896,7 @@ pressgang_website_callback = function(data) {
                         localDimmer.style.zIndex = pressgang_website_local_dimmer_zindex_offset;
                         localDimmer.setAttribute("data-pressganglocaldimmer", "true");
                         topMostParent.appendChild(localDimmer);
+
                         element.style.zIndex += pressgang_website_local_zindex_offset;
                     }
                 }
@@ -1012,13 +1013,13 @@ pressgang_website_callback = function(data) {
                 for (var j = 0, elementsLength = elements.length; j < elementsLength; ++j) {
                     var element = elements[j];
 
-                    if (element.parentNode == window.document) {
+                    if (element.parentNode == document.body) {
                         element.style.zIndex -= zIndexDiff;
                     } else {
                         element.style.zIndex -= pressgang_website_local_zindex_offset;
 
                         var topMostParent = element.parentNode;
-                        while (topMostParent.parentNode != window.document) {
+                        while (topMostParent.parentNode != document.body) {
                             topMostParent = topMostParent.parentNode;
                         }
 
