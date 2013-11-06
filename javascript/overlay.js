@@ -1894,7 +1894,7 @@ function buildMenu() {
 	$(document.body).append(menuIcon);
 
     // this is the help icon available on each menu
-    var help = '<span style="float: right" class=".glyphicon .glyphicon-question-sign"></span>';
+    var help = '<span style="float: right; font-size: 24px;" class="glyphicon glyphicon-question-sign" onclick="javascript:pressgang_website_enable()"></span>';
 
 	// each menu is a Bootstrap panel with vertically stacked nav pills.
 	mainMenu = $('\
@@ -2209,7 +2209,7 @@ function buildMenu() {
     sideMenus.push(licenseConflicts);
 
     bugzillaBugs = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24787" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Bugzilla Bugs</div>\
 				<div id="bugzillaBugsPanel" class="panel-body ">\
 		            <ul id="bugzillaBugsItems" class="nav nav-pills nav-stacked">\
