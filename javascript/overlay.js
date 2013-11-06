@@ -1173,7 +1173,7 @@ function getUpdatedTopics(specId) {
 
                 if (newerTopicRevisions.length != 0) {
                     var button = '<div class="btn-group" style="margin-bottom: 8px;">\
-                        <button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + topic.id + '</button>\
+                        <button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + topic.id + ' [' + topic.rev + ']</button>\
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
                             <span class="caret"></span>\
                         </button>\
