@@ -857,7 +857,7 @@ pressgang_website_callback = function(data) {
                     var element = elements[j];
 
                     // the element being promoted is directly attached to the body
-                    if (element.parentNode == window.body) {
+                    if (element.parentNode == window.document) {
                         var computedStyle = window.getComputedStyle(element);
                         if (computedStyle.position == "static") {
                             element.style.position = "relative";
@@ -870,7 +870,7 @@ pressgang_website_callback = function(data) {
                         element.style.zIndex += zIndexDiff;
                     } else {
                         var topMostParent = element.parentNode;
-                        while (topMostParent.parentNode != window.body) {
+                        while (topMostParent.parentNode != window.document) {
                             topMostParent = topMostParent.parentNode;
                         }
 
@@ -1012,13 +1012,13 @@ pressgang_website_callback = function(data) {
                 for (var j = 0, elementsLength = elements.length; j < elementsLength; ++j) {
                     var element = elements[j];
 
-                    if (element.parentNode == window.body) {
+                    if (element.parentNode == window.document) {
                         element.style.zIndex -= zIndexDiff;
                     } else {
                         element.style.zIndex -= pressgang_website_local_zindex_offset;
 
                         var topMostParent = element.parentNode;
-                        while (topMostParent.parentNode != window.body) {
+                        while (topMostParent.parentNode != window.document) {
                             topMostParent = topMostParent.parentNode;
                         }
 
