@@ -777,7 +777,6 @@ pressgang_website_callback = function(data) {
         pressgang_website_initialHelp.id = pressgang_website_initial_calloutID;
         pressgang_website_initialHelp.textContent = "Press Escape to close the help overlay.\nMouse over the highlighted elements to view the help."
         pressgang_website_initialHelp.className = "pressgang_websites_divContainerNone";
-
         pressgang_website_initialHelp.style.left = "50%";
         pressgang_website_initialHelp.style.top = "50%";
         pressgang_website_initialHelp.style.marginLeft = "-250px";
@@ -1070,8 +1069,7 @@ pressgang_website_callback = function(data) {
      * Closes the popover that displays the initial help
      */
     pressgang_website_close_initial_callout = function() {
-        var callout = document.getElementById(pressgang_website_initial_calloutID);
-        if (callout != null && callout.parentNode != null) {
+        if (pressgang_website_initialHelp.parentNode == document.body) {
             callout.parentNode.removeChild(callout);
         }
     }
@@ -1080,8 +1078,7 @@ pressgang_website_callback = function(data) {
      * Displays the initial help
      */
     pressgang_website_open_initial_callout = function () {
-        var callout = document.getElementById(pressgang_website_initial_calloutID);
-        if (callout == null || callout.parentNode == null) {
+        if (pressgang_website_initialHelp.parentNode != document.body) {
             document.body.appendChild(pressgang_website_initialHelp);
         }
     }

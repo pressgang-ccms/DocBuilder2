@@ -999,6 +999,7 @@ function firstPass() {
 function createIcon(img, topicId, helpid) {
     var linkDiv = document.createElement("div");
     linkDiv.setAttribute("id", topicId + img + "Icon");
+    linkDiv.style.backgroundColor = "white";
     linkDiv.style.backgroundImage = "url(/images/" + img + ".png)";
     linkDiv.style.width = "26px";
     linkDiv.style.height = "26px";
