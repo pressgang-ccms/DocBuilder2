@@ -71,6 +71,9 @@ pressgang_website_lastSelectedElement = null;
  */
 var pressgang_website_initialHelp = null;
 
+var pressgang_website_local_dimmer_zindex_offset = 1000;
+var pressgang_website_local_zindex_offset = 1001;
+
 
 /**
  * @return the name of the current html page
@@ -852,16 +855,49 @@ pressgang_website_callback = function(data) {
                 var elements = document.querySelectorAll('[data-pressgangtopic="' + dataItem.topicId + '"]');
                 for (var j = 0, elementsLength = elements.length; j < elementsLength; ++j) {
                     var element = elements[j];
-                    var computedStyle = window.getComputedStyle(element);
-                    if (computedStyle.position == "static") {
-                        element.style.position = "relative";
-                        changedPositionFromStatic.push(element);
-                    } else if (computedStyle.position == "") {
-                        element.style.position = "relative";
-                        changedPositionFromDefault.push(element);
-                    }
 
-                    element.style.zIndex += zIndexDiff;
+                    // the element being promoted is directly attached to the body
+                    if (element.parentNode == window.body) {
+                        var computedStyle = window.getComputedStyle(element);
+                        if (computedStyle.position == "static") {
+                            element.style.position = "relative";
+                            changedPositionFromStatic.push(element);
+                        } else if (computedStyle.position == "") {
+                            element.style.position = "relative";
+                            changedPositionFromDefault.push(element);
+                        }
+
+                        element.style.zIndex += zIndexDiff;
+                    } else {
+                        var topMostParent = element.parentNode;
+                        while (topMostParent != window.body) {
+                            topMostParent = topMostParent.parentNode;
+                        }
+
+                        var computedStyle = window.getComputedStyle(topMostParent);
+                        if (computedStyle.position == "static") {
+                            element.style.position = "relative";
+                            changedPositionFromStatic.push(topMostParent);
+                        } else if (computedStyle.position == "") {
+                            element.style.position = "relative";
+                            changedPositionFromDefault.push(topMostParent);
+                        }
+
+                        topMostParent.style.zIndex += zIndexDiff;
+
+                        var localDimmer = document.createElement("div");
+                        localDimmer.style.position = "absolute";
+                        localDimmer.style.top = 0;
+                        localDimmer.style.bottom = 0;
+                        localDimmer.style.left = 0;
+                        localDimmer.style.right = 0;
+                        localDimmer.style.backgroundColor = "black";
+                        localDimmer.style.opacity = 0.9;
+                        localDimmer.style.zIndex = pressgang_website_local_dimmer_zindex_offset;
+                        localDimmer.setAttribute("data-pressganglocaldimmer", "true");
+                        topMostParent.appendChild(localDimmer);
+                        element.style.zIndex += pressgang_website_local_zindex_offset;
+                    }
                 }
 
             }
@@ -975,9 +1011,28 @@ pressgang_website_callback = function(data) {
                 var elements = document.querySelectorAll('[data-pressgangtopic="' + dataItem.topicId + '"]');
                 for (var j = 0, elementsLength = elements.length; j < elementsLength; ++j) {
                     var element = elements[j];
-                    element.style.zIndex -= zIndexDiff;
+
+                    if (element.parentNode == window.body) {
+                        element.style.zIndex -= zIndexDiff;
+                    } else {
+                        element.style.zIndex -= pressgang_website_local_zindex_offset;
+
+                        var topMostParent = element.parentNode;
+                        while (topMostParent != window.body) {
+                            topMostParent = topMostParent.parentNode;
+                        }
+
+                        topMostParent.style.zIndex -= zIndexDiff;
+                    }
                 }
             }
+
+            var localDimmerElements = document.querySelectorAll('[data-pressganglocaldimmer="true"]');
+            for (var j = 0, elementsLength = localDimmerElements.length; j < elementsLength; ++j) {
+                var localDimmer = localDimmerElements[j];
+                localDimmer.parentNode.removeChild(localDimmer);
+            }
+
 
             for (var i = 0, count = changedPositionFromStatic.length; i < count; ++i) {
                 changedPositionFromStatic[i].style.position = "static";
