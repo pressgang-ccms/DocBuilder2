@@ -846,10 +846,11 @@ pressgang_website_callback = function(data) {
                 var elements = document.querySelectorAll('[data-pressgangtopic="' + dataItem.topicId + '"]');
                 for (var j = 0, elementsLength = elements.length; j < elementsLength; ++j) {
                     var element = elements[j];
-                    if (element.style.position == "static") {
+                    var computedStyle = window.getComputedStyle(element);
+                    if (computedStyle.position == "static") {
                         element.style.position = "relative";
                         changedPositionFromStatic.push(element);
-                    } else if (element.style.position == "") {
+                    } else if (computedStyle.position == "") {
                         element.style.position = "relative";
                         changedPositionFromDefault.push(element);
                     }
