@@ -870,7 +870,7 @@ pressgang_website_callback = function(data) {
                         element.style.zIndex += zIndexDiff;
                     } else {
                         var topMostParent = element.parentNode;
-                        while (topMostParent != window.body) {
+                        while (topMostParent.parentNode != window.body) {
                             topMostParent = topMostParent.parentNode;
                         }
 
@@ -1018,7 +1018,7 @@ pressgang_website_callback = function(data) {
                         element.style.zIndex -= pressgang_website_local_zindex_offset;
 
                         var topMostParent = element.parentNode;
-                        while (topMostParent != window.body) {
+                        while (topMostParent.parentNode != window.body) {
                             topMostParent = topMostParent.parentNode;
                         }
 
