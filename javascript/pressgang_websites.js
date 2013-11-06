@@ -133,7 +133,7 @@ pressgang_website_get_iframe_url = function(iframe, success) {
  */
 pressgang_website_key_handler = function(e) {
 
-    pressgang_website_close_initial_callout();
+
 
     if (e.keyCode == 27) {
         pressgang_website_disable();
