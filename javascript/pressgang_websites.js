@@ -1070,7 +1070,7 @@ pressgang_website_callback = function(data) {
      */
     pressgang_website_close_initial_callout = function() {
         if (pressgang_website_initialHelp.parentNode == document.body) {
-            pressgang_website_initialHelp.parentNode.removeChild(callout);
+            pressgang_website_initialHelp.parentNode.removeChild(pressgang_website_initialHelp);
         }
     }
 
