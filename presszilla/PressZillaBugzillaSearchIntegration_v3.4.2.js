@@ -264,6 +264,12 @@
                             $('#closedBugzillaBugs').append($('<span class="badge pull-right">' + closedCount + '</span>'));
                             $('#releasePendingBugzillaBugs').append($('<span class="badge pull-right">' + releasePendingCount + '</span>'));
 
+                            var allButClosed = newCount + assignedCount + postCount + modifiedCount + onqaCount + verifiedCount + releasePendingCount;
+                            var allIncClosed = allButClosed + closedCount;
+
+                            $('#bugzillaBugs').append($('<span class="badge pull-right">' + allButClosed + "/" + allIncClosed +  '</span>'));
+
+
                             /*
                                 Build a pie chart without the closed bugs
                              */
