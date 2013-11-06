@@ -1155,7 +1155,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 	}
 }
 
-function getModifiedTopics(specId) {
+function getUpdatedTopics(specId) {
     function getTopicNodes(topics) {
         if (topics.length != 0) {
             var topic = topics.pop();
