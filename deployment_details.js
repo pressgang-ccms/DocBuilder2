@@ -26,6 +26,10 @@ module.exports = {
      */
     BASE_SERVER:  "topika.ecs.eng.bne.redhat.com:8080",
     /**
+     * The UI instance to point to
+     */
+    UI_URL: "pressgang-ccms-ui-next",
+    /**
      * The DocBuilder server
      */
     DOCBUILDER_SERVER: "docbuilder.usersys.redhat.com",

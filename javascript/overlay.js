@@ -1149,237 +1149,293 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 		// get the spec id
 		var specId = getSpecIdFromURL();
 		if (specId) {
-			// get the revisions of the spec itself
-
-			// get content spec revisions
-			var revisionsURL = SERVER + "/contentspec/get/json/" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%7D%7D%5D%7D";
-
-			$.getJSON(revisionsURL, function(data) {
-				// get the revisions that existed 1 day, week, month, year ago
-				for (var index = 0, count = data.revisions.items.length; index < count; ++index) {
-					var revision = data.revisions.items[index].item;
-
-					var date = moment(revision.lastModified);
-
-					if (!specRevisionCache.day || (date.isAfter(moment().subtract('day', 1)) && revision.revision < specRevisionCache.day)) {
-						specRevisionCache.day = revision.revision;
-					}
-
-					if (!specRevisionCache.week || (date.isAfter(moment().subtract('week', 1)) && revision.revision < specRevisionCache.week)) {
-						specRevisionCache.week = revision.revision;
-					}
-
-					if (!specRevisionCache.month || (date.isAfter(moment().subtract('month', 1)) && revision.revision < specRevisionCache.month)) {
-						specRevisionCache.month = revision.revision;
-					}
-
-					if (!specRevisionCache.year || (date.isAfter(moment().subtract('year', 1)) && revision.revision < specRevisionCache.year)) {
-						specRevisionCache.year = revision.revision;
-					}
-				}
-
-				// a callback to call when all spec topics are found
-				var compareRevisions = function() {
-					for (var revisionIndex = 0, revisionCount = specRevisionCache.revisions.length; revisionIndex < revisionCount; ++revisionIndex) {
-						var revision = specRevisionCache[specRevisionCache.revisions[revisionIndex]].topics;
-						var added = [];
-						var removed = [];
-
-						for (revTopicID in revision) {
-							var found = false;
-							for (currentTopicID in specRevisionCache.current.topics) {
-								if (currentTopicID == revTopicID) {
-									found = true;
-									break;
-								}
-							}
-
-							if (!found) {
-								removed.push(revTopicID);
-							}
-						}
-
-						for (currentTopicID in specRevisionCache.current.topics) {
-							var found = false;
-							for (revTopicID in revision) {
-								if (currentTopicID == revTopicID) {
-									found = true;
-									break;
-								}
-							}
-
-							if (!found) {
-								added.push(currentTopicID);
-							}
-						}
-
-						specRevisionCache[specRevisionCache.revisions[revisionIndex]].added = added;
-						specRevisionCache[specRevisionCache.revisions[revisionIndex]].removed = removed;
-					}
-
-					// at this point we are ready to start the third pass (an email report)
-					thirdPass(false, true);
-
-					// add the results to the menu
-					$('#topicsAddedIn1Day').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.day].added.length + '</span>'));
-					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.day].added.length; topicIndex < topicCount; ++topicIndex) {
-						var topic = specRevisionCache[specRevisionCache.day].added[topicIndex];
-						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1DayItems"));
-					}
-
-					$('#topicsAddedIn1Week').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.week].added.length + '</span>'));
-					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.week].added.length; topicIndex < topicCount; ++topicIndex) {
-						var topic = specRevisionCache[specRevisionCache.week].added[topicIndex];
-						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1WeekItems"));
-					}
-
-					$('#topicsAddedIn1Month').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.month].added.length + '</span>'));
-					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.month].added.length; topicIndex < topicCount; ++topicIndex) {
-						var topic = specRevisionCache[specRevisionCache.month].added[topicIndex];
-						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1MonthItems"));
-					}
-
-					$('#topicsAddedIn1Year').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.year].added.length + '</span>'));
-					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.year].added.length; topicIndex < topicCount; ++topicIndex) {
-						var topic = specRevisionCache[specRevisionCache.year].added[topicIndex];
-						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1YearItems"));
-					}
-
-					$('#topicsRemovedIn1Day').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.day].removed.length + '</span>'));
-					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.day].removed.length; topicIndex < topicCount; ++topicIndex) {
-						var topic = specRevisionCache[specRevisionCache.day].removed[topicIndex];
-						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1DayItems"));
-					}
-
-					$('#topicsRemovedIn1Week').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.week].removed.length + '</span>'));
-					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.week].removed.length; topicIndex < topicCount; ++topicIndex) {
-						var topic = specRevisionCache[specRevisionCache.week].removed[topicIndex];
-						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1WeekItems"));
-					}
-
-					$('#topicsRemovedIn1Month').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.month].removed.length + '</span>'));
-					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.month].removed.length; topicIndex < topicCount; ++topicIndex) {
-						var topic = specRevisionCache[specRevisionCache.month].removed[topicIndex];
-						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1MonthItems"));
-					}
-
-					$('#topicsRemovedIn1Year').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.year].removed.length + '</span>'));
-					for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.year].removed.length; topicIndex < topicCount; ++topicIndex) {
-						var topic = specRevisionCache[specRevisionCache.year].removed[topicIndex];
-						$('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1YearItems"));
-					}
-
-					// create the graphs
-					var values = [
-						specRevisionCache[specRevisionCache.day].added.length,
-						specRevisionCache[specRevisionCache.week].added.length,
-						specRevisionCache[specRevisionCache.month].added.length,
-						specRevisionCache[specRevisionCache.year].added.length];
-
-					var labels = ["day", "week", "month", "year"];
-					var colors = [Raphael.rgb(0, 254, 254), Raphael.rgb(0, 254, 0), Raphael.rgb(254, 254, 0), Raphael.rgb(254, 127, 0)];
-
-					var offscreenDiv = $('<div id="topicsAddedSinceChart"></div>');
-					offscreenDiv.appendTo(offscreenRendering);
-
-					setTimeout(function(offscreenDiv, values, labels, colors) {
-						return function(){
-							Raphael("topicsAddedSinceChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 30, 30, 16, "#fff");
-							$(offscreenDiv).appendTo($("#topicsAddedSincePanel"));
-						}
-					}(offscreenDiv, values, labels, colors), 0);
-
-
-					var values = [
-						specRevisionCache[specRevisionCache.day].removed.length ,
-						specRevisionCache[specRevisionCache.week].removed.length,
-						specRevisionCache[specRevisionCache.month].removed.length,
-						specRevisionCache[specRevisionCache.year].removed.length];
-
-					var offscreenDiv = $('<div id="topicsRemovedSinceChart"></div>');
-					offscreenDiv.appendTo(offscreenRendering);
-
-					setTimeout(function(offscreenDiv, values, labels, colors) {
-						return function(){
-							Raphael("topicsRemovedSinceChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 30, 30, 16, "#fff");
-							$(offscreenDiv).appendTo($("#topicsRemovedSincePanel"));
-						}
-					}(offscreenDiv, values, labels, colors), 0);
-
-				}
-
-				// keep a track of how many async calls are to be made and have been made
-				var callsToMake = 2;
-				var callsMade = 0;
-				if (specRevisionCache.week != specRevisionCache.day) {
-					++callsToMake;
-				}
-				if (specRevisionCache.month != specRevisionCache.week) {
-					++callsToMake;
-				}
-				if (specRevisionCache.year != specRevisionCache.month) {
-					++callsToMake;
-				}
-
-				// get topic for current revision
-				getTopicsFromSpec(specId, function(data){
-					specRevisionCache.current = {topics: data};
-					++callsMade;
-					if (callsMade == callsToMake) {
-						compareRevisions();
-					}
-				});
-
-				// get topics for the previous revisions
-
-				// specRevisionCache.revisions is a list of the revisions that we will be processing. It is
-				// there for convenience so we can loop over it later.
-				specRevisionCache.revisions = [specRevisionCache.day];
-				getTopicsFromSpecAndRevision(specId, specRevisionCache.day, function(data) {
-					specRevisionCache[specRevisionCache.day] = {topics: data};
-					++callsMade;
-					if (callsMade == callsToMake) {
-						compareRevisions();
-					}
-				});
-
-				if (specRevisionCache.week != specRevisionCache.day) {
-					specRevisionCache.revisions.push(specRevisionCache.week);
-					getTopicsFromSpecAndRevision(specId, specRevisionCache.week, function(data) {
-						specRevisionCache[specRevisionCache.week] = {topics: data};
-						++callsMade;
-						if (callsMade == callsToMake) {
-							compareRevisions();
-						}
-					});
-				}
-
-				if (specRevisionCache.month != specRevisionCache.week) {
-					specRevisionCache.revisions.push(specRevisionCache.month);
-					getTopicsFromSpecAndRevision(specId, specRevisionCache.month, function(data) {
-						specRevisionCache[specRevisionCache.month] = {topics: data};
-						++callsMade;
-						if (callsMade == callsToMake) {
-							compareRevisions();
-						}
-					});
-				}
-
-				if (specRevisionCache.year != specRevisionCache.month) {
-					specRevisionCache.revisions.push(specRevisionCache.year);
-					getTopicsFromSpecAndRevision(specId, specRevisionCache.year, function(data) {
-						specRevisionCache[specRevisionCache.year] = {topics: data};
-						++callsMade;
-						if (callsMade == callsToMake) {
-							compareRevisions();
-						}
-					});
-				}
-
-				// get added and removed topics
-			});
+            getModifiedTopics(specId);
+            getUpdatedTopics(specId);
 		}
 	}
+}
+
+function getModifiedTopics(specId) {
+    function getTopicNodes(topics) {
+        if (topics.length != 0) {
+            var topic = topics.pop();
+            var topicNodesUrl = SERVER + "/contentspecnodes/get/json/query;csNodeEntityId=" + topic.id + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpec%22%7D%7D%5D%7D%5D%7D%0A%0A";
+            $.getJSON(topicNodesUrl, function(topicNodeData) {
+                var newerTopicRevisions = [];
+                for (var topicNodeIndex = 0, topicNodeCount = topicNodeData.items.length; topicNodeIndex < topicNodeCount; ++topicNodeIndex) {
+                    var topicNode = topicNodeData.items[topicNodeIndex].item;
+                    if (topicNode.contentSpec.id != specId) {
+                        if (topicNode.entityRevision && topicNode.entityRevision > topic.rev) {
+                            newerTopicRevisions.push({spec: topicNode.contentSpec.id, rev: topicNode.entityRevision});
+                        }
+                    }
+                }
+
+                if (newerTopicRevisions.length != 0) {
+                    var button = '<div class="btn-group" style="margin-bottom: 8px;">\
+                        <button type="button" class="btn ' + style + '" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + bug.summary + '</button>\
+                        <button type="button" class="btn ' + style + ' dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
+                            <span class="caret"></span>\
+                        </button>\
+                        <ul class="dropdown-menu" role="menu">';
+
+                    for (var newerTopicRevisionIndex = 0, newerTopicRevisionCount = newerTopicRevisions.length; newerTopicRevisionIndex < newerTopicRevisionCount; ++newerTopicRevisionIndex) {
+                        button += '<li><a href="' + SERVER + '/pressgang-ccms-ui-next/#TopicHistoryView;' + topic.id + ';' + topic.rev + ';' + newerTopicRevisions[newerTopicRevisionIndex].rev + '">Spec: ' + newerTopicRevisions[newerTopicRevisionIndex].spec + " Rev: " + newerTopicRevisions[newerTopicRevisionIndex].rev + '</a></li>';
+                    }
+
+                    button += '</ul>\
+                        </div>';
+
+                    $(button).appendTo($("#topicsUpdatedInOtherSpecsItems"));
+                }
+
+                getTopicNodes(topics);
+            });
+        }
+    }
+
+    var topicsUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=0,9,10;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
+    $.getJSON(topicsUrl, function(data) {
+        var topics = [];
+        for (var index = 0, count = data.items.length; index < count; ++index) {
+            var topic = data.items[index].item;
+            if (topic.entityRevision) {
+                topics.push({id: topic.entityId, rev: topic.entityRevision});
+            }
+        }
+
+        getTopicNodes(topics);
+    });
+}
+
+function getModifiedTopics(specId) {
+    // get content spec revisions
+    var revisionsURL = SERVER + "/contentspec/get/json/" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%7D%7D%5D%7D";
+
+    $.getJSON(revisionsURL, function(data) {
+        // get the revisions that existed 1 day, week, month, year ago
+        for (var index = 0, count = data.revisions.items.length; index < count; ++index) {
+            var revision = data.revisions.items[index].item;
+
+            var date = moment(revision.lastModified);
+
+            if (!specRevisionCache.day || (date.isAfter(moment().subtract('day', 1)) && revision.revision < specRevisionCache.day)) {
+                specRevisionCache.day = revision.revision;
+            }
+
+            if (!specRevisionCache.week || (date.isAfter(moment().subtract('week', 1)) && revision.revision < specRevisionCache.week)) {
+                specRevisionCache.week = revision.revision;
+            }
+
+            if (!specRevisionCache.month || (date.isAfter(moment().subtract('month', 1)) && revision.revision < specRevisionCache.month)) {
+                specRevisionCache.month = revision.revision;
+            }
+
+            if (!specRevisionCache.year || (date.isAfter(moment().subtract('year', 1)) && revision.revision < specRevisionCache.year)) {
+                specRevisionCache.year = revision.revision;
+            }
+        }
+
+        // a callback to call when all spec topics are found
+        var compareRevisions = function() {
+            for (var revisionIndex = 0, revisionCount = specRevisionCache.revisions.length; revisionIndex < revisionCount; ++revisionIndex) {
+                var revision = specRevisionCache[specRevisionCache.revisions[revisionIndex]].topics;
+                var added = [];
+                var removed = [];
+
+                for (revTopicID in revision) {
+                    var found = false;
+                    for (currentTopicID in specRevisionCache.current.topics) {
+                        if (currentTopicID == revTopicID) {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found) {
+                        removed.push(revTopicID);
+                    }
+                }
+
+                for (currentTopicID in specRevisionCache.current.topics) {
+                    var found = false;
+                    for (revTopicID in revision) {
+                        if (currentTopicID == revTopicID) {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found) {
+                        added.push(currentTopicID);
+                    }
+                }
+
+                specRevisionCache[specRevisionCache.revisions[revisionIndex]].added = added;
+                specRevisionCache[specRevisionCache.revisions[revisionIndex]].removed = removed;
+            }
+
+            // at this point we are ready to start the third pass (an email report)
+            thirdPass(false, true);
+
+            // add the results to the menu
+            $('#topicsAddedIn1Day').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.day].added.length + '</span>'));
+            for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.day].added.length; topicIndex < topicCount; ++topicIndex) {
+                var topic = specRevisionCache[specRevisionCache.day].added[topicIndex];
+                $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1DayItems"));
+            }
+
+            $('#topicsAddedIn1Week').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.week].added.length + '</span>'));
+            for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.week].added.length; topicIndex < topicCount; ++topicIndex) {
+                var topic = specRevisionCache[specRevisionCache.week].added[topicIndex];
+                $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1WeekItems"));
+            }
+
+            $('#topicsAddedIn1Month').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.month].added.length + '</span>'));
+            for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.month].added.length; topicIndex < topicCount; ++topicIndex) {
+                var topic = specRevisionCache[specRevisionCache.month].added[topicIndex];
+                $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1MonthItems"));
+            }
+
+            $('#topicsAddedIn1Year').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.year].added.length + '</span>'));
+            for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.year].added.length; topicIndex < topicCount; ++topicIndex) {
+                var topic = specRevisionCache[specRevisionCache.year].added[topicIndex];
+                $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1YearItems"));
+            }
+
+            $('#topicsRemovedIn1Day').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.day].removed.length + '</span>'));
+            for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.day].removed.length; topicIndex < topicCount; ++topicIndex) {
+                var topic = specRevisionCache[specRevisionCache.day].removed[topicIndex];
+                $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1DayItems"));
+            }
+
+            $('#topicsRemovedIn1Week').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.week].removed.length + '</span>'));
+            for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.week].removed.length; topicIndex < topicCount; ++topicIndex) {
+                var topic = specRevisionCache[specRevisionCache.week].removed[topicIndex];
+                $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1WeekItems"));
+            }
+
+            $('#topicsRemovedIn1Month').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.month].removed.length + '</span>'));
+            for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.month].removed.length; topicIndex < topicCount; ++topicIndex) {
+                var topic = specRevisionCache[specRevisionCache.month].removed[topicIndex];
+                $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1MonthItems"));
+            }
+
+            $('#topicsRemovedIn1Year').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.year].removed.length + '</span>'));
+            for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.year].removed.length; topicIndex < topicCount; ++topicIndex) {
+                var topic = specRevisionCache[specRevisionCache.year].removed[topicIndex];
+                $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1YearItems"));
+            }
+
+            // create the graphs
+            var values = [
+                specRevisionCache[specRevisionCache.day].added.length,
+                specRevisionCache[specRevisionCache.week].added.length,
+                specRevisionCache[specRevisionCache.month].added.length,
+                specRevisionCache[specRevisionCache.year].added.length];
+
+            var labels = ["day", "week", "month", "year"];
+            var colors = [Raphael.rgb(0, 254, 254), Raphael.rgb(0, 254, 0), Raphael.rgb(254, 254, 0), Raphael.rgb(254, 127, 0)];
+
+            var offscreenDiv = $('<div id="topicsAddedSinceChart"></div>');
+            offscreenDiv.appendTo(offscreenRendering);
+
+            setTimeout(function(offscreenDiv, values, labels, colors) {
+                return function(){
+                    Raphael("topicsAddedSinceChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 30, 30, 16, "#fff");
+                    $(offscreenDiv).appendTo($("#topicsAddedSincePanel"));
+                }
+            }(offscreenDiv, values, labels, colors), 0);
+
+
+            var values = [
+                specRevisionCache[specRevisionCache.day].removed.length ,
+                specRevisionCache[specRevisionCache.week].removed.length,
+                specRevisionCache[specRevisionCache.month].removed.length,
+                specRevisionCache[specRevisionCache.year].removed.length];
+
+            var offscreenDiv = $('<div id="topicsRemovedSinceChart"></div>');
+            offscreenDiv.appendTo(offscreenRendering);
+
+            setTimeout(function(offscreenDiv, values, labels, colors) {
+                return function(){
+                    Raphael("topicsRemovedSinceChart", 250, 250).pieChart(125, 125, 50, values, labels, colors, 30, 30, 16, "#fff");
+                    $(offscreenDiv).appendTo($("#topicsRemovedSincePanel"));
+                }
+            }(offscreenDiv, values, labels, colors), 0);
+
+        }
+
+        // keep a track of how many async calls are to be made and have been made
+        var callsToMake = 2;
+        var callsMade = 0;
+        if (specRevisionCache.week != specRevisionCache.day) {
+            ++callsToMake;
+        }
+        if (specRevisionCache.month != specRevisionCache.week) {
+            ++callsToMake;
+        }
+        if (specRevisionCache.year != specRevisionCache.month) {
+            ++callsToMake;
+        }
+
+        // get topic for current revision
+        getTopicsFromSpec(specId, function(data){
+            specRevisionCache.current = {topics: data};
+            ++callsMade;
+            if (callsMade == callsToMake) {
+                compareRevisions();
+            }
+        });
+
+        // get topics for the previous revisions
+
+        // specRevisionCache.revisions is a list of the revisions that we will be processing. It is
+        // there for convenience so we can loop over it later.
+        specRevisionCache.revisions = [specRevisionCache.day];
+        getTopicsFromSpecAndRevision(specId, specRevisionCache.day, function(data) {
+            specRevisionCache[specRevisionCache.day] = {topics: data};
+            ++callsMade;
+            if (callsMade == callsToMake) {
+                compareRevisions();
+            }
+        });
+
+        if (specRevisionCache.week != specRevisionCache.day) {
+            specRevisionCache.revisions.push(specRevisionCache.week);
+            getTopicsFromSpecAndRevision(specId, specRevisionCache.week, function(data) {
+                specRevisionCache[specRevisionCache.week] = {topics: data};
+                ++callsMade;
+                if (callsMade == callsToMake) {
+                    compareRevisions();
+                }
+            });
+        }
+
+        if (specRevisionCache.month != specRevisionCache.week) {
+            specRevisionCache.revisions.push(specRevisionCache.month);
+            getTopicsFromSpecAndRevision(specId, specRevisionCache.month, function(data) {
+                specRevisionCache[specRevisionCache.month] = {topics: data};
+                ++callsMade;
+                if (callsMade == callsToMake) {
+                    compareRevisions();
+                }
+            });
+        }
+
+        if (specRevisionCache.year != specRevisionCache.month) {
+            specRevisionCache.revisions.push(specRevisionCache.year);
+            getTopicsFromSpecAndRevision(specId, specRevisionCache.year, function(data) {
+                specRevisionCache[specRevisionCache.year] = {topics: data};
+                ++callsMade;
+                if (callsMade == callsToMake) {
+                    compareRevisions();
+                }
+            });
+        }
+
+        // get added and removed topics
+    });
 }
 
 /**
@@ -1845,6 +1901,7 @@ function buildMenu() {
 						<li><a href="javascript:hideAllMenus(); topicsRemovedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">Topics Removed In</a></li>\
 						<li><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">Licenses</a></li>\
 						<li><a href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">Bugzilla Bugs</a></li>\
+						<li><a href="javascript:hideAllMenus(); topicsUpdatedInOtherSpecs.show(); localStorage.setItem(\'lastMenu\', \'topicsUpdatedInOtherSpecs\');">Updated Topics</a></li>\
 						<li><a href="' + BUG_LINK + '&cf_build_id=Content%20Spec%20ID:%20' + SPEC_ID + '">Report a bug</a></li>\
 					</ul>\
 				</div>\
@@ -1852,6 +1909,19 @@ function buildMenu() {
 		</div>')
 	$(document.body).append(mainMenu);
     sideMenus.push(mainMenu);
+
+    topicsUpdatedInOtherSpecs = $('\
+		<div class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">Updated Topics</div>\
+				<div id="topicsRemovedSincePanel" class="panel-body ">\
+		            <ul id="topicsUpdatedInOtherSpecsItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+    $(document.body).append(topicsUpdatedInOtherSpecs);
+    sideMenus.push(topicsUpdatedInOtherSpecs);
 
 	topicsAddedSince = $('\
 		<div class="panel panel-default pressgangMenu">\
@@ -2364,7 +2434,10 @@ function buildMenu() {
     }else if (lastMenu == "releasePendingBugzillaBugs") {
         releasePendingBugzillaBugs.show();
         showMenu();
-    }else {
+    } else if (lastMenu == "topicsUpdatedInOtherSpecs") {
+        topicsUpdatedInOtherSpecs.show();
+        showMenu();
+    } else {
 		menuIcon.show();
 		hideMenu();
 	}
