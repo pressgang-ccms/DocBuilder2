@@ -1,0 +1,118 @@
+.pressgang_websites_callout {
+	position: absolute;
+}
+
+.pressgang_websites_contentIFrame {
+	width: 100%;
+	height: 300px;
+	border: none;
+}
+
+.pressgang_websites_calloutUp {
+    height: 0;
+    width: 0;
+    border-bottom: 12px solid #ffffff;
+    border-left: 12px dotted transparent;
+    border-right: 12px dotted transparent;
+    left: 0px;
+    top: 0px;
+    margin-left: 20px;
+}
+
+.pressgang_websites_calloutUp2 {
+    position: relative;
+    left: -10px;
+    top: 2px;
+    height: 0;
+    width: 0;
+    border-bottom: 10px solid #9999ff;
+    border-left: 10px dotted transparent;
+    border-right: 10px dotted transparent;
+    z-index: 1;
+}
+
+.pressgang_websites_calloutUpRight {
+    height: 0;
+    width: 0;
+    border-bottom: 12px solid #ffffff;
+    border-left: 12px dotted transparent;
+    border-right: 12px dotted transparent;
+    left: 0px;
+    top: 0px;
+    margin-left: 470px;
+}
+
+
+.pressgang_websites_calloutDown
+{
+    height: 0;
+    width: 0;
+    border-top: 12px solid #ffffff;
+    border-left: 12px dotted transparent;
+    border-right: 12px dotted transparent;
+    left: 0px;
+    top: 0px;
+    margin-left: 20px;
+}
+
+.pressgang_websites_calloutDownRight
+{
+    height: 0;
+    width: 0;
+    border-top: 12px solid #ffffff;
+    border-left: 12px dotted transparent;
+    border-right: 12px dotted transparent;
+    left: 0px;
+    top: 0px;
+    margin-left: 470px;
+}
+
+.pressgang_websites_calloutDown2
+{
+    position: relative;
+    left: -10px;
+    top: -12px;
+    height: 0;
+    width: 0;
+    border-top: 10px solid #9999ff;
+    border-left: 10px dotted transparent;
+    border-right: 10px dotted transparent;
+    z-index: 1;
+}
+
+.pressgang_websites_divContainerUp
+{
+    background-color: #9999ff;
+    border: solid 1px #ffffff;
+    position: relative;
+    top: -1px;
+    width: 500px;
+    padding: 24px 4px 4px 4px;
+}
+
+.pressgang_websites_divContainerDown
+{
+    background-color: #9999ff;
+    border: solid 1px #ffffff;
+    position: relative;
+    top: 1px;
+    width: 500px;
+    padding: 24px 4px 4px 4px;
+}
+
+.pressgang_websites_divContainerNone
+{
+    background-color: #9999ff;
+    border: solid 1px #ffffff;
+    position: relative;
+    width: 500px;
+    padding: 4px 4px 4px 4px;
+    color: white;
+    position: absolute;
+}
+
+.pressgang_websites_divContainerMain
+{
+    background-color: #ccccff;
+    padding: 8px;
+}

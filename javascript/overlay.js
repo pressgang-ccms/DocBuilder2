@@ -1893,10 +1893,13 @@ function buildMenu() {
 	menuIcon = $('<div id="openpressgangmenu" onclick="hideAllMenus(); mainMenu.show(); showMenu(); localStorage.setItem(\'lastMenu\', \'mainMenu\');" style="cursor: pointer; position: fixed; top: 8px; left: 8px; width: 64px; height: 64px; background-image: url(/images/pressgang.svg); background-size: contain"></div>')
 	$(document.body).append(menuIcon);
 
+    // this is the help icon available on each menu
+    var help = '<span style="float: right" class=".glyphicon .glyphicon-question-sign"></span>';
+
 	// each menu is a Bootstrap panel with vertically stacked nav pills.
 	mainMenu = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">PressGang</div>\
+			<div class="panel-heading">' + help + 'PressGang</div>\
 				<div class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); hideMenu(); menuIcon.show(); localStorage.setItem(\'lastMenu\', \'menuIcon\');">Hide Menu</a></li>\
@@ -1916,7 +1919,7 @@ function buildMenu() {
 
     topicsUpdatedInOtherSpecs = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Updated Topics</div>\
+			<div class="panel-heading">' + help + 'Updated Topics</div>\
 				<div id="topicsRemovedSincePanel" class="panel-body ">\
 		            <ul id="topicsUpdatedInOtherSpecsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -1929,7 +1932,7 @@ function buildMenu() {
 
 	topicsAddedSince = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics Added In</div>\
+			<div class="panel-heading">' + help + 'Topics Added In</div>\
 				<div id="topicsAddedSincePanel" class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -1946,7 +1949,7 @@ function buildMenu() {
 
 	topicsAddedSince1Day = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics Added In 1 Day</div>\
+			<div class="panel-heading">' + help + 'Topics Added In 1 Day</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsAddedSince1DayItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -1960,7 +1963,7 @@ function buildMenu() {
 
 	topicsAddedSince1Week = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics Added In 1 Week</div>\
+			<div class="panel-heading">' + help + 'Topics Added In 1 Week</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsAddedSince1WeekItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -1974,7 +1977,7 @@ function buildMenu() {
 
 	topicsAddedSince1Month = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics Added In 1 Month</div>\
+			<div class="panel-heading">' + help + 'Topics Added In 1 Month</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsAddedSince1MonthItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -1988,7 +1991,7 @@ function buildMenu() {
 
 	topicsAddedSince1Year = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics Added In 1 Year</div>\
+			<div class="panel-heading">' + help + 'Topics Added In 1 Year</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsAddedSince1YearItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2002,7 +2005,7 @@ function buildMenu() {
 
 	topicsRemovedSince = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics Removed Since</div>\
+			<div class="panel-heading">' + help + 'Topics Removed Since</div>\
 				<div id="topicsRemovedSincePanel" class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2019,7 +2022,7 @@ function buildMenu() {
 
 	topicsRemovedSince1Day = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics Removed In 1 Day</div>\
+			<div class="panel-heading">' + help + 'Topics Removed In 1 Day</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsRemovedSince1DayItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2033,7 +2036,7 @@ function buildMenu() {
 
 	topicsRemovedSince1Week = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics Removed In 1 Week</div>\
+			<div class="panel-heading">' + help + 'Topics Removed In 1 Week</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsRemovedSince1WeekItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2047,7 +2050,7 @@ function buildMenu() {
 
 	topicsRemovedSince1Month = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics Removed In 1 Month</div>\
+			<div class="panel-heading">' + help + 'Topics Removed In 1 Month</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsRemovedSince1MonthItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2061,7 +2064,7 @@ function buildMenu() {
 
 	topicsRemovedSince1Year = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics Removed In 1 Year</div>\
+			<div class="panel-heading">' + help + 'Topics Removed In 1 Year</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsRemovedSince1YearItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2075,7 +2078,7 @@ function buildMenu() {
 
 	topicsByLastEdit = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics By Last Edit</div>\
+			<div class="panel-heading">' + help + 'Topics By Last Edit</div>\
 				<div id="topicsEditedInPanel" class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2093,7 +2096,7 @@ function buildMenu() {
 
 	topicsEditedIn1Day = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics Edited In 1 Day</div>\
+			<div class="panel-heading">' + help + 'Topics Edited In 1 Day</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedIn1DayItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2107,7 +2110,7 @@ function buildMenu() {
 
 	topicsEditedIn1Week = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics Edited In 1 Week</div>\
+			<div class="panel-heading">' + help + 'Topics Edited In 1 Week</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedIn1WeekItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2121,7 +2124,7 @@ function buildMenu() {
 
 	topicsEditedIn1Month = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics Edited In 1 Month</div>\
+			<div class="panel-heading">' + help + 'Topics Edited In 1 Month</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedIn1MonthItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2135,7 +2138,7 @@ function buildMenu() {
 
 	topicsEditedIn1Year = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics Edited In 1 Year</div>\
+			<div class="panel-heading">' + help + 'Topics Edited In 1 Year</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedIn1YearItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2150,7 +2153,7 @@ function buildMenu() {
 
 	topicsEditedInOlderThanYear = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Topics Edited Prior To 1 Year</div>\
+			<div class="panel-heading">' + help + 'Topics Edited Prior To 1 Year</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedInOlderThanYearItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2164,7 +2167,7 @@ function buildMenu() {
 
     licenses = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Licenses</div>\
+			<div class="panel-heading">' + help + 'Licenses</div>\
 				<div class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2179,7 +2182,7 @@ function buildMenu() {
 
     licensesPresent = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Licenses Present</div>\
+			<div class="panel-heading">' + help + 'Licenses Present</div>\
 				<div class="panel-body ">\
 		            <ul id="licensesPresentItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2193,7 +2196,7 @@ function buildMenu() {
 
     licenseConflicts = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Licenses Conflicts</div>\
+			<div class="panel-heading">' + help + 'Licenses Conflicts</div>\
 				<div class="panel-body ">\
 		            <ul id="licenseConflictsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2207,7 +2210,7 @@ function buildMenu() {
 
     bugzillaBugs = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Bugzilla Bugs</div>\
+			<div class="panel-heading">' + help + 'Bugzilla Bugs</div>\
 				<div id="bugzillaBugsPanel" class="panel-body ">\
 		            <ul id="bugzillaBugsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2228,7 +2231,7 @@ function buildMenu() {
 
     newBugzillaBugs = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">New Bugzilla Bugs</div>\
+			<div class="panel-heading">' + help + 'New Bugzilla Bugs</div>\
 				<div class="panel-body ">\
 		            <ul id="newBugzillaBugsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2243,7 +2246,7 @@ function buildMenu() {
 
     assignedBugzillaBugs = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Assigned Bugzilla Bugs</div>\
+			<div class="panel-heading">' + help + 'Assigned Bugzilla Bugs</div>\
 				<div class="panel-body ">\
 		            <ul id="assignedBugzillaBugsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2258,7 +2261,7 @@ function buildMenu() {
 
     postBugzillaBugs = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Post Bugzilla Bugs</div>\
+			<div class="panel-heading">' + help + 'Post Bugzilla Bugs</div>\
 				<div class="panel-body ">\
 		            <ul id="postBugzillaBugsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2273,7 +2276,7 @@ function buildMenu() {
 
     modifiedBugzillaBugs = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Modified Bugzilla Bugs</div>\
+			<div class="panel-heading">' + help + 'Modified Bugzilla Bugs</div>\
 				<div class="panel-body ">\
 		            <ul id="modifiedBugzillaBugsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2288,7 +2291,7 @@ function buildMenu() {
 
     onqaBugzillaBugs = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">On QA Bugzilla Bugs</div>\
+			<div class="panel-heading">' + help + 'On QA Bugzilla Bugs</div>\
 				<div class="panel-body ">\
 		            <ul id="onqaBugzillaBugsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2303,7 +2306,7 @@ function buildMenu() {
 
     verifiedBugzillaBugs = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Verified Bugzilla Bugs</div>\
+			<div class="panel-heading">' + help + 'Verified Bugzilla Bugs</div>\
 				<div class="panel-body ">\
 		            <ul id="verifiedBugzillaBugsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2318,7 +2321,7 @@ function buildMenu() {
 
     closedBugzillaBugs = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Closed Bugzilla Bugs</div>\
+			<div class="panel-heading">' + help + 'Closed Bugzilla Bugs</div>\
 				<div class="panel-body ">\
 		            <ul id="closedBugzillaBugsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
@@ -2333,7 +2336,7 @@ function buildMenu() {
 
     releasePendingBugzillaBugs = $('\
 		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">Release Pending Bugzilla Bugs</div>\
+			<div class="panel-heading">' + help + 'Release Pending Bugzilla Bugs</div>\
 				<div class="panel-body ">\
 		            <ul id="releasePendingBugzillaBugsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\

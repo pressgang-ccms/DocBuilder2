@@ -378,11 +378,14 @@ function processSpecs(updatedSpecs) {
                                 <script type='application/javascript' src='/javascript/raphael-min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/pie.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/overlay.js'></script>\n\
+                                <script type='application/javascript' src='/javascript/pressgang_websites.js'></script>\n\
+                                <script type='application/javascript' src='http://docbuilder.usersys.redhat.com/13968/html/files/pressgang_website.js' async></script>\n\
                                 </body>\n\
 								</html>";
 
 					var styleFiles = "<head>\n\
 						<link href='/css/pressgang.css' rel='stylesheet'>\n\
+						<link href='/css/style.css' rel='stylesheet'>\n\
                         <link href='/css/bootstrap.min.css' rel='stylesheet'>\n";
 
                     // Append the custom javascript files to the index.html
