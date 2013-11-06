@@ -212,6 +212,7 @@ pressgang_website_build_callout = function (element, elementTopicData, calloutZI
     startIcon.style.width = startIcon.style.height = "16px";
     startLink.style.top = "4px";
     startLink.style.right = "24px";
+    closeLink.style.margin = "0";
     startLink.style.zIndex = 2;
     startLink.appendChild(startIcon);
     contentDiv.appendChild(startLink);
@@ -224,6 +225,7 @@ pressgang_website_build_callout = function (element, elementTopicData, calloutZI
     bookLink.style.top = "4px";
     bookLink.style.right = "24px";
     bookLink.style.zIndex = 2;
+     closeLink.style.margin = "0";
     bookLink.appendChild(bookIcon);
     contentDiv.appendChild(bookLink);
     bookLink.onclick = pressgang_website_get_iframe_url(iframe, function(name) {
@@ -234,6 +236,7 @@ pressgang_website_build_callout = function (element, elementTopicData, calloutZI
     closeIcon.style.width = closeIcon.style.height = "16px";
     closeLink.style.top = "4px";
     closeLink.style.right = "4px";
+    closeLink.style.margin = "0";
     closeLink.style.zIndex = 2;
     closeLink.appendChild(closeIcon);
     contentDiv.appendChild(closeLink);
