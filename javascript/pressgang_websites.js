@@ -209,10 +209,10 @@ pressgang_website_build_callout = function (element, elementTopicData, calloutZI
 
 
     startIcon.src = pressgang_website_images_dir + "start.png";
+    startIcon.style.margin = "0";
     startIcon.style.width = startIcon.style.height = "16px";
     startLink.style.top = "4px";
     startLink.style.right = "24px";
-    closeLink.style.margin = "0";
     startLink.style.zIndex = 2;
     startLink.appendChild(startIcon);
     contentDiv.appendChild(startLink);
@@ -221,11 +221,11 @@ pressgang_website_build_callout = function (element, elementTopicData, calloutZI
     }
 
     /*bookIcon.src = pressgang_website_images_dir + "book.png";
+    bookIcon.style.margin = "0";
     bookIcon.style.width = bookIcon.style.height = "16px";
     bookLink.style.top = "4px";
     bookLink.style.right = "24px";
     bookLink.style.zIndex = 2;
-     closeLink.style.margin = "0";
     bookLink.appendChild(bookIcon);
     contentDiv.appendChild(bookLink);
     bookLink.onclick = pressgang_website_get_iframe_url(iframe, function(name) {
@@ -233,10 +233,10 @@ pressgang_website_build_callout = function (element, elementTopicData, calloutZI
     });*/
 
     closeIcon.src = pressgang_website_images_dir + "close.png";
+    closeIcon.style.margin = "0";
     closeIcon.style.width = closeIcon.style.height = "16px";
     closeLink.style.top = "4px";
     closeLink.style.right = "4px";
-    closeLink.style.margin = "0";
     closeLink.style.zIndex = 2;
     closeLink.appendChild(closeIcon);
     contentDiv.appendChild(closeLink);
