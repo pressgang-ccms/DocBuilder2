@@ -770,6 +770,19 @@ pressgang_website_callback = function(data) {
             }
         });
 
+        /*
+            Create the initial help callout
+         */
+        pressgang_website_initialHelp = document.createElement("div");
+        pressgang_website_initialHelp.id = pressgang_website_initial_calloutID;
+        pressgang_website_initialHelp.textContent = "Press Escape to close the help overlay.\nMouse over the highlighted elements to view the help."
+        pressgang_website_initialHelp.className = "pressgang_websites_divContainerNone";
+        pressgang_website_initialHelp.style.zIndex = initialCalloutZIndex;
+        pressgang_website_initialHelp.style.left = "50%";
+        pressgang_website_initialHelp.style.top = "50%";
+        pressgang_website_initialHelp.style.marginLeft = "-250px";
+        pressgang_website_initialHelp.style.textAlign = "center";
+
         /**
          * Enabled the help overlay.
          */
@@ -836,15 +849,6 @@ pressgang_website_callback = function(data) {
             /*
              * Display the initial help callout
              */
-            pressgang_website_initialHelp = document.createElement("div");
-            pressgang_website_initialHelp.id = pressgang_website_initial_calloutID;
-            pressgang_website_initialHelp.textContent = "Press Escape to close the help overlay.\nMouse over the highlighted elements to view the help."
-            pressgang_website_initialHelp.className = "pressgang_websites_divContainerNone";
-            pressgang_website_initialHelp.style.zIndex = initialCalloutZIndex;
-            pressgang_website_initialHelp.style.left = "50%";
-            pressgang_website_initialHelp.style.top = "50%";
-            pressgang_website_initialHelp.style.marginLeft = "-250px";
-            pressgang_website_initialHelp.style.textAlign = "center";
             pressgang_website_open_initial_callout();
 
             /*

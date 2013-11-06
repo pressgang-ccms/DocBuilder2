@@ -498,7 +498,7 @@ function createJBossPopover(topicId, parent) {
  * @param parent The element that should hold the icon
  */
 function createSpecsPopover(topicId, parent) {
-    var linkDiv = createIcon("book", topicId);
+    var linkDiv = createIcon("book", topicId, 24788);
     parent.appendChild(linkDiv);
 
     var popover = createPopover("Content Specifications", topicId);
@@ -996,7 +996,7 @@ function firstPass() {
  * @param topicId The topic id
  * @returns The icon element
  */
-function createIcon(img, topicId) {
+function createIcon(img, topicId, helpid) {
     var linkDiv = document.createElement("div");
     linkDiv.setAttribute("id", topicId + img + "Icon");
     linkDiv.style.backgroundImage = "url(/images/" + img + ".png)";
@@ -1016,6 +1016,10 @@ function createIcon(img, topicId) {
 
 	linkDiv.appendChild(countDiv);
 	linkDiv.countMarker = countDiv;
+
+    if (helpid) {
+        linkDiv.setAttribute("data-pressgangtopic", helpid);
+    }
 
     return linkDiv;
 }
