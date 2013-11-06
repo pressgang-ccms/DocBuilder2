@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript/overlay.js" afterPath="$PROJECT_DIR$/javascript/overlay.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/copy_js_files.sh" afterPath="$PROJECT_DIR$/copy_js_files.sh" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383771323801" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383772873726" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383771225312" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -129,7 +129,7 @@
     <file path="/PressZillaBugzillaIntegration.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382657662505" ignored="false" />
     <file path="/PressZillaSolutionsIntegration.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382664646361" ignored="false" />
     <file path="/PressZillaMojoIntegration_v2.1.2.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382667797016" ignored="false" />
-    <file path="/copy_js_files.sh" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382667854134" ignored="false" />
+    <file path="/copy_js_files.sh" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383772998835" ignored="false" />
     <file path="/PressZillaJbossOrgIntegration_v2.1.7.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382671095230" ignored="false" />
     <file path="/PressZillaJbossOrgIntegration_v2.1.8.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382671487610" ignored="false" />
     <file path="/PressZillaJbossOrgIntegration_v2.1.9.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382671929733" ignored="false" />
@@ -268,26 +268,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaSolutionsIntegration_v2.7.1.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
+      <file leaf-file-name="copy_js_files.sh" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="89" column="89" selection-start="4616" selection-end="4628" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1383533692440" expanded="false" signature="4030:4106" placeholder="..." />
-                <marker date="1383533692440" expanded="true" signature="4107:4165" placeholder="..." />
-                <marker date="1383533692440" expanded="false" signature="5391:5429" placeholder="..." />
-                <marker date="1383533692440" expanded="false" signature="5441:5448" placeholder="..." />
-                <marker date="1383533692440" expanded="false" signature="7247:7323" placeholder="..." />
-                <marker date="1383533692440" expanded="true" signature="7324:7366" placeholder="..." />
-              </folding>
+            <state line="0" column="21" selection-start="21" selection-end="21" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="overlay.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="overlay.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1896" column="111" selection-start="76529" selection-end="76529" vertical-scroll-proportion="0.4213615">
+            <state line="1896" column="111" selection-start="76529" selection-end="76529" vertical-scroll-proportion="-14.36">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <marker date="1383772869030" expanded="true" signature="11393:11491" placeholder="..." />
@@ -471,7 +464,7 @@
       <file leaf-file-name="pressgang_websites.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/javascript/pressgang_websites.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="22" selection-start="966" selection-end="988" vertical-scroll-proportion="-4.8">
+            <state line="744" column="26" selection-start="32688" selection-end="32714" vertical-scroll-proportion="-11.52">
               <folding />
             </state>
           </provider>
@@ -595,7 +588,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v2.9.5.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v2.9.6.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v2.9.7.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v2.9.8.js" />
@@ -611,6 +603,7 @@
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/javascript/pressgang_websites.js" />
         <option value="$PROJECT_DIR$/javascript/overlay.js" />
+        <option value="$PROJECT_DIR$/copy_js_files.sh" />
       </list>
     </option>
   </component>
@@ -699,6 +692,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="presszilla" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DocBuilder2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DocBuilder2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="javascript" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2207,7 +2214,11 @@
       <created>1383771325820</created>
       <updated>1383771325820</updated>
     </task>
-    <option name="localTasksCounter" value="331" />
+    <task id="LOCAL-00331" summary="Added help overlay">
+      <created>1383772874716</created>
+      <updated>1383772874716</updated>
+    </task>
+    <option name="localTasksCounter" value="332" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2325,20 +2336,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="89" selection-start="4616" selection-end="4628" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1383533692440" expanded="false" signature="4030:4106" placeholder="..." />
-            <marker date="1383533692440" expanded="true" signature="4107:4165" placeholder="..." />
-            <marker date="1383533692440" expanded="false" signature="5391:5429" placeholder="..." />
-            <marker date="1383533692440" expanded="false" signature="5441:5448" placeholder="..." />
-            <marker date="1383533692440" expanded="false" signature="7247:7323" placeholder="..." />
-            <marker date="1383533692440" expanded="true" signature="7324:7366" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="309" column="45" selection-start="9898" selection-end="9898" vertical-scroll-proportion="0.0">
@@ -2599,12 +2596,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="89" column="89" selection-start="4616" selection-end="4628" vertical-scroll-proportion="0.0">
           <folding>
-            <marker date="1383533692440" expanded="false" signature="4030:4106" placeholder="..." />
-            <marker date="1383533692440" expanded="true" signature="4107:4165" placeholder="..." />
-            <marker date="1383533692440" expanded="false" signature="5391:5429" placeholder="..." />
-            <marker date="1383533692440" expanded="false" signature="5441:5448" placeholder="..." />
-            <marker date="1383533692440" expanded="false" signature="7247:7323" placeholder="..." />
-            <marker date="1383533692440" expanded="true" signature="7324:7366" placeholder="..." />
+            <marker date="1383533692440" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1383533692440" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1383533692440" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1383533692440" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1383533692440" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1383533692440" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -2685,59 +2682,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/pressgang_websites.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="22" selection-start="966" selection-end="988" vertical-scroll-proportion="-4.8">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="379" column="87" selection-start="15638" selection-end="15638" vertical-scroll-proportion="-11.36">
-          <folding>
-            <marker date="1383771277967" expanded="true" signature="3699:4670" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="3711:4024" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="4071:4670" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="4103:4670" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="4134:4601" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="4223:4587" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="4632:4670" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="4646:4670" placeholder="..." />
-            <marker date="1383771277967" expanded="false" signature="4813:4827" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="4829:6005" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="6123:7738" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="6140:7721" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="6155:6618" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="6171:6210" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="6226:6319" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="6335:6379" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="6395:6493" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="6523:6602" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="6633:6993" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="6649:6693" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="6709:6807" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="6823:6865" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="6881:6977" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="7008:7394" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="7024:7069" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="7085:7183" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="7199:7251" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="7267:7378" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="7409:7703" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="7425:7472" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="7488:7621" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="7637:7654" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="7670:7687" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="7806:7895" placeholder="..." />
-            <marker date="1383771277967" expanded="false" signature="13231:13276" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="14763:14822" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="16046:16115" placeholder="..." />
-            <marker date="1383771277967" expanded="true" signature="16046:16243" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/bootstrap.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2386" column="25" selection-start="40363" selection-end="40372" vertical-scroll-proportion="44.44">
@@ -2747,7 +2691,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1896" column="111" selection-start="76529" selection-end="76529" vertical-scroll-proportion="0.4213615">
+        <state line="1896" column="111" selection-start="76529" selection-end="76529" vertical-scroll-proportion="-14.36">
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <marker date="1383772869030" expanded="true" signature="11393:11491" placeholder="..." />
@@ -2915,6 +2859,66 @@
             <marker date="1383772869030" expanded="true" signature="104261:104818" placeholder="..." />
             <marker date="1383772869030" expanded="true" signature="104352:104806" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/pressgang_websites.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="744" column="26" selection-start="32688" selection-end="32714" vertical-scroll-proportion="-11.52">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="379" column="87" selection-start="15638" selection-end="15638" vertical-scroll-proportion="-11.36">
+          <folding>
+            <marker date="1383771277967" expanded="true" signature="3699:4670" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="3711:4024" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="4071:4670" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="4103:4670" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="4134:4601" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="4223:4587" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="4632:4670" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="4646:4670" placeholder="..." />
+            <marker date="1383771277967" expanded="false" signature="4813:4827" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="4829:6005" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="6123:7738" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="6140:7721" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="6155:6618" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="6171:6210" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="6226:6319" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="6335:6379" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="6395:6493" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="6523:6602" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="6633:6993" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="6649:6693" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="6709:6807" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="6823:6865" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="6881:6977" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="7008:7394" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="7024:7069" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="7085:7183" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="7199:7251" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="7267:7378" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="7409:7703" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="7425:7472" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="7488:7621" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="7637:7654" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="7670:7687" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="7806:7895" placeholder="..." />
+            <marker date="1383771277967" expanded="false" signature="13231:13276" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="14763:14822" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="16046:16115" placeholder="..." />
+            <marker date="1383771277967" expanded="true" signature="16046:16243" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="21" selection-start="21" selection-end="21" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
