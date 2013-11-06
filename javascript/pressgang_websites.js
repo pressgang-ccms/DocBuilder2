@@ -66,6 +66,10 @@ pressgang_website_diagonal_callout_offset_size = 22;
  * The last element that displayed a callout.
  */
 pressgang_website_lastSelectedElement = null;
+/**
+ * The help popover to be displayed when no other popover is displayed
+ */
+var pressgang_website_initialHelp = null;
 
 
 /**
@@ -221,16 +225,16 @@ pressgang_website_build_callout = function (element, elementTopicData, calloutZI
     }
 
     /*bookIcon.src = pressgang_website_images_dir + "book.png";
-    bookIcon.style.margin = "0";
-    bookIcon.style.width = bookIcon.style.height = "16px";
-    bookLink.style.top = "4px";
-    bookLink.style.right = "24px";
-    bookLink.style.zIndex = 2;
-    bookLink.appendChild(bookIcon);
-    contentDiv.appendChild(bookLink);
-    bookLink.onclick = pressgang_website_get_iframe_url(iframe, function(name) {
-        window.open(pressgang_website_doc_base + "#" + name);
-    });*/
+     bookIcon.style.margin = "0";
+     bookIcon.style.width = bookIcon.style.height = "16px";
+     bookLink.style.top = "4px";
+     bookLink.style.right = "24px";
+     bookLink.style.zIndex = 2;
+     bookLink.appendChild(bookIcon);
+     contentDiv.appendChild(bookLink);
+     bookLink.onclick = pressgang_website_get_iframe_url(iframe, function(name) {
+     window.open(pressgang_website_doc_base + "#" + name);
+     });*/
 
     closeIcon.src = pressgang_website_images_dir + "close.png";
     closeIcon.style.margin = "0";
@@ -286,9 +290,9 @@ pressgang_website_build_callout = function (element, elementTopicData, calloutZI
     var elementPosition = element.getBoundingClientRect();
 
     /*
-        This is where we try to position the popover based on the size and position of the element
-        that the popover is associated with. This really is a lot of trial and error to find some
-        logic that places the popover in a natural position.
+     This is where we try to position the popover based on the size and position of the element
+     that the popover is associated with. This really is a lot of trial and error to find some
+     logic that places the popover in a natural position.
      */
 
     // If there is a large element, the popover should be centered as much as possible
@@ -318,8 +322,8 @@ pressgang_website_build_callout = function (element, elementTopicData, calloutZI
 
     if (isCenteredHorizontally && isCenteredVertically) {
         /*
-            If we have set both the vertical and horizontal position based on the size of the element,
-            then go ahead and set the style of the popover.
+         If we have set both the vertical and horizontal position based on the size of the element,
+         then go ahead and set the style of the popover.
          */
         if (elementPosition.left < hx) {
             contentDiv.className = "pressgang_websites_divContainerUp";
@@ -337,8 +341,8 @@ pressgang_website_build_callout = function (element, elementTopicData, calloutZI
         }
     } else {
         /*
-             Only proceed if we still need to set either the vertical or horizontal popover position
-             based on the element position.
+         Only proceed if we still need to set either the vertical or horizontal popover position
+         based on the element position.
          */
         if (elementPosition.left < tx) {
 
@@ -829,17 +833,16 @@ pressgang_website_callback = function(data) {
             /*
              * Display the initial help callout
              */
-            var initialHelp = document.createElement("div");
-            initialHelp.id = pressgang_website_initial_calloutID;
-            initialHelp.textContent = "Press Escape to close the help overlay.\nMouse over the highlighted elements to view the help."
-            initialHelp.className = "pressgang_websites_divContainerNone";
-            initialHelp.style.zIndex = initialCalloutZIndex;
-            initialHelp.style.left = "50%";
-            initialHelp.style.top = "50%";
-            initialHelp.style.marginLeft = "-250px";
-            initialHelp.style.textAlign = "center";
-            document.body.appendChild(initialHelp);
-            setTimeout(pressgang_website_close_initial_callout, 10000);
+            pressgang_website_initialHelp = document.createElement("div");
+            pressgang_website_initialHelp.id = pressgang_website_initial_calloutID;
+            pressgang_website_initialHelp.textContent = "Press Escape to close the help overlay.\nMouse over the highlighted elements to view the help."
+            pressgang_website_initialHelp.className = "pressgang_websites_divContainerNone";
+            pressgang_website_initialHelp.style.zIndex = initialCalloutZIndex;
+            pressgang_website_initialHelp.style.left = "50%";
+            pressgang_website_initialHelp.style.top = "50%";
+            pressgang_website_initialHelp.style.marginLeft = "-250px";
+            pressgang_website_initialHelp.style.textAlign = "center";
+            pressgang_website_open_initial_callout();
 
             /*
              * Promote the elements listed in the data
@@ -893,8 +896,8 @@ pressgang_website_callback = function(data) {
                 }
 
                 /*
-                    Loop over each element identified by a topic in the documentation, and see if the mouse is over
-                    it.
+                 Loop over each element identified by a topic in the documentation, and see if the mouse is over
+                 it.
                  */
                 for (var i = 0, dataLength = data.length; i < dataLength; ++i) {
                     var dataItem = data[i];
@@ -909,8 +912,8 @@ pressgang_website_callback = function(data) {
                             e.clientY <= elementPosition.bottom) {
 
                             /*
-                                We have found an element with a help topic associated with it under the mouse cursor.
-                                Display the new popover after a short delay.
+                             We have found an element with a help topic associated with it under the mouse cursor.
+                             Display the new popover after a short delay.
                              */
                             if (element != pressgang_website_lastSelectedElement) {
                                 // If there is a pending timeout, cancel it
@@ -923,6 +926,7 @@ pressgang_website_callback = function(data) {
                                     function(element, dataItem) {
                                         return function() {
                                             pressgang_website_build_callout(element, dataItem, calloutZIndex);
+                                            pressgang_website_close_initial_callout();
                                             pressgang_website_lastSelectedElement = element;
                                         }
                                     }(element, dataItem), pressgang_website_popover_switch_deplay
@@ -1010,5 +1014,16 @@ pressgang_website_callback = function(data) {
             callout.parentNode.removeChild(callout);
         }
     }
+
+    /**
+     * Displays the initial help
+     */
+    pressgang_website_open_initial_callout = function () {
+        var callout = document.getElementById(pressgang_website_initial_calloutID);
+        if (callout == null || callout.parentNode == null) {
+            document.body.appendChild(pressgang_website_initialHelp);
+        }
+    }
+
 
 }

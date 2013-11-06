@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/style.css" afterPath="$PROJECT_DIR$/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript/pressgang_websites.js" afterPath="$PROJECT_DIR$/javascript/pressgang_websites.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383775642857" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383775852971" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383771225312" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -159,7 +159,7 @@
     <file path="/PressZillaProductPagesIntegration_v2.9.8.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383544343291" ignored="false" />
     <file path="/PressZillaProductPagesIntegration_v2.9.9.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383544636542" ignored="false" />
     <file path="/PressZillaBugzillaSearchIntegration_v2.6.6.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383768947256" ignored="false" />
-    <file path="/pressgang_websites.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383775126771" ignored="false" />
+    <file path="/pressgang_websites.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383776318541" ignored="false" />
     <file path="/style.css" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383775190678" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -462,19 +462,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pressgang_websites.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="pressgang_websites.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/javascript/pressgang_websites.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="76" column="95" selection-start="3131" selection-end="3131" vertical-scroll-proportion="-19.32">
-              <folding />
+            <state line="928" column="86" selection-start="40992" selection-end="40992" vertical-scroll-proportion="0.8086854">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="18" selection-start="1112" selection-end="1112" vertical-scroll-proportion="0.90751445">
+            <state line="54" column="18" selection-start="1112" selection-end="1112" vertical-scroll-proportion="-31.4">
               <folding />
             </state>
           </provider>
@@ -603,8 +605,8 @@
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/copy_js_files.sh" />
         <option value="$PROJECT_DIR$/javascript/overlay.js" />
-        <option value="$PROJECT_DIR$/javascript/pressgang_websites.js" />
         <option value="$PROJECT_DIR$/css/style.css" />
+        <option value="$PROJECT_DIR$/javascript/pressgang_websites.js" />
       </list>
     </option>
   </component>
@@ -2239,7 +2241,11 @@
       <created>1383775644330</created>
       <updated>1383775644330</updated>
     </task>
-    <option name="localTasksCounter" value="337" />
+    <task id="LOCAL-00337" summary="Added help overlay">
+      <created>1383775854233</created>
+      <updated>1383775854233</updated>
+    </task>
+    <option name="localTasksCounter" value="338" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2929,17 +2935,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/pressgang_websites.js">
+    <entry file="file://$PROJECT_DIR$/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="95" selection-start="3131" selection-end="3131" vertical-scroll-proportion="-19.32">
+        <state line="54" column="18" selection-start="1112" selection-end="1112" vertical-scroll-proportion="-31.4">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/style.css">
+    <entry file="file://$PROJECT_DIR$/javascript/pressgang_websites.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="18" selection-start="1112" selection-end="1112" vertical-scroll-proportion="0.90751445">
-          <folding />
+        <state line="928" column="86" selection-start="40992" selection-end="40992" vertical-scroll-proportion="0.8086854">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
