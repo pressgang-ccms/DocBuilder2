@@ -243,6 +243,12 @@ var sideMenus = [];
  */
 var eventDetails = null;
 
+/**
+ * The height of the schedule if displayed by PressZilla
+ * @type {boolean}
+ */
+var scheduleHeight = 0;
+
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
  */
@@ -1793,14 +1799,26 @@ function buildTopicEditedInChart() {
  * appears to the right of the menu.
  */
 function showMenu() {
-	document.body.style.margin = "0 auto auto 350px";
+    document.body.style.margin = scheduleHeight + "px auto auto 350px";
+    jQuery("#timelineChartDiv").css("left", "316px");
+    jQuery("#timelineChartDiv").css("right", "8px");
+    jQuery("#productpagestodaybutton").css("right", "8px");
+    jQuery("#pressgangschedulelegend").css("left", "316px");
+    jQuery("#pressgangscheduleprocessname").css("left", "348px");
+    jQuery("#openpressgangmenu").css("display", "none");
 }
 
 /**
  * When the menu is hidden, we reset the margins to the defulats used by Publican.
  */
 function hideMenu() {
-	document.body.style.margin = "0 auto";
+	document.body.style.margin = scheduleHeight + "px auto";
+    jQuery("#timelineChartDiv").css("left", "72px");
+    jQuery("#timelineChartDiv").css("right", "72px");
+    jQuery("#pressgangschedulelegend").css("left", "72px");
+    jQuery("#pressgangscheduleprocessname").css("left", "104px");
+    jQuery("#productpagestodaybutton").css("right", "72px");
+    jQuery("#openpressgangmenu").css("display", "");
 }
 
 /**
@@ -1812,7 +1830,7 @@ function buildMenu() {
 	$(document.body).append(offscreenRendering);
 
 	// the icon used to show the initil menu
-	menuIcon = $('<div onclick="hideAllMenus(); mainMenu.show(); showMenu(); localStorage.setItem(\'lastMenu\', \'mainMenu\');" style="cursor: pointer; position: fixed; top: 8px; left: 8px; width: 64px; height: 64px; background-image: url(/images/pressgang.svg); background-size: contain"></div>')
+	menuIcon = $('<div id="openpressgangmenu" onclick="hideAllMenus(); mainMenu.show(); showMenu(); localStorage.setItem(\'lastMenu\', \'mainMenu\');" style="cursor: pointer; position: fixed; top: 8px; left: 8px; width: 64px; height: 64px; background-image: url(/images/pressgang.svg); background-size: contain"></div>')
 	$(document.body).append(menuIcon);
 
 	// each menu is a Bootstrap panel with vertically stacked nav pills.
