@@ -1160,7 +1160,7 @@ pressgang_website_callback = function(data) {
                 var w = window.innerWidth;
                 var h = window.innerHeight;
 
-                var offset = 16;
+                var offset = 32;
 
                 // try all the corners
                 if (!((e && mouseCollides(e.clientX, e.clientY, offset, initialHelpPosition.width, offset, initialHelpPosition.height)) ||
