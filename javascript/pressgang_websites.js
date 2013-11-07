@@ -654,7 +654,7 @@ pressgang_website_build_callout = function (element, elementTopicData, calloutZI
                     }, 0);
                 } else {
                     /*
-                     * The element is on the bottom of the screen
+                     * The element is on the bottom of the screen                                                          Added help overlay
                      */
                     contentDiv.className = "pressgang_websites_divContainerDown";
                     outerArrowDiv.className = "pressgang_websites_calloutDown";
