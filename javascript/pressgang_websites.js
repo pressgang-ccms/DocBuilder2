@@ -896,10 +896,10 @@ pressgang_website_callback = function(data) {
 
                             var computedStyle = window.getComputedStyle(topMostParent);
                             if (computedStyle.position == "static") {
-                                element.style.position = "relative";
+                                topMostParent.style.position = "relative";
                                 changedPositionFromStatic.push(topMostParent);
                             } else if (computedStyle.position == "") {
-                                element.style.position = "relative";
+                                topMostParent.style.position = "relative";
                                 changedPositionFromDefault.push(topMostParent);
                             }
 
