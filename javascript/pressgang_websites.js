@@ -889,6 +889,8 @@ pressgang_website_callback = function(data) {
 
                         // dont add another dimmer to the parent if it has already been processed
                         if (!found) {
+                            processedParents.push(topMostParent);
+
                             var computedStyle = window.getComputedStyle(topMostParent);
                             if (computedStyle.position == "static") {
                                 element.style.position = "relative";
