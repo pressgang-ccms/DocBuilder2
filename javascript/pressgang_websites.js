@@ -1011,7 +1011,7 @@ pressgang_website_callback = function(data) {
                     If the mouse has moved off a popover or highlighted element for a period of time,
                     display the initial help popover.
                  */
-                if (!mouseOverElement && !pressgang_website_initial_callout_displayed()) {
+                if (!mouseOverElement && !pressgang_website_initial_callout_displayed() && !pressgang_website_popover_switch_timeout) {
                     pressgang_website_popover_switch_timeout = setTimeout(
                         function() {
                             pressgang_website_close_callout();
