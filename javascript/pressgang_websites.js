@@ -882,7 +882,7 @@ pressgang_website_callback = function(data) {
 
                         var found = false;
                         for (var parentIndex = 0, parentCount = processedParents.length; parentIndex < parentCount; ++parentIndex) {
-                            if (processedParents.length[parentIndex] == topMostParent)  {
+                            if (processedParents[parentIndex] == topMostParent)  {
                                 found = true;
                                 break;
                             }
