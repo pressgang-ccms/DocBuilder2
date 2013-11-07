@@ -915,7 +915,7 @@ pressgang_website_callback = function(data) {
                             localDimmer.style.opacity = 0.9;
                             localDimmer.style.zIndex = pressgang_website_local_dimmer_zindex_offset;
                             localDimmer.setAttribute("data-pressganglocaldimmer", "true");
-                            element.parentNode(localDimmer);
+                            element.parentNode.appendChild(localDimmer);
                         }
 
                         element.style.zIndex += pressgang_website_local_zindex_offset;
