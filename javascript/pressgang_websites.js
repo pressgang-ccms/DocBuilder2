@@ -1137,10 +1137,10 @@ pressgang_website_callback = function(data) {
                 if (callout != null) {
                     var calloutPosition = callout.getBoundingClientRect();
 
-                    if (!(calloutPosition.bottom < top) ||
+                    if (!((calloutPosition.bottom < top) ||
                     (calloutPosition.top > top + height) ||
                     (calloutPosition.left > left + width) ||
-                    (calloutPosition.right < left)) {
+                    (calloutPosition.right < left))) {
                         return true;
                     }
                 }
