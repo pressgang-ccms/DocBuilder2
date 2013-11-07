@@ -71,8 +71,7 @@ pressgang_website_lastSelectedElement = null;
  */
 var pressgang_website_initialHelp = null;
 
-var pressgang_website_local_dimmer_zindex_offset = 1;
-var pressgang_website_local_zindex_offset = 2;
+var pressgang_website_local_zindex_offset = 1;
 
 
 /**
@@ -904,18 +903,6 @@ pressgang_website_callback = function(data) {
                             }
 
                             topMostParent.style.zIndex += zIndexDiff;
-
-                            var localDimmer = document.createElement("div");
-                            localDimmer.style.position = "absolute";
-                            localDimmer.style.top = 0;
-                            localDimmer.style.bottom = 0;
-                            localDimmer.style.left = 0;
-                            localDimmer.style.right = 0;
-                            localDimmer.style.backgroundColor = "black";
-                            localDimmer.style.opacity = 0.9;
-                            localDimmer.style.zIndex = pressgang_website_local_dimmer_zindex_offset;
-                            localDimmer.setAttribute("data-pressganglocaldimmer", "true");
-                            topMostParent.appendChild(localDimmer);
                         }
 
                         element.style.zIndex += pressgang_website_local_zindex_offset;
@@ -1061,13 +1048,6 @@ pressgang_website_callback = function(data) {
                     }
                 }
             }
-
-            var localDimmerElements = document.querySelectorAll('[data-pressganglocaldimmer="true"]');
-            for (var j = 0, elementsLength = localDimmerElements.length; j < elementsLength; ++j) {
-                var localDimmer = localDimmerElements[j];
-                localDimmer.parentNode.removeChild(localDimmer);
-            }
-
 
             for (var i = 0, count = changedPositionFromStatic.length; i < count; ++i) {
                 changedPositionFromStatic[i].style.position = "static";
