@@ -957,6 +957,8 @@ pressgang_website_callback = function(data) {
                             e.clientY >= calloutPosition.top &&
                             e.clientY <= calloutPosition.bottom;
                     }
+
+                    return false;
                 }
 
                 if (checkOverPopover(e)) {
@@ -1041,8 +1043,8 @@ pressgang_website_callback = function(data) {
                                     pressgang_website_open_initial_callout();
                                 }
                                 pressgang_website_popover_close_timeout = null;
-                        }
-                    }(e), pressgang_website_popover_close_deplay);
+                            }
+                        }(e), pressgang_website_popover_close_deplay);
                 }
             }
 
