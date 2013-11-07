@@ -803,6 +803,8 @@ pressgang_website_callback = function(data) {
 
             displaying = true;
 
+            pressgang_website_disable_scroll();
+
             document.addEventListener("keydown", pressgang_website_key_handler, false);
             window.addEventListener("hashchange", pressgang_website_url_change_handler, false);
 
@@ -1025,6 +1027,7 @@ pressgang_website_callback = function(data) {
 
             pressgang_website_close_initial_callout();
             pressgang_website_close_callout();
+            pressgang_website_enable_scroll();
 
             var processedParents = [];
             for (var i = 0, dataLength = data.length; i < dataLength; ++i) {
@@ -1110,5 +1113,46 @@ pressgang_website_callback = function(data) {
         }
     }
 
+    /*
+        The following functions are used to prevent page scrolling while the overlay is active.
+     */
 
+    // left: 37, up: 38, right: 39, down: 40,
+    // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
+    var pressgang_website_scrolling_keys = [37, 38, 39, 40, 32, 33, 34, 35, 36];
+
+    function pressgang_website_preventDefault(e) {
+        e = e || window.event;
+        if (e.preventDefault)
+            e.preventDefault();
+        e.returnValue = false;
+    }
+
+    function pressgang_website_keydown(e) {
+        for (var i = keys.length; i--;) {
+            if (e.keyCode === keys[i]) {
+                preventDefault(e);
+                return;
+            }
+        }
+    }
+
+    function pressgang_website_wheel(e) {
+        preventDefault(e);
+    }
+
+    function pressgang_website_disable_scroll() {
+        if (window.addEventListener) {
+            window.addEventListener('DOMMouseScroll', pressgang_website_wheel, false);
+        }
+        window.onmousewheel = document.onmousewheel = pressgang_website_wheel;
+        document.onkeydown = pressgang_website_keydown;
+    }
+
+    function pressgang_website_enable_scroll() {
+        if (window.removeEventListener) {
+            window.removeEventListener('DOMMouseScroll', pressgang_website_wheel, false);
+        }
+        window.onmousewheel = document.onmousewheel = document.onkeydown = null;
+    }
 }
