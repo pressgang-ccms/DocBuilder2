@@ -854,10 +854,11 @@ pressgang_website_callback = function(data) {
             /*
              * Promote the elements listed in the data
              */
+            var processedParents = [];
             for (var i = 0, dataLength = data.length; i < dataLength; ++i) {
                 var dataItem = data[i];
                 var elements = document.querySelectorAll('[data-pressgangtopic="' + dataItem.topicId + '"]');
-                var processedParents = [];
+
                 for (var j = 0, elementsLength = elements.length; j < elementsLength; ++j) {
                     var element = elements[j];
 
