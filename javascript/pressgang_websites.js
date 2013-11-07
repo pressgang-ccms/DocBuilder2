@@ -43,11 +43,6 @@ pressgang_website_popover_close_deplay = 3000;
  * Any pending timeouts to open a new popover are assigned to this.
  */
 pressgang_website_popover_switch_timeout = null;
-
-/**
- * Any pending timeouts to close the popovers and display the initial help popover
- */
-pressgang_website_popover_close_timeout = null;
 /**
  * The id assigned to the div that dims elements that have no help topic.
  */
@@ -970,10 +965,6 @@ pressgang_website_callback = function(data) {
                         pressgang_website_popover_switch_timeout = null;
                     }
 
-                    if (pressgang_website_popover_close_timeout) {
-                        clearTimeout(pressgang_website_popover_close_timeout);
-                        pressgang_website_popover_close_timeout = null;
-                    }
 
                     return;
                 }
@@ -995,11 +986,6 @@ pressgang_website_callback = function(data) {
                             e.clientX <= elementPosition.right &&
                             e.clientY >= elementPosition.top &&
                             e.clientY <= elementPosition.bottom) {
-
-                            if (pressgang_website_popover_close_timeout) {
-                                clearTimeout(pressgang_website_popover_close_timeout);
-                                pressgang_website_popover_close_timeout = null;
-                            }
 
                             /*
                              We have found an element with a help topic associated with it under the mouse cursor.
@@ -1049,12 +1035,6 @@ pressgang_website_callback = function(data) {
                 clearTimeout(pressgang_website_popover_switch_timeout);
                 pressgang_website_popover_switch_timeout = null;
             }
-
-            if (pressgang_website_popover_close_timeout) {
-                clearTimeout(pressgang_website_popover_close_timeout);
-                pressgang_website_popover_close_timeout = null;
-            }
-
 
             document.removeEventListener("keydown", pressgang_website_key_handler);
             document.removeEventListener("mousemove", pressgang_website_mouse_move);
@@ -1156,11 +1136,10 @@ pressgang_website_callback = function(data) {
                 var callout = document.getElementById(pressgang_website_calloutID);
                 if (callout != null) {
                     var calloutPosition = callout.getBoundingClientRect();
-                    ;
 
-                    if(abs(calloutPosition.left - left) < calloutPosition.width + width)
+                    if(Math.abs(calloutPosition.left - left) < calloutPosition.width + width)
                     {
-                        if(abs(calloutPosition.top - top) < calloutPosition.height + height)
+                        if(Math.abs(calloutPosition.top - top) < calloutPosition.height + height)
                         {
                             return true;
                         }
@@ -1172,7 +1151,7 @@ pressgang_website_callback = function(data) {
                 return false;
             }
 
-            var initialHelpPosition = pressgang_website_initialHelp.getBoundingClientRect()
+            var initialHelpPosition = pressgang_website_initialHelp.getBoundingClientRect();
 
             // we collide in our current location
             if ((e && mouseCollides(e.clientX, e.clientY, initialHelpPosition.left, initialHelpPosition.width, initialHelpPosition.top, initialHelpPosition.height)) ||
