@@ -544,8 +544,9 @@ pressgang_website_build_callout = function (element, elementTopicData, calloutZI
                 contentDiv.className = "pressgang_websites_divContainerRight";
                 outerArrowDiv.className = "pressgang_websites_calloutRight";
                 innerArrowDiv.className = "pressgang_websites_calloutRight2";
-                calloutDiv.appendChild(contentDiv);
                 calloutDiv.appendChild(outerArrowDiv);
+                calloutDiv.appendChild(contentDiv);
+
                 //calloutDiv.style.top = elementPosition.top + "px";
                 //calloutDiv.style.left = (elementPosition.right - pressgang_website_callout_offset_size) + "px";
 
