@@ -71,8 +71,8 @@ pressgang_website_lastSelectedElement = null;
  */
 var pressgang_website_initialHelp = null;
 
-var pressgang_website_local_dimmer_zindex_offset = 1000;
-var pressgang_website_local_zindex_offset = 1001;
+var pressgang_website_local_dimmer_zindex_offset = 1;
+var pressgang_website_local_zindex_offset = 2;
 
 
 /**
