@@ -31,6 +31,12 @@ pressgang_website_images_dir = "/images/overlay/";
 /* THESE VARIABLES ARE USED BY THE OVERLAY, AND DON'T NEED TO BE CHANGED */
 
 /**
+ * The maximum width of what the help overlay considers the side borders in a page. This
+ * is used when determining what kind of callout to display.
+ */
+pressgang_website_column_width = 300;
+
+/**
  * Time, in milliseconds, to delay the opening of a new popover.
  */
 pressgang_website_popover_switch_deplay = 100;
@@ -75,8 +81,13 @@ pressgang_website_lastSelectedElement = null;
  * The help popover to be displayed when no other popover is displayed
  */
 var pressgang_website_initialHelp = null;
-
+/**
+ * The zIndex of any dimmer placed over a individual element
+ */
 var pressgang_website_local_dimmer_zindex_offset = 1;
+/**
+ * The zIndex of any individual element promoted above a local dimmer
+ */
 var pressgang_website_local_zindex_offset = 2;
 
 
@@ -291,6 +302,16 @@ pressgang_website_build_callout = function (element, elementTopicData, calloutZI
         hx = x/2,
         ty = y/3,
         tx = x/3;
+
+    /*
+        We use 1 third of the screen as a rough guide as to where any menus will sit
+        in relation to the main content. But if they are larger than pressgang_website_column_width
+        we use that value instead.
+    */
+
+    if (tx > pressgang_website_column_width) {
+        tx = pressgang_website_column_width;
+    }
 
     /*
      * Get the elements position
