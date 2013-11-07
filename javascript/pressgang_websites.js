@@ -35,6 +35,11 @@ pressgang_website_images_dir = "/images/overlay/";
  */
 pressgang_website_popover_switch_deplay = 100;
 /**
+ * Time, in milliseconds, to wait before closing any displays popovers if the
+ * mouse has been moved off all popovers and highlighted elements.
+ */
+pressgang_website_popover_close_deplay = 3000;
+/**
  * Any pending timeouts to open a new popover are assigned to this.
  */
 pressgang_website_popover_switch_timeout = null;
@@ -961,6 +966,8 @@ pressgang_website_callback = function(data) {
                  Loop over each element identified by a topic in the documentation, and see if the mouse is over
                  it.
                  */
+                var mouseOverElement = false;
+                outerloop:
                 for (var i = 0, dataLength = data.length; i < dataLength; ++i) {
                     var dataItem = data[i];
                     var elements = document.querySelectorAll('[data-pressgangtopic="' + dataItem.topicId + '"]');
@@ -994,9 +1001,23 @@ pressgang_website_callback = function(data) {
                                     }(element, dataItem), pressgang_website_popover_switch_deplay
                                 );
                             }
-                            break;
+                            mouseOverElement = true;
+                            break outerloop;
                         }
                     }
+                }
+
+                /*
+                    If the mouse has moved off a popover or highlighted element for a period of time,
+                    display the initial help popover.
+                 */
+                if (!mouseOverElement) {
+                    pressgang_website_popover_switch_timeout = setTimeout(
+                        function() {
+                            pressgang_website_close_callout();
+                            pressgang_website_open_initial_callout();
+                        }, pressgang_website_popover_close_deplay
+                    );
                 }
             }
 
