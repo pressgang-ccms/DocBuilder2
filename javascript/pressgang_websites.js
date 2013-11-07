@@ -1137,7 +1137,7 @@ pressgang_website_callback = function(data) {
                 if (callout != null) {
                     var calloutPosition = callout.getBoundingClientRect();
 
-                    if (!(callout.bottom < top) ||
+                    if ((callout.bottom < top) ||
                     (callout.top > top + height) ||
                     (callout.left > left + width) ||
                     (callout.right < left)) {
