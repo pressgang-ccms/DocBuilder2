@@ -312,7 +312,7 @@ function addOverlayIcons(topicId, RoleCreatePara) {
 }
 
 function createWebDAVPopover(topicId, parent) {
-    var linkDiv = createIcon("webdav", topicId);
+    var linkDiv = createIcon("webdav", topicId, 24804);
     parent.appendChild(linkDiv);
 
     var popover = createPopover("WebDAV", topicId);
@@ -340,7 +340,7 @@ function createWebDAVPopover(topicId, parent) {
 }
 
 function createSolutionsPopover(topicId, parent) {
-    var linkDiv = createIcon("lightbulb", topicId);
+    var linkDiv = createIcon("lightbulb", topicId, 24799);
     parent.appendChild(linkDiv);
 
     var popover = createPopover("KCS Solutions", topicId);
@@ -378,7 +378,7 @@ function createSolutionsPopover(topicId, parent) {
 
 
 function createPnTPopover(topicId, parent) {
-    var linkDiv = createIcon("money", topicId);
+    var linkDiv = createIcon("money", topicId, 24798);
     parent.appendChild(linkDiv);
 
     var popover = createPopover("PnT Content", topicId);
@@ -407,7 +407,7 @@ function createPnTPopover(topicId, parent) {
 }
 
 function createMojoPopover(topicId, parent) {
-    var linkDiv = createIcon("jive", topicId);
+    var linkDiv = createIcon("jive", topicId, 24801);
     parent.appendChild(linkDiv);
 
     var popover = createPopover("Mojo Documents", topicId);
@@ -436,7 +436,7 @@ function createMojoPopover(topicId, parent) {
 }
 
 function createBugzillaPopover(topicId, parent) {
-    var linkDiv = createIcon("bug", topicId);
+    var linkDiv = createIcon("bug", topicId, 24803);
     parent.appendChild(linkDiv);
 
     var popover = createPopover("Bugzilla Bugs", topicId);
@@ -465,7 +465,7 @@ function createBugzillaPopover(topicId, parent) {
 }
 
 function createJBossPopover(topicId, parent) {
-    var linkDiv = createIcon("jboss", topicId);
+    var linkDiv = createIcon("jboss", topicId, 24791);
     parent.appendChild(linkDiv);
 
     var popover = createPopover("JBoss.org Content", topicId);
@@ -578,7 +578,7 @@ function renderSpecs(topicId) {
  * @param parent The element that should hold the icon
  */
 function createTagsPopover(topicId, parent) {
-    var linkDiv = createIcon("tags", topicId);
+    var linkDiv = createIcon("tags", topicId, 24796);
     parent.appendChild(linkDiv);
 
     var popover = createPopover("Tags", topicId);
@@ -640,7 +640,7 @@ function renderTags(topicId) {
  * @param parent The element that should hold the icon
  */
 function createUrlsPopover(topicId, parent) {
-    var linkDiv = createIcon("urls", topicId);
+    var linkDiv = createIcon("urls", topicId, 24797);
     parent.appendChild(linkDiv);
 
     var popover = createPopover("URLs", topicId);
@@ -721,7 +721,7 @@ function renderUrls(topicId) {
  * @param parent The element that should hold the icon
  */
 function createHistoryPopover(topicId, parent) {
-    var linkDiv = createIcon("history", topicId);
+    var linkDiv = createIcon("history", topicId, 24802);
     parent.appendChild(linkDiv);
 
     var popover = createPopover("History", topicId);
@@ -849,7 +849,7 @@ function updateHistoryIcon(topicId, title) {
  * @param parent The icon
  */
 function createDescriptionPopover(topicId, parent) {
-    var linkDiv = createIcon("info", topicId);
+    var linkDiv = createIcon("info", topicId, 24795);
     parent.appendChild(linkDiv);
 
     var popover = createPopover("Description", topicId);
@@ -1908,13 +1908,13 @@ function buildMenu() {
 				<div class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); hideMenu(); menuIcon.show(); localStorage.setItem(\'lastMenu\', \'menuIcon\');">Hide Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsByLastEdit.show(); localStorage.setItem(\'lastMenu\', \'topicsByLastEdit\');">Topics By Last Edit</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince\');">Topics Added In</a></li>\
-						<li><a href="javascript:hideAllMenus(); topicsRemovedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">Topics Removed In</a></li>\
-						<li><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">Licenses</a></li>\
-						<li data-pressgangtopic="24787" style="background-color: white"><a id="bugzillaBugs" href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">Bugzilla Bugs</a></li>\
-						<li><a id="topicsUpdatedInOtherSpecs" href="javascript:hideAllMenus(); topicsUpdatedInOtherSpecs.show(); localStorage.setItem(\'lastMenu\', \'topicsUpdatedInOtherSpecs\');">Updated Topics</a></li>\
-						<li><a href="' + BUG_LINK + '&cf_build_id=Content%20Spec%20ID:%20' + SPEC_ID + '">Report a bug</a></li>\
+						<li data-pressgangtopic="24793" style="background-color: white"><a href="javascript:hideAllMenus(); topicsByLastEdit.show(); localStorage.setItem(\'lastMenu\', \'topicsByLastEdit\');">Topics By Last Edit</a></li>\
+						<li data-pressgangtopic="24794" style="background-color: white"><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince\');">Topics Added In</a></li>\
+						<li data-pressgangtopic="24792" style="background-color: white"><a href="javascript:hideAllMenus(); topicsRemovedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">Topics Removed In</a></li>\
+						<li data-pressgangtopic="24792"><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">Licenses</a></li>\
+						<li data-pressgangtopic="24800" style="background-color: white"><a id="bugzillaBugs" href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">Bugzilla Bugs</a></li>\
+						<li data-pressgangtopic="24789"><a id="topicsUpdatedInOtherSpecs" href="javascript:hideAllMenus(); topicsUpdatedInOtherSpecs.show(); localStorage.setItem(\'lastMenu\', \'topicsUpdatedInOtherSpecs\');">Updated Topics</a></li>\
+						<li data-pressgangtopic="24805"><a href="' + BUG_LINK + '&cf_build_id=Content%20Spec%20ID:%20' + SPEC_ID + '">Report a bug</a></li>\
 					</ul>\
 				</div>\
 			</div>\
