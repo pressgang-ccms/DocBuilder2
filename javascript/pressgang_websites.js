@@ -1026,6 +1026,7 @@ pressgang_website_callback = function(data) {
             pressgang_website_close_initial_callout();
             pressgang_website_close_callout();
 
+            var processedParents = [];
             for (var i = 0, dataLength = data.length; i < dataLength; ++i) {
                 var dataItem = data[i];
                 var elements = document.querySelectorAll('[data-pressgangtopic="' + dataItem.topicId + '"]');
@@ -1042,7 +1043,18 @@ pressgang_website_callback = function(data) {
                             topMostParent = topMostParent.parentNode;
                         }
 
-                        topMostParent.style.zIndex -= zIndexDiff;
+                        var found = false;
+                        for (var parentIndex = 0, parentCount = processedParents.length; parentIndex < parentCount; ++parentIndex) {
+                            if (processedParents[parentIndex] == topMostParent)  {
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        if (!found) {
+                            processedParents.push(topMostParent);
+                            topMostParent.style.zIndex -= zIndexDiff;
+                        }
                     }
                 }
             }
