@@ -506,7 +506,7 @@ pressgang_website_build_callout = function (element, elementTopicData, calloutZI
                     }
                 }, 0);
             }
-        } else if (elementPosition.left > tx * 2) {
+        } else if (elementPosition.left > y - tx) {
             /*
              * The element is on the right hand side of the screen
              */
