@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.4.3.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.4.2.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZilla.user.js" afterPath="$PROJECT_DIR$/PressZilla.user.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript/pressgang_websites.js" afterPath="$PROJECT_DIR$/javascript/pressgang_websites.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383788497596" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383788643131" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383771225312" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -161,7 +159,7 @@
     <file path="/PressZillaProductPagesIntegration_v2.9.8.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383544343291" ignored="false" />
     <file path="/PressZillaProductPagesIntegration_v2.9.9.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383544636542" ignored="false" />
     <file path="/PressZillaBugzillaSearchIntegration_v2.6.6.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383768947256" ignored="false" />
-    <file path="/pressgang_websites.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383788491291" ignored="false" />
+    <file path="/pressgang_websites.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383788831146" ignored="false" />
     <file path="/style.css" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383781830801" ignored="false" />
     <file path="/PressZillaBugzillaSearchIntegration_v3.4.2.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383788592340" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -227,7 +225,7 @@
       <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="379" column="87" selection-start="15638" selection-end="15638" vertical-scroll-proportion="-11.36">
+            <state line="379" column="87" selection-start="15638" selection-end="15638" vertical-scroll-proportion="159.04">
               <folding>
                 <marker date="1383771277967" expanded="true" signature="3699:4670" placeholder="..." />
                 <marker date="1383771277967" expanded="true" signature="3711:4024" placeholder="..." />
@@ -284,7 +282,7 @@
       <file leaf-file-name="overlay.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1001" column="35" selection-start="37287" selection-end="37287" vertical-scroll-proportion="-13.16">
+            <state line="1001" column="4" selection-start="37256" selection-end="37296" vertical-scroll-proportion="-330.6">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <marker date="1383781538496" expanded="true" signature="11393:11491" placeholder="..." />
@@ -466,10 +464,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pressgang_websites.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="pressgang_websites.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/javascript/pressgang_websites.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="917" column="59" selection-start="40228" selection-end="40228" vertical-scroll-proportion="-25.8">
+            <state line="907" column="45" selection-start="39592" selection-end="39592" vertical-scroll-proportion="0.5809859">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -551,10 +549,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZilla.user.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PressZilla.user.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="110" selection-start="1252" selection-end="1252" vertical-scroll-proportion="0.28651685">
+            <state line="17" column="110" selection-start="1252" selection-end="1252" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -596,9 +594,9 @@
         <option value="$PROJECT_DIR$/copy_js_files.sh" />
         <option value="$PROJECT_DIR$/javascript/overlay.js" />
         <option value="$PROJECT_DIR$/css/style.css" />
-        <option value="$PROJECT_DIR$/javascript/pressgang_websites.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.4.2.js" />
         <option value="$PROJECT_DIR$/PressZilla.user.js" />
+        <option value="$PROJECT_DIR$/javascript/pressgang_websites.js" />
       </list>
     </option>
   </component>
@@ -2365,7 +2363,11 @@
       <created>1383788498947</created>
       <updated>1383788498947</updated>
     </task>
-    <option name="localTasksCounter" value="370" />
+    <task id="LOCAL-00370" summary="Added help overlay">
+      <created>1383788644035</created>
+      <updated>1383788644035</updated>
+    </task>
+    <option name="localTasksCounter" value="371" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2801,9 +2803,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="21" selection-start="21" selection-end="21" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/bootstrap.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2386" column="25" selection-start="40363" selection-end="40372" vertical-scroll-proportion="-1.3039906">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="110" column="19" selection-start="2228" selection-end="2228" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.4.3.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="3" selection-start="252" selection-end="20094" vertical-scroll-proportion="-9.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="110" selection-start="1252" selection-end="1252" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="379" column="87" selection-start="15638" selection-end="15638" vertical-scroll-proportion="-11.36">
+        <state line="379" column="87" selection-start="15638" selection-end="15638" vertical-scroll-proportion="159.04">
           <folding>
             <marker date="1383771277967" expanded="true" signature="3699:4670" placeholder="..." />
             <marker date="1383771277967" expanded="true" signature="3711:4024" placeholder="..." />
@@ -2847,23 +2886,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="21" selection-start="21" selection-end="21" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/bootstrap.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2386" column="25" selection-start="40363" selection-end="40372" vertical-scroll-proportion="-1.3039906">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1001" column="35" selection-start="37287" selection-end="37287" vertical-scroll-proportion="-13.16">
+        <state line="1001" column="4" selection-start="37256" selection-end="37296" vertical-scroll-proportion="-330.6">
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <marker date="1383781538496" expanded="true" signature="11393:11491" placeholder="..." />
@@ -3035,35 +3060,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="19" selection-start="2228" selection-end="2228" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/javascript/pressgang_websites.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="917" column="59" selection-start="40228" selection-end="40228" vertical-scroll-proportion="-25.8">
+        <state line="907" column="45" selection-start="39592" selection-end="39592" vertical-scroll-proportion="0.5809859">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.4.3.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="3" selection-start="252" selection-end="20094" vertical-scroll-proportion="-9.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="110" selection-start="1252" selection-end="1252" vertical-scroll-proportion="0.28651685">
-          <folding />
         </state>
       </provider>
     </entry>

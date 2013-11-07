@@ -904,6 +904,9 @@ pressgang_website_callback = function(data) {
                             }
 
                             topMostParent.style.zIndex += zIndexDiff;
+                            if (topMostParent.style.backgroundColor == "") {
+                                topMostParent.style.backgroundColor = "white";
+                            }
 
                             var localDimmer = document.createElement("div");
                             localDimmer.style.position = "absolute";
