@@ -944,32 +944,35 @@ pressgang_website_callback = function(data) {
              */
             pressgang_website_mouse_move = function(e) {
 
-                /*
-                 * Don't display a new callout if the mouse is over the
-                 * existing one.
-                 */
-                var callout = document.getElementById(pressgang_website_calloutID);
-                if (callout != null) {
-                    var calloutPosition = callout.getBoundingClientRect();
-                    if (e.clientX >= calloutPosition.left &&
-                        e.clientX <= calloutPosition.right &&
-                        e.clientY >= calloutPosition.top &&
-                        e.clientY <= calloutPosition.bottom) {
-
-                        // If we have moved the mouse back over the existing popover, cancel any
-                        // pending request to change the popover
-                        if (pressgang_website_popover_switch_timeout) {
-                            clearTimeout(pressgang_website_popover_switch_timeout);
-                            pressgang_website_popover_switch_timeout = null;
-                        }
-
-                        if (pressgang_website_popover_close_timeout) {
-                            clearTimeout(pressgang_website_popover_close_timeout);
-                            pressgang_website_popover_close_timeout = null;
-                        }
-
-                        return;
+                function checkOverPopover(e) {
+                    /*
+                     * Don't display a new callout if the mouse is over the
+                     * existing one.
+                     */
+                    var callout = document.getElementById(pressgang_website_calloutID);
+                    if (callout != null) {
+                        var calloutPosition = callout.getBoundingClientRect();
+                        return e.clientX >= calloutPosition.left &&
+                            e.clientX <= calloutPosition.right &&
+                            e.clientY >= calloutPosition.top &&
+                            e.clientY <= calloutPosition.bottom;
                     }
+                }
+
+                if (checkOverPopover(e)) {
+                    // If we have moved the mouse back over the existing popover, cancel any
+                    // pending request to change the popover
+                    if (pressgang_website_popover_switch_timeout) {
+                        clearTimeout(pressgang_website_popover_switch_timeout);
+                        pressgang_website_popover_switch_timeout = null;
+                    }
+
+                    if (pressgang_website_popover_close_timeout) {
+                        clearTimeout(pressgang_website_popover_close_timeout);
+                        pressgang_website_popover_close_timeout = null;
+                    }
+
+                    return;
                 }
 
                 /*
@@ -1029,12 +1032,17 @@ pressgang_website_callback = function(data) {
                  */
                 if (!mouseOverElement && !pressgang_website_initial_callout_displayed() && pressgang_website_popover_close_timeout == null) {
                     pressgang_website_popover_close_timeout = setTimeout(
-                        function() {
-                            pressgang_website_close_callout();
-                            pressgang_website_open_initial_callout();
-                            pressgang_website_popover_close_timeout = null;
-                        }, pressgang_website_popover_close_deplay
-                    );
+                        function(e) {
+                            return function() {
+                                // check to make sure a popover hasn't appeared under the mouse without the
+                                // mouse moving
+                                if (!checkOverPopover(e)) {
+                                    pressgang_website_close_callout();
+                                    pressgang_website_open_initial_callout();
+                                }
+                                pressgang_website_popover_close_timeout = null;
+                        }
+                    }(e), pressgang_website_popover_close_deplay);
                 }
             }
 
