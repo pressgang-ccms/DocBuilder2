@@ -1011,7 +1011,7 @@ pressgang_website_callback = function(data) {
                     If the mouse has moved off a popover or highlighted element for a period of time,
                     display the initial help popover.
                  */
-                if (!mouseOverElement) {
+                if (!mouseOverElement && !pressgang_website_initial_callout_displayed()) {
                     pressgang_website_popover_switch_timeout = setTimeout(
                         function() {
                             pressgang_website_close_callout();
@@ -1136,6 +1136,13 @@ pressgang_website_callback = function(data) {
         if (pressgang_website_initialHelp.parentNode != document.body) {
             document.body.appendChild(pressgang_website_initialHelp);
         }
+    }
+
+    /**
+     * @return true if the initial callout is displayed, false otherwise
+     */
+    pressgang_website_initial_callout_displayed = function () {
+        return pressgang_website_initialHelp.parentNode == document.body;
     }
 
     /*
