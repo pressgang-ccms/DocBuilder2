@@ -1923,7 +1923,7 @@ function buildMenu() {
     sideMenus.push(mainMenu);
 
     topicsUpdatedInOtherSpecs = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24789" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Updated Topics</div>\
 				<div id="topicsRemovedSincePanel" class="panel-body ">\
 		            <ul id="topicsUpdatedInOtherSpecsItems" class="nav nav-pills nav-stacked">\
@@ -1936,7 +1936,7 @@ function buildMenu() {
     sideMenus.push(topicsUpdatedInOtherSpecs);
 
 	topicsAddedSince = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24794" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics Added In</div>\
 				<div id="topicsAddedSincePanel" class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
@@ -1953,7 +1953,7 @@ function buildMenu() {
     sideMenus.push(topicsAddedSince);
 
 	topicsAddedSince1Day = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24794" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics Added In 1 Day</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsAddedSince1DayItems" class="nav nav-pills nav-stacked">\
@@ -1967,7 +1967,7 @@ function buildMenu() {
     sideMenus.push(topicsAddedSince1Day);
 
 	topicsAddedSince1Week = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24794" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics Added In 1 Week</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsAddedSince1WeekItems" class="nav nav-pills nav-stacked">\
@@ -1981,7 +1981,7 @@ function buildMenu() {
     sideMenus.push(topicsAddedSince1Week);
 
 	topicsAddedSince1Month = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24794" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics Added In 1 Month</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsAddedSince1MonthItems" class="nav nav-pills nav-stacked">\
@@ -1995,7 +1995,7 @@ function buildMenu() {
     sideMenus.push(topicsAddedSince1Month);
 
 	topicsAddedSince1Year = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24794" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics Added In 1 Year</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsAddedSince1YearItems" class="nav nav-pills nav-stacked">\
@@ -2009,7 +2009,7 @@ function buildMenu() {
     sideMenus.push(topicsAddedSince1Year);
 
 	topicsRemovedSince = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24792" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics Removed Since</div>\
 				<div id="topicsRemovedSincePanel" class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
@@ -2026,7 +2026,7 @@ function buildMenu() {
     sideMenus.push(topicsRemovedSince);
 
 	topicsRemovedSince1Day = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24792" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics Removed In 1 Day</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsRemovedSince1DayItems" class="nav nav-pills nav-stacked">\
@@ -2040,7 +2040,7 @@ function buildMenu() {
     sideMenus.push(topicsRemovedSince1Day);
 
 	topicsRemovedSince1Week = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24792" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics Removed In 1 Week</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsRemovedSince1WeekItems" class="nav nav-pills nav-stacked">\
@@ -2054,7 +2054,7 @@ function buildMenu() {
     sideMenus.push(topicsRemovedSince1Week);
 
 	topicsRemovedSince1Month = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24792" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics Removed In 1 Month</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsRemovedSince1MonthItems" class="nav nav-pills nav-stacked">\
@@ -2068,7 +2068,7 @@ function buildMenu() {
     sideMenus.push(topicsRemovedSince1Month);
 
 	topicsRemovedSince1Year = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24792" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics Removed In 1 Year</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsRemovedSince1YearItems" class="nav nav-pills nav-stacked">\
@@ -2082,7 +2082,7 @@ function buildMenu() {
     sideMenus.push(topicsRemovedSince1Year);
 
 	topicsByLastEdit = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24793" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics By Last Edit</div>\
 				<div id="topicsEditedInPanel" class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
@@ -2100,7 +2100,7 @@ function buildMenu() {
     sideMenus.push(topicsByLastEdit);
 
 	topicsEditedIn1Day = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24793" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics Edited In 1 Day</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedIn1DayItems" class="nav nav-pills nav-stacked">\
@@ -2114,7 +2114,7 @@ function buildMenu() {
     sideMenus.push(topicsEditedIn1Day);
 
 	topicsEditedIn1Week = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24793" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics Edited In 1 Week</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedIn1WeekItems" class="nav nav-pills nav-stacked">\
@@ -2128,7 +2128,7 @@ function buildMenu() {
     sideMenus.push(topicsEditedIn1Week);
 
 	topicsEditedIn1Month = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24793" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics Edited In 1 Month</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedIn1MonthItems" class="nav nav-pills nav-stacked">\
@@ -2142,7 +2142,7 @@ function buildMenu() {
     sideMenus.push(topicsEditedIn1Month);
 
 	topicsEditedIn1Year = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24793" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics Edited In 1 Year</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedIn1YearItems" class="nav nav-pills nav-stacked">\
@@ -2157,7 +2157,7 @@ function buildMenu() {
 
 
 	topicsEditedInOlderThanYear = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24793" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics Edited Prior To 1 Year</div>\
 				<div class="panel-body ">\
 		            <ul id="topicsEditedInOlderThanYearItems" class="nav nav-pills nav-stacked">\
@@ -2171,7 +2171,7 @@ function buildMenu() {
     sideMenus.push(topicsEditedInOlderThanYear);
 
     licenses = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24800" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Licenses</div>\
 				<div class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
@@ -2186,7 +2186,7 @@ function buildMenu() {
     sideMenus.push(licenses);
 
     licensesPresent = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24800" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Licenses Present</div>\
 				<div class="panel-body ">\
 		            <ul id="licensesPresentItems" class="nav nav-pills nav-stacked">\
@@ -2200,7 +2200,7 @@ function buildMenu() {
     sideMenus.push(licensesPresent);
 
     licenseConflicts = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24800" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Licenses Conflicts</div>\
 				<div class="panel-body ">\
 		            <ul id="licenseConflictsItems" class="nav nav-pills nav-stacked">\
@@ -2235,7 +2235,7 @@ function buildMenu() {
     sideMenus.push(bugzillaBugs);
 
     newBugzillaBugs = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24787" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'New Bugzilla Bugs</div>\
 				<div class="panel-body ">\
 		            <ul id="newBugzillaBugsItems" class="nav nav-pills nav-stacked">\
@@ -2250,7 +2250,7 @@ function buildMenu() {
     sideMenus.push(newBugzillaBugs);
 
     assignedBugzillaBugs = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24787" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Assigned Bugzilla Bugs</div>\
 				<div class="panel-body ">\
 		            <ul id="assignedBugzillaBugsItems" class="nav nav-pills nav-stacked">\
@@ -2265,7 +2265,7 @@ function buildMenu() {
     sideMenus.push(assignedBugzillaBugs);
 
     postBugzillaBugs = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24787" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Post Bugzilla Bugs</div>\
 				<div class="panel-body ">\
 		            <ul id="postBugzillaBugsItems" class="nav nav-pills nav-stacked">\
@@ -2280,7 +2280,7 @@ function buildMenu() {
     sideMenus.push(postBugzillaBugs);
 
     modifiedBugzillaBugs = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24787" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Modified Bugzilla Bugs</div>\
 				<div class="panel-body ">\
 		            <ul id="modifiedBugzillaBugsItems" class="nav nav-pills nav-stacked">\
@@ -2295,7 +2295,7 @@ function buildMenu() {
     sideMenus.push(modifiedBugzillaBugs);
 
     onqaBugzillaBugs = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24787" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'On QA Bugzilla Bugs</div>\
 				<div class="panel-body ">\
 		            <ul id="onqaBugzillaBugsItems" class="nav nav-pills nav-stacked">\
@@ -2325,7 +2325,7 @@ function buildMenu() {
     sideMenus.push(verifiedBugzillaBugs);
 
     closedBugzillaBugs = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24787" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Closed Bugzilla Bugs</div>\
 				<div class="panel-body ">\
 		            <ul id="closedBugzillaBugsItems" class="nav nav-pills nav-stacked">\
@@ -2340,7 +2340,7 @@ function buildMenu() {
     sideMenus.push(closedBugzillaBugs);
 
     releasePendingBugzillaBugs = $('\
-		<div class="panel panel-default pressgangMenu">\
+		<div data-pressgangtopic="24787" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Release Pending Bugzilla Bugs</div>\
 				<div class="panel-body ">\
 		            <ul id="releasePendingBugzillaBugsItems" class="nav nav-pills nav-stacked">\
