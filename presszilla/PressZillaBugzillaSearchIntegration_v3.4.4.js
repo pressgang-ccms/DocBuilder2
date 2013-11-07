@@ -11,7 +11,7 @@
 
     }
 
-    if (unsafeWindow.getSpecIdFromUR) {
+    if (unsafeWindow.getSpecIdFromURL) {
 
         var specId = unsafeWindow.getSpecIdFromURL();
         var specProductUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/contentspecnodes/get/json/query;csNodeType=7;contentSpecIds=" + specId + "?expand=" + encodeURIComponent("{\"branches\":[{\"trunk\":{\"name\": \"nodes\"}}]}");
