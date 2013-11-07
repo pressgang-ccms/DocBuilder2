@@ -1016,7 +1016,6 @@ pressgang_website_callback = function(data) {
                                     function(element, dataItem) {
                                         return function() {
                                             pressgang_website_build_callout(element, dataItem, calloutZIndex);
-                                            pressgang_website_close_initial_callout();
                                             pressgang_website_lastSelectedElement = element;
                                             pressgang_website_popover_switch_timeout = null;
                                         }
