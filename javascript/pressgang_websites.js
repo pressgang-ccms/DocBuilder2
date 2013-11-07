@@ -1160,25 +1160,27 @@ pressgang_website_callback = function(data) {
                 var w = window.innerWidth;
                 var h = window.innerHeight;
 
+                var offset = 16;
+
                 // try all the corners
-                if (!((e && mouseCollides(e.clientX, e.clientY, 8, initialHelpPosition.width, 8, initialHelpPosition.height)) ||
-                    calloutCollides(8, initialHelpPosition.width, 8, initialHelpPosition.height))) {
-                    pressgang_website_initialHelp.style.left = "8px";
-                    pressgang_website_initialHelp.style.top = "8px";
+                if (!((e && mouseCollides(e.clientX, e.clientY, offset, initialHelpPosition.width, offset, initialHelpPosition.height)) ||
+                    calloutCollides(offset, initialHelpPosition.width, offset, initialHelpPosition.height))) {
+                    pressgang_website_initialHelp.style.left = offset + "px";
+                    pressgang_website_initialHelp.style.top = offset + "px";
                     pressgang_website_initialHelp.style.marginLeft = "0";
-                } else if (!((e && mouseCollides(e.clientX, e.clientY, w - 8 - initialHelpPosition.width, initialHelpPosition.width, 8, initialHelpPosition.height)) ||
-                    calloutCollides(w - 8 - initialHelpPosition.width, initialHelpPosition.width, 8, initialHelpPosition.height))) {
-                    pressgang_website_initialHelp.style.left = w - 8 - initialHelpPosition.width + "px";
-                    pressgang_website_initialHelp.style.top = "8px";
+                } else if (!((e && mouseCollides(e.clientX, e.clientY, w - offset - initialHelpPosition.width, initialHelpPosition.width, offset, initialHelpPosition.height)) ||
+                    calloutCollides(w - offset - initialHelpPosition.width, initialHelpPosition.width, offset, initialHelpPosition.height))) {
+                    pressgang_website_initialHelp.style.left = w - offset - initialHelpPosition.width + "px";
+                    pressgang_website_initialHelp.style.top = offset + "px";
                     pressgang_website_initialHelp.style.marginLeft = "0";
-                } else if (!((e && mouseCollides(e.clientX, e.clientY, w - 8 - initialHelpPosition.width, initialHelpPosition.width, h - 8 - initialHelpPosition.height, initialHelpPosition.height)) ||
-                    calloutCollides(w - 8 - initialHelpPosition.width, initialHelpPosition.width, h - 8 - initialHelpPosition.height, initialHelpPosition.height))) {
-                    pressgang_website_initialHelp.style.left = w - 8 - initialHelpPosition.width + "px";
-                    pressgang_website_initialHelp.style.top = h - 8 - initialHelpPosition.height + "px";
+                } else if (!((e && mouseCollides(e.clientX, e.clientY, w - offset - initialHelpPosition.width, initialHelpPosition.width, h - offset - initialHelpPosition.height, initialHelpPosition.height)) ||
+                    calloutCollides(w - offset - initialHelpPosition.width, initialHelpPosition.width, h - offset - initialHelpPosition.height, initialHelpPosition.height))) {
+                    pressgang_website_initialHelp.style.left = w - offset - initialHelpPosition.width + "px";
+                    pressgang_website_initialHelp.style.top = h - offset - initialHelpPosition.height + "px";
                     pressgang_website_initialHelp.style.marginLeft = "0";
                 } else {
-                    pressgang_website_initialHelp.style.left = "8px";
-                    pressgang_website_initialHelp.style.top = h - 8 - initialHelpPosition.height + "px";
+                    pressgang_website_initialHelp.style.left = offset + "px";
+                    pressgang_website_initialHelp.style.top = h - offset - initialHelpPosition.height + "px";
                     pressgang_website_initialHelp.style.marginLeft = "0";
                 }
             }
