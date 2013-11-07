@@ -756,6 +756,7 @@ pressgang_website_build_callout = function (element, elementTopicData, calloutZI
     // Once the popover is positioned, restore the alpha to make it visible
     setTimeout(function(){
         calloutDiv.style.opacity = 1;
+        pressgang_website_reposition_initial_callout();
     }, 0);
 }
 
@@ -1028,24 +1029,7 @@ pressgang_website_callback = function(data) {
                     }
                 }
 
-                /*
-                    If the mouse has moved off a popover or highlighted element for a period of time,
-                    display the initial help popover.
-                 */
-                if (!mouseOverElement && !pressgang_website_initial_callout_displayed() && pressgang_website_popover_close_timeout == null) {
-                    pressgang_website_popover_close_timeout = setTimeout(
-                        function(e) {
-                            return function() {
-                                // check to make sure a popover hasn't appeared under the mouse without the
-                                // mouse moving
-                                if (!checkOverPopover(e)) {
-                                    pressgang_website_close_callout();
-                                    pressgang_website_open_initial_callout();
-                                }
-                                pressgang_website_popover_close_timeout = null;
-                            }
-                        }(e), pressgang_website_popover_close_deplay);
-                }
+                pressgang_website_reposition_initial_callout(e);
             }
 
             document.addEventListener("mousemove", pressgang_website_mouse_move, false);
@@ -1155,6 +1139,72 @@ pressgang_website_callback = function(data) {
         }
         pressgang_website_lastSelectedElement = null;
 
+    }
+
+    /**
+     * Repositions the initial help so it stays out of the way of the mouse and any other callouts.
+     */
+    pressgang_website_reposition_initial_callout = function(e) {
+        if (pressgang_website_initialHelp.parentNode == document.body) {
+            function mouseCollides(x, y, left, width, top, height) {
+                return e.clientX >= left &&
+                    e.clientX <= left + width &&
+                    e.clientY >= top &&
+                    e.clientY <= top + height;
+            }
+
+            function calloutCollides(left, width, top, height) {
+                var callout = document.getElementById(pressgang_website_calloutID);
+                if (callout != null) {
+                    var calloutPosition = callout.getBoundingClientRect();
+                    ;
+
+                    if(abs(calloutPosition.left - left) < calloutPosition.width + width)
+                    {
+                        if(abs(calloutPosition.top - top) < calloutPosition.height + height)
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+
+                return false;
+            }
+
+            var initialHelpPosition = pressgang_website_initialHelp.getBoundingClientRect()
+
+            // we collide in our current location
+            if ((e && mouseCollides(e.clientX, e.clientY, initialHelpPosition.left, initialHelpPosition.width, initialHelpPosition.top, initialHelpPosition.height)) ||
+                calloutCollides(initialHelpPosition.left, initialHelpPosition.width, initialHelpPosition.top, initialHelpPosition.height)) {
+
+                var w = window.innerWidth;
+                var h = window.innerHeight;
+
+                // try all the corners
+                if (!((e && mouseCollides(e.clientX, e.clientY, 8, initialHelpPosition.width, 8, initialHelpPosition.height)) ||
+                    calloutCollides(8, initialHelpPosition.width, 8, initialHelpPosition.height))) {
+                    pressgang_website_initialHelp.style.left = "8px";
+                    pressgang_website_initialHelp.style.top = "8px";
+                    pressgang_website_initialHelp.style.marginLeft = "0";
+                } else if (!((e && mouseCollides(e.clientX, e.clientY, w - 8 - initialHelpPosition.width, initialHelpPosition.width, 8, initialHelpPosition.height)) ||
+                    calloutCollides(w - 8 - initialHelpPosition.width, initialHelpPosition.width, 8, initialHelpPosition.height))) {
+                    pressgang_website_initialHelp.style.left = w - 8 - initialHelpPosition.width + "px";
+                    pressgang_website_initialHelp.style.top = "8px";
+                    pressgang_website_initialHelp.style.marginLeft = "0";
+                } else if (!((e && mouseCollides(e.clientX, e.clientY, w - 8 - initialHelpPosition.width, initialHelpPosition.width, h - 8 - initialHelpPosition.height, initialHelpPosition.height)) ||
+                    calloutCollides(w - 8 - initialHelpPosition.width, initialHelpPosition.width, h - 8 - initialHelpPosition.height, initialHelpPosition.height))) {
+                    pressgang_website_initialHelp.style.left = w - 8 - initialHelpPosition.width + "px";
+                    pressgang_website_initialHelp.style.top = h - 8 - initialHelpPosition.height + "px";
+                    pressgang_website_initialHelp.style.marginLeft = "0";
+                } else {
+                    pressgang_website_initialHelp.style.left = "8px";
+                    pressgang_website_initialHelp.style.top = h - 8 - initialHelpPosition.height + "px";
+                    pressgang_website_initialHelp.style.marginLeft = "0";
+                }
+            }
+        }
     }
 
     /**
