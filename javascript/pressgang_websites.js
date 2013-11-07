@@ -1129,7 +1129,7 @@ pressgang_website_callback = function(data) {
     }
 
     function pressgang_website_keydown(e) {
-        for (var i = keys.length; i--;) {
+        for (var i = pressgang_website_scrolling_keys.length; i--;) {
             if (e.keyCode === keys[i]) {
                 preventDefault(e);
                 return;
