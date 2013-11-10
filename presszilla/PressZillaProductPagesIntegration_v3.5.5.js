@@ -45,6 +45,49 @@
         // Edited from http://raphaeljs.com/github/impact-code.js
         var process = function (json) {
 
+            // spread processes across all buckets
+            for (var i in json.processes) {
+                var start, end;
+
+                // look for the last bucket (buckets have to be sorted by date)
+                for (var j = json.buckets.length - 1; j >= 0; j--) {
+                    var isin = false;
+                    for (var k = 0, kk = json.buckets[j].processes.length; k < kk; k++) {
+                        isin = isin || (json.buckets[j].processes[k] == i);
+                    }
+                    if (isin) {
+                        end = j;
+                        break;
+                    }
+                }
+
+                // look for the first bucket
+                for (var j = 0, jj = json.buckets.length; j < jj; j++) {
+                    var isin = false;
+                    for (var k = 0, kk = json.buckets[j].processes.length; k < kk; k++) {
+                        isin = isin || (json.buckets[j].processes[k] == i);
+                    };
+                    if (isin) {
+                        start = j;
+                        break;
+                    }
+                }
+
+                // add the author to every bucket inbetween if not already present
+                for (var j = start, jj = end; j < jj; j++) {
+                    var isin = false;
+                    for (var k = 0, kk = json.buckets[j].processes.length; k < kk; k++) {
+                        isin = isin || (json.buckets[j].processes[k] == i);
+                    }
+                    if (!isin) {
+                        json.buckets[j].processes.push(parseInt(i));
+                    }
+
+                    json.buckets[j].processes.sort();
+                }
+            }
+
+            // count the maximum number of processes
             var maxProcesses = 0;
             for (var bucketIndex = 0, bucketCount = json.buckets.length; bucketIndex < bucketCount; ++bucketIndex) {
 
@@ -54,9 +97,6 @@
                     maxProcesses = numProcesses;
                 }
             }
-
-            logToConsole(json);
-            logToConsole("Max processes: " + maxProcesses);
 
             // allow some extra rows for the date and some padding
             maxProcesses += 1;
@@ -100,56 +140,10 @@
                 jQuery("body").append(usrnm2);
                 jQuery("body").append(today);
 
-                function finishes() {
 
-                    logToConsole("finishes()");
-
-                    // look for the first and last time an author is mentioned in a bucket
-                    for (var i in json.processes) {
-                        var start, end;
-
-                        // look for the last bucket (buckets have to be sorted by date)
-                        for (var j = json.buckets.length - 1; j >= 0; j--) {
-                            var isin = false;
-                            for (var k = 0, kk = json.buckets[j].processes.length; k < kk; k++) {
-                                isin = isin || (json.buckets[j].processes[k] == i);
-                            }
-                            if (isin) {
-                                end = j;
-                                break;
-                            }
-                        }
-
-                        // look for the first bucket
-                        for (var j = 0, jj = json.buckets.length; j < jj; j++) {
-                            var isin = false;
-                            for (var k = 0, kk = json.buckets[j].processes.length; k < kk; k++) {
-                                isin = isin || (json.buckets[j].processes[k] == i);
-                            };
-                            if (isin) {
-                                start = j;
-                                break;
-                            }
-                        }
-
-                        // add the author to every bucket inbetween if not already present
-                        for (var j = start, jj = end; j < jj; j++) {
-                            var isin = false;
-                            for (var k = 0, kk = json.buckets[j].processes.length; k < kk; k++) {
-                                isin = isin || (json.buckets[j].processes[k] == i);
-                            }
-                            if (!isin) {
-                                json.buckets[j].processes.push(parseInt(i));
-                            }
-
-                            json.buckets[j].processes.sort();
-                        }
-                    }
-                }
                 function block() {
 
                     var p, h;
-                    finishes();
 
                     var today = new Date();
                     var todayOnGraph = null;
