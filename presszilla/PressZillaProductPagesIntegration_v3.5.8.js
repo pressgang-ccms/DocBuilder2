@@ -410,9 +410,9 @@
                         onload: function(stringConstantResponse) {
                             var mappingWrapper = JSON.parse(stringConstantResponse.responseText);
                             var mapping = JSON.parse(mappingWrapper.value);
-
-                            if (mapping[spec.product + " " + spec.version]) {
-                                getSchedule(mapping[spec.product + " " + spec.version], 0);
+                            var prodAndVer = (spec.product + " " + spec.version).trim();
+                            if (mapping[prodAndVer]) {
+                                getSchedule(mapping[prodAndVer], 0);
                             }
                         }
                     });
