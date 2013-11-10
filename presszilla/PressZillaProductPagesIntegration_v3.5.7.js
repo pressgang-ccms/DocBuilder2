@@ -24,7 +24,7 @@
          * The width of a given date in the timeline
          * @type {number}
          */
-        var TIMELINE_ITEM_WIDTH = 200;
+        var TIMELINE_ITEM_WIDTH = 100;
 
         /**
          * The number of times to retry the product pages API
@@ -174,7 +174,7 @@
                             todayOnGraph = textElement;
                         }
 
-                        x += TIMELINE_ITEM_WIDTH;
+                        x += 100;
                     }
 
                     if (scrollToToday) {
