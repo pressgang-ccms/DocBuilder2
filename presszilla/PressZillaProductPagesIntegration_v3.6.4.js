@@ -272,7 +272,7 @@
 
         function getSchedule(id, count) {
             if (count >= PRODUCT_PAGES_RETRY) {
-                // handle error
+                logToConsole("Product Pages REST API failed too many times.");
             } else {
 
                 logToConsole("Getting Schedules");
@@ -427,10 +427,12 @@
                                 prodAndVer += " " + spec.version;
                             }
                             prodAndVer = prodAndVer.trim();
-                            logToConsole(prodAndVer);
+
 
                             if (mapping[prodAndVer]) {
                                 getSchedule(mapping[prodAndVer], 0);
+                            } else {
+                                logToConsole(prodAndVer + " has not been mapped to a product pages id");
                             }
                         }
                     });
