@@ -121,7 +121,7 @@
             var leftSide = 316;
             var rightside = 8;
 
-            var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: ' + leftSide + 'px; right: ' + rightside + 'px; height: ' + timelineHeight + 'px; overflow-x: auto; overflow-y: hidden"></div>');
+            var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: ' + leftSide + 'px; right: ' + rightside + 'px; height: ' + timelineHeight + 'px; overflow: auto;"></div>');
 
             // hide it if the menu is hidden
             if (jQuery("#openpressgangmenu").css("display") != "none") {
