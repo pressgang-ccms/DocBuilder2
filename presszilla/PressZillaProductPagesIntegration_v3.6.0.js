@@ -12,7 +12,7 @@
          * The height of a process in the timeline
          * @type {number}
          */
-        var TIMELINE_ITEM_HEIGHT = 30;
+        var TIMELINE_ITEM_HEIGHT = 27;
 
         /**
          * The margine above the timeline
@@ -410,8 +410,14 @@
                         onload: function(stringConstantResponse) {
                             var mappingWrapper = JSON.parse(stringConstantResponse.responseText);
                             var mapping = JSON.parse(mappingWrapper.value);
-                            var prodAndVer = (spec.product + " " + spec.version).trim();
+
+                            var prodAndVer = spec.product;
+                            if (spec.version) {
+                                prodAndVer += " " + spec.version;
+                            }
+                            prodAndVer = prodAndVer.trim();
                             logToConsole(prodAndVer);
+
                             if (mapping[prodAndVer]) {
                                 getSchedule(mapping[prodAndVer], 0);
                             }
