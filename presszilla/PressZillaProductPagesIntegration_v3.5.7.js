@@ -92,7 +92,6 @@
             for (var bucketIndex = 0, bucketCount = json.buckets.length; bucketIndex < bucketCount; ++bucketIndex) {
 
                 var numProcesses = json.buckets[bucketIndex].processes.length;
-                logToConsole(numProcesses + " " + maxProcesses);
                 if (maxProcesses < numProcesses)  {
                     maxProcesses = numProcesses;
                 }
