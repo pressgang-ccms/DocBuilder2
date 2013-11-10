@@ -12,7 +12,7 @@
          * The height of a process in the timeline
          * @type {number}
          */
-        var TIMELINE_ITEM_HEIGHT = 27;
+        var TIMELINE_ITEM_HEIGHT = 23;
 
         /**
          * The margine above the timeline
@@ -106,9 +106,7 @@
             // allow some extra rows for the date and some padding
             maxProcesses += 1;
             var timelineHeight = (maxProcesses * TIMELINE_ITEM_HEIGHT);
-            if (timelineHeight > MAX_HEIGHT) {
-                timelineHeight = MAX_HEIGHT;
-            }
+            var timelineDisplayHeight = timelineHeight > MAX_HEIGHT ? MAX_HEIGHT :  timelineHeight;
 
             var timelineWidth = json.buckets.length * TIMELINE_ITEM_WIDTH;
 
@@ -121,7 +119,7 @@
             var leftSide = 316;
             var rightside = 8;
 
-            var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: ' + leftSide + 'px; right: ' + rightside + 'px; height: ' + timelineHeight + 'px; overflow: auto;"></div>');
+            var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: ' + leftSide + 'px; right: ' + rightside + 'px; height: ' + timelineDisplayHeight + 'px; overflow: auto;"></div>');
 
             // hide it if the menu is hidden
             if (jQuery("#openpressgangmenu").css("display") != "none") {
