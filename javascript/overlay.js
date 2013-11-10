@@ -1865,11 +1865,10 @@ function buildTopicEditedInChart() {
  */
 function showMenu() {
     document.body.style.margin = scheduleHeight + "px auto auto 350px";
-    jQuery("#timelineChartDiv").css("left", "316px");
-    jQuery("#timelineChartDiv").css("right", "8px");
-    jQuery("#productpagestodaybutton").css("right", "8px");
-    jQuery("#pressgangschedulelegend").css("left", "316px");
-    jQuery("#pressgangscheduleprocessname").css("left", "348px");
+    jQuery("#timelineChartDiv").css("display", "");
+    jQuery("#productpagestodaybutton").css("display", "");
+    jQuery("#pressgangschedulelegend").css("display", "");
+    jQuery("#pressgangscheduleprocessname").css("display", "");
     jQuery("#openpressgangmenu").css("display", "none");
 }
 
@@ -1878,11 +1877,10 @@ function showMenu() {
  */
 function hideMenu() {
 	document.body.style.margin = scheduleHeight + "px auto";
-    jQuery("#timelineChartDiv").css("left", "72px");
-    jQuery("#timelineChartDiv").css("right", "72px");
-    jQuery("#pressgangschedulelegend").css("left", "72px");
-    jQuery("#pressgangscheduleprocessname").css("left", "104px");
-    jQuery("#productpagestodaybutton").css("right", "72px");
+    jQuery("#timelineChartDiv").css("display", "none");;
+    jQuery("#pressgangschedulelegend").css("display", "none");
+    jQuery("#pressgangscheduleprocessname").css("display", "none");
+    jQuery("#productpagestodaybutton").css("display", "none");
     jQuery("#openpressgangmenu").css("display", "");
 }
 

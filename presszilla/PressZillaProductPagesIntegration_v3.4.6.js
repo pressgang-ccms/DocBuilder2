@@ -72,6 +72,12 @@
             var rightside = jQuery("#openpressgangmenu").css("display") == "none" ? 8 : 72;
 
             var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: ' + leftSide + 'px; right: ' + rightside + 'px; height: ' + timelineHeight + 'px; overflow-x: auto; overflow-y: hidden"></div>');
+
+            // hide it if the menu is hidden
+            if (jQuery("#openpressgangmenu").css("display") != "none") {
+                timelineChartDiv.css("display", "none");
+            }
+
             timelineChartDiv.appendTo(jQuery('#offscreenRendering'));
 
             // raphael charts need to be drawn in an element attached to the DOM
@@ -384,7 +390,7 @@
         var specId = unsafeWindow.getSpecIdFromURL();
 
         // 6 is the comment node type
-        var specProductUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/contentspecnodes/get/json/query;csNodeType=6;contentSpecIds=" + specId + "?expand=" + encodeURIComponent("{\"branches\":[{\"trunk\":{\"name\": \"nodes\"}}]}");
+        var specProductUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/contentspec/get/json+text/" + specId;
 
         // see http://stackoverflow.com/questions/11007605/gm-xmlhttprequest-why-is-it-never-firing-the-onload-in-firefox
         // and http://wiki.greasespot.net/0.7.20080121.0_compatibility
@@ -395,20 +401,27 @@
                 onabort: function() {handleFailure("onabort"); },
                 onerror: function() {handleFailure("onerror");},
                 ontimeout: function() {handleFailure("ontimeout");},
-                onload: function(specNodesResponse) {
-                    var nodes = JSON.parse(specNodesResponse.responseText);
-                    logToConsole(nodes);
-                    for (var nodeIndex = 0, nodeCount = nodes.items.length; nodeIndex < nodeCount; ++nodeIndex) {
-                        var node = nodes.items[nodeIndex].item;
-                        if (node.title.indexOf("#ProductPagesID = ") == 0) {
-                            var id = node.title.replace("#ProductPagesID = ", "");
-                            logToConsole("Found ID: " + id);
-                            getSchedule(id, 0);
-                            return;
-                        }
-                    }
+                onload: function(specResponse) {
+                    var spec = JSON.parse(specResponse.responseText);
 
-                    logToConsole("Could not find ID");
+                    // 6 is the comment node type
+                    var stringConstant = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/stringconstants/get/json/74";
+
+                    GM_xmlhttpRequest({
+                        method: 'GET',
+                        url: stringConstant,
+                        onabort: function() {handleFailure("onabort"); },
+                        onerror: function() {handleFailure("onerror");},
+                        ontimeout: function() {handleFailure("ontimeout");},
+                        onload: function(stringConstantResponse) {
+                            var mappingWrapper = JSON.parse(stringConstantResponse.responseText);
+                            var mapping = JSON.parse(mappingWrapper.value);
+
+                            if (mapping[spec.product + " " + spec.version]) {
+                                getSchedule(mapping[spec.product + " " + spec.version], 0);
+                            }
+                        }
+                    });
                 }
             });
         }, 0);
