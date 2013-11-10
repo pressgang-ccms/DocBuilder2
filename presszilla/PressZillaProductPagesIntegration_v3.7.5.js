@@ -336,8 +336,6 @@
                                                 hash = hash << 2;
                                                 var blue = (hash & mask) / mask;
 
-                                                logToConsole("Creating colour for process");
-
                                                 var clr = unsafeWindow.Raphael.getRGB("rgb(" + (red * 255) + "," + (green * 255) + "," + (blue * 255) + ")");
 
                                                 data.processes[processId] = {name: scheduleDisplayedName, id: schedule.id, color: clr};
