@@ -125,7 +125,7 @@
             if (jQuery("#openpressgangmenu").css("display") != "none") {
                 timelineChartDiv.css("display", "none");
             } else {
-                jQuery("body").css("margin-top", (timelineHeight + TIMELINE_VERTICAL_OFFSET) + "px");
+                jQuery("body").css("margin-top", (timelineDisplayHeight + TIMELINE_VERTICAL_OFFSET) + "px");
             }
 
             timelineChartDiv.appendTo(jQuery('#offscreenRendering'));
