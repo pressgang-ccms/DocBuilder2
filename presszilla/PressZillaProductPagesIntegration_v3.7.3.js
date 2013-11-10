@@ -329,6 +329,8 @@
                                                 processId = maxId;
                                                 ++maxId;
 
+                                                logToConsole("Calculating colour for process");
+
                                                 var hash = hashCode(scheduleDisplayedName);
                                                 var mask = parseInt("11111111", 2);
 
@@ -337,6 +339,8 @@
                                                 var green = (hash & mask) / mask;
                                                 hash = hash << 2;
                                                 var blue = (hash & mask) / mask;
+
+                                                logToConsole("Creating colour for process");
 
                                                 var clr = Raphael.getRGB("rgb(" + (red * 255) + "," + (green * 255) + "," + (blue * 255) + ")");
 
