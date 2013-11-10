@@ -48,8 +48,6 @@
         // Edited from http://raphaeljs.com/github/impact-code.js
         var process = function (json) {
 
-            logToConsole("Creating offscreen rendering area");
-
             var maxProcesses = 0;
             for (var bucketIndex = 0, bucketCount = json.buckets.length; bucketIndex < bucketCount; ++bucketIndex) {
                 var numProcesses = json.buckets[bucketIndex].processes.length;
@@ -57,6 +55,8 @@
                     maxProcesses = numProcesses;
                 }
             }
+
+            logToConsole("Max processes: " + maxProcesses);
 
             // allow some extra rows for the date and some padding
             maxProcesses += 1;
