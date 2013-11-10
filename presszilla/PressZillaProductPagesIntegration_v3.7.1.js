@@ -274,7 +274,6 @@
             } else {
 
                 logToConsole("Getting Schedules");
-                logToConsole("Getting Schedules");
 
                 var solutionsUrl = "https://pp.engineering.redhat.com/pp/action/explorer/" + id + "/all/cpe,schedule/";
 
@@ -298,6 +297,8 @@
                                     getSchedule(id, ++count);
                                 }
                             } else {
+
+                                logToConsole("Processing Response");
 
                                 var responseJson = JSON.parse(response.responseText);
 
@@ -377,6 +378,8 @@
                                             }
                                         }
                                     }
+
+                                    logToConsole("Sorting Buckets");
 
                                     // sort the buckets
                                     data.buckets.sort(function(a, b){
