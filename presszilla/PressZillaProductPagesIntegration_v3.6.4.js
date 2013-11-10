@@ -283,14 +283,14 @@
                     method: 'GET',
                     url: solutionsUrl,
                     headers: {Accept: 'application/json'},
-                    onabort: function() {logToConsole("onabort"); getSchedule(++count);},
-                    onerror: function() {logToConsole("onerror"); getSchedule(++count);},
-                    ontimeout: function() {logToConsole("ontimeout"); getSchedule(++count);},
+                    onabort: function() {logToConsole("onabort"); getSchedule(id, ++count);},
+                    onerror: function() {logToConsole("onerror"); getSchedule(id, ++count);},
+                    ontimeout: function() {logToConsole("ontimeout"); getSchedule(id, ++count);},
                     onload: function(response) {
                         logToConsole(response);
 
                         if (response.responseText.length == 0) {
-                            getSchedule(++count)
+                            getSchedule(id, ++count)
                         } else {
 
                             var responseJson = JSON.parse(response.responseText);
