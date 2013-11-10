@@ -119,7 +119,7 @@
             var leftSide = 316;
             var rightside = 8;
 
-            var timelineChartDiv = jQuery('<div data-pressgangtopic="24986" id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: ' + leftSide + 'px; right: ' + rightside + 'px; height: ' + timelineDisplayHeight + 'px; overflow: auto;"></div>');
+            var timelineChartDiv = jQuery('<div data-pressgangtopic="24986" id="timelineChartDiv" style="background-color: white; position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: ' + leftSide + 'px; right: ' + rightside + 'px; height: ' + timelineDisplayHeight + 'px; overflow: auto;"></div>');
 
             // hide it if the menu is hidden
             if (jQuery("#openpressgangmenu").css("display") != "none") {
@@ -140,9 +140,9 @@
                     labels = {},
                     textattr = {"font": '9px "Arial"', stroke: "none", fill: "#fff"},
                     pathes = {},
-                    lgnd2 = jQuery('<div data-pressgangtopic="24986" id="pressgangschedulelegend" style="position: absolute; top: 8px; left: ' + leftSide + 'px; width: 24px; height: 24px;"></div>'),
-                    usrnm2 = jQuery('<div data-pressgangtopic="24986" id="pressgangscheduleprocessname" style="position: absolute; top: 8px; left: ' + (leftSide + 32) + 'px"></div>'),
-                    today = jQuery('<button data-pressgangtopic="24986" id="productpagestodaybutton" type="button" style="position: absolute; top: 8px; right: ' + rightside + 'px" class="btn btn-default btn-xs">Show Today</button>');
+                    lgnd2 = jQuery('<div data-pressgangtopic="24986" id="pressgangschedulelegend" style="background-color: white; position: absolute; top: 8px; left: ' + leftSide + 'px; width: 24px; height: 24px;"></div>'),
+                    usrnm2 = jQuery('<div data-pressgangtopic="24986" id="pressgangscheduleprocessname" style="background-color: white; position: absolute; top: 8px; left: ' + (leftSide + 32) + 'px"></div>'),
+                    today = jQuery('<button data-pressgangtopic="24986" id="productpagestodaybutton" type="button" style="background-color: white; position: absolute; top: 8px; right: ' + rightside + 'px" class="btn btn-default btn-xs">Show Today</button>');
 
                 jQuery("body").append(lgnd2);
                 jQuery("body").append(usrnm2);
