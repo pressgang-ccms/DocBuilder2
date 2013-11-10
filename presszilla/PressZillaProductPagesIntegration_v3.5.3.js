@@ -304,7 +304,7 @@
                                         var processId = null;
                                         for (var scheduleDetails in data.processes) {
                                             if (data.processes[scheduleDetails] == scheduleDisplayedName) {
-                                                processId = scheduleDetails;
+                                                processId = parseInt(scheduleDetails);
                                                 break;
                                             }
                                         }
