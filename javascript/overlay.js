@@ -1876,7 +1876,7 @@ function showMenu() {
  * When the menu is hidden, we reset the margins to the defulats used by Publican.
  */
 function hideMenu() {
-	document.body.style.margin = scheduleHeight + "px auto";
+	document.body.style.margin = "0px auto";
     jQuery("#timelineChartDiv").css("display", "none");;
     jQuery("#pressgangschedulelegend").css("display", "none");
     jQuery("#pressgangscheduleprocessname").css("display", "none");
