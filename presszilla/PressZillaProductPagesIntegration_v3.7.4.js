@@ -343,8 +343,6 @@
                                                 data.processes[processId] = {name: scheduleDisplayedName, id: schedule.id, color: clr};
                                             }
 
-                                            logToConsole("Processing start bucket");
-
                                             var startDate = new Date(schedule.start.actual.timet * 1000);
                                             var fixedStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
                                             var startBucket = null;
@@ -364,8 +362,6 @@
                                                     startBucket.processes.push(processId);
                                                 }
                                             }
-
-                                            logToConsole("Processing end bucket");
 
                                             var endDate = new Date(schedule.end.actual.timet * 1000);
                                             var fixedEndDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
