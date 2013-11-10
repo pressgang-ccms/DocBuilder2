@@ -139,7 +139,7 @@
                                 isin = isin || (json.buckets[j].processes[k] == i);
                             }
                             if (!isin) {
-                                json.buckets[j].processes.push(i);
+                                json.buckets[j].processes.push(parseInt(i));
                             }
 
                             json.buckets[j].processes.sort();
@@ -304,7 +304,7 @@
                                         var processId = null;
                                         for (var scheduleDetails in data.processes) {
                                             if (data.processes[scheduleDetails] == scheduleDisplayedName) {
-                                                processId = parseInt(scheduleDetails);
+                                                processId = scheduleDetails;
                                                 break;
                                             }
                                         }
