@@ -33,6 +33,12 @@
         var PRODUCT_PAGES_RETRY = 5;
 
         /**
+         * The maximum height of the timeline graph
+         * @type {number}
+         */
+        var MAX_HEIGHT = 512;
+
+        /**
          * The scale to apply when a path is clicked
          * @type {number}
          */
@@ -100,7 +106,12 @@
             // allow some extra rows for the date and some padding
             maxProcesses += 1;
             var timelineHeight = (maxProcesses * TIMELINE_ITEM_HEIGHT);
+            if (timelineHeight > MAX_HEIGHT) {
+                timelineHeight = MAX_HEIGHT;
+            }
+
             var timelineWidth = json.buckets.length * TIMELINE_ITEM_WIDTH;
+
 
             // if the main javascript file opens and closes the side menu, it will need this info to keep the body
             // properly positioned.
