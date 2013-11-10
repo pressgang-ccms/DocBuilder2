@@ -42,9 +42,6 @@
             return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
         }
 
-        //the 'colors' argument is an array of colors
-        var exampleColorList = ['red', 'blue', 'yellow'];
-
         // Edited from http://raphaeljs.com/github/impact-code.js
         var process = function (json) {
 
@@ -56,6 +53,7 @@
                 }
             }
 
+            logToConsole(json);
             logToConsole("Max processes: " + maxProcesses);
 
             // allow some extra rows for the date and some padding
