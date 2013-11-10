@@ -12,7 +12,7 @@
          * The height of a process in the timeline
          * @type {number}
          */
-        var TIMELINE_ITEM_HEIGHT = 33;
+        var TIMELINE_ITEM_HEIGHT = 30;
 
         /**
          * The margine above the timeline
@@ -24,7 +24,7 @@
          * The width of a given date in the timeline
          * @type {number}
          */
-        var TIMELINE_ITEM_WIDTH = 100;
+        var TIMELINE_ITEM_WIDTH = 200;
 
         /**
          * The number of times to retry the product pages API
@@ -174,7 +174,7 @@
                             todayOnGraph = textElement;
                         }
 
-                        x += 100;
+                        x += TIMELINE_ITEM_WIDTH;
                     }
 
                     if (scrollToToday) {
