@@ -136,7 +136,7 @@
                 timelineChartDiv.appendTo(jQuery("body"));
 
                 var x = 0,
-                    timelineChart = Raphael("timelineChartDiv", timelineWidth, timelineHeight),
+                    timelineChart = unsafeWindow.Raphael("timelineChartDiv", timelineWidth, timelineHeight),
                     labels = {},
                     textattr = {"font": '9px "Arial"', stroke: "none", fill: "#fff"},
                     pathes = {},
@@ -324,12 +324,8 @@
 
                                             if (!processId) {
 
-                                                logToConsole("Found new process " + scheduleDisplayedName);
-
                                                 processId = maxId;
                                                 ++maxId;
-
-                                                logToConsole("Calculating colour for process");
 
                                                 var hash = hashCode(scheduleDisplayedName);
                                                 var mask = parseInt("11111111", 2);
@@ -342,7 +338,7 @@
 
                                                 logToConsole("Creating colour for process");
 
-                                                var clr = Raphael.getRGB("rgb(" + (red * 255) + "," + (green * 255) + "," + (blue * 255) + ")");
+                                                var clr = unsafeWindow.Raphael.getRGB("rgb(" + (red * 255) + "," + (green * 255) + "," + (blue * 255) + ")");
 
                                                 data.processes[processId] = {name: scheduleDisplayedName, id: schedule.id, color: clr};
                                             }
