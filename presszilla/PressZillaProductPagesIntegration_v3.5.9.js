@@ -411,6 +411,7 @@
                             var mappingWrapper = JSON.parse(stringConstantResponse.responseText);
                             var mapping = JSON.parse(mappingWrapper.value);
                             var prodAndVer = (spec.product + " " + spec.version).trim();
+                            logToConsole(prodAndVer);
                             if (mapping[prodAndVer]) {
                                 getSchedule(mapping[prodAndVer], 0);
                             }
