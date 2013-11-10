@@ -405,7 +405,7 @@
                     var spec = JSON.parse(specResponse.responseText);
 
                     // 6 is the comment node type
-                    var stringConstant = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/stringconstants/get/json/74";
+                    var stringConstant = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/stringconstant/get/json/74";
 
                     GM_xmlhttpRequest({
                         method: 'GET',
