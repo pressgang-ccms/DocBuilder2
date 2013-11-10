@@ -68,8 +68,8 @@
             unsafeWindow.scheduleHeight = timelineHeight + TIMELINE_VERTICAL_OFFSET;
 
             // is the menu open?
-            var leftSide = jQuery("#openpressgangmenu").css("display") == "none" ? 316 : 72;
-            var rightside = jQuery("#openpressgangmenu").css("display") == "none" ? 8 : 72;
+            var leftSide = 316;
+            var rightside = 8;
 
             var timelineChartDiv = jQuery('<div id="timelineChartDiv" style="position: absolute; top:' + TIMELINE_VERTICAL_OFFSET + 'px; left: ' + leftSide + 'px; right: ' + rightside + 'px; height: ' + timelineHeight + 'px; overflow-x: auto; overflow-y: hidden"></div>');
 
