@@ -1360,7 +1360,7 @@ function getTopicNodes(specId, topics, count) {
                 ++count;
             }
 
-            getTopicNodes(topics, count);
+            getTopicNodes(specId, topics, count);
         });
     } else {
         $('#topicsUpdatedInOtherSpecs').append($('<span class="badge pull-right">' + count + '</span>'));
