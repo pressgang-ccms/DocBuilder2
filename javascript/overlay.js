@@ -1126,7 +1126,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
         if (specId) {
             getModifiedTopics(specId);
 
-            // getTopicNodes and checkSpellingErrors need the topic ids and revisions for the topics in the current
+            // getUpdatedTopics and checkSpellingErrors need the topic ids and revisions for the topics in the current
             // spec.
             var topicsUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=0,9,10;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
             $.getJSON(topicsUrl, function(data) {
@@ -1138,7 +1138,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
                     }
                 }
 
-                getTopicNodes(topics, 0);
+                getTopicNodes(specId, topics, 0);
 
                 // the js file might not be included just yet in all builds
                 if (window.Typo) {
@@ -1151,7 +1151,6 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
                 }
             });
 
-            getTopicNodes(specId);
             //getTopReusedTopics(specId);
         }
 	}
@@ -1326,7 +1325,7 @@ function getTopicDetailsInBacthes() {
     }
 }
 
-function getTopicNodes(topics, count) {
+function getTopicNodes(specId, topics, count) {
     if (topics.length != 0) {
         var topic = topics.pop();
         var topicNodesUrl = SERVER + "/contentspecnodes/get/json/query;csNodeEntityId=" + topic.id + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpec%22%7D%7D%5D%7D%5D%7D%0A%0A";
