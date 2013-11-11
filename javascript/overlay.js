@@ -1189,7 +1189,8 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                     "application",
                     "guibutton",
                     "guilabel",
-                    "filename"
+                    "filename",
+                    "replaceable"
                 ];
 
                 for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
