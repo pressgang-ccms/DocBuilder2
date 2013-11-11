@@ -1142,8 +1142,8 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 
                 // the js file might not be included just yet in all builds
                 if (window.Typo) {
-                    jQuery.get("/dictionaries/en-US.aff", function(affData) {
-                        jQuery.get("/dictionaries/en-US.dic", function(dicData) {
+                    jQuery.get("/dictionaries/en_US.aff", function(affData) {
+                        jQuery.get("/dictionaries/en_US.dic", function(dicData) {
                             var dictionary = new Typo("en_US", affData, dicData);
                             checkSpellingErrors(dictionary, topics, 0, 0);
                         })
