@@ -1152,7 +1152,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
                             jQuery("#spellingErrorsBadge").remove();
                             jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">0 (0% complete)</span>'));
 
-                            checkSpellingErrors(dictionary, allTopics, 0, 0);
+                            checkSpellingErrors(dictionary, allTopics, 0, 0, {});
                         })
                     });
                 }
@@ -1262,7 +1262,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
 
                             if (!buttons[word]) {
                                 var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
-                                var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</button>\
+                                var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
                                      <span class="caret"></span>\
                                  </button>');
@@ -1284,14 +1284,14 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                         checkWord(words, topic, ++wordIndex);
                     }
                     else {
-                        setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors);}, 0);
+                        setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors, buttons);}, 0);
                     }
                 }
 
                 checkWord(words, topic, 0);
 
             } catch (e) {
-                setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors);}, 0);
+                setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors, buttons);}, 0);
             }
 
 
