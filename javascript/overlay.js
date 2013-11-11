@@ -1177,16 +1177,23 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
         jQuery.getJSON(topicUrl, function(data) {
             try {
                 var xmlDoc = jQuery(jQuery.parseXML(data.xml));
-                jQuery("screen", xmlDoc).remove();
-                jQuery("programlisting", xmlDoc).remove();
-                jQuery("command", xmlDoc).remove();
-                jQuery("literal", xmlDoc).remove();
-                jQuery("package", xmlDoc).remove();
-                jQuery("systemitem", xmlDoc).remove();
-                jQuery("application", xmlDoc).remove();
-                jQuery("guibutton", xmlDoc).remove();
-                jQuery("guilabel", xmlDoc).remove();
 
+                var doNotSpellCheck = [
+                    "parameter",
+                    "screen",
+                    "programlisting",
+                    "command",
+                    "literal",
+                    "package",
+                    "systemitem",
+                    "application",
+                    "guibutton",
+                    "guilabel",
+                    "filename"
+                ];
+
+                for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
+                    jQuery(doNotSpellCheck[elementIndex], xmlDoc).remove();
 
                 var text = xmlDoc.text();
 
