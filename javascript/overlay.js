@@ -1148,6 +1148,10 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
                     jQuery.get("/dictionaries/en_US.aff", function(affData) {
                         jQuery.get("/dictionaries/en_US.dic", function(dicData) {
                             var dictionary = new Typo("en_US", affData, dicData);
+
+                            jQuery("#spellingErrorsBadge").remove();
+                            jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">0 (working)</span>'));
+
                             checkSpellingErrors(dictionary, allTopics, 0, 0);
                         })
                     });
@@ -1231,6 +1235,9 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
 
                              ++spellingErrors;
 
+                             jQuery("#spellingErrorsBadge").remove();
+                             jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrors + ' (working)</span>'));
+
                              var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
                              var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</button>\
                                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
@@ -1271,7 +1278,8 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
 
         });
     } else {
-        jQuery('#spellingErrors').append($('<span class="badge pull-right">' + spellingErrors + '</span>'));
+        jQuery("#spellingErrorsBadge").remove();
+        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrors + '</span>'));
     }
 }
 
