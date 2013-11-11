@@ -1244,9 +1244,9 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
                      }
                  }
 
-                 checkSpellingErrors(topics, ++index, spellingErrors);
+                 checkSpellingErrors(dictionary, topics, ++index, spellingErrors);
              } catch (e) {
-                 checkSpellingErrors(topics, ++index, spellingErrors);
+                 checkSpellingErrors(dictionary, topics, ++index, spellingErrors);
              }
         });
     } else {
