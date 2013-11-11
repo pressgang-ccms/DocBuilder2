@@ -1164,9 +1164,11 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 }
 
 function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
-    console.log("Checking spelling " + (index / topics.length * 100).toFixed(2) + "% done");
-
     if (index < topics.length) {
+
+        jQuery("#spellingErrorsBadge").remove();
+        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrors + ' (' + (index / topics.length * 100).toFixed(2) + '% complete)</span>'));
+
         var topic = topics[index];
         var topicUrl = SERVER + "/topic/get/json/" + topic.id;
         if (topic.rev) {
@@ -1234,9 +1236,6 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
                          if (!dictionary.check(word)) {
 
                              ++spellingErrors;
-
-                             jQuery("#spellingErrorsBadge").remove();
-                             jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrors + ' (' + (index / topics.length * 100).toFixed(2) + '% complete)</span>'));
 
                              var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
                              var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</button>\
