@@ -1194,6 +1194,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
 
                 for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
                     jQuery(doNotSpellCheck[elementIndex], xmlDoc).remove();
+                }
 
                 var text = xmlDoc.text();
 
