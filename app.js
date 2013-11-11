@@ -377,6 +377,8 @@ function processSpecs(updatedSpecs) {
                                 <script type='application/javascript' src='/javascript/bootstrap.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/raphael-min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/pie.js'></script>\n\
+                                <script type='application/javascript' src='/javascript/typo_proto.js'></script>\n\
+                                <script type='application/javascript' src='/javascript/typo.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/overlay.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/pressgang_websites.js'></script>\n\
                                 <script type='application/javascript' src='http://docbuilder.usersys.redhat.com/13968/html/files/pressgang_website.js' async></script>\n\
