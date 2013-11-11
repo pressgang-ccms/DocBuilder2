@@ -1126,7 +1126,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
         if (specId) {
             getModifiedTopics(specId);
 
-            // getUpdatedTopics and checkSpellingErrors need the topic ids and revisions for the topics in the current
+            // getTopicNodes and checkSpellingErrors need the topic ids and revisions for the topics in the current
             // spec.
             var topicsUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=0,9,10;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
             $.getJSON(topicsUrl, function(data) {
@@ -1151,7 +1151,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
                 }
             });
 
-            getUpdatedTopics(specId);
+            getTopicNodes(specId);
             //getTopReusedTopics(specId);
         }
 	}
