@@ -1138,7 +1138,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
                     }
                 }
 
-                getTopicNodes(specId, topics, 0);
+                getTopicNodes(specId, topics, 0, 0);
 
                 // the js file might not be included just yet in all builds
                 if (window.Typo) {
@@ -1325,9 +1325,9 @@ function getTopicDetailsInBacthes() {
     }
 }
 
-function getTopicNodes(specId, topics, count) {
-    if (count < topics.length) {
-        var topic = topics[count];
+function getTopicNodes(specId, topics, index, count) {
+    if (index < topics.length) {
+        var topic = topics[index];
         var topicNodesUrl = SERVER + "/contentspecnodes/get/json/query;csNodeEntityId=" + topic.id + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpec%22%7D%7D%5D%7D%5D%7D%0A%0A";
         $.getJSON(topicNodesUrl, function(topicNodeData) {
             var newerTopicRevisions = [];
@@ -1360,7 +1360,7 @@ function getTopicNodes(specId, topics, count) {
                 ++count;
             }
 
-            getTopicNodes(specId, topics, count);
+            getTopicNodes(specId, topics, ++index, count);
         });
     } else {
         $('#topicsUpdatedInOtherSpecs').append($('<span class="badge pull-right">' + count + '</span>'));
