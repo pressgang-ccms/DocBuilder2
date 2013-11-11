@@ -1176,113 +1176,116 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
         }
         jQuery.getJSON(topicUrl, function(data) {
              try {
-                var xmlDoc = jQuery.parseXML(data.xml);
-                var text = jQuery(xmlDoc).text();
+                var xmlDoc = jQuery(jQuery.parseXML(data.xml));
+                jQuery("screen", xmlDoc).remove();
+                jQuery("programlisting", xmlDoc).remove();
 
-                 // remove all xml/html elements
-                 var tagRe = /<.*?>/;
-                 var tagMatch = null;
-                 while ((tagMatch = text.match(tagRe)) != null) {
-                     var tagLength = tagMatch[0].length;
-                     var replacementString = "";
-                     for (var i = 0; i < tagLength; ++i) {
-                         replacementString += " ";
-                     }
-                     text = text.replace(tagRe, replacementString);
-                 }
+                var text = xmlDoc.text();
 
-                 // remove all xml/html entities
-                 var entityRe = /&.*?;/;
-                 var entityMatch = null;
-                 while ((entityMatch = text.match(entityRe)) != null) {
-                     var entityLength = entityMatch[0].length;
-                     var replacementString = "";
-                     for (var i = 0; i < entityLength; ++i) {
-                         replacementString += " ";
-                     }
-                     text = text.replace(entityRe, replacementString);
-                 }
+                // remove all xml/html elements
+                var tagRe = /<.*?>/;
+                var tagMatch = null;
+                while ((tagMatch = text.match(tagRe)) != null) {
+                    var tagLength = tagMatch[0].length;
+                    var replacementString = "";
+                    for (var i = 0; i < tagLength; ++i) {
+                        replacementString += " ";
+                    }
+                    text = text.replace(tagRe, replacementString);
+                }
 
-                 // remove all urls
-                 var urlRe = /\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/i;
-                 var urlMatch = null;
-                 while ((urlMatch = text.match(urlRe)) != null) {
-                     var urlLength = urlMatch[0].length;
-                     var replacementString = "";
-                     for (var i = 0; i < urlLength; ++i) {
-                         replacementString += " ";
-                     }
-                     text = text.replace(urlRe, replacementString);
-                 }
+                // remove all xml/html entities
+                var entityRe = /&.*?;/;
+                var entityMatch = null;
+                while ((entityMatch = text.match(entityRe)) != null) {
+                    var entityLength = entityMatch[0].length;
+                    var replacementString = "";
+                    for (var i = 0; i < entityLength; ++i) {
+                        replacementString += " ";
+                    }
+                    text = text.replace(entityRe, replacementString);
+                }
 
-                 // remove all numbers
-                 var numberRe = /\b\d+\b/;
-                 var numberMatch = null;
-                 while ((numberMatch = text.match(numberRe)) != null) {
-                     var numberLength = numberMatch[0].length;
-                     var replacementString = "";
-                     for (var i = 0; i < numberLength; ++i) {
-                         replacementString += " ";
-                     }
-                     text = text.replace(numberRe, replacementString);
-                 }
+                // remove all urls
+                var urlRe = /\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/i;
+                var urlMatch = null;
+                while ((urlMatch = text.match(urlRe)) != null) {
+                    var urlLength = urlMatch[0].length;
+                    var replacementString = "";
+                    for (var i = 0; i < urlLength; ++i) {
+                        replacementString += " ";
+                    }
+                    text = text.replace(urlRe, replacementString);
+                }
 
-                 // replace any character that doesn't make up a word with a space, and then split on space
-                 var words = text.replace(/[^a-zA-Z0-9'\\-]/g, ' ').split(/\s/);
+                // remove all numbers
+                var numberRe = /\b\d+\b/;
+                var numberMatch = null;
+                while ((numberMatch = text.match(numberRe)) != null) {
+                    var numberLength = numberMatch[0].length;
+                    var replacementString = "";
+                    for (var i = 0; i < numberLength; ++i) {
+                        replacementString += " ";
+                    }
+                    text = text.replace(numberRe, replacementString);
+                }
 
-                 function checkWord(words, topic, wordIndex) {
-                     if (wordIndex < words.length) {
-                         var word = words[wordIndex];
-                         if (!dictionary.check(word)) {
+                // replace any character that doesn't make up a word with a space, and then split on space
+                var words = text.replace(/[^a-zA-Z0-9'\\-]/g, ' ').split(/\s/);
 
-                             ++spellingErrors;
+                function checkWord(words, topic, wordIndex) {
+                    if (wordIndex < words.length) {
+                        var word = words[wordIndex];
+                        if (!dictionary.check(word)) {
 
-                             jQuery('<li><a href="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</a></li>').appendTo(jQuery("#spellingErrorsItems"));
+                         ++spellingErrors;
 
-                             /*
-                                This code will generate spelling suggestions, but this takes a long time to finish
-                                on a large document. The code is here for reference, but should be commented out.
-                              */
-                             /*
-                             var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
-                             var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</button>\
-                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
-                                         <span class="caret"></span>\
-                                     </button>');
-                             jQuery(button).appendTo(buttonParent);
-                             jQuery(buttonParent).appendTo($("#spellingErrorsItems"));
+                         jQuery('<li><a href="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</a></li>').appendTo(jQuery("#spellingErrorsItems"));
 
-                             dictionary.suggest(word, 5, function(topic, buttonParent) {
-                                 return function(suggestions) {
-                                     var dropDown = '<ul class="dropdown-menu" role="menu">';
+                         /*
+                            This code will generate spelling suggestions, but this takes a long time to finish
+                            on a large document. The code is here for reference, but should be commented out.
+                          */
+                         /*
+                         var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
+                         var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</button>\
+                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
+                                     <span class="caret"></span>\
+                                 </button>');
+                         jQuery(button).appendTo(buttonParent);
+                         jQuery(buttonParent).appendTo($("#spellingErrorsItems"));
 
-                                     for (var suggestionsIndex = 0, suggestionsCount = suggestions.length; suggestionsIndex < suggestionsCount; ++suggestionsIndex) {
-                                         dropDown += '<li><a href="javascript:null">' + suggestions[suggestionsIndex] + '</a></li>';
-                                     }
+                         dictionary.suggest(word, 5, function(topic, buttonParent) {
+                             return function(suggestions) {
+                                 var dropDown = '<ul class="dropdown-menu" role="menu">';
 
-                                     dropDown += '</ul>'
-
-                                     jQuery(dropDown).appendTo(buttonParent);
-
-                                     checkWord(words, ++wordIndex);
+                                 for (var suggestionsIndex = 0, suggestionsCount = suggestions.length; suggestionsIndex < suggestionsCount; ++suggestionsIndex) {
+                                     dropDown += '<li><a href="javascript:null">' + suggestions[suggestionsIndex] + '</a></li>';
                                  }
-                             }(topic, buttonParent));
-                         } else {
-                             checkWord(words, topic, ++wordIndex);*/
-                         }
 
-                         checkWord(words, topic, ++wordIndex);
-                     }
-                     else {
-                         setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors);}, 0);
-                     }
+                                 dropDown += '</ul>'
+
+                                 jQuery(dropDown).appendTo(buttonParent);
+
+                                 checkWord(words, ++wordIndex);
+                             }
+                         }(topic, buttonParent));
+                        } else {
+                         checkWord(words, topic, ++wordIndex);*/
+                        }
+
+                        checkWord(words, topic, ++wordIndex);
+                    }
+                    else {
+                        setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors);}, 0);
+                    }
                 }
 
                 checkWord(words, topic, 0);
 
-             } catch (e) {
-                 setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors);}, 0);
-             }
+            } catch (e) {
+                setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors);}, 0);
+            }
 
 
         });
