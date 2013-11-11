@@ -1150,7 +1150,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
                             var dictionary = new Typo("en_US", affData, dicData);
 
                             jQuery("#spellingErrorsBadge").remove();
-                            jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">0 (working)</span>'));
+                            jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">0 (0% complete)</span>'));
 
                             checkSpellingErrors(dictionary, allTopics, 0, 0);
                         })
@@ -1236,7 +1236,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
                              ++spellingErrors;
 
                              jQuery("#spellingErrorsBadge").remove();
-                             jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrors + ' (working)</span>'));
+                             jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrors + ' (' + (index / topics.length * 100).toFixed(2) + '% complete)</span>'));
 
                              var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
                              var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</button>\
