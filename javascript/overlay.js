@@ -1131,10 +1131,13 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
             var topicsUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=0,9,10;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
             $.getJSON(topicsUrl, function(data) {
                 var topics = [];
+                var allTopics = [];
                 for (var index = 0, count = data.items.length; index < count; ++index) {
                     var topic = data.items[index].item;
+                    var topicDetails = {id: topic.entityId, rev: topic.entityRevision};
+                    allTopics.push(topicDetails);
                     if (topic.entityRevision) {
-                        topics.push({id: topic.entityId, rev: topic.entityRevision});
+                        topics.push(topicDetails);
                     }
                 }
 
@@ -1145,7 +1148,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
                     jQuery.get("/dictionaries/en_US.aff", function(affData) {
                         jQuery.get("/dictionaries/en_US.dic", function(dicData) {
                             var dictionary = new Typo("en_US", affData, dicData);
-                            checkSpellingErrors(dictionary, topics, 0, 0);
+                            checkSpellingErrors(dictionary, allTopics, 0, 0);
                         })
                     });
                 }
