@@ -1163,7 +1163,10 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
     console.log("Checking spelling " + (index / topics.length * 100).toFixed(2) + "% done");
 
     if (index < topics.length) {
-        var topicUrl = SERVER + "/topic/get/json/" + topics[index].id + "/r/" + topics[index].rev;
+        var topicUrl = SERVER + "/topic/get/json/" + topics[index].id;
+        if (topics[index].rev) {
+            topicUrl += "/r/" + topics[index].rev;
+        }
         jQuery.getJSON(topicUrl, function(data) {
              try {
                 var xmlDoc = jQuery.parseXML();
