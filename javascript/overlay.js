@@ -1238,7 +1238,6 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
                              ++spellingErrors;
 
                              jQuery('<li><a href="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</a></li>').appendTo(jQuery("#spellingErrorsItems"));
-                             setTimeout(function() {checkWord(words, topic, ++wordIndex);}, 0)
 
                              /*
                                 This code will generate spelling suggestions, but this takes a long time to finish
@@ -1269,15 +1268,18 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
                                  }
                              }(topic, buttonParent));
                          } else {
-                             setTimeout(function() {checkWord(words, topic, ++wordIndex);}, 0)
-                         } */
+                             setTimeout(function() {checkWord(words, topic, ++wordIndex);}, 0) */
+                         }
+
+                         checkWord(words, topic, ++wordIndex);
                      }
                      else {
                          setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors);}, 0);
                      }
                  }
 
-                 setTimeout(function() {checkWord(words, topic, 0);}, 0);
+                setTimeout(function() {checkWord(words, topic, 0);}, 0);
+
              } catch (e) {
                  setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors);}, 0);
              }
