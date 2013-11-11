@@ -7,7 +7,7 @@
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384205661675" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384206699726" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384135183396" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -56,7 +56,7 @@
     <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/topic/base/BaseTopicXMLPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382058248165" ignored="false" />
     <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/topic/TopicReviewPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382058248165" ignored="false" />
     <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/topic/base/BaseTopicRenderedPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382058248165" ignored="false" />
-    <file path="/a.dummy" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382663679991" ignored="false" />
+    <file path="/a.dummy" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384206738183" ignored="false" />
     <file path="/PressZilla.user.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382657068623" ignored="false" />
     <file path="$PROJECT_DIR$/../PressGangCCMSREST/src/main/java/org/jboss/pressgang/ccms/server/rest/v1/TranslatedTopicV1Factory.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382301795436" ignored="false" />
     <file path="$PROJECT_DIR$/../PressGangCCMSRESTv1Common/pom.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382303255542" ignored="false" />
@@ -177,8 +177,10 @@
     <file path="/PressZillaProductPagesIntegration_v3.6.8.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384114781113" ignored="false" />
     <file path="/PressZillaProductPagesIntegration_v3.6.9.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384114971657" ignored="false" />
     <file path="/PressZillaProductPagesIntegration_v3.7.1.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384125221583" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/webapp/javascript/typojs/en_US.dic" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384205446470" ignored="false" />
-    <file path="/en_US.dic" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384206071960" ignored="false" />
+    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/webapp/javascript/typojs/en_US.dic" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384206694031" ignored="false" />
+    <file path="/en_US.dic" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384206694031" ignored="false" />
+    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/webapp/javascript/typojs/en_US-custom.dic" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384206624437" ignored="false" />
+    <file path="/en_US-custom.dic" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384206624437" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -411,7 +413,7 @@
       <file leaf-file-name="en_US.dic" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dictionaries/en_US.dic">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62841" column="3" selection-start="701675" selection-end="701675" vertical-scroll-proportion="0.9636804">
+            <state line="62850" column="5" selection-start="701745" selection-end="701745" vertical-scroll-proportion="0.9625468">
               <folding />
             </state>
           </provider>
@@ -2669,7 +2671,11 @@
       <created>1384205662659</created>
       <updated>1384205662659</updated>
     </task>
-    <option name="localTasksCounter" value="484" />
+    <task id="LOCAL-00484" summary="Updated dictionary">
+      <created>1384206096981</created>
+      <updated>1384206096981</updated>
+    </task>
+    <option name="localTasksCounter" value="485" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2679,6 +2685,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3997879" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2700,7 +2707,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TunnelliJ" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -3042,7 +3048,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dictionaries/en_US.dic">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62841" column="3" selection-start="701675" selection-end="701675" vertical-scroll-proportion="0.9636804">
+        <state line="62850" column="5" selection-start="701745" selection-end="701745" vertical-scroll-proportion="0.9625468">
           <folding />
         </state>
       </provider>
