@@ -1163,9 +1163,10 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
     console.log("Checking spelling " + (index / topics.length * 100).toFixed(2) + "% done");
 
     if (index < topics.length) {
-        var topicUrl = SERVER + "/topic/get/json/" + topics[index].id;
-        if (topics[index].rev) {
-            topicUrl += "/r/" + topics[index].rev;
+        var topic = topics[index];
+        var topicUrl = SERVER + "/topic/get/json/" + topic.id;
+        if (topic.rev) {
+            topicUrl += "/r/" + topic.rev;
         }
         jQuery.getJSON(topicUrl, function(data) {
              try {
@@ -1229,25 +1230,29 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
 
                          ++spellingErrors;
 
-                         dictionary.suggest(word, 5, function(suggestions) {
-
-                             var button = '<div class="btn-group" style="margin-bottom: 8px;">\
-                                 <button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</button>\
+                         var buttonParent = ('<div class="btn-group" style="margin-bottom: 8px;"></div>');
+                         var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</button>\
                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
                                      <span class="caret"></span>\
-                                 </button>\
-                                 <ul class="dropdown-menu" role="menu">';
+                                 </button>');
+                         jQuery(button).appendTo(buttonParent);
+                         jQuery(buttonParent).appendTo($("#spellingErrorsItems"));
+
+                         dictionary.suggest(word, 5, function(topic, buttonParent) {
+                             return function(suggestions) {
+
+
+                                 var dropDown = '<ul class="dropdown-menu" role="menu">';
 
                                  for (var suggestionsIndex = 0, suggestionsCount = suggestions.length; suggestionsIndex < suggestionsCount; ++suggestionsIndex) {
                                      button += '<li><a href="javascript:null">' + suggestions[suggestionsIndex] + '</a></li>';
                                  }
 
-                                 button += '</ul>\
-                                     </div>';
+                                 dropDown += '</ul>'
 
-
-                             jQuery(button).appendTo($("#spellingErrorsItems"));
-                         });
+                                 jQuery(dropDown).appendTo(buttonParent)
+                             }
+                         }(topic, buttonParent));
                      }
                  }
 
