@@ -1175,10 +1175,12 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
             topicUrl += "/r/" + topic.rev;
         }
         jQuery.getJSON(topicUrl, function(data) {
-             try {
+            try {
                 var xmlDoc = jQuery(jQuery.parseXML(data.xml));
                 jQuery("screen", xmlDoc).remove();
                 jQuery("programlisting", xmlDoc).remove();
+                jQuery("command", xmlDoc).remove();
+                jQuery("literal", xmlDoc).remove();
 
                 var text = xmlDoc.text();
 
