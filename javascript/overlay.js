@@ -1276,9 +1276,9 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
                      else {
                          setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors);}, 0);
                      }
-                 }
+                }
 
-                setTimeout(function() {checkWord(words, topic, 0);}, 0);
+                checkWord(words, topic, 0);
 
              } catch (e) {
                  setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors);}, 0);
