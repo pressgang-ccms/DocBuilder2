@@ -1138,12 +1138,15 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 
                 getTopicNodes(topics, 0);
 
-                jQuery.get("/dictionaries/en-US.aff", function(affData) {
-                    jQuery.get("/dictionaries/en-US.dic", function(dicData) {
-                        var dictionary = new Typo("en_US", affData, dicData);
-                        checkSpellingErrors(dictionary, topics, 0, 0);
-                    })
-                });
+                // the js file might not be included just yet in all builds
+                if (window.Typo) {
+                    jQuery.get("/dictionaries/en-US.aff", function(affData) {
+                        jQuery.get("/dictionaries/en-US.dic", function(dicData) {
+                            var dictionary = new Typo("en_US", affData, dicData);
+                            checkSpellingErrors(dictionary, topics, 0, 0);
+                        })
+                    });
+                }
             });
 
             getUpdatedTopics(specId);
