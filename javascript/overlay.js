@@ -1224,41 +1224,44 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
                  // replace any character that doesn't make up a word with a space, and then split on space
                  var words = text.replace(/[^a-zA-Z0-9'\\-]/g, ' ').split(/\s/);
 
-                 for (var wordIndex = 0, wordCount = words.length; wordIndex < wordCount; ++wordIndex) {
-                     var word = words[wordIndex];
-                     if (!dictionary.check(word)) {
+                 function checkWord(words, wordIndex) {
+                     if (wordIndex < words.length) {
+                         var word = words[wordIndex];
+                         if (!dictionary.check(word)) {
 
-                         ++spellingErrors;
+                             ++spellingErrors;
 
-                         var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
-                         var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</button>\
-                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
-                                     <span class="caret"></span>\
-                                 </button>');
-                         jQuery(button).appendTo(buttonParent);
-                         jQuery(buttonParent).appendTo($("#spellingErrorsItems"));
+                             var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
+                             var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</button>\
+                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
+                                         <span class="caret"></span>\
+                                     </button>');
+                             jQuery(button).appendTo(buttonParent);
+                             jQuery(buttonParent).appendTo($("#spellingErrorsItems"));
 
-                         dictionary.suggest(word, 5, function(topic, buttonParent) {
-                             return function(suggestions) {
-                                 var dropDown = '<ul class="dropdown-menu" role="menu">';
+                             dictionary.suggest(word, 5, function(topic, buttonParent) {
+                                 return function(suggestions) {
+                                     var dropDown = '<ul class="dropdown-menu" role="menu">';
 
-                                 for (var suggestionsIndex = 0, suggestionsCount = suggestions.length; suggestionsIndex < suggestionsCount; ++suggestionsIndex) {
-                                     dropDown += '<li><a href="javascript:null">' + suggestions[suggestionsIndex] + '</a></li>';
+                                     for (var suggestionsIndex = 0, suggestionsCount = suggestions.length; suggestionsIndex < suggestionsCount; ++suggestionsIndex) {
+                                         dropDown += '<li><a href="javascript:null">' + suggestions[suggestionsIndex] + '</a></li>';
+                                     }
+
+                                     dropDown += '</ul>'
+
+                                     jQuery(dropDown).appendTo(buttonParent);
+
+                                     checkWord(words, ++wordIndex);
                                  }
-
-                                 dropDown += '</ul>'
-
-                                 jQuery(dropDown).appendTo(buttonParent);
-
-                                 checkSpellingErrors(dictionary, topics, ++index, spellingErrors);
-                             }
-                         }(topic, buttonParent));
-                     } else {
-                        checkSpellingErrors(dictionary, topics, ++index, spellingErrors);
+                             }(topic, buttonParent));
+                         } else {
+                             checkWord(words, ++wordIndex);
+                         }
+                     }
+                     else {
+                         checkSpellingErrors(dictionary, topics, ++index, spellingErrors);
                      }
                  }
-
-
              } catch (e) {
                  checkSpellingErrors(dictionary, topics, ++index, spellingErrors);
              }
