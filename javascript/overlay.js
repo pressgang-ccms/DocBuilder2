@@ -1255,17 +1255,17 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
                                  }
                              }(topic, buttonParent));
                          } else {
-                             checkWord(words, topic, ++wordIndex);
+                             setTimeout(function() {checkWord(words, topic, ++wordIndex);}, 0)
                          }
                      }
                      else {
-                         checkSpellingErrors(dictionary, topics, ++index, spellingErrors);
+                         setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors);}, 0);
                      }
                  }
 
-                 checkWord(words, topic, 0);
+                 setTimeout(function() {checkWord(words, topic, 0);}, 0);
              } catch (e) {
-                 checkSpellingErrors(dictionary, topics, ++index, spellingErrors);
+                 setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors);}, 0);
              }
 
 
