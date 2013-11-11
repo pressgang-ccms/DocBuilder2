@@ -1229,24 +1229,25 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
 
                          ++spellingErrors;
 
-                         var suggestions = dictionary.suggest(word);
+                         dictionary.suggest(word, 5, function(suggestions){
 
-                         var button = '<div class="btn-group" style="margin-bottom: 8px;">\
-                             <button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</button>\
-                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
-                                 <span class="caret"></span>\
-                             </button>\
-                             <ul class="dropdown-menu" role="menu">';
+                             var button = '<div class="btn-group" style="margin-bottom: 8px;">\
+                                 <button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</button>\
+                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
+                                     <span class="caret"></span>\
+                                 </button>\
+                                 <ul class="dropdown-menu" role="menu">';
 
-                             for (var suggestionsIndex = 0, suggestionsCount = suggestions.length; suggestionsIndex < suggestionsCount; ++suggestionsIndex) {
-                                 button += '<li><a href="javascript:null">' + suggestions[suggestionsIndex] + '</a></li>';
-                             }
+                                 for (var suggestionsIndex = 0, suggestionsCount = suggestions.length; suggestionsIndex < suggestionsCount; ++suggestionsIndex) {
+                                     button += '<li><a href="javascript:null">' + suggestions[suggestionsIndex] + '</a></li>';
+                                 }
 
-                             button += '</ul>\
-                                 </div>';
+                                 button += '</ul>\
+                                     </div>';
 
 
-                         jQuery(button).appendTo($("#spellingErrorsItems"));
+                             jQuery(button).appendTo($("#spellingErrorsItems"));
+                         });
                      }
                  }
 
