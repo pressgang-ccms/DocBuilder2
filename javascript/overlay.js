@@ -1240,12 +1240,10 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
 
                          dictionary.suggest(word, 5, function(topic, buttonParent) {
                              return function(suggestions) {
-
-
                                  var dropDown = '<ul class="dropdown-menu" role="menu">';
 
                                  for (var suggestionsIndex = 0, suggestionsCount = suggestions.length; suggestionsIndex < suggestionsCount; ++suggestionsIndex) {
-                                     button += '<li><a href="javascript:null">' + suggestions[suggestionsIndex] + '</a></li>';
+                                     dropDown += '<li><a href="javascript:null">' + suggestions[suggestionsIndex] + '</a></li>';
                                  }
 
                                  dropDown += '</ul>'
