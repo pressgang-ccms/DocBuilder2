@@ -1262,9 +1262,13 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
                          checkSpellingErrors(dictionary, topics, ++index, spellingErrors);
                      }
                  }
+
+                 checkWord(words, 0);
              } catch (e) {
                  checkSpellingErrors(dictionary, topics, ++index, spellingErrors);
              }
+
+
         });
     } else {
         jQuery('#spellingErrors').append($('<span class="badge pull-right">' + spellingErrors + '</span>'));
