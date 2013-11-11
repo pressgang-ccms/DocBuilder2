@@ -1169,7 +1169,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
         }
         jQuery.getJSON(topicUrl, function(data) {
              try {
-                var xmlDoc = jQuery.parseXML();
+                var xmlDoc = jQuery.parseXML(data.xml);
                 var text = jQuery(xmlDoc).text();
 
                  // remove all xml/html elements
