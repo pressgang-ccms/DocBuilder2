@@ -1237,6 +1237,14 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
 
                              ++spellingErrors;
 
+                             jQuery('<li><a href="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</a></li>').appendTo(jQuery("#spellingErrorsItems"));
+                             setTimeout(function() {checkWord(words, topic, ++wordIndex);}, 0)
+
+                             /*
+                                This code will generate spelling suggestions, but this takes a long time to finish
+                                on a large document. The code is here for reference, but should be commented out.
+                              */
+                             /*
                              var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
                              var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</button>\
                                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
@@ -1262,7 +1270,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
                              }(topic, buttonParent));
                          } else {
                              setTimeout(function() {checkWord(words, topic, ++wordIndex);}, 0)
-                         }
+                         } */
                      }
                      else {
                          setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors);}, 0);
