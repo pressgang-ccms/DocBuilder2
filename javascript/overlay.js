@@ -1248,13 +1248,15 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
 
                                  dropDown += '</ul>'
 
-                                 jQuery(dropDown).appendTo(buttonParent)
+                                 jQuery(dropDown).appendTo(buttonParent);
+
+                                 checkSpellingErrors(dictionary, topics, ++index, spellingErrors);
                              }
                          }(topic, buttonParent));
                      }
                  }
 
-                 checkSpellingErrors(dictionary, topics, ++index, spellingErrors);
+
              } catch (e) {
                  checkSpellingErrors(dictionary, topics, ++index, spellingErrors);
              }
