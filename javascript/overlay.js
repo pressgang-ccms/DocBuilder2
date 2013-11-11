@@ -1224,7 +1224,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
                  // replace any character that doesn't make up a word with a space, and then split on space
                  var words = text.replace(/[^a-zA-Z0-9'\\-]/g, ' ').split(/\s/);
 
-                 function checkWord(words, wordIndex) {
+                 function checkWord(words, topic, wordIndex) {
                      if (wordIndex < words.length) {
                          var word = words[wordIndex];
                          if (!dictionary.check(word)) {
@@ -1255,7 +1255,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
                                  }
                              }(topic, buttonParent));
                          } else {
-                             checkWord(words, ++wordIndex);
+                             checkWord(words, topic, ++wordIndex);
                          }
                      }
                      else {
@@ -1263,7 +1263,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
                      }
                  }
 
-                 checkWord(words, 0);
+                 checkWord(words, topic, 0);
              } catch (e) {
                  checkSpellingErrors(dictionary, topics, ++index, spellingErrors);
              }
