@@ -1268,7 +1268,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
                                  }
                              }(topic, buttonParent));
                          } else {
-                             setTimeout(function() {checkWord(words, topic, ++wordIndex);}, 0) */
+                             checkWord(words, topic, ++wordIndex);*/
                          }
 
                          checkWord(words, topic, ++wordIndex);
