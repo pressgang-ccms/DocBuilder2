@@ -2639,7 +2639,7 @@ function buildMenu() {
     } else if (lastMenu == "topReusedTopics") {
         topReusedTopics.show();
         showMenu();
-    } else if (lastMenu == spellingErrors) {
+    } else if (lastMenu == "spellingErrors") {
         spellingErrors.show();
         showMenu();
     } else {
