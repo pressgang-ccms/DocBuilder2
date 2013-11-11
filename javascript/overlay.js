@@ -1119,103 +1119,251 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 
 		secondPassCalled = true;
 
-		// fire off rest queries requesting information on topics in batches
-		var topicBacthSize = 15;
-		var topicIdsString = "";
-		var delay = SECOND_PASS_REST_CALL_DELAY;
-		for (var index = 0, count = topicIds.length; index < count; ++index) {
-			if (topicIdsString.length != 0) {
-				topicIdsString += ",";
-			}
+        getTopicDetailsInBacthes();
 
-			topicIdsString += topicIds[index];
-
-			if (index != 0 && index % topicBacthSize == 0) {
-				++secondPassRESTCalls;
-				setTimeout(function(topicIdsString) {
-					return function() {
-						doSecondPassQuery(topicIdsString);
-					}
-				}(topicIdsString), delay);
-				delay += SECOND_PASS_REST_CALL_DELAY;
-				topicIdsString = "";
-			}
-		}
-
-		if (topicIdsString.length != 0) {
-			++secondPassRESTCalls;
-			setTimeout(function(topicIdsString) {
-				return function() {
-					doSecondPassQuery(topicIdsString);
-				}
-			}(topicIdsString), delay);
-		}
-
-		// get the spec id
-		var specId = getSpecIdFromURL();
-		if (specId) {
+        // get the spec id
+        var specId = getSpecIdFromURL();
+        if (specId) {
             getModifiedTopics(specId);
+
+            var topicsUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=0,9,10;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
+            $.getJSON(topicsUrl, function(data) {
+                var topics = [];
+                for (var index = 0, count = data.items.length; index < count; ++index) {
+                    var topic = data.items[index].item;
+                    if (topic.entityRevision) {
+                        topics.push({id: topic.entityId, rev: topic.entityRevision});
+                    }
+                }
+
+                getTopicNodes(topics, 0);
+
+                jQuery.get("/dictionaries/en-US.aff", function(affData) {
+                    jQuery.get("/dictionaries/en-US.dic", function(dicData) {
+                        var dictionary = new Typo("en_US", affData, dicData);
+                        checkSpellingErrors(dictionary, topics, 0, 0);
+                    })
+                });
+            });
+
             getUpdatedTopics(specId);
-		}
+            //getTopReusedTopics(specId);
+        }
 	}
 }
 
-function getUpdatedTopics(specId) {
-    function getTopicNodes(topics, count) {
-        if (topics.length != 0) {
-            var topic = topics.pop();
-            var topicNodesUrl = SERVER + "/contentspecnodes/get/json/query;csNodeEntityId=" + topic.id + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpec%22%7D%7D%5D%7D%5D%7D%0A%0A";
-            $.getJSON(topicNodesUrl, function(topicNodeData) {
-                var newerTopicRevisions = [];
-                for (var topicNodeIndex = 0, topicNodeCount = topicNodeData.items.length; topicNodeIndex < topicNodeCount; ++topicNodeIndex) {
-                    var topicNode = topicNodeData.items[topicNodeIndex].item;
-                    if (topicNode.contentSpec.id != specId) {
-                        if (topicNode.entityRevision && topicNode.entityRevision > topic.rev) {
-                            newerTopicRevisions.push({spec: topicNode.contentSpec.id, rev: topicNode.entityRevision});
+function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
+    console.log("Checking spelling " + (index / topics.length * 100).toFixed(2) + "% done");
+
+    if (index < topics.length) {
+        var topicUrl = SERVER + "/topic/get/json/" + topics[index].id + "/r/" + topics[index].rev;
+        jQuery.getJSON(topicUrl, function(data) {
+             try {
+                var xmlDoc = jQuery.parseXML();
+                var text = jQuery(xmlDoc).text();
+
+                 // remove all xml/html elements
+                 var tagRe = /<.*?>/;
+                 var tagMatch = null;
+                 while ((tagMatch = text.match(tagRe)) != null) {
+                     var tagLength = tagMatch[0].length;
+                     var replacementString = "";
+                     for (var i = 0; i < tagLength; ++i) {
+                         replacementString += " ";
+                     }
+                     text = text.replace(tagRe, replacementString);
+                 }
+
+                 // remove all xml/html entities
+                 var entityRe = /&.*?;/;
+                 var entityMatch = null;
+                 while ((entityMatch = text.match(entityRe)) != null) {
+                     var entityLength = entityMatch[0].length;
+                     var replacementString = "";
+                     for (var i = 0; i < entityLength; ++i) {
+                         replacementString += " ";
+                     }
+                     text = text.replace(entityRe, replacementString);
+                 }
+
+                 // remove all urls
+                 var urlRe = /\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/i;
+                 var urlMatch = null;
+                 while ((urlMatch = text.match(urlRe)) != null) {
+                     var urlLength = urlMatch[0].length;
+                     var replacementString = "";
+                     for (var i = 0; i < urlLength; ++i) {
+                         replacementString += " ";
+                     }
+                     text = text.replace(urlRe, replacementString);
+                 }
+
+                 // remove all numbers
+                 var numberRe = /\b\d+\b/;
+                 var numberMatch = null;
+                 while ((numberMatch = text.match(numberRe)) != null) {
+                     var numberLength = numberMatch[0].length;
+                     var replacementString = "";
+                     for (var i = 0; i < numberLength; ++i) {
+                         replacementString += " ";
+                     }
+                     text = text.replace(numberRe, replacementString);
+                 }
+
+                 // replace any character that doesn't make up a word with a space, and then split on space
+                 var words = text.replace(/[^a-zA-Z0-9'\\-]/g, ' ').split(/\s/);
+
+                 for (var wordIndex = 0, wordCount = words.length; wordIndex < wordCount; ++wordIndex) {
+                     var word = words[wordIndex];
+                     if (!dictionary.check(word)) {
+
+                         ++spellingErrors;
+
+                         var suggestions = dictionary.suggest(word);
+
+                         var button = '<div class="btn-group" style="margin-bottom: 8px;">\
+                             <button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</button>\
+                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
+                                 <span class="caret"></span>\
+                             </button>\
+                             <ul class="dropdown-menu" role="menu">';
+
+                             for (var suggestionsIndex = 0, suggestionsCount = suggestions.length; suggestionsIndex < suggestionsCount; ++suggestionsIndex) {
+                                 button += '<li><a href="javascript:null">' + suggestions[suggestionsIndex] + '</a></li>';
+                             }
+
+                             button += '</ul>\
+                                 </div>';
+
+
+                         jQuery(button).appendTo($("#spellingErrorsItems"));
+                     }
+                 }
+
+                 checkSpellingErrors(topics, ++index, spellingErrors);
+             } catch (e) {
+                 checkSpellingErrors(topics, ++index, spellingErrors);
+             }
+        });
+    } else {
+        jQuery('#spellingErrors').append($('<span class="badge pull-right">' + spellingErrors + '</span>'));
+    }
+}
+
+function getTopReusedTopics(specId) {
+    var specProductUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=7;contentSpecIds=" + specId + "?expand=" + encodeURIComponent("{\"branches\":[{\"trunk\":{\"name\": \"nodes\"}}]}");
+    jQuery.getJSON(specProductUrl, function(data) {
+        for (var nodeIndex = 0, nodeCount = data.items.length; nodeIndex < nodeCount; ++nodeIndex) {
+            var node = data.items[nodeIndex].item;
+            if (node.title == "Product") {
+                var product = node.additionalText;
+
+                var specsUrl = SERVER + "/contentspecs/get/json/query;contentSpecProduct=" + encodeURIComponent(product) + "?expand=" + encodeURIComponent("{\"branches\":[{\"trunk\":{\"name\": \"contentSpecs\"}, \"branches\":[{\"trunk\":{\"name\": \"topics\"}, \"branches\":[{\"trunk\":{\"name\": \"contentSpecs_OTM\"}}]}]}]}]}");
+
+                jQuery.getJSON(specsUrl, function(specData) {
+                    var relatedContentSpecs = [];
+                    for (var specIndex = 0, specCount = specData.items.length; specIndex < specCount; ++specIndex) {
+                        var spec =  specData.items[specIndex].item;
+                        for (var topicIndex = 0, topicCount = spec.topics.items.length; topicIndex < topicCount; ++topicIndex) {
+                            var topic = spec.topics.items[topicIndex].item;
+                            for (var specIndex2 = 0, specCount2 = topic.contentSpecs_OTM.items.length; specIndex2 < specCount2; ++specIndex2) {
+                                var spec2 = topic.contentSpecs_OTM.items[specIndex2];
+                                if (jQuery.inArray(spec2.id, relatedContentSpecs) == -1) {
+                                    relatedContentSpecs.push(spec2.id);
+                                }
+                            }
                         }
                     }
+                });
+
+                break;
+            }
+        }
+    });
+}
+
+/**
+ * Every topic that has been found in the book has its details populated by a series
+ * of batched REST requests delayed to help prevent high load on the server.
+ */
+function getTopicDetailsInBacthes() {
+    // fire off rest queries requesting information on topics in batches
+    var topicBacthSize = 15;
+    var topicIdsString = "";
+    var delay = SECOND_PASS_REST_CALL_DELAY;
+    for (var index = 0, count = topicIds.length; index < count; ++index) {
+        if (topicIdsString.length != 0) {
+            topicIdsString += ",";
+        }
+
+        topicIdsString += topicIds[index];
+
+        if (index != 0 && index % topicBacthSize == 0) {
+            ++secondPassRESTCalls;
+            setTimeout(function(topicIdsString) {
+                return function() {
+                    doSecondPassQuery(topicIdsString);
                 }
-
-                if (newerTopicRevisions.length != 0) {
-                    var button = '<div class="btn-group" style="margin-bottom: 8px;">\
-                        <button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">Topic: ' + topic.id + ' Rev: ' + topic.rev + '</button>\
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
-                            <span class="caret"></span>\
-                        </button>\
-                        <ul class="dropdown-menu" role="menu">';
-
-                    for (var newerTopicRevisionIndex = 0, newerTopicRevisionCount = newerTopicRevisions.length; newerTopicRevisionIndex < newerTopicRevisionCount; ++newerTopicRevisionIndex) {
-                        button += '<li><a href="http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#TopicHistoryView;' + topic.id + ';' + topic.rev + ';' + newerTopicRevisions[newerTopicRevisionIndex].rev + '">Spec: ' + newerTopicRevisions[newerTopicRevisionIndex].spec + " Rev: " + newerTopicRevisions[newerTopicRevisionIndex].rev + '</a></li>';
-                    }
-
-                    button += '</ul>\
-                        </div>';
-
-                    $(button).appendTo($("#topicsUpdatedInOtherSpecsItems"));
-
-                    ++count;
-                }
-
-                getTopicNodes(topics, count);
-            });
-        } else {
-            $('#topicsUpdatedInOtherSpecs').append($('<span class="badge pull-right">' + count + '</span>'));
+            }(topicIdsString), delay);
+            delay += SECOND_PASS_REST_CALL_DELAY;
+            topicIdsString = "";
         }
     }
 
-    var topicsUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=0,9,10;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
-    $.getJSON(topicsUrl, function(data) {
-        var topics = [];
-        for (var index = 0, count = data.items.length; index < count; ++index) {
-            var topic = data.items[index].item;
-            if (topic.entityRevision) {
-                topics.push({id: topic.entityId, rev: topic.entityRevision});
+    // query the remaining topics not picked up in the for loop above
+    if (topicIdsString.length != 0) {
+        ++secondPassRESTCalls;
+        setTimeout(function(topicIdsString) {
+            return function() {
+                doSecondPassQuery(topicIdsString);
             }
-        }
-
-        getTopicNodes(topics, 0);
-    });
+        }(topicIdsString), delay);
+    }
 }
+
+function getTopicNodes(topics, count) {
+    if (topics.length != 0) {
+        var topic = topics.pop();
+        var topicNodesUrl = SERVER + "/contentspecnodes/get/json/query;csNodeEntityId=" + topic.id + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpec%22%7D%7D%5D%7D%5D%7D%0A%0A";
+        $.getJSON(topicNodesUrl, function(topicNodeData) {
+            var newerTopicRevisions = [];
+            for (var topicNodeIndex = 0, topicNodeCount = topicNodeData.items.length; topicNodeIndex < topicNodeCount; ++topicNodeIndex) {
+                var topicNode = topicNodeData.items[topicNodeIndex].item;
+                if (topicNode.contentSpec.id != specId) {
+                    if (topicNode.entityRevision && topicNode.entityRevision > topic.rev) {
+                        newerTopicRevisions.push({spec: topicNode.contentSpec.id, rev: topicNode.entityRevision});
+                    }
+                }
+            }
+
+            if (newerTopicRevisions.length != 0) {
+                var button = '<div class="btn-group" style="margin-bottom: 8px;">\
+                    <button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">Topic: ' + topic.id + ' Rev: ' + topic.rev + '</button>\
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
+                        <span class="caret"></span>\
+                    </button>\
+                    <ul class="dropdown-menu" role="menu">';
+
+                for (var newerTopicRevisionIndex = 0, newerTopicRevisionCount = newerTopicRevisions.length; newerTopicRevisionIndex < newerTopicRevisionCount; ++newerTopicRevisionIndex) {
+                    button += '<li><a href="http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#TopicHistoryView;' + topic.id + ';' + topic.rev + ';' + newerTopicRevisions[newerTopicRevisionIndex].rev + '">Spec: ' + newerTopicRevisions[newerTopicRevisionIndex].spec + " Rev: " + newerTopicRevisions[newerTopicRevisionIndex].rev + '</a></li>';
+                }
+
+                button += '</ul>\
+                    </div>';
+
+                $(button).appendTo($("#topicsUpdatedInOtherSpecsItems"));
+
+                ++count;
+            }
+
+            getTopicNodes(topics, count);
+        });
+    } else {
+        $('#topicsUpdatedInOtherSpecs').append($('<span class="badge pull-right">' + count + '</span>'));
+    }
+}
+
+
 
 function getModifiedTopics(specId) {
     // get content spec revisions
@@ -1877,7 +2025,7 @@ function showMenu() {
  */
 function hideMenu() {
 	document.body.style.margin = "0px auto";
-    jQuery("#timelineChartDiv").css("display", "none");;
+    jQuery("#timelineChartDiv").css("display", "none");
     jQuery("#pressgangschedulelegend").css("display", "none");
     jQuery("#pressgangscheduleprocessname").css("display", "none");
     jQuery("#productpagestodaybutton").css("display", "none");
@@ -1912,6 +2060,7 @@ function buildMenu() {
 						<li data-pressgangtopic="24800" style="background-color: white"><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">Licenses</a></li>\
 						<li data-pressgangtopic="24787" style="background-color: white"><a id="bugzillaBugs" href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">Bugzilla Bugs</a></li>\
 						<li data-pressgangtopic="24789" style="background-color: white"><a id="topicsUpdatedInOtherSpecs" href="javascript:hideAllMenus(); topicsUpdatedInOtherSpecs.show(); localStorage.setItem(\'lastMenu\', \'topicsUpdatedInOtherSpecs\');">Updated Topics</a></li>\
+						<li data-pressgangtopic="00000" style="background-color: white"><a id="spellingErrors" href="javascript:hideAllMenus(); spellingErrors.show(); localStorage.setItem(\'lastMenu\', \'spellingErrors\');">Spelling Errors</a></li>\
 						<li data-pressgangtopic="24805" style="background-color: white"><a href="' + BUG_LINK + '&cf_build_id=Content%20Spec%20ID:%20' + SPEC_ID + '">Report a bug</a></li>\
 					</ul>\
 				</div>\
@@ -1919,6 +2068,32 @@ function buildMenu() {
 		</div>')
 	$(document.body).append(mainMenu);
     sideMenus.push(mainMenu);
+
+    spellingErrors = $('\
+		<div data-pressgangtopic="0000" class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">' + help + 'Spelling Errors</div>\
+				<div id="topicsRemovedSincePanel" class="panel-body ">\
+		            <ul id="spellingErrorsItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+    $(document.body).append(spellingErrors);
+    sideMenus.push(spellingErrors);
+
+    topReusedTopics = $('\
+		<div data-pressgangtopic="0000" class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">' + help + 'Top Reused Topics</div>\
+				<div id="topicsRemovedSincePanel" class="panel-body ">\
+		            <ul id="topReusedTopicsItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+    $(document.body).append(topReusedTopics);
+    sideMenus.push(topReusedTopics);
 
     topicsUpdatedInOtherSpecs = $('\
 		<div data-pressgangtopic="24789" class="panel panel-default pressgangMenu">\
@@ -2446,6 +2621,12 @@ function buildMenu() {
         showMenu();
     } else if (lastMenu == "topicsUpdatedInOtherSpecs") {
         topicsUpdatedInOtherSpecs.show();
+        showMenu();
+    } else if (lastMenu == "topReusedTopics") {
+        topReusedTopics.show();
+        showMenu();
+    } else if (lastMenu == spellingErrors) {
+        spellingErrors.show();
         showMenu();
     } else {
 		menuIcon.show();
