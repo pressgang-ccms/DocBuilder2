@@ -1253,6 +1253,8 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
                                  checkSpellingErrors(dictionary, topics, ++index, spellingErrors);
                              }
                          }(topic, buttonParent));
+                     } else {
+                        checkSpellingErrors(dictionary, topics, ++index, spellingErrors);
                      }
                  }
 
