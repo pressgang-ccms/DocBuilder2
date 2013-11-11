@@ -1230,7 +1230,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
 
                          ++spellingErrors;
 
-                         var buttonParent = ('<div class="btn-group" style="margin-bottom: 8px;"></div>');
+                         var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
                          var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</button>\
                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
                                      <span class="caret"></span>\
