@@ -547,7 +547,7 @@ typoPrototype = {
 			}
 
 			for (var i = 0; i < numWorkers; ++i) {
-				var worker = new Worker("javascript/wordprocessor.js");
+				var worker = new Worker("/javascript/wordprocessor.js");
 				worker.addEventListener('message', function (index) {
 					return function (e) {
 						rv = rv.concat(e.data);

@@ -1229,7 +1229,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors) {
 
                          ++spellingErrors;
 
-                         dictionary.suggest(word, 5, function(suggestions){
+                         dictionary.suggest(word, 5, function(suggestions) {
 
                              var button = '<div class="btn-group" style="margin-bottom: 8px;">\
                                  <button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + word + '</button>\
