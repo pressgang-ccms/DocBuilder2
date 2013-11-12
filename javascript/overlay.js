@@ -1178,6 +1178,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
             try {
                 var xmlDoc = jQuery(jQuery.parseXML(data.xml));
 
+                // These docbook elements will commonly contain words that are not found in the dictionary.
                 var doNotSpellCheck = [
                     "parameter",
                     "screen",
