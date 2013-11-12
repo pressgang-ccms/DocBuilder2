@@ -275,7 +275,7 @@
 
                 logToConsole("Getting Schedules");
 
-                var solutionsUrl = "https://pp.engineering.redhat.com/pp/action/explorer/" + id + "/all/cpe,schedule/";
+                var solutionsUrl = "http://pp.engineering.redhat.com/pp/action/explorer/" + id + "/all/cpe,schedule/";
 
                 (function (count) {
 
