@@ -225,7 +225,7 @@
             var versionSelect = jQuery('#version');
             versionSelect.css("display", "none");
 
-            var title = jQuery('#short_desc');
+            var shortDesc = jQuery('#short_desc');
             var comment = jQuery('#comment');
             var commit = jQuery('#commit');
 
@@ -262,12 +262,11 @@
 
             createForm.append(componentSelect);
             createForm.append(versionSelect);
-            createForm.append(shortDesc);
             createForm.append(assignedTo);
             createForm.append(cfBuildId);
             createForm.append(cfEnvironment);
             createForm.append(hidden);
-            createForm.find('#TitleCell').append(title);
+            createForm.find('#TitleCell').append(shortDesc);
             createForm.find('#CommentCell').append(comment);
             createForm.find('#SubmittCell').append(commit);
 
