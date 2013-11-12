@@ -224,8 +224,6 @@
             componentSelect.css("display", "none");
             var versionSelect = jQuery('#version');
             versionSelect.css("display", "none");
-            var shortDesc = jQuery('#short_desc');
-            shortDesc.css("display", "none");
 
             var title = jQuery('#short_desc');
             var comment = jQuery('#comment');
