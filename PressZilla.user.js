@@ -11,14 +11,14 @@
 // @require     http://code.jquery.com/jquery-2.0.3.min.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaCommonUtils_v2.1.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaKeywordExtraction_v2.2.8.js
-// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaIntegration_v2.1.js
+// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaIntegration_v3.7.8.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaSolutionsIntegration_v2.7.1.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaMojoIntegration_v2.6.8.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaSearchIntegration_v3.4.5.js
 // @require		http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaPnTIntegration_v2.7.4.js
-// @require		http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaProductPagesIntegration_v3.7.5.js
-// @version     3.7.5
+// @require		http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaProductPagesIntegration_v3.7.9.js
+// @version     3.7.9
 // @grant       GM_xmlhttpRequest
 // @grant       unsafeWindow
 // @downloadURL https://docbuilder.usersys.redhat.com/PressZilla.user.js

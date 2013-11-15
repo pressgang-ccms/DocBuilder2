@@ -54,7 +54,7 @@
 
                 var bzURLRegex = /.*?(&|\?)comment=(.*?)(&|$)/;
                 var match = bzURLRegex.exec(iframeSrc);
-                iframeSrc = iframeSrc.replace("comment=" + match[2], "comment=" + encodeURIComponent("Selected Text: \"" + text + "\"\n\nBug Details: ") + "&short_desc==" + encodeURIComponent("PressZilla Bug"));
+                iframeSrc = iframeSrc.replace("comment=" + match[2], "comment=" + encodeURIComponent("Selected Text: \"" + text + "\"\n\nBug Details: ") + "&short_desc=" + encodeURIComponent("PressZilla Bug"));
 
                 logToConsole(iframeSrc);
 
@@ -224,9 +224,8 @@
             componentSelect.css("display", "none");
             var versionSelect = jQuery('#version');
             versionSelect.css("display", "none");
-            var shortDesc = jQuery('#short_desc');
-            shortDesc.css("display", "none");
 
+            var shortDesc = jQuery('#short_desc');
             var comment = jQuery('#comment');
             var commit = jQuery('#commit');
 
@@ -246,6 +245,10 @@
                     <form id="Create" class="enter_bug_form" onsubmit="return validateEnterBug(this)" enctype="multipart/form-data" action="post_bug.cgi" method="post" name="Create">\
                         <table>\
                             <tr>\
+                                <td id="TitleCell">\
+                                </td>\
+                            </tr>\
+                            <tr>\
                                 <td id="CommentCell">\
                                 </td>\
                             </tr>\
@@ -259,11 +262,11 @@
 
             createForm.append(componentSelect);
             createForm.append(versionSelect);
-            createForm.append(shortDesc);
             createForm.append(assignedTo);
             createForm.append(cfBuildId);
             createForm.append(cfEnvironment);
             createForm.append(hidden);
+            createForm.find('#TitleCell').append(shortDesc);
             createForm.find('#CommentCell').append(comment);
             createForm.find('#SubmittCell').append(commit);
 
