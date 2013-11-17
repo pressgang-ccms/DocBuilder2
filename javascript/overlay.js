@@ -1193,7 +1193,8 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                     "filename",
                     "replaceable",
                     "code",
-                    "option"
+                    "option",
+                    "classname"
                 ];
 
                 for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
