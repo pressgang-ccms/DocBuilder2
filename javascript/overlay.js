@@ -953,7 +953,7 @@ function setupEvents(linkDiv, popover) {
 }
 
 /*
- * Finds all the topic ids in a document and adds the topic id to the bottom of the title.
+ * Finds all the topic ids in a document and adds the icons under the topic
  */
 function firstPass() {
     var foundTopics = {};
@@ -1178,6 +1178,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
             try {
                 var xmlDoc = jQuery(jQuery.parseXML(data.xml));
 
+                // These docbook elements will commonly contain words that are not found in the dictionary.
                 var doNotSpellCheck = [
                     "parameter",
                     "screen",
@@ -1190,7 +1191,9 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                     "guibutton",
                     "guilabel",
                     "filename",
-                    "replaceable"
+                    "replaceable",
+                    "code",
+                    "option"
                 ];
 
                 for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
@@ -1861,6 +1864,12 @@ function doSecondPassQuery(topicIdsString) {
 	});
 }
 
+/**
+ * The third pass is done once every topic has been returned and the details extracted from them. We can then
+ * read this information display some additional reports.
+ * @param mySecondPassDone
+ * @param mySpecHistoryDone
+ */
 function thirdPass(mySecondPassDone, mySpecHistoryDone) {
 	if (mySecondPassDone) {
 		secondPassDone = true;
