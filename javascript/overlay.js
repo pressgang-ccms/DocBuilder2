@@ -1197,6 +1197,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                     "classname"
                 ];
 
+                // remove these elements
                 for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
                     jQuery(doNotSpellCheck[elementIndex], xmlDoc).remove();
                 }
@@ -1251,8 +1252,11 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                     text = text.replace(numberRe, replacementString);
                 }
 
+                // replace any character that doesn't make up a word with a space, and then split on space
+                text = text.replace(/[^a-zA-Z0-9'\\-]/g, ' ');
+
                 // remove all dashes
-                var dashRe = /\b-\b/;
+                var dashRe = /\s+-\s+/;
                 var dashMatch = null;
                 while ((dashMatch = text.match(dashRe)) != null) {
                     var dashLength = dashMatch[0].length;
@@ -1263,8 +1267,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                     text = text.replace(dashRe, replacementString);
                 }
 
-                // replace any character that doesn't make up a word with a space, and then split on space
-                var words = text.replace(/[^a-zA-Z0-9'\\-]/g, ' ').split(/\s/);
+                var words = text.split(/\s/);
 
                 function checkWord(words, topic, wordIndex) {
                     if (wordIndex < words.length) {
