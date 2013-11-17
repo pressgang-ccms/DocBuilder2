@@ -1194,7 +1194,8 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                     "replaceable",
                     "code",
                     "option",
-                    "classname"
+                    "classname",
+                    "term"
                 ];
 
                 // remove these elements
