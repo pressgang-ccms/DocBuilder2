@@ -1268,6 +1268,19 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                     text = text.replace(numberRe, replacementString);
                 }
 
+                // remove the quotes around words
+                var quoteRe = /'.*?'/;
+                var quoteMatch = null;
+                while ((quoteMatch = text.match(quoteRe)) != null) {
+                    var numberLength = quoteMatch[0].length;
+                    var replacementString = "";
+                    for (var i = 0; i < numberLength; ++i) {
+                        replacementString += " ";
+                    }
+                    text = text.replace(quoteRe, replacementString);
+                }
+
+
                 var words = text.split(/\s/);
 
                 function checkWord(words, topic, wordIndex) {
