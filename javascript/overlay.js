@@ -1243,8 +1243,8 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                 // replace any character that doesn't make up a word with a space, and then split on space
                 text = text.replace(/[^a-zA-Z0-9'\\-]/g, ' ');
 
-                // remove all dashes
-                var dashRe = /\s+-\s+/;
+                // remove all stand alone characters
+                var dashRe = /\s+[^A-Za-z0-9]\s+/;
                 var dashMatch = null;
                 while ((dashMatch = text.match(dashRe)) != null) {
                     var dashLength = dashMatch[0].length;
