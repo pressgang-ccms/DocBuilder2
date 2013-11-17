@@ -1241,7 +1241,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                 }
 
                 // remove all numbers
-                var numberRe = /\b\d+\b/;
+                var numberRe = /\s+\d+\s+/;
                 var numberMatch = null;
                 while ((numberMatch = text.match(numberRe)) != null) {
                     var numberLength = numberMatch[0].length;
