@@ -1269,14 +1269,11 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                 }
 
                 // remove the quotes around words
-                var quoteRe = /'.*?'/;
+                var quoteRe = /'(.*?)'/;
                 var quoteMatch = null;
                 while ((quoteMatch = text.match(quoteRe)) != null) {
                     var numberLength = quoteMatch[0].length;
-                    var replacementString = "";
-                    for (var i = 0; i < numberLength; ++i) {
-                        replacementString += " ";
-                    }
+                    var replacementString = " " + quoteMatch[1] + " ";
                     text = text.replace(quoteRe, replacementString);
                 }
 
