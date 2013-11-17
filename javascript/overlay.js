@@ -1240,18 +1240,6 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                     text = text.replace(urlRe, replacementString);
                 }
 
-                // remove all numbers
-                var numberRe = /\s+\d+\s+/;
-                var numberMatch = null;
-                while ((numberMatch = text.match(numberRe)) != null) {
-                    var numberLength = numberMatch[0].length;
-                    var replacementString = "";
-                    for (var i = 0; i < numberLength; ++i) {
-                        replacementString += " ";
-                    }
-                    text = text.replace(numberRe, replacementString);
-                }
-
                 // replace any character that doesn't make up a word with a space, and then split on space
                 text = text.replace(/[^a-zA-Z0-9'\\-]/g, ' ');
 
@@ -1265,6 +1253,18 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                         replacementString += " ";
                     }
                     text = text.replace(dashRe, replacementString);
+                }
+
+                // remove all numbers
+                var numberRe = /\s+\d+\s+/;
+                var numberMatch = null;
+                while ((numberMatch = text.match(numberRe)) != null) {
+                    var numberLength = numberMatch[0].length;
+                    var replacementString = "";
+                    for (var i = 0; i < numberLength; ++i) {
+                        replacementString += " ";
+                    }
+                    text = text.replace(numberRe, replacementString);
                 }
 
                 var words = text.split(/\s/);
