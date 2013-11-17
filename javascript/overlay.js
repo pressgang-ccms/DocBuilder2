@@ -1244,7 +1244,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                 text = text.replace(/[^a-zA-Z0-9'\\-]/g, ' ');
 
                 // remove all stand alone characters
-                var dashRe = /\s+[^A-Za-z0-9]\s+/;
+                var dashRe = /\s+-\s+/;
                 var dashMatch = null;
                 while ((dashMatch = text.match(dashRe)) != null) {
                     var dashLength = dashMatch[0].length;
