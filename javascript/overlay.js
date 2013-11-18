@@ -1182,10 +1182,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
             try {
                 var xmlDoc = jQuery(jQuery.parseXML(data.xml));
 
-                var doubleWordText = xmlDoc.text();
 
-                // We split the string up now to look for doubled words
-                var doubledWords = doubleWordText.split(/\s+/);
 
                 // These docbook elements will commonly contain words that are not found in the dictionary.
                 var doNotSpellCheck = [
@@ -1207,24 +1204,21 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                     "term"
                 ];
 
-                // remove these elements
+                // for double word detection we want XML elements in place, we just don't want the contents of these
+                // elements
+                for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
+                    jQuery(doNotSpellCheck[elementIndex], xmlDoc).text("|");
+                }
+
+                // We split the string up now to look for doubled words
+                var doubledWords = xmlDoc.text().split(/\s+/);
+
+                // For spell checking, we don't want these elements at all
                 for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
                     jQuery(doNotSpellCheck[elementIndex], xmlDoc).remove();
                 }
 
                 var text = xmlDoc.text();
-
-                // remove all xml/html elements
-                var tagRe = /<.*?>/;
-                var tagMatch = null;
-                while ((tagMatch = text.match(tagRe)) != null) {
-                    var tagLength = tagMatch[0].length;
-                    var replacementString = "";
-                    for (var i = 0; i < tagLength; ++i) {
-                        replacementString += " ";
-                    }
-                    text = text.replace(tagRe, replacementString);
-                }
 
                 // remove all xml/html entities
                 var entityRe = /&.*?;/;
