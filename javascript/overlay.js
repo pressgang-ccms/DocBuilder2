@@ -1199,7 +1199,8 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                     "secondary",
                     "guimenu",
                     "guimenuitem",
-                    "listitem"
+                    "listitem",
+                    "ulink"
                 ];
 
                 for (var elementIndex = 0, elementCount = addDoubleWordBreaks.length; elementIndex < elementCount; ++elementIndex) {
