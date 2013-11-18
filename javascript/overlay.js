@@ -1184,7 +1184,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                 // before spellchecking, and set to text that is skipped for double word checking.
                 // but having the comment replaced means that there is a break in a double word.
 
-                var fixedXML = data.xml.replace(/<!--\s*Inject\s*:.*?-->/g, "<literal> | </literal>");
+                var fixedXML = data.xml.replace(/<\!--\s*Inject\s*:.*?-->/g, "<literal> | </literal>");
 
                 var xmlDoc = jQuery(jQuery.parseXML(fixedXML));
 
