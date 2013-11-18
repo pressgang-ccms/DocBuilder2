@@ -1185,14 +1185,15 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                 // but having the comment replaced means that there is a break in a double word.
                 var fixedXML = data.xml.replace(/<\!--\s*Inject\s*:.*?-->/g, "<literal></literal>");
 
-                // now add a literal after a title. This splits up text like
+                // now add a literal after a title and an entry. This splits up text like:
                 // How to use Snapshots
                 // Snaphots are blah blah
+                // and tables with adjacent cells like
+                // Supported | Supported
                 fixedXML = fixedXML.replace(/<\/title>/g, "</title><literal></literal>");
+                fixedXML = fixedXML.replace(/<\/entry>/g, "</entry><literal></literal>");
 
                 var xmlDoc = jQuery(jQuery.parseXML(fixedXML));
-
-
 
                 // These docbook elements will commonly contain words that are not found in the dictionary.
                 var doNotSpellCheck = [
