@@ -1257,7 +1257,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                 }
 
                 // remove anything that does not contain a letter
-                var numberRe = /\b[^A-Za-z\s]*\b/;
+                var numberRe = /\b[^A-Za-z\s]+\b/;
                 var numberMatch = null;
                 while ((numberMatch = text.match(numberRe)) != null) {
                     var numberLength = numberMatch[0].length;
