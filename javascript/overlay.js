@@ -2205,7 +2205,7 @@ function buildMenu() {
     doubledWords = $('\
 		<div data-pressgangtopic="0000" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Doubled Words</div>\
-				<div id="topicsRemovedSincePanel" class="panel-body ">\
+				<div class="panel-body ">\
 		            <ul id="doubledWordsErrorsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
 					</ul>\
@@ -2218,7 +2218,7 @@ function buildMenu() {
     spellingErrors = $('\
 		<div data-pressgangtopic="0000" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Spelling Errors</div>\
-				<div id="topicsRemovedSincePanel" class="panel-body ">\
+				<div class="panel-body ">\
 		            <ul id="spellingErrorsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
 					</ul>\
@@ -2231,7 +2231,7 @@ function buildMenu() {
     topReusedTopics = $('\
 		<div data-pressgangtopic="0000" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Top Reused Topics</div>\
-				<div id="topicsRemovedSincePanel" class="panel-body ">\
+				<div class="panel-body ">\
 		            <ul id="topReusedTopicsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
 					</ul>\
@@ -2244,7 +2244,7 @@ function buildMenu() {
     topicsUpdatedInOtherSpecs = $('\
 		<div data-pressgangtopic="24789" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Updated Topics</div>\
-				<div id="topicsRemovedSincePanel" class="panel-body ">\
+				<div class="panel-body ">\
 		            <ul id="topicsUpdatedInOtherSpecsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
 					</ul>\
