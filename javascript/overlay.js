@@ -1222,7 +1222,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                 }
 
                 // We split the string up now to look for doubled words
-                var doubledWords = text.split(/s+/);
+                var doubledWords = text.split(/\s+/);
 
                 // remove all xml/html entities
                 var entityRe = /&.*?;/;
