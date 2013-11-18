@@ -1171,7 +1171,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
         jQuery("#spellingErrorsBadge").remove();
         jQuery("#doubledWordsErrorsBadge").remove();
         jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrors + ' (' + (index / topics.length * 100).toFixed(2) + '% complete)</span>'));
-        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubledWords + ' (' + (index / topics.length * 100).toFixed(2) + '% complete)</span>'));
+        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (' + (index / topics.length * 100).toFixed(2) + '% complete)</span>'));
 
         var topic = topics[index];
         var topicUrl = SERVER + "/topic/get/json/" + topic.id;
