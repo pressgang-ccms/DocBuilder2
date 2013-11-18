@@ -1923,6 +1923,8 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
 
 	if (secondPassDone && specHistoryDone) {
 
+        console.log("Starting Third Pass");
+
         // get the spec id
         var specId = getSpecIdFromURL();
         if (specId) {
