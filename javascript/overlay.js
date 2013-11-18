@@ -1183,10 +1183,16 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                 // find any injection comments and replace them with a literal. These will be removed
                 // before spellchecking, and set to text that is skipped for double word checking.
                 // but having the comment replaced means that there is a break in a double word.
-
                 var fixedXML = data.xml.replace(/<\!--\s*Inject\s*:.*?-->/g, "<literal></literal>");
 
+                // now add a literal after a title. This splits up text like
+                // How to use Snapshots
+                // Snaphots are blah blah
+                fixedXML = fixedXML.replace(/<\/title>/g, "</title><literal></literal>");
+
                 var xmlDoc = jQuery(jQuery.parseXML(fixedXML));
+
+
 
                 // These docbook elements will commonly contain words that are not found in the dictionary.
                 var doNotSpellCheck = [
