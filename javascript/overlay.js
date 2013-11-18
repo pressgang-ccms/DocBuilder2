@@ -1182,6 +1182,9 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
             try {
                 var xmlDoc = jQuery(jQuery.parseXML(data.xml));
 
+                // We split the string up now to look for doubled words
+                var doubledWords = xmlDoc.text().split(/\s+/);
+
                 // These docbook elements will commonly contain words that are not found in the dictionary.
                 var doNotSpellCheck = [
                     "parameter",
@@ -1202,16 +1205,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                     "term"
                 ];
 
-                // for double word detection we want XML elements in place, we just don't want the contents of these
-                // elements
-                for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
-                    jQuery(doNotSpellCheck[elementIndex], xmlDoc).text("|");
-                }
-
-                // We split the string up now to look for doubled words
-                var doubledWords = xmlDoc.text().split(/\s+/);
-
-                // For spell checking, we don't want these elements at all
+                // remove these elements
                 for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
                     jQuery(doNotSpellCheck[elementIndex], xmlDoc).remove();
                 }
