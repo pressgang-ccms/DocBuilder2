@@ -1150,7 +1150,9 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
                             var dictionary = new Typo("en_US", affData, dicData);
 
                             jQuery("#spellingErrorsBadge").remove();
+                            jQuery("#doubledWordsErrorsBadge").remove();
                             jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">0 (0% complete)</span>'));
+                            jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">0 (0% complete)</span>'));
 
                             checkSpellingErrors(dictionary, allTopics, 0, 0, 0, {}, {});
                         })
@@ -1167,7 +1169,9 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
     if (index < topics.length) {
 
         jQuery("#spellingErrorsBadge").remove();
+        jQuery("#doubledWordsErrorsBadge").remove();
         jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrors + ' (' + (index / topics.length * 100).toFixed(2) + '% complete)</span>'));
+        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + spellingErrors + ' (' + (index / topics.length * 100).toFixed(2) + '% complete)</span>'));
 
         var topic = topics[index];
         var topicUrl = SERVER + "/topic/get/json/" + topic.id;
@@ -1362,7 +1366,9 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
         });
     } else {
         jQuery("#spellingErrorsBadge").remove();
+        jQuery("#doubledWordsErrorsBadge").remove();
         jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrors + '</span>'));
+        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + '</span>'));
     }
 }
 
@@ -2183,7 +2189,7 @@ function buildMenu() {
 						<li data-pressgangtopic="24787" style="background-color: white"><a id="bugzillaBugs" href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">Bugzilla Bugs</a></li>\
 						<li data-pressgangtopic="24789" style="background-color: white"><a id="topicsUpdatedInOtherSpecs" href="javascript:hideAllMenus(); topicsUpdatedInOtherSpecs.show(); localStorage.setItem(\'lastMenu\', \'topicsUpdatedInOtherSpecs\');">Updated Topics</a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a id="spellingErrors" href="javascript:hideAllMenus(); spellingErrors.show(); localStorage.setItem(\'lastMenu\', \'spellingErrors\');">Spelling Errors</a></li>\
-						<li data-pressgangtopic="00000" style="background-color: white"><a id="doubledWords" href="javascript:hideAllMenus(); spellingErrors.show(); localStorage.setItem(\'lastMenu\', \'doubledWords\');">Doubled Words</a></li>\
+						<li data-pressgangtopic="00000" style="background-color: white"><a id="doubledWordsErrors" href="javascript:hideAllMenus(); doubledWords.show(); localStorage.setItem(\'lastMenu\', \'doubledWords\');">Doubled Words</a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a href="' + BUG_LINK + '&cf_build_id=Content%20Spec%20ID:%20' + SPEC_ID + '">Report a bug</a></li>\
 					</ul>\
 				</div>\
