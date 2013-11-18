@@ -1184,7 +1184,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                 // before spellchecking, and set to text that is skipped for double word checking.
                 // but having the comment replaced means that there is a break in a double word.
 
-                var fixedXML = data.xml.replace(/<\!--\s*Inject\s*:.*?-->/g, "<literal> | </literal>");
+                var fixedXML = data.xml.replace(/<\!--\s*Inject\s*:.*?-->/g, "<literal></literal>");
 
                 var xmlDoc = jQuery(jQuery.parseXML(fixedXML));
 
@@ -1213,9 +1213,6 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                     jQuery(doNotSpellCheck[elementIndex], xmlDoc).text(" | ");
                 }
 
-                // xrefs present as empty strings, which leads to a lot of "to to" errors
-                jQuery("xref", xmlDoc).text(" | ");
-
                 // We split the string up now to look for doubled words
                 var doubledWords = xmlDoc.text().split(/\s+/);
 
@@ -1225,9 +1222,6 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                 }
 
                 var text = xmlDoc.text();
-
-                // We split the string up now to look for doubled words
-                var doubledWords = text.split(/\s+/);
 
                 // remove all xml/html entities
                 var entityRe = /&.*?;/;
