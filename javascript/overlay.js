@@ -1121,47 +1121,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 
         getTopicDetailsInBacthes();
 
-        // get the spec id
-        var specId = getSpecIdFromURL();
-        if (specId) {
-            getModifiedTopics(specId);
 
-            // getUpdatedTopics and checkSpellingErrors need the topic ids and revisions for the topics in the current
-            // spec.
-            var topicsUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=0,9,10;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
-            $.getJSON(topicsUrl, function(data) {
-                var topics = [];
-                var allTopics = [];
-                for (var index = 0, count = data.items.length; index < count; ++index) {
-                    var topic = data.items[index].item;
-                    var topicDetails = {id: topic.entityId, rev: topic.entityRevision};
-                    allTopics.push(topicDetails);
-                    if (topic.entityRevision) {
-                        topics.push(topicDetails);
-                    }
-                }
-
-                getTopicNodes(specId, topics, 0, 0);
-
-                // the js file might not be included just yet in all builds
-                if (window.Typo) {
-                    jQuery.get("/dictionaries/en_US.aff", function(affData) {
-                        jQuery.get("/dictionaries/en_US.dic", function(dicData) {
-                            var dictionary = new Typo("en_US", affData, dicData);
-
-                            jQuery("#spellingErrorsBadge").remove();
-                            jQuery("#doubledWordsErrorsBadge").remove();
-                            jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">0 (0% complete)</span>'));
-                            jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">0 (0% complete)</span>'));
-
-                            checkSpellingErrors(dictionary, allTopics, 0, 0, 0, {}, {});
-                        })
-                    });
-                }
-            });
-
-            //getTopReusedTopics(specId);
-        }
 	}
 }
 
@@ -1962,6 +1922,48 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
 	}
 
 	if (secondPassDone && specHistoryDone) {
+
+        // get the spec id
+        var specId = getSpecIdFromURL();
+        if (specId) {
+            getModifiedTopics(specId);
+
+            // getUpdatedTopics and checkSpellingErrors need the topic ids and revisions for the topics in the current
+            // spec.
+            var topicsUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=0,9,10;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
+            $.getJSON(topicsUrl, function(data) {
+                var topics = [];
+                var allTopics = [];
+                for (var index = 0, count = data.items.length; index < count; ++index) {
+                    var topic = data.items[index].item;
+                    var topicDetails = {id: topic.entityId, rev: topic.entityRevision};
+                    allTopics.push(topicDetails);
+                    if (topic.entityRevision) {
+                        topics.push(topicDetails);
+                    }
+                }
+
+                getTopicNodes(specId, topics, 0, 0);
+
+                // the js file might not be included just yet in all builds
+                if (window.Typo) {
+                    jQuery.get("/dictionaries/en_US.aff", function(affData) {
+                        jQuery.get("/dictionaries/en_US.dic", function(dicData) {
+                            var dictionary = new Typo("en_US", affData, dicData);
+
+                            jQuery("#spellingErrorsBadge").remove();
+                            jQuery("#doubledWordsErrorsBadge").remove();
+                            jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">0 (0% complete)</span>'));
+                            jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">0 (0% complete)</span>'));
+
+                            checkSpellingErrors(dictionary, allTopics, 0, 0, 0, {}, {});
+                        })
+                    });
+                }
+            });
+
+            //getTopReusedTopics(specId);
+        }
 
         // the function to call when all incompatibilities have been found
         var reportIncompatibilities = function(usedLicenses, incompatibleLicenses) {
