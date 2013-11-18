@@ -1284,7 +1284,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                     text = text.replace(quoteRe, replacementString);
                 }
 
-                var words = text.split(/\s/);
+                var words = text.split(/\s+/);
 
                 function checkWord(words, topic, wordIndex) {
                     if (wordIndex < words.length) {
@@ -1323,29 +1323,33 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                 function checkDoubledWord(doubledWords, topic, wordIndex) {
                     if (wordIndex < doubledWords.length - 1) {
                         var word = doubledWords[wordIndex];
-                        var nextWord = doubledWords[wordIndex + 1];
-                        if (word == nextWord) {
 
-                            ++doubleWordErrors;
+                        if (word.match(/^[^A-Za-z]*$/) == null) {
 
-                            if (!doubleWordButtons[word]) {
-                                var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
-                                var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
-                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
-                                     <span class="caret"></span>\
-                                 </button>');
-                                var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>');
-                                jQuery(button).appendTo(buttonParent);
-                                jQuery(buttonList).appendTo(buttonParent);
-                                jQuery(buttonParent).appendTo($("#doubledWordsErrorsItems"));
+                            var nextWord = doubledWords[wordIndex + 1];
+                            if (word == nextWord) {
 
-                                doubleWordButtons[word] = {list: buttonList, topics: []};
-                            }
+                                ++doubleWordErrors;
 
-                            if (jQuery.inArray(topic.id, doubleWordButtons[word].topics) == -1) {
-                                doubleWordButtons[word].topics.push(topic.id);
-                                var link = jQuery('<li><a href="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + topic.id + '</a></li>');
-                                link.appendTo(doubleWordButtons[word].list);
+                                if (!doubleWordButtons[word]) {
+                                    var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
+                                    var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
+                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
+                                         <span class="caret"></span>\
+                                     </button>');
+                                    var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>');
+                                    jQuery(button).appendTo(buttonParent);
+                                    jQuery(buttonList).appendTo(buttonParent);
+                                    jQuery(buttonParent).appendTo($("#doubledWordsErrorsItems"));
+
+                                    doubleWordButtons[word] = {list: buttonList, topics: []};
+                                }
+
+                                if (jQuery.inArray(topic.id, doubleWordButtons[word].topics) == -1) {
+                                    doubleWordButtons[word].topics.push(topic.id);
+                                    var link = jQuery('<li><a href="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + topic.id + '</a></li>');
+                                    link.appendTo(doubleWordButtons[word].list);
+                                }
                             }
                         }
 
