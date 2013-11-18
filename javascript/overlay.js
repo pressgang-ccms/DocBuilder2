@@ -1321,9 +1321,9 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                 checkWord(words, topic, 0);
 
                 function checkDoubledWord(doubledWords, topic, wordIndex) {
-                    if (wordIndex < words.length - 1) {
-                        var word = words[wordIndex];
-                        var nextWord = words[wordIndex + 1];
+                    if (wordIndex < doubledWords.length - 1) {
+                        var word = doubledWords[wordIndex];
+                        var nextWord = doubledWords[wordIndex + 1];
                         if (word == nextWord) {
 
                             ++doubleWordErrors;
@@ -1349,7 +1349,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                             }
                         }
 
-                        checkDoubledWord(words, topic, ++wordIndex);
+                        checkDoubledWord(doubledWords, topic, ++wordIndex);
                     }
                     else {
                         setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors, doubleWordErrors, buttons, doubleWordButtons);}, 0);
