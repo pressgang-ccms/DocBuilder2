@@ -1192,6 +1192,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                 // Supported | Supported
                 fixedXML = fixedXML.replace(/<\/title>/g, "</title><literal></literal>");
                 fixedXML = fixedXML.replace(/<\/entry>/g, "</entry><literal></literal>");
+                fixedXML = fixedXML.replace(/<\/indexterm>/g, "</indexterm><literal></literal>");
 
                 var xmlDoc = jQuery(jQuery.parseXML(fixedXML));
 
