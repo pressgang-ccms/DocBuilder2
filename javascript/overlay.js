@@ -1182,9 +1182,6 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
             try {
                 var xmlDoc = jQuery(jQuery.parseXML(data.xml));
 
-                // We split the string up now to look for doubled words
-                var doubledWords = xmlDoc.text().split(/\s+/);
-
                 // These docbook elements will commonly contain words that are not found in the dictionary.
                 var doNotSpellCheck = [
                     "parameter",
@@ -1211,6 +1208,21 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                 }
 
                 var text = xmlDoc.text();
+
+                // remove all xml/html elements
+                var tagRe = /<.*?>/;
+                var tagMatch = null;
+                while ((tagMatch = text.match(tagRe)) != null) {
+                    var tagLength = tagMatch[0].length;
+                    var replacementString = "";
+                    for (var i = 0; i < tagLength; ++i) {
+                        replacementString += " ";
+                    }
+                    text = text.replace(tagRe, replacementString);
+                }
+
+                // We split the string up now to look for doubled words
+                var doubledWords = text.split(/\s+/);
 
                 // remove all xml/html entities
                 var entityRe = /&.*?;/;
