@@ -1180,7 +1180,13 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
         }
         jQuery.getJSON(topicUrl, function(data) {
             try {
-                var xmlDoc = jQuery(jQuery.parseXML(data.xml));
+                // find any injection comments and replace them with a literal. These will be removed
+                // before spellchecking, and set to text that is skipped for double word checking.
+                // but having the comment replaced means that there is a break in a double word.
+
+                var fixedXML = data.xml.replace(/<!--\s*Inject\s*:.*?-->/g, "<literal> | </literal>");
+
+                var xmlDoc = jQuery(jQuery.parseXML(fixedXML));
 
                 // These docbook elements will commonly contain words that are not found in the dictionary.
                 var doNotSpellCheck = [
@@ -1207,7 +1213,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                     jQuery(doNotSpellCheck[elementIndex], xmlDoc).text(" | ");
                 }
 
-                // xrefs present as empty strings, which leds to a lot of "to to" errors
+                // xrefs present as empty strings, which leads to a lot of "to to" errors
                 jQuery("xref", xmlDoc).text(" | ");
 
                 // We split the string up now to look for doubled words
