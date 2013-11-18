@@ -2792,7 +2792,7 @@ function buildMenu() {
         showMenu();
     } else if (lastMenu == "doubledWords") {
         doubledWords.show();
-        shoeMenu();
+        showMenu();
     } else {
 		menuIcon.show();
 		hideMenu();
