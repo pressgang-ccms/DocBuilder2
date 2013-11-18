@@ -1185,14 +1185,23 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                 // but having the comment replaced means that there is a break in a double word.
                 var fixedXML = data.xml.replace(/<\!--\s*Inject\s*:.*?-->/g, "<literal></literal>");
 
-                // now add a literal after a title and an entry. This splits up text like:
-                // How to use Snapshots
-                // Snaphots are blah blah
-                // and tables with adjacent cells like
-                // Supported | Supported
-                fixedXML = fixedXML.replace(/<\/title>/g, "</title><literal></literal>");
-                fixedXML = fixedXML.replace(/<\/entry>/g, "</entry><literal></literal>");
-                fixedXML = fixedXML.replace(/<\/indexterm>/g, "</indexterm><literal></literal>");
+                /*
+                    A number of docbook elements define a logical break between words that is lost
+                    when the elements are removed. So we just add a literal after these to prevent
+                    the double word logic from picking them up. Also, because we ignore literals
+                    in the spell checking, these new elements have no impact.
+                 */
+                var addDoubleWordBreaks = [
+                    "title",
+                    "entry",
+                    "indexterm",
+                    "primary",
+                    "secondary"
+                ];
+
+                for (var elementIndex = 0, elementCount = addDoubleWordBreaks.length; elementIndex < elementCount; ++elementIndex) {
+                    fixedXML = fixedXML.replace(Regex.compile("<\/" + addDoubleWordBreaks[elementIndex] + ">", "g"), "</" + addDoubleWordBreaks[elementIndex] + "><literal></literal>");
+                }
 
                 var xmlDoc = jQuery(jQuery.parseXML(fixedXML));
 
