@@ -1152,7 +1152,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
                             jQuery("#spellingErrorsBadge").remove();
                             jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">0 (0% complete)</span>'));
 
-                            checkSpellingErrors(dictionary, allTopics, 0, 0, {});
+                            checkSpellingErrors(dictionary, allTopics, 0, 0, 0, {}, {});
                         })
                     });
                 }
@@ -1163,7 +1163,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 	}
 }
 
-function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons) {
+function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWordErrors, buttons, doubleWordButtons) {
     if (index < topics.length) {
 
         jQuery("#spellingErrorsBadge").remove();
@@ -1216,6 +1216,9 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                     }
                     text = text.replace(tagRe, replacementString);
                 }
+
+                // We split the string up now to look for doubled words
+                var doubledWords = text.split(/s+/);
 
                 // remove all xml/html entities
                 var entityRe = /&.*?;/;
@@ -1277,7 +1280,6 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
                     text = text.replace(quoteRe, replacementString);
                 }
 
-
                 var words = text.split(/\s/);
 
                 function checkWord(words, topic, wordIndex) {
@@ -1310,15 +1312,50 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, buttons)
 
                         checkWord(words, topic, ++wordIndex);
                     }
-                    else {
-                        setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors, buttons);}, 0);
-                    }
                 }
 
                 checkWord(words, topic, 0);
 
+                function checkDoubledWord(doubledWords, topic, wordIndex) {
+                    if (wordIndex < words.length - 1) {
+                        var word = words[wordIndex];
+                        var nextWord = words[wordIndex + 1];
+                        if (word == nextWord) {
+
+                            ++doubleWordErrors;
+
+                            if (!doubleWordButtons[word]) {
+                                var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
+                                var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
+                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
+                                     <span class="caret"></span>\
+                                 </button>');
+                                var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>')
+                                jQuery(button).appendTo(buttonParent);
+                                jQuery(buttonList).appendTo(buttonParent);
+                                jQuery(buttonParent).appendTo($("#doubledWordsErrorsItems"));
+
+                                doubleWordButtons[word] = {list: buttonList, topics: []};
+                            }
+
+                            if (jQuery.inArray(topic.id, doubleWordButtons[word].topics) == -1) {
+                                doubleWordButtons[word].topics.push(topic.id);
+                                var link = jQuery('<li><a href="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + topic.id + '</a></li>');
+                                link.appendTo(doubleWordButtons[word].list);
+                            }
+                        }
+
+                        checkDoubledWord(words, topic, ++wordIndex);
+                    }
+                    else {
+                        setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors, doubleWordErrors, buttons, doubleWordButtons);}, 0);
+                    }
+                }
+
+                checkDoubledWord(doubledWords, topic, 0);
+
             } catch (e) {
-                setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors, buttons);}, 0);
+                setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors, doubleWordErrors, buttons, doubleWordButtons);}, 0);
             }
 
 
@@ -2146,13 +2183,27 @@ function buildMenu() {
 						<li data-pressgangtopic="24787" style="background-color: white"><a id="bugzillaBugs" href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">Bugzilla Bugs</a></li>\
 						<li data-pressgangtopic="24789" style="background-color: white"><a id="topicsUpdatedInOtherSpecs" href="javascript:hideAllMenus(); topicsUpdatedInOtherSpecs.show(); localStorage.setItem(\'lastMenu\', \'topicsUpdatedInOtherSpecs\');">Updated Topics</a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a id="spellingErrors" href="javascript:hideAllMenus(); spellingErrors.show(); localStorage.setItem(\'lastMenu\', \'spellingErrors\');">Spelling Errors</a></li>\
-						<li data-pressgangtopic="24805" style="background-color: white"><a href="' + BUG_LINK + '&cf_build_id=Content%20Spec%20ID:%20' + SPEC_ID + '">Report a bug</a></li>\
+						<li data-pressgangtopic="00000" style="background-color: white"><a id="doubledWords" href="javascript:hideAllMenus(); spellingErrors.show(); localStorage.setItem(\'lastMenu\', \'doubledWords\');">Doubled Words</a></li>\
+						<li data-pressgangtopic="00000" style="background-color: white"><a href="' + BUG_LINK + '&cf_build_id=Content%20Spec%20ID:%20' + SPEC_ID + '">Report a bug</a></li>\
 					</ul>\
 				</div>\
 			</div>\
 		</div>')
 	$(document.body).append(mainMenu);
     sideMenus.push(mainMenu);
+
+    doubledWords = $('\
+		<div data-pressgangtopic="0000" class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">' + help + 'Doubled Words</div>\
+				<div id="topicsRemovedSincePanel" class="panel-body ">\
+		            <ul id="doubledWordsErrorsItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+    $(document.body).append(doubledWords);
+    sideMenus.push(doubledWords);
 
     spellingErrors = $('\
 		<div data-pressgangtopic="0000" class="panel panel-default pressgangMenu">\
@@ -2713,6 +2764,9 @@ function buildMenu() {
     } else if (lastMenu == "spellingErrors") {
         spellingErrors.show();
         showMenu();
+    } else if (lastMenu == "doubledWords") {
+        doubledWords.show();
+        shoeMenu();
     } else {
 		menuIcon.show();
 		hideMenu();
