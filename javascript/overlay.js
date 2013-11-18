@@ -1121,7 +1121,8 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 
         getTopicDetailsInBacthes();
 
-
+        var specId = getSpecIdFromURL();
+        getModifiedTopics(specId);
 	}
 }
 
@@ -1928,7 +1929,7 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
         // get the spec id
         var specId = getSpecIdFromURL();
         if (specId) {
-            getModifiedTopics(specId);
+
 
             // getUpdatedTopics and checkSpellingErrors need the topic ids and revisions for the topics in the current
             // spec.
