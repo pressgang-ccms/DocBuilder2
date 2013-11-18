@@ -1200,7 +1200,7 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                 ];
 
                 for (var elementIndex = 0, elementCount = addDoubleWordBreaks.length; elementIndex < elementCount; ++elementIndex) {
-                    fixedXML = fixedXML.replace(Regex.compile("<\/" + addDoubleWordBreaks[elementIndex] + ">", "g"), "</" + addDoubleWordBreaks[elementIndex] + "><literal></literal>");
+                    fixedXML = fixedXML.replace(RegExp.compile("<\/" + addDoubleWordBreaks[elementIndex] + ">", "g"), "</" + addDoubleWordBreaks[elementIndex] + "><literal></literal>");
                 }
 
                 var xmlDoc = jQuery(jQuery.parseXML(fixedXML));
