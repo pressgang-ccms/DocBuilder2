@@ -1202,6 +1202,17 @@ function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWo
                     "term"
                 ];
 
+                // remove the contents of these elements
+                for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
+                    jQuery(doNotSpellCheck[elementIndex], xmlDoc).text(" | ");
+                }
+
+                // xrefs present as empty strings, which leds to a lot of "to to" errors
+                jQuery("xref", xmlDoc).text(" | ");
+
+                // We split the string up now to look for doubled words
+                var doubledWords = xmlDoc.text().split(/\s+/);
+
                 // remove these elements
                 for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
                     jQuery(doNotSpellCheck[elementIndex], xmlDoc).remove();
