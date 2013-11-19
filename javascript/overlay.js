@@ -2697,15 +2697,15 @@ function getInfoFromREST() {
                     jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (' + (index / topics.items.length * 100).toFixed(2) + '% complete)</span>'));
                     jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (' + (index / topics.items.length * 100).toFixed(2) + '% complete)</span>'));
 
-                    var topic = data.items[index].item;
+                    var topicNode = data.items[index].item;
 
                     // for each topic we need the latest revision, and the specific revision included in the spec (if the revision is defined)
-                    var topicUrl = SERVER + "/topic/get/json/" + topic.entityId;
+                    var topicUrl = SERVER + "/topic/get/json/" + topicNode.entityId;
                     jQuery.getJSON(topicUrl, function(fixedrevision) {
-                        return function(data) {
+                        return function(topic) {
 
                             if (!fixedrevision) {
-                                checkSpellingErrors(data);
+                                checkSpellingErrors(topic);
                             }
 
                             if (!topicNames[topic.id]) {
