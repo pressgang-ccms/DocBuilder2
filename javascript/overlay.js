@@ -1235,8 +1235,6 @@ function getTopicNodes(specId, topics, index, count) {
     }
 }
 
-
-
 function getModifiedTopics(specId) {
     // get content spec revisions
     var revisionsURL = SERVER + "/contentspec/get/json/" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%7D%7D%5D%7D";
@@ -2816,6 +2814,8 @@ function getInfoFromREST() {
                     jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + '</span>'));
 
                     console.log("Retrieved all topic data");
+
+                    buildTopicEditedInChart();
 
                     getTopicNodes(specId, topics, 0, 0);
                 }
