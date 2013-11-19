@@ -1142,6 +1142,7 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 		secondPassCalled = true;
 
         getInfoFromREST();
+        getDictionary();
 
         var specId = getSpecIdFromURL();
         getModifiedTopics(specId);
@@ -1720,31 +1721,33 @@ function buildTopicEditedInChart() {
 	var totalCount = 0;
 
 	for (var index = 0; index < historyCache.summary.count; ++index) {
-		var topic = historyCache[topicIds[index]].data[0];
-		var date = moment(topic.lastModified);
+		if (historyCache[topicIds[index]].data) {
+            var topic = historyCache[topicIds[index]].data[0];
+            var date = moment(topic.lastModified);
 
-		if (date.isAfter(moment().subtract('day', 1))) {
-			++historyCache.summary.day;
-			++totalCount;
-		}
+            if (date.isAfter(moment().subtract('day', 1))) {
+                ++historyCache.summary.day;
+                ++totalCount;
+            }
 
-		if (date.isAfter(moment().subtract('week', 1))) {
-			++historyCache.summary.week;
-			++totalCount;
-		}
+            if (date.isAfter(moment().subtract('week', 1))) {
+                ++historyCache.summary.week;
+                ++totalCount;
+            }
 
-		if (date.isAfter(moment().subtract('month', 1))) {
-			++historyCache.summary.month;
-			++totalCount;
-		}
+            if (date.isAfter(moment().subtract('month', 1))) {
+                ++historyCache.summary.month;
+                ++totalCount;
+            }
 
-		if (date.isAfter(moment().subtract('year', 1))) {
-			++historyCache.summary.year;
-			++totalCount;
-		}
+            if (date.isAfter(moment().subtract('year', 1))) {
+                ++historyCache.summary.year;
+                ++totalCount;
+            }
 
-		++historyCache.summary.older;
-		++totalCount;
+            ++historyCache.summary.older;
+            ++totalCount;
+        }
 
 	}
 
@@ -2823,39 +2826,39 @@ function getInfoFromREST() {
             getTopic(0, data);
         });
     }
+}
 
-    function getDictionary() {
-        // load the dictionaries for spell checking
-        if (window.Typo) {
+function getDictionary() {
+    // load the dictionaries for spell checking
+    if (window.Typo) {
 
-            var customDicUrl = SERVER + "/topics/get/json/query;;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
-            jQuery.getJSON(customDicUrl, function(topics) {
-                var customWords = "";
-                for (var topicIndex = 0, topicCount = topics.items.length; topicIndex < topicCount; ++topicIndex) {
-                    var topic =  topics.items[topicIndex].item;
+        var customDicUrl = SERVER + "/topics/get/json/query;;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
+        jQuery.getJSON(customDicUrl, function(topics) {
+            var customWords = "";
+            for (var topicIndex = 0, topicCount = topics.items.length; topicIndex < topicCount; ++topicIndex) {
+                var topic =  topics.items[topicIndex].item;
 
-                    for (var propertyIndex = 0, propertyCount = topic.properties.length; propertyIndex < propertyCount; ++propertyIndex) {
-                        var property = topic.properties[propertyIndex].item;
+                for (var propertyIndex = 0, propertyCount = topic.properties.length; propertyIndex < propertyCount; ++propertyIndex) {
+                    var property = topic.properties[propertyIndex].item;
 
-                        if (customWords.length == 0) {
-                            customWords += "\n";
-                        }
-
-                        customWords += property.value;
+                    if (customWords.length == 0) {
+                        customWords += "\n";
                     }
+
+                    customWords += property.value;
                 }
+            }
 
-                jQuery.get("/dictionaries/en_US.aff", function(affData) {
-                    jQuery.get("/dictionaries/en_US.dic", function(dicData) {
+            jQuery.get("/dictionaries/en_US.aff", function(affData) {
+                jQuery.get("/dictionaries/en_US.dic", function(dicData) {
 
-                        dictionary = new Typo("en_US", affData, dicData + "\n" + customWords);
+                    dictionary = new Typo("en_US", affData, dicData + "\n" + customWords);
 
-                        if (topicsToCheckForSpelling.length != 0) {
-                            checkSpellingErrors();
-                        }
-                    })
-                });
+                    if (topicsToCheckForSpelling.length != 0) {
+                        checkSpellingErrors();
+                    }
+                })
             });
-        }
+        });
     }
 }
