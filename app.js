@@ -375,6 +375,7 @@ function processSpecs(updatedSpecs) {
                                 <script type='application/javascript' src='/javascript/jquery-2.0.3.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/moment.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/bootstrap.min.js'></script>\n\
+                                <script type='application/javascript' src='/javascript/bootbox.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/raphael-min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/pie.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/typo_proto.js'></script>\n\
