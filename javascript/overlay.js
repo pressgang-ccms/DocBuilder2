@@ -261,7 +261,7 @@ var dictionary;
 /**
  * Spell checking counter
  */
-var spellingErrors = 0;
+var spellingErrorsCount = 0;
 /**
  * Double word counter
  */
@@ -2595,7 +2595,7 @@ function getInfoFromREST() {
                             var word = words[wordIndex];
                             if (!dictionary.check(word)) {
 
-                                ++spellingErrors;
+                                ++spellingErrorsCount;
 
                                 if (!buttons[word]) {
                                     var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
@@ -2677,7 +2677,7 @@ function getInfoFromREST() {
                 dictionary = new Typo("en_US", affData, dicData);
 
                 if (topicsToCheckForSpelling.length != 0) {
-                    topicsToCheckForSpelling();
+                    checkSpellingErrors();
                 }
             })
         });
@@ -2694,7 +2694,7 @@ function getInfoFromREST() {
 
                     jQuery("#spellingErrorsBadge").remove();
                     jQuery("#doubledWordsErrorsBadge").remove();
-                    jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrors + ' (' + (index / topics.items.length * 100).toFixed(2) + '% complete)</span>'));
+                    jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (' + (index / topics.items.length * 100).toFixed(2) + '% complete)</span>'));
                     jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (' + (index / topics.items.length * 100).toFixed(2) + '% complete)</span>'));
 
                     var topic = data.items[index].item;
@@ -2705,7 +2705,7 @@ function getInfoFromREST() {
                         return function(data) {
 
                             if (!fixedrevision) {
-                                topicsToCheckForSpelling(data);
+                                checkSpellingErrors(data);
                             }
 
                             if (!topicNames[topic.id]) {
@@ -2713,78 +2713,90 @@ function getInfoFromREST() {
                             }
 
                             // set the description
-                            descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
+                            if (descriptionCache[topic.id]) {
+                                descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
+                            }
 
                             // set the revisions
-                            historyCache[topic.id].data = [];
-                            for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
-                                var revision = topic.revisions.items[revisionIndex].item;
-                                historyCache[topic.id].data.push({
-                                    revision: revision.revision,
-                                    message: revision.logDetails.message,
-                                    lastModified: revision.lastModified});
+                            if (historyCache[topic.id]) {
+                                historyCache[topic.id].data = [];
+                                for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
+                                    var revision = topic.revisions.items[revisionIndex].item;
+                                    historyCache[topic.id].data.push({
+                                        revision: revision.revision,
+                                        message: revision.logDetails.message,
+                                        lastModified: revision.lastModified});
+                                }
+
+                                updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
+                                updateHistoryIcon(topic.id, topic.title);
                             }
 
                             // set the tags
-                            tagsCache[topic.id].data = [];
-                            for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
-                                var tag = topic.tags.items[tagIndex].item;
-                                tagsCache[topic.id].data.push({
-                                    name: tag.name,
-                                    id: tag.id
-                                });
+                            if (tagsCache[topic.id]) {
+                                tagsCache[topic.id].data = [];
+                                for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
+                                    var tag = topic.tags.items[tagIndex].item;
+                                    tagsCache[topic.id].data.push({
+                                        name: tag.name,
+                                        id: tag.id
+                                    });
+                                }
+
+                                updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
                             }
 
                             // set the urls
-                            urlCache[topic.id].data = [];
+                            if (urlCache[topic.id]) {
+                                urlCache[topic.id].data = [];
 
-                            var match = null;
-                            while (match = COMMENT_RE.exec(topic.xml)) {
-                                var comment = match[1];
+                                var match = null;
+                                while (match = COMMENT_RE.exec(topic.xml)) {
+                                    var comment = match[1];
 
-                                var match2 = null;
-                                while (match2 = URL_RE.exec(comment)) {
-                                    var url = match2[0];
-                                    urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
+                                    var match2 = null;
+                                    while (match2 = URL_RE.exec(comment)) {
+                                        var url = match2[0];
+                                        urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
+                                    }
                                 }
-                            }
 
-                            for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
-                                var url = topic.sourceUrls_OTM.items[urlsIndex].item;
-                                urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
+                                for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
+                                    var url = topic.sourceUrls_OTM.items[urlsIndex].item;
+                                    urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
+                                }
+
+                                updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
                             }
 
                             // set the specs
-                            specCache[topic.id].data = [];
-                            var specs = {};
-                            for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
-                                var spec = topic.contentSpecs_OTM.items[specIndex].item;
-                                if (!specs[spec.id]) {
-                                    var specDetails = {id: spec.id, title: "", product: "", version: ""};
-                                    for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
-                                        var child = spec.children_OTM.items[specChildrenIndex].item;
-                                        if (child.title == "Product") {
-                                            specDetails.product = child.additionalText;
-                                        } else if (child.title == "Version") {
-                                            specDetails.version = child.additionalText;
-                                        } if (child.title == "Title") {
-                                            specDetails.title = child.additionalText;
+                            if (specCache[topic.id]) {
+                                specCache[topic.id].data = [];
+                                var specs = {};
+                                for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
+                                    var spec = topic.contentSpecs_OTM.items[specIndex].item;
+                                    if (!specs[spec.id]) {
+                                        var specDetails = {id: spec.id, title: "", product: "", version: ""};
+                                        for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
+                                            var child = spec.children_OTM.items[specChildrenIndex].item;
+                                            if (child.title == "Product") {
+                                                specDetails.product = child.additionalText;
+                                            } else if (child.title == "Version") {
+                                                specDetails.version = child.additionalText;
+                                            } if (child.title == "Title") {
+                                                specDetails.title = child.additionalText;
+                                            }
                                         }
+                                        specs[spec.id] = specDetails;
                                     }
-                                    specs[spec.id] = specDetails;
                                 }
+
+                                for (spec in specs) {
+                                    specCache[topic.id].data.push(specs[spec]);
+                                }
+
+                                updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
                             }
-
-                            for (spec in specs) {
-                                specCache[topic.id].data.push(specs[spec]);
-                            }
-
-                            updateHistoryIcon(topic.id, topic.title);
-
-                            updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
-                            updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
-                            updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
-                            updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
 
                             getTopic(++index, topics);
                         }
@@ -2794,13 +2806,13 @@ function getInfoFromREST() {
                     if (topic.entityRevision) {
                         var topicRevisionUrl = SERVER + "/topic/get/json/" + topic.entityId + "/r/" + topic.entityRevision;
                         jQuery.getJSON(topicRevisionUrl, function(data) {
-                            topicsToCheckForSpelling(data);
+                            checkSpellingErrors(data);
                         });
                     }
                 } else {
                     jQuery("#spellingErrorsBadge").remove();
                     jQuery("#doubledWordsErrorsBadge").remove();
-                    jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrors + '</span>'));
+                    jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + '</span>'));
                     jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + '</span>'));
 
                     console.log("Retrieved all topic data");
