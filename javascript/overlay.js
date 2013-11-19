@@ -114,18 +114,17 @@ var BACKGROUND_QUERY_PREFIX = SERVER + "/topics/get/json/query;topicIds="
  * The end of the URL to the REST endpoint to call to get all the details for all the topics
  * @type {string}
  */
-var BACKGROUND_QUERY_POSTFIX = "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs_OTM%22%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22children_OTM%22%7D%7D%5D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22sourceUrls_OTM%22%7D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%2C%20%22start%22%3A%200%2C%20%22end%22%3A%2015%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22logDetails%22%7D%7D%5D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D%7D%0A%0A";
-
+var BACKGROUND_QUERY_POSTFIX = "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs_OTM%22%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22children_OTM%22%7D%7D%5D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22sourceUrls_OTM%22%7D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22revisions%22%2C%20%22start%22%3A%200%2C%20%22end%22%3A%2015%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22logDetails%22%7D%7D%5D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D%5D%7D%0A%0A";
 /**
  * How long to wait for the window to load before starting the second pass
  * @type {number}
  */
 var SECOND_PASS_TIMEOUT = 30000;
 /**
- * How long to wait beteen each call to get the data for the second pass
+ * The number of topics to get the details on in one REST call
  * @type {number}
  */
-var SECOND_PASS_REST_CALL_DELAY = 500;
+var TOPIC_BATCH_SIZE = 20;
 /**
  * Report a bug url.
  * @type {string}
@@ -2685,110 +2684,128 @@ function getInfoFromREST() {
                     jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (' + (index / topics.items.length * 100).toFixed(2) + '% complete)</span>'));
                     jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (' + (index / topics.items.length * 100).toFixed(2) + '% complete)</span>'));
 
-                    var topicNode = data.items[index].item;
+                    // make a note of the topic IDs and revisions
+                    var topicDetailsMap = {};
+                    // the list of topic ids to send tp the query url
+                    var topicIdList = "";
+
+                    for (var topicIndex = index; topicIndex < index + TOPIC_BATCH_SIZE && topicIndex < data.items.length; ++topicIndex) {
+                        var topicNode = data.items[topicIndex].item;
+
+                        if (topicIdList.length != 0) {
+                            topicIdList += ",";
+                        }
+                        topicIdList += topicNode.entityId;
+                        topicDetailsMap[topicNode.entityId] = topicNode.entityRevision;
+                    }
 
                     // for each topic we need the latest revision, and the specific revision included in the spec (if the revision is defined)
-                    var topicUrl = SERVER + "/topic/get/json/" + topicNode.entityId + BACKGROUND_QUERY_POSTFIX;
-                    jQuery.getJSON(topicUrl, function(fixedrevision) {
-                        return function(topic) {
+                    var topicUrl = BACKGROUND_QUERY_PREFIX + topicIdList + BACKGROUND_QUERY_POSTFIX;
+                    jQuery.getJSON(topicUrl, function(index, topicDetailsMap) {
+                        return function(expandedTopics) {
 
-                            if (!fixedrevision) {
-                                checkSpellingErrors(topic);
-                            }
+                            for (var topicIndex = index, topicCount = expandedTopics.items.length; topicIndex < topicCount; ++topicIndex) {
 
-                            if (!topicNames[topic.id]) {
-                                topicNames[topic.id] = topic.title;
-                            }
+                                var topic = expandedTopics.items[topicIndex].item;
 
-                            // set the description
-                            if (descriptionCache[topic.id]) {
-                                descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
-                            }
-
-                            // set the revisions
-                            if (historyCache[topic.id]) {
-                                historyCache[topic.id].data = [];
-                                for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
-                                    var revision = topic.revisions.items[revisionIndex].item;
-                                    historyCache[topic.id].data.push({
-                                        revision: revision.revision,
-                                        message: revision.logDetails.message,
-                                        lastModified: revision.lastModified});
+                                if (!topicDetailsMap[topic.id]) {
+                                    checkSpellingErrors(topic);
                                 }
 
-                                updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
-                                updateHistoryIcon(topic.id, topic.title);
-                            }
-
-                            // set the tags
-                            if (tagsCache[topic.id]) {
-                                tagsCache[topic.id].data = [];
-                                for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
-                                    var tag = topic.tags.items[tagIndex].item;
-                                    tagsCache[topic.id].data.push({
-                                        name: tag.name,
-                                        id: tag.id
-                                    });
+                                if (!topicNames[topic.id]) {
+                                    topicNames[topic.id] = topic.title;
                                 }
 
-                                updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
-                            }
+                                // set the description
+                                if (descriptionCache[topic.id]) {
+                                    descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
+                                }
 
-                            // set the urls
-                            if (urlCache[topic.id]) {
-                                urlCache[topic.id].data = [];
-
-                                var match = null;
-                                while (match = COMMENT_RE.exec(topic.xml)) {
-                                    var comment = match[1];
-
-                                    var match2 = null;
-                                    while (match2 = URL_RE.exec(comment)) {
-                                        var url = match2[0];
-                                        urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
+                                // set the revisions
+                                if (historyCache[topic.id]) {
+                                    historyCache[topic.id].data = [];
+                                    for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
+                                        var revision = topic.revisions.items[revisionIndex].item;
+                                        historyCache[topic.id].data.push({
+                                            revision: revision.revision,
+                                            message: revision.logDetails.message,
+                                            lastModified: revision.lastModified});
                                     }
+
+                                    updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
+                                    updateHistoryIcon(topic.id, topic.title);
                                 }
 
-                                for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
-                                    var url = topic.sourceUrls_OTM.items[urlsIndex].item;
-                                    urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
+                                // set the tags
+                                if (tagsCache[topic.id]) {
+                                    tagsCache[topic.id].data = [];
+                                    for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
+                                        var tag = topic.tags.items[tagIndex].item;
+                                        tagsCache[topic.id].data.push({
+                                            name: tag.name,
+                                            id: tag.id
+                                        });
+                                    }
+
+                                    updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
                                 }
 
-                                updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
-                            }
+                                // set the urls
+                                if (urlCache[topic.id]) {
+                                    urlCache[topic.id].data = [];
 
-                            // set the specs
-                            if (specCache[topic.id]) {
-                                specCache[topic.id].data = [];
-                                var specs = {};
-                                for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
-                                    var spec = topic.contentSpecs_OTM.items[specIndex].item;
-                                    if (!specs[spec.id]) {
-                                        var specDetails = {id: spec.id, title: "", product: "", version: ""};
-                                        for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
-                                            var child = spec.children_OTM.items[specChildrenIndex].item;
-                                            if (child.title == "Product") {
-                                                specDetails.product = child.additionalText;
-                                            } else if (child.title == "Version") {
-                                                specDetails.version = child.additionalText;
-                                            } if (child.title == "Title") {
-                                                specDetails.title = child.additionalText;
-                                            }
+                                    var match = null;
+                                    while (match = COMMENT_RE.exec(topic.xml)) {
+                                        var comment = match[1];
+
+                                        var match2 = null;
+                                        while (match2 = URL_RE.exec(comment)) {
+                                            var url = match2[0];
+                                            urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
                                         }
-                                        specs[spec.id] = specDetails;
                                     }
+
+                                    for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
+                                        var url = topic.sourceUrls_OTM.items[urlsIndex].item;
+                                        urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
+                                    }
+
+                                    updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
                                 }
 
-                                for (spec in specs) {
-                                    specCache[topic.id].data.push(specs[spec]);
-                                }
+                                // set the specs
+                                if (specCache[topic.id]) {
+                                    specCache[topic.id].data = [];
+                                    var specs = {};
+                                    for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
+                                        var spec = topic.contentSpecs_OTM.items[specIndex].item;
+                                        if (!specs[spec.id]) {
+                                            var specDetails = {id: spec.id, title: "", product: "", version: ""};
+                                            for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
+                                                var child = spec.children_OTM.items[specChildrenIndex].item;
+                                                if (child.title == "Product") {
+                                                    specDetails.product = child.additionalText;
+                                                } else if (child.title == "Version") {
+                                                    specDetails.version = child.additionalText;
+                                                } if (child.title == "Title") {
+                                                    specDetails.title = child.additionalText;
+                                                }
+                                            }
+                                            specs[spec.id] = specDetails;
+                                        }
+                                    }
 
-                                updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
+                                    for (spec in specs) {
+                                        specCache[topic.id].data.push(specs[spec]);
+                                    }
+
+                                    updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
+                                }
                             }
 
-                            getTopic(++index, topics);
+                            getTopic(index + TOPIC_BATCH_SIZE, topics);
                         }
-                    }(topicNode.entityRevision != null));
+                    }(index, topicDetailsMap));
 
                     // get the specific topic revision
                     if (topicNode.entityRevision) {
