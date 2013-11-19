@@ -206,16 +206,6 @@ var windowLoaded = false;
  */
 var secondPassCalled = false;
 /**
- * Keeps a track of how many second pass rest calls are to be made
- * @type {number}
- */
-var secondPassRESTCalls = 0;
-/**
- * Keeps a track of how many second pass rest calls have been made
- * @type {number}
- */
-var secondPassRESTCallsCompleted = 0;
-/**
  * There is a bug in Raphael that prevents a SVG text element from being created
  * properly when added to a canvas not attached to the DOM (https://github.com/DmitryBaranovskiy/raphael/issues/772).
  * This is kind of a problem, so this div element is off the screen and used to create new graphs.
