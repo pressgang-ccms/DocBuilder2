@@ -2803,8 +2803,8 @@ function getInfoFromREST() {
                     }(topicNode.entityRevision != null));
 
                     // get the specific topic revision
-                    if (topic.entityRevision) {
-                        var topicRevisionUrl = SERVER + "/topic/get/json/" + topic.entityId + "/r/" + topic.entityRevision;
+                    if (topicNode.entityRevision) {
+                        var topicRevisionUrl = SERVER + "/topic/get/json/" + topicNode.entityId + "/r/" + topic.entityRevision;
                         jQuery.getJSON(topicRevisionUrl, function(data) {
                             checkSpellingErrors(data);
                         });
