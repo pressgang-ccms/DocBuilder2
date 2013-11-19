@@ -2700,7 +2700,7 @@ function getInfoFromREST() {
                     var topicNode = data.items[index].item;
 
                     // for each topic we need the latest revision, and the specific revision included in the spec (if the revision is defined)
-                    var topicUrl = SERVER + "/topic/get/json/" + topicNode.entityId;
+                    var topicUrl = SERVER + "/topic/get/json/" + topicNode.entityId + BACKGROUND_QUERY_POSTFIX;
                     jQuery.getJSON(topicUrl, function(fixedrevision) {
                         return function(topic) {
 
