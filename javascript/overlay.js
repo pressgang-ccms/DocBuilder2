@@ -248,6 +248,34 @@ var eventDetails = null;
  * @type {boolean}
  */
 var scheduleHeight = 0;
+/**
+ * A collection of topics to process for spell checking. This holds any topics that are loaded before the
+ * dictionary is loaded.
+ * @type {Array}
+ */
+var topicsToCheckForSpelling = [];
+/**
+ * The TypoJS dictionary
+ */
+var dictionary;
+/**
+ * Spell checking counter
+ */
+var spellingErrors = 0;
+/**
+ * Double word counter
+ */
+var doubleWordErrors = 0;
+/**
+ * Spell error buttons
+ * @type {{}}
+ */
+var buttons = {};
+/**
+ * Doubled words buttons
+ * @type {{}}
+ */
+var doubleWordButtons = {};
 
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
@@ -1119,242 +1147,11 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 
 		secondPassCalled = true;
 
-        getTopicDetailsInBacthes();
+        getInfoFromREST();
 
         var specId = getSpecIdFromURL();
         getModifiedTopics(specId);
 	}
-}
-
-function checkSpellingErrors(dictionary, topics, index, spellingErrors, doubleWordErrors, buttons, doubleWordButtons) {
-    if (index < topics.length) {
-
-        jQuery("#spellingErrorsBadge").remove();
-        jQuery("#doubledWordsErrorsBadge").remove();
-        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrors + ' (' + (index / topics.length * 100).toFixed(2) + '% complete)</span>'));
-        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (' + (index / topics.length * 100).toFixed(2) + '% complete)</span>'));
-
-        var topic = topics[index];
-        var topicUrl = SERVER + "/topic/get/json/" + topic.id;
-        if (topic.rev) {
-            topicUrl += "/r/" + topic.rev;
-        }
-        jQuery.getJSON(topicUrl, function(data) {
-            try {
-                // find any injection comments and replace them with a literal. These will be removed
-                // before spellchecking, and set to text that is skipped for double word checking.
-                // but having the comment replaced means that there is a break in a double word.
-                var fixedXML = data.xml.replace(/<\!--\s*Inject\s*:.*?-->/g, "<literal></literal>");
-
-                /*
-                    A number of docbook elements define a logical break between words that is lost
-                    when the elements are removed. So we just add a literal after these to prevent
-                    the double word logic from picking them up. Also, because we ignore literals
-                    in the spell checking, these new elements have no impact.
-                 */
-                var addDoubleWordBreaks = [
-                    "title",
-                    "entry",
-                    "indexterm",
-                    "primary",
-                    "secondary",
-                    "guimenu",
-                    "guimenuitem",
-                    "listitem",
-                    "ulink"
-                ];
-
-                for (var elementIndex = 0, elementCount = addDoubleWordBreaks.length; elementIndex < elementCount; ++elementIndex) {
-                    fixedXML = fixedXML.replace(new RegExp("<\/" + addDoubleWordBreaks[elementIndex] + ">", "g"), "</" + addDoubleWordBreaks[elementIndex] + "><literal></literal>");
-                }
-
-                var xmlDoc = jQuery(jQuery.parseXML(fixedXML));
-
-                // These docbook elements will commonly contain words that are not found in the dictionary.
-                var doNotSpellCheck = [
-                    "parameter",
-                    "screen",
-                    "programlisting",
-                    "command",
-                    "literal",
-                    "package",
-                    "systemitem",
-                    "application",
-                    "guibutton",
-                    "guilabel",
-                    "filename",
-                    "replaceable",
-                    "code",
-                    "option",
-                    "classname",
-                    "term"
-                ];
-
-                // remove the contents of these elements
-                for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
-                    jQuery(doNotSpellCheck[elementIndex], xmlDoc).text(" | ");
-                }
-
-                // We split the string up now to look for doubled words
-                var doubledWords = xmlDoc.text().split(/\s+/);
-
-                // remove these elements
-                for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
-                    jQuery(doNotSpellCheck[elementIndex], xmlDoc).remove();
-                }
-
-                var text = xmlDoc.text();
-
-                // remove all xml/html entities
-                var entityRe = /&.*?;/;
-                var entityMatch = null;
-                while ((entityMatch = text.match(entityRe)) != null) {
-                    var entityLength = entityMatch[0].length;
-                    var replacementString = "";
-                    for (var i = 0; i < entityLength; ++i) {
-                        replacementString += " ";
-                    }
-                    text = text.replace(entityRe, replacementString);
-                }
-
-                // remove all urls
-                var urlRe = /\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/i;
-                var urlMatch = null;
-                while ((urlMatch = text.match(urlRe)) != null) {
-                    var urlLength = urlMatch[0].length;
-                    var replacementString = "";
-                    for (var i = 0; i < urlLength; ++i) {
-                        replacementString += " ";
-                    }
-                    text = text.replace(urlRe, replacementString);
-                }
-
-                // replace any character that doesn't make up a word with a space, and then split on space
-                text = text.replace(/[^a-zA-Z0-9'\\-]/g, ' ');
-
-                // remove all stand alone characters
-                var dashRe = /\s+[^\sA-Za-z0-9]\s+/;
-                var dashMatch = null;
-                while ((dashMatch = text.match(dashRe)) != null) {
-                    var dashLength = dashMatch[0].length;
-                    var replacementString = "";
-                    for (var i = 0; i < dashLength; ++i) {
-                        replacementString += " ";
-                    }
-                    text = text.replace(dashRe, replacementString);
-                }
-
-                // remove anything that does not contain a letter
-                var numberRe = /\b[^A-Za-z\s]+\b/;
-                var numberMatch = null;
-                while ((numberMatch = text.match(numberRe)) != null) {
-                    var numberLength = numberMatch[0].length;
-                    var replacementString = "";
-                    for (var i = 0; i < numberLength; ++i) {
-                        replacementString += " ";
-                    }
-                    text = text.replace(numberRe, replacementString);
-                }
-
-                // remove the quotes around words
-                var quoteRe = /'(.*?)'/;
-                var quoteMatch = null;
-                while ((quoteMatch = text.match(quoteRe)) != null) {
-                    var numberLength = quoteMatch[0].length;
-                    var replacementString = " " + quoteMatch[1] + " ";
-                    text = text.replace(quoteRe, replacementString);
-                }
-
-                var words = text.split(/\s+/);
-
-                function checkWord(words, topic, wordIndex) {
-                    if (wordIndex < words.length) {
-                        var word = words[wordIndex];
-                        if (!dictionary.check(word)) {
-
-                            ++spellingErrors;
-
-                            if (!buttons[word]) {
-                                var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
-                                var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
-                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
-                                     <span class="caret"></span>\
-                                 </button>');
-                                var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>')
-                                jQuery(button).appendTo(buttonParent);
-                                jQuery(buttonList).appendTo(buttonParent);
-                                jQuery(buttonParent).appendTo($("#spellingErrorsItems"));
-
-                                buttons[word] = {list: buttonList, topics: []};
-                            }
-
-                            if (jQuery.inArray(topic.id, buttons[word].topics) == -1) {
-                                buttons[word].topics.push(topic.id);
-                                var link = jQuery('<li><a href="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + topic.id + '</a></li>');
-                                link.appendTo(buttons[word].list);
-                            }
-                        }
-
-                        checkWord(words, topic, ++wordIndex);
-                    }
-                }
-
-                checkWord(words, topic, 0);
-
-                function checkDoubledWord(doubledWords, topic, wordIndex) {
-                    if (wordIndex < doubledWords.length - 1) {
-                        var word = doubledWords[wordIndex];
-
-                        if (word.match(/^[^A-Za-z]*$/) == null) {
-
-                            var nextWord = doubledWords[wordIndex + 1];
-                            if (word == nextWord) {
-
-                                ++doubleWordErrors;
-
-                                if (!doubleWordButtons[word]) {
-                                    var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
-                                    var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
-                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
-                                         <span class="caret"></span>\
-                                     </button>');
-                                    var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>');
-                                    jQuery(button).appendTo(buttonParent);
-                                    jQuery(buttonList).appendTo(buttonParent);
-                                    jQuery(buttonParent).appendTo($("#doubledWordsErrorsItems"));
-
-                                    doubleWordButtons[word] = {list: buttonList, topics: []};
-                                }
-
-                                if (jQuery.inArray(topic.id, doubleWordButtons[word].topics) == -1) {
-                                    doubleWordButtons[word].topics.push(topic.id);
-                                    var link = jQuery('<li><a href="javascript:topicSections[' + topic.id + '].scrollIntoView()">' + topic.id + '</a></li>');
-                                    link.appendTo(doubleWordButtons[word].list);
-                                }
-                            }
-                        }
-
-                        checkDoubledWord(doubledWords, topic, ++wordIndex);
-                    }
-                    else {
-                        setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors, doubleWordErrors, buttons, doubleWordButtons);}, 0);
-                    }
-                }
-
-                checkDoubledWord(doubledWords, topic, 0);
-
-            } catch (e) {
-                setTimeout(function() {checkSpellingErrors(dictionary, topics, ++index, spellingErrors, doubleWordErrors, buttons, doubleWordButtons);}, 0);
-            }
-
-
-        });
-    } else {
-        jQuery("#spellingErrorsBadge").remove();
-        jQuery("#doubledWordsErrorsBadge").remove();
-        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrors + '</span>'));
-        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + '</span>'));
-    }
 }
 
 function getTopReusedTopics(specId) {
@@ -1390,44 +1187,12 @@ function getTopReusedTopics(specId) {
 }
 
 /**
- * Every topic that has been found in the book has its details populated by a series
- * of batched REST requests delayed to help prevent high load on the server.
+ * Find instances where a topic has been used at a higher revision in another book
+ * @param specId
+ * @param topics
+ * @param index
+ * @param count
  */
-function getTopicDetailsInBacthes() {
-    // fire off rest queries requesting information on topics in batches
-    var topicBacthSize = 15;
-    var topicIdsString = "";
-    var delay = SECOND_PASS_REST_CALL_DELAY;
-    for (var index = 0, count = topicIds.length; index < count; ++index) {
-        if (topicIdsString.length != 0) {
-            topicIdsString += ",";
-        }
-
-        topicIdsString += topicIds[index];
-
-        if (index != 0 && index % topicBacthSize == 0) {
-            ++secondPassRESTCalls;
-            setTimeout(function(topicIdsString) {
-                return function() {
-                    doSecondPassQuery(topicIdsString);
-                }
-            }(topicIdsString), delay);
-            delay += SECOND_PASS_REST_CALL_DELAY;
-            topicIdsString = "";
-        }
-    }
-
-    // query the remaining topics not picked up in the for loop above
-    if (topicIdsString.length != 0) {
-        ++secondPassRESTCalls;
-        setTimeout(function(topicIdsString) {
-            return function() {
-                doSecondPassQuery(topicIdsString);
-            }
-        }(topicIdsString), delay);
-    }
-}
-
 function getTopicNodes(specId, topics, index, count) {
     if (index < topics.length) {
         var topic = topics[index];
@@ -1804,110 +1569,6 @@ function expandSpecChildren(topics, nodeId, revision, callback) {
 }
 
 /**
- * Getting the information on the topics in the spec is done in batches. Each batch is processed by this function.
- * @param topicIdsString The comma separated list of topic ids to query.
- */
-function doSecondPassQuery(topicIdsString) {
-	$.getJSON(BACKGROUND_QUERY_PREFIX + topicIdsString + BACKGROUND_QUERY_POSTFIX, function (data, textStatus, jqXHR) {
-		++secondPassRESTCallsCompleted;
-		if (data && data.items) {
-			for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
-				var topic = data.items[topicIndex].item;
-
-                if (!topicNames[topic.id]) {
-                    topicNames[topic.id] = topic.title;
-                }
-
-				// set the description
-				descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
-
-				// set the revisions
-				historyCache[topic.id].data = [];
-				for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
-					var revision = topic.revisions.items[revisionIndex].item;
-					historyCache[topic.id].data.push({
-						revision: revision.revision,
-						message: revision.logDetails.message,
-						lastModified: revision.lastModified});
-				}
-
-				// set the tags
-				tagsCache[topic.id].data = [];
-				for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
-					var tag = topic.tags.items[tagIndex].item;
-                    tagsCache[topic.id].data.push({
-                        name: tag.name,
-                        id: tag.id
-                    });
-				}
-
-				// set the urls
-				urlCache[topic.id].data = [];
-
-				var match = null;
-				while (match = COMMENT_RE.exec(topic.xml)) {
-					var comment = match[1];
-
-					var match2 = null;
-					while (match2 = URL_RE.exec(comment)) {
-						var url = match2[0];
-						urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
-					}
-				}
-
-				for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
-					var url = topic.sourceUrls_OTM.items[urlsIndex].item;
-					urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
-				}
-
-				// set the specs
-				specCache[topic.id].data = [];
-				var specs = {};
-				for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
-					var spec = topic.contentSpecs_OTM.items[specIndex].item;
-					if (!specs[spec.id]) {
-						var specDetails = {id: spec.id, title: "", product: "", version: ""};
-						for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
-							var child = spec.children_OTM.items[specChildrenIndex].item;
-							if (child.title == "Product") {
-								specDetails.product = child.additionalText;
-							} else if (child.title == "Version") {
-								specDetails.version = child.additionalText;
-							} if (child.title == "Title") {
-								specDetails.title = child.additionalText;
-							}
-						}
-						specs[spec.id] = specDetails;
-					}
-				}
-
-				for (spec in specs) {
-					specCache[topic.id].data.push(specs[spec]);
-				}
-
-				updateHistoryIcon(topic.id, topic.title);
-
-				updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
-				updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
-				updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
-				updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
-			}
-		} else {
-			console.log("Bad request");
-		}
-
-		// Call some functions when all the data is availble.
-		if (secondPassRESTCallsCompleted == secondPassRESTCalls) {
-			console.log("Second pass completed");
-			buildTopicEditedInChart();
-
-			// at this point we are ready to start the third pass (an email report)
-			thirdPass(true, false);
-		}
-	});
-}
-
-/**
  * The third pass is done once every topic has been returned and the details extracted from them. We can then
  * read this information display some additional reports.
  * @param mySecondPassDone
@@ -1925,48 +1586,6 @@ function thirdPass(mySecondPassDone, mySpecHistoryDone) {
 	if (secondPassDone && specHistoryDone) {
 
         console.log("Starting Third Pass");
-
-        // get the spec id
-        var specId = getSpecIdFromURL();
-        if (specId) {
-
-
-            // getUpdatedTopics and checkSpellingErrors need the topic ids and revisions for the topics in the current
-            // spec.
-            var topicsUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=0,9,10;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
-            $.getJSON(topicsUrl, function(data) {
-                var topics = [];
-                var allTopics = [];
-                for (var index = 0, count = data.items.length; index < count; ++index) {
-                    var topic = data.items[index].item;
-                    var topicDetails = {id: topic.entityId, rev: topic.entityRevision};
-                    allTopics.push(topicDetails);
-                    if (topic.entityRevision) {
-                        topics.push(topicDetails);
-                    }
-                }
-
-                getTopicNodes(specId, topics, 0, 0);
-
-                // the js file might not be included just yet in all builds
-                if (window.Typo) {
-                    jQuery.get("/dictionaries/en_US.aff", function(affData) {
-                        jQuery.get("/dictionaries/en_US.dic", function(dicData) {
-                            var dictionary = new Typo("en_US", affData, dicData);
-
-                            jQuery("#spellingErrorsBadge").remove();
-                            jQuery("#doubledWordsErrorsBadge").remove();
-                            jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">0 (0% complete)</span>'));
-                            jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">0 (0% complete)</span>'));
-
-                            checkSpellingErrors(dictionary, allTopics, 0, 0, 0, {}, {});
-                        })
-                    });
-                }
-            });
-
-            //getTopReusedTopics(specId);
-        }
 
         // the function to call when all incompatibilities have been found
         var reportIncompatibilities = function(usedLicenses, incompatibleLicenses) {
@@ -2822,3 +2441,375 @@ function countKeys(obj) {
 	}
 	return size;
 };
+
+/**
+ * The side menus require various information about topics and specs. This function is where
+ * we pull down this information.
+ *
+ * Since browsers limit the number of connections to a server, even between tabs, we want to
+ * avoid queuing up too many requsts.
+ */
+function getInfoFromREST() {
+
+    function checkSpellingErrors(topic) {
+        if (topic) {
+            topicsToCheckForSpelling.push(topic);
+        }
+
+        // it is possible we are trying to spell check topics before the dictionary is loaded.
+        // in this case we just append to topicsToCheckForSpelling and grab them next time.
+        if (dictionary != null) {
+            while (topicsToCheckForSpelling.length != 0) {
+
+                var thisTopic = topicsToCheckForSpelling.pop();
+
+                try {
+                    // find any injection comments and replace them with a literal. These will be removed
+                    // before spellchecking, and set to text that is skipped for double word checking.
+                    // but having the comment replaced means that there is a break in a double word.
+                    var fixedXML = thisTopic.xml.replace(/<\!--\s*Inject\s*:.*?-->/g, "<literal></literal>");
+
+                    /*
+                     A number of docbook elements define a logical break between words that is lost
+                     when the elements are removed. So we just add a literal after these to prevent
+                     the double word logic from picking them up. Also, because we ignore literals
+                     in the spell checking, these new elements have no impact.
+                     */
+                    var addDoubleWordBreaks = [
+                        "title",
+                        "entry",
+                        "indexterm",
+                        "primary",
+                        "secondary",
+                        "guimenu",
+                        "guimenuitem",
+                        "listitem",
+                        "ulink"
+                    ];
+
+                    for (var elementIndex = 0, elementCount = addDoubleWordBreaks.length; elementIndex < elementCount; ++elementIndex) {
+                        fixedXML = fixedXML.replace(new RegExp("<\/" + addDoubleWordBreaks[elementIndex] + ">", "g"), "</" + addDoubleWordBreaks[elementIndex] + "><literal></literal>");
+                    }
+
+                    var xmlDoc = jQuery(jQuery.parseXML(fixedXML));
+
+                    // These docbook elements will commonly contain words that are not found in the dictionary.
+                    var doNotSpellCheck = [
+                        "parameter",
+                        "screen",
+                        "programlisting",
+                        "command",
+                        "literal",
+                        "package",
+                        "systemitem",
+                        "application",
+                        "guibutton",
+                        "guilabel",
+                        "filename",
+                        "replaceable",
+                        "code",
+                        "option",
+                        "classname",
+                        "term"
+                    ];
+
+                    // remove the contents of these elements
+                    for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
+                        jQuery(doNotSpellCheck[elementIndex], xmlDoc).text(" | ");
+                    }
+
+                    // We split the string up now to look for doubled words
+                    var doubledWords = xmlDoc.text().split(/\s+/);
+
+                    // remove these elements
+                    for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
+                        jQuery(doNotSpellCheck[elementIndex], xmlDoc).remove();
+                    }
+
+                    var text = xmlDoc.text();
+
+                    // remove all xml/html entities
+                    var entityRe = /&.*?;/;
+                    var entityMatch = null;
+                    while ((entityMatch = text.match(entityRe)) != null) {
+                        var entityLength = entityMatch[0].length;
+                        var replacementString = "";
+                        for (var i = 0; i < entityLength; ++i) {
+                            replacementString += " ";
+                        }
+                        text = text.replace(entityRe, replacementString);
+                    }
+
+                    // remove all urls
+                    var urlRe = /\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/i;
+                    var urlMatch = null;
+                    while ((urlMatch = text.match(urlRe)) != null) {
+                        var urlLength = urlMatch[0].length;
+                        var replacementString = "";
+                        for (var i = 0; i < urlLength; ++i) {
+                            replacementString += " ";
+                        }
+                        text = text.replace(urlRe, replacementString);
+                    }
+
+                    // replace any character that doesn't make up a word with a space, and then split on space
+                    text = text.replace(/[^a-zA-Z0-9'\\-]/g, ' ');
+
+                    // remove all stand alone characters
+                    var dashRe = /\s+[^\sA-Za-z0-9]\s+/;
+                    var dashMatch = null;
+                    while ((dashMatch = text.match(dashRe)) != null) {
+                        var dashLength = dashMatch[0].length;
+                        var replacementString = "";
+                        for (var i = 0; i < dashLength; ++i) {
+                            replacementString += " ";
+                        }
+                        text = text.replace(dashRe, replacementString);
+                    }
+
+                    // remove anything that does not contain a letter
+                    var numberRe = /\b[^A-Za-z\s]+\b/;
+                    var numberMatch = null;
+                    while ((numberMatch = text.match(numberRe)) != null) {
+                        var numberLength = numberMatch[0].length;
+                        var replacementString = "";
+                        for (var i = 0; i < numberLength; ++i) {
+                            replacementString += " ";
+                        }
+                        text = text.replace(numberRe, replacementString);
+                    }
+
+                    // remove the quotes around words
+                    var quoteRe = /'(.*?)'/;
+                    var quoteMatch = null;
+                    while ((quoteMatch = text.match(quoteRe)) != null) {
+                        var numberLength = quoteMatch[0].length;
+                        var replacementString = " " + quoteMatch[1] + " ";
+                        text = text.replace(quoteRe, replacementString);
+                    }
+
+                    var words = text.split(/\s+/);
+
+                    function checkWord(words, topic, wordIndex) {
+                        if (wordIndex < words.length) {
+                            var word = words[wordIndex];
+                            if (!dictionary.check(word)) {
+
+                                ++spellingErrors;
+
+                                if (!buttons[word]) {
+                                    var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
+                                    var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
+                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
+                                     <span class="caret"></span>\
+                                 </button>');
+                                    var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>')
+                                    jQuery(button).appendTo(buttonParent);
+                                    jQuery(buttonList).appendTo(buttonParent);
+                                    jQuery(buttonParent).appendTo($("#spellingErrorsItems"));
+
+                                    buttons[word] = {list: buttonList, topics: []};
+                                }
+
+                                if (jQuery.inArray(topic.id, buttons[word].topics) == -1) {
+                                    buttons[word].topics.push(topic.id);
+                                    var link = jQuery('<li><a href="javascript:topicSections[' + thisTopic.id + '].scrollIntoView()">' + thisTopic.id + '</a></li>');
+                                    link.appendTo(buttons[word].list);
+                                }
+                            }
+
+                            checkWord(words, topic, ++wordIndex);
+                        }
+                    }
+
+                    checkWord(words, topic, 0);
+
+                    function checkDoubledWord(doubledWords, topic, wordIndex) {
+                        if (wordIndex < doubledWords.length - 1) {
+                            var word = doubledWords[wordIndex];
+
+                            if (word.match(/^[^A-Za-z]*$/) == null) {
+
+                                var nextWord = doubledWords[wordIndex + 1];
+                                if (word == nextWord) {
+
+                                    ++doubleWordErrors;
+
+                                    if (!doubleWordButtons[word]) {
+                                        var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
+                                        var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
+                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
+                                         <span class="caret"></span>\
+                                     </button>');
+                                        var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>');
+                                        jQuery(button).appendTo(buttonParent);
+                                        jQuery(buttonList).appendTo(buttonParent);
+                                        jQuery(buttonParent).appendTo($("#doubledWordsErrorsItems"));
+
+                                        doubleWordButtons[word] = {list: buttonList, topics: []};
+                                    }
+
+                                    if (jQuery.inArray(topic.id, doubleWordButtons[word].topics) == -1) {
+                                        doubleWordButtons[word].topics.push(topic.id);
+                                        var link = jQuery('<li><a href="javascript:topicSections[' + thisTopic.id + '].scrollIntoView()">' + thisTopic.id + '</a></li>');
+                                        link.appendTo(doubleWordButtons[word].list);
+                                    }
+                                }
+                            }
+
+                            checkDoubledWord(doubledWords, topic, ++wordIndex);
+                        }
+                    }
+
+                    checkDoubledWord(doubledWords, topic, 0);
+
+                } catch (e) {
+
+                }
+            }
+        }
+    }
+
+    // load the dictionaries for spell checking
+    if (window.Typo) {
+        jQuery.get("/dictionaries/en_US.aff", function(affData) {
+            jQuery.get("/dictionaries/en_US.dic", function(dicData) {
+                dictionary = new Typo("en_US", affData, dicData);
+
+                if (topicsToCheckForSpelling.length != 0) {
+                    topicsToCheckForSpelling();
+                }
+            })
+        });
+    }
+
+    // first we need to know all the topics in the spec, and what revision (if any) is used.
+    var specId = getSpecIdFromURL();
+    if (specId) {
+        var topicsUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=0,9,10;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
+        jQuery.getJSON(topicsUrl, function(data) {
+
+            function getTopic(index, topics) {
+                if (index < topics.items.length) {
+
+                    jQuery("#spellingErrorsBadge").remove();
+                    jQuery("#doubledWordsErrorsBadge").remove();
+                    jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrors + ' (' + (index / topics.items.length * 100).toFixed(2) + '% complete)</span>'));
+                    jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (' + (index / topics.items.length * 100).toFixed(2) + '% complete)</span>'));
+
+                    var topic = data.items[index].item;
+
+                    // for each topic we need the latest revision, and the specific revision included in the spec (if the revision is defined)
+                    var topicUrl = SERVER + "/topic/get/json/" + topic.entityId;
+                    jQuery.getJSON(topicUrl, function(fixedrevision) {
+                        return function(data) {
+
+                            if (!fixedrevision) {
+                                topicsToCheckForSpelling(data);
+                            }
+
+                            if (!topicNames[topic.id]) {
+                                topicNames[topic.id] = topic.title;
+                            }
+
+                            // set the description
+                            descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
+
+                            // set the revisions
+                            historyCache[topic.id].data = [];
+                            for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
+                                var revision = topic.revisions.items[revisionIndex].item;
+                                historyCache[topic.id].data.push({
+                                    revision: revision.revision,
+                                    message: revision.logDetails.message,
+                                    lastModified: revision.lastModified});
+                            }
+
+                            // set the tags
+                            tagsCache[topic.id].data = [];
+                            for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
+                                var tag = topic.tags.items[tagIndex].item;
+                                tagsCache[topic.id].data.push({
+                                    name: tag.name,
+                                    id: tag.id
+                                });
+                            }
+
+                            // set the urls
+                            urlCache[topic.id].data = [];
+
+                            var match = null;
+                            while (match = COMMENT_RE.exec(topic.xml)) {
+                                var comment = match[1];
+
+                                var match2 = null;
+                                while (match2 = URL_RE.exec(comment)) {
+                                    var url = match2[0];
+                                    urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
+                                }
+                            }
+
+                            for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
+                                var url = topic.sourceUrls_OTM.items[urlsIndex].item;
+                                urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
+                            }
+
+                            // set the specs
+                            specCache[topic.id].data = [];
+                            var specs = {};
+                            for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
+                                var spec = topic.contentSpecs_OTM.items[specIndex].item;
+                                if (!specs[spec.id]) {
+                                    var specDetails = {id: spec.id, title: "", product: "", version: ""};
+                                    for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
+                                        var child = spec.children_OTM.items[specChildrenIndex].item;
+                                        if (child.title == "Product") {
+                                            specDetails.product = child.additionalText;
+                                        } else if (child.title == "Version") {
+                                            specDetails.version = child.additionalText;
+                                        } if (child.title == "Title") {
+                                            specDetails.title = child.additionalText;
+                                        }
+                                    }
+                                    specs[spec.id] = specDetails;
+                                }
+                            }
+
+                            for (spec in specs) {
+                                specCache[topic.id].data.push(specs[spec]);
+                            }
+
+                            updateHistoryIcon(topic.id, topic.title);
+
+                            updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
+                            updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
+                            updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
+                            updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
+
+                            getTopic(++index, topics);
+                        }
+                    }(topic.entityRevision != null));
+
+                    // get the specific topic revision
+                    if (topic.entityRevision) {
+                        var topicRevisionUrl = SERVER + "/topic/get/json/" + topic.entityId + "/r/" + topic.entityRevision;
+                        jQuery.getJSON(topicRevisionUrl, function(data) {
+                            topicsToCheckForSpelling(data);
+                        });
+                    }
+                } else {
+                    jQuery("#spellingErrorsBadge").remove();
+                    jQuery("#doubledWordsErrorsBadge").remove();
+                    jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrors + '</span>'));
+                    jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + '</span>'));
+
+                    console.log("Retrieved all topic data");
+
+                    getTopicNodes(specId, topics, 0, 0);
+                }
+            }
+
+            getTopic(0, data);
+        });
+    }
+}
