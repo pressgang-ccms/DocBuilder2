@@ -2792,7 +2792,7 @@ function getInfoFromREST() {
 
                     // get the specific topic revision
                     if (topicNode.entityRevision) {
-                        var topicRevisionUrl = SERVER + "/topic/get/json/" + topicNode.entityId + "/r/" + topic.entityRevision;
+                        var topicRevisionUrl = SERVER + "/topic/get/json/" + topicNode.entityId + "/r/" + topicNode.entityRevision;
                         jQuery.getJSON(topicRevisionUrl, function(data) {
                             checkSpellingErrors(data);
                         });
