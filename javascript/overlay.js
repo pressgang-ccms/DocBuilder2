@@ -2800,7 +2800,7 @@ function getInfoFromREST() {
 
                             getTopic(++index, topics);
                         }
-                    }(topic.entityRevision != null));
+                    }(topicNode.entityRevision != null));
 
                     // get the specific topic revision
                     if (topic.entityRevision) {
