@@ -1748,7 +1748,6 @@ function buildTopicEditedInChart() {
             ++historyCache.summary.older;
             ++totalCount;
         }
-
 	}
 
 	$('#topicsEditedIn1Day').append($('<span class="badge pull-right">' + historyCache.summary.day + '</span>'));
@@ -2584,12 +2583,17 @@ function checkSpellingErrors(topic) {
                             ++spellingErrorsCount;
 
                             if (!buttons[word]) {
+
+                                var wordId = "spellingError" + word.replace(/[^A-Za-z0-9]/g, "");
+
                                 var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
-                                var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
+                                var button = jQuery('<button id="' + wordId + '" type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
                                      <span class="caret"></span>\
                                  </button>');
-                                var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>')
+                                var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>');
+                                var addToDictionary = jQuery("<li><a href='javascript:addToDictionary(\"" + word + "\", \"" + wordId + "\")'>Add to dictionary</a></li>");
+                                buttonList.append(addToDictionary);
                                 jQuery(button).appendTo(buttonParent);
                                 jQuery(buttonList).appendTo(buttonParent);
                                 jQuery(buttonParent).appendTo($("#spellingErrorsItems"));
@@ -2832,20 +2836,30 @@ function getDictionary() {
     // load the dictionaries for spell checking
     if (window.Typo) {
 
-        var customDicUrl = SERVER + "/topics/get/json/query;;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
+        //var customDicUrl = SERVER + "/topics/get/json/query;;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
+        var customDicUrl = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topics/get/json/query;;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
         jQuery.getJSON(customDicUrl, function(topics) {
             var customWords = "";
+            var customWordsDict = {};
             for (var topicIndex = 0, topicCount = topics.items.length; topicIndex < topicCount; ++topicIndex) {
                 var topic =  topics.items[topicIndex].item;
 
-                for (var propertyIndex = 0, propertyCount = topic.properties.length; propertyIndex < propertyCount; ++propertyIndex) {
-                    var property = topic.properties[propertyIndex].item;
+                for (var propertyIndex = 0, propertyCount = topic.properties.items.length; propertyIndex < propertyCount; ++propertyIndex) {
+                    var property = topic.properties.items[propertyIndex].item;
 
-                    if (customWords.length == 0) {
-                        customWords += "\n";
+                    if (property.id == VALID_WORD_EXTENDED_PROPERTY_TAG_ID) {
+                        if (!customWordsDict[property.value]) {
+                            customWordsDict[property.value] = 1;
+
+                            if (customWords.length != 0) {
+                                customWords += "\n";
+                            }
+
+                            customWords += property.value;
+                        } else {
+                            customWordsDict[property.value] = customWordsDict[property.value] + 1;
+                        }
                     }
-
-                    customWords += property.value;
                 }
             }
 
@@ -2861,4 +2875,60 @@ function getDictionary() {
             });
         });
     }
+}
+
+function addToDictionary(word, wordId) {
+    bootbox.dialog({
+        message: "<textarea id='newWordDetails' style='width: 100%; height: 300px'></textarea>",
+        title: "Please enter a plain text description for '" + word + "'. This description will be displayed in the ECS custom dictionary.",
+        buttons: {
+            danger: {
+                label: "Cancel",
+                className: "btn-default"
+            },
+            success: {
+                label: "OK",
+                className: "btn-primary",
+                callback: function() {
+                    var description = jQuery.trim(jQuery('#newWordDetails').val());
+                    if (description.length == 0) {
+                        bootbox.alert("Please enter a description.", function() {
+                            addToDictionary(word, wordId);
+                        });
+                    } else {
+                        var paras = description.split("\n");
+                        var docbook = "<section><title>" + word + "</title>";
+
+                        for (var parasIndex = 0, parasCount = paras.length; parasIndex < parasCount; ++parasIndex) {
+                            var trimmedPara = jQuery.trim(paras[parasIndex]);
+                            if (trimmedPara.length != 0) {
+                                docbook += "<para>" + trimmedPara + "</para>";
+                            }
+                        }
+
+                        docbook += "</section>";
+
+                        //var createTopicURL = SERVER + "/topic/create/json?message=docbuilder%3A+New+dictionary+word+added&flag=2&userId=89";
+                        var createTopicURL = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topic/create/json?message=docbuilder%3A+New+dictionary+word+added&flag=2&userId=89";
+                        var postBody = '{"xml":"' + docbook + '", "locale":"en-US", "properties":{"items":[{"item":{"value":"' + word + '", "id":' + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + '}, "state":1}]}, "configuredParameters":["properties","locale","xml"]}';
+
+                        jQuery.ajax({
+                            type: "POST",
+                            contentType: "application/json",
+                            url: createTopicURL,
+                            data: postBody,
+                            success: function(data) {
+                                jQuery("#" + wordId).remove();
+                                bootbox.alert("Topic <a href='http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms-ui/#SearchResultsAndTopicView;query;topicIds=" + data.id + "'>" + data.id + "</a> was successfully created to represent '" + word + "' in the custom dictionary.");
+                            },
+                            error: function() {
+                                bootbox.alert("An error occured while trying to create the topic. Please try again later.");
+                            },
+                            dataType: "json"
+                        });
+                    }
+                }
+            }
+        }
+    });
 }
