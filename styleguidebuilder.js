@@ -21,6 +21,8 @@ var customDicUrl = REST_SERVER + "/1/topics/get/json/query;;propertyTagExists" +
 
 $.getJSON(customDicUrl, function(topics) {
 
+    var lastLetter = null;
+
     var contentSpec = 'ID = ' + STYLE_GUIDE_SPEC_ID + '\n\
 Title = ECS Custom Dictionary\n\
 Product = PressGang\n\
@@ -33,6 +35,12 @@ Chapter: Dictionary\n';
 
     for (var topicIndex = 0, topicCount = topics.items.length; topicIndex < topicCount; ++topicIndex) {
         var topic =  topics.items[topicIndex].item;
+        var firstLetter = topic.title.substring(0, 1).toUpperCase();
+        if (firstLetter != lastLetter) {
+            lastLetter = firstLetter;
+            contentSpec += "Chapter: " + firstLetter + "\n";
+        }
+
         contentSpec += "  " + topic.title + " [" + topic.id + "]\n";
     }
 
