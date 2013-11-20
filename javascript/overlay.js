@@ -2888,6 +2888,8 @@ function addCustomWord() {
 }
 
 function addToDictionary(word, wordId) {
+    word = encodeXml(word);
+
     bootbox.dialog({
         message: "<textarea id='newWordDetails' style='width: 100%; height: 300px'></textarea>",
         title: "Please enter a plain text description for '" + word + "'. This description will be displayed in the ECS custom dictionary.",
@@ -2910,7 +2912,8 @@ function addToDictionary(word, wordId) {
                         var docbook = "<section><title>" + word + "</title>";
 
                         for (var parasIndex = 0, parasCount = paras.length; parasIndex < parasCount; ++parasIndex) {
-                            var trimmedPara = jQuery.trim(paras[parasIndex]);
+                            var trimmedPara = encodeXml(jQuery.trim(paras[parasIndex]));
+
                             if (trimmedPara.length != 0) {
                                 docbook += "<para>" + trimmedPara + "</para>";
                             }
@@ -2942,4 +2945,13 @@ function addToDictionary(word, wordId) {
             }
         }
     });
+}
+
+function encodeXml(text) {
+    text = text.replace(/&/g, "&amp;");
+    text = text.replace(/'/g, "&apos;");
+    text = text.replace(/"/g, "&quot;");
+    text = text.replace(/</g, "&lt;");
+    text = text.replace(/>/g, "&gt;");
+    return text;
 }
