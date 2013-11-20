@@ -2498,6 +2498,12 @@ function checkSpellingErrors(topic) {
                     "classname",
                     "interfacename",
                     "synopsis",
+                    "classsynopsis",
+                    "classsynopsisinfo",
+                    "constructorsynopsis",
+                    "destructorsynopsis",
+                    "methodsynopsis",
+                    "fieldsynopsis",
                     "term"
                 ];
 
