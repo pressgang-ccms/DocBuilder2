@@ -27,8 +27,7 @@ $.getJSON(customDicUrl, function(topics) {
 Title = ECS Custom Dictionary\n\
 Product = PressGang\n\
 Version = 1.3\n\
-Copyright Holder = Red Hat\n\
-\n';
+Copyright Holder = Red Hat\n';
 
     topics.items.sort(function(a, b) {return a.item.title.toLowerCase() > b.item.title.toLowerCase()});
 
