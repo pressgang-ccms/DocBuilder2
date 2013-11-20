@@ -2838,8 +2838,7 @@ function getDictionary() {
     // load the dictionaries for spell checking
     if (window.Typo) {
 
-        //var customDicUrl = SERVER + "/topics/get/json/query;;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
-        var customDicUrl = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topics/get/json/query;;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
+        var customDicUrl = SERVER + "/topics/get/json/query;;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
         jQuery.getJSON(customDicUrl, function(topics) {
             var customWords = "";
             var customWordsDict = {};
@@ -2910,8 +2909,7 @@ function addToDictionary(word, wordId) {
 
                         docbook += "</section>";
 
-                        //var createTopicURL = SERVER + "/topic/create/json?message=docbuilder%3A+New+dictionary+word+added&flag=2&userId=89";
-                        var createTopicURL = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topic/create/json?message=docbuilder%3A+New+dictionary+word+added&flag=2&userId=89";
+                        var createTopicURL = SERVER + "/topic/create/json?message=docbuilder%3A+New+dictionary+word+added&flag=2&userId=89";
                         var postBody = '{"xml":"' + docbook + '", "locale":"en-US", "properties":{"items":[{"item":{"value":"' + word + '", "id":' + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + '}, "state":1}]}, "configuredParameters":["properties","locale","xml"]}';
 
                         jQuery.ajax({
@@ -2921,7 +2919,7 @@ function addToDictionary(word, wordId) {
                             data: postBody,
                             success: function(data) {
                                 jQuery("#" + wordId).remove();
-                                bootbox.alert("Topic <a href='http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms-ui/#SearchResultsAndTopicView;query;topicIds=" + data.id + "'>" + data.id + "</a> was successfully created to represent '" + word + "' in the custom dictionary.");
+                                bootbox.alert("Topic <a href='http://" + BASE_SERVER + "/pressgang-ccms-ui/#SearchResultsAndTopicView;query;topicIds=" + data.id + "'>" + data.id + "</a> was successfully created to represent '" + word + "' in the custom dictionary.");
                             },
                             error: function() {
                                 bootbox.alert("An error occured while trying to create the topic. Please try again later.");
