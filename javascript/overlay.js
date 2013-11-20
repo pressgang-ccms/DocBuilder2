@@ -2504,6 +2504,8 @@ function checkSpellingErrors(topic) {
                     "destructorsynopsis",
                     "methodsynopsis",
                     "fieldsynopsis",
+                    "cmdsynopsis",
+                    "funcsynopsis",
                     "term"
                 ];
 
