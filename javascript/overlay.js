@@ -2592,8 +2592,10 @@ function checkSpellingErrors(topic) {
                                      <span class="caret"></span>\
                                  </button>');
                                 var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>');
-                                var addToDictionary = jQuery("<li><a href='javascript:addToDictionary(\"" + word + "\", \"" + wordId + "\")'>Add to dictionary</a></li>");
-                                buttonList.append(addToDictionary);
+                                if (window.bootbox) {
+                                    var addToDictionary = jQuery("<li><a href='javascript:addToDictionary(\"" + word + "\", \"" + wordId + "\")'>Add to dictionary</a></li>");
+                                    buttonList.append(addToDictionary);
+                                }
                                 jQuery(button).appendTo(buttonParent);
                                 jQuery(buttonList).appendTo(buttonParent);
                                 jQuery(buttonParent).appendTo($("#spellingErrorsItems"));
