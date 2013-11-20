@@ -37,7 +37,7 @@ Copyright Holder = Red Hat\n\
         var firstLetter = topic.title.substring(0, 1).toUpperCase();
         if (firstLetter != lastLetter) {
             lastLetter = firstLetter;
-            contentSpec += "Chapter: " + firstLetter + "\n";
+            contentSpec += "\nChapter: " + firstLetter + "\n";
         }
 
         contentSpec += "  " + topic.title + " [" + topic.id + "]\n";

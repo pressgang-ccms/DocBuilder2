@@ -2839,7 +2839,7 @@ function getDictionary() {
     // load the dictionaries for spell checking
     if (window.Typo) {
 
-        var customDicUrl = SERVER + "/topics/get/json/query;;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
+        var customDicUrl = SERVER + "/topics/get/json/query;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
         jQuery.getJSON(customDicUrl, function(topics) {
             var customWords = "";
             var customWordsDict = {};
@@ -2890,61 +2890,70 @@ function addCustomWord() {
 function addToDictionary(word, wordId) {
     word = encodeXml(word);
 
-    bootbox.dialog({
-        message: "<textarea id='newWordDetails' style='width: 100%; height: 300px'></textarea>",
-        title: "Please enter a plain text description for '" + word + "'. This description will be displayed in the ECS custom dictionary.",
-        buttons: {
-            danger: {
-                label: "Cancel",
-                className: "btn-default"
-            },
-            success: {
-                label: "OK",
-                className: "btn-primary",
-                callback: function() {
-                    var description = jQuery.trim(jQuery('#newWordDetails').val());
-                    if (description.length == 0) {
-                        bootbox.alert("Please enter a description.", function() {
-                            addToDictionary(word, wordId);
-                        });
-                    } else {
-                        var paras = description.split("\n");
-                        var docbook = "<section><title>" + word + "</title>";
+    var existingTopicUrl = SERVER + "/topics/get/json/query;propertyTag" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=" + encodeURIComponent(word) + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
+    jQuery.getJSON(existingTopicUrl, function(topics){
+        if (topics.items.length == 0) {
+            bootbox.dialog({
+                message: "<textarea id='newWordDetails' style='width: 100%; height: 300px'></textarea>",
+                title: "Please enter a plain text description for '" + word + "'. This description will be displayed in the ECS custom dictionary.",
+                buttons: {
+                    danger: {
+                        label: "Cancel",
+                        className: "btn-default"
+                    },
+                    success: {
+                        label: "OK",
+                        className: "btn-primary",
+                        callback: function() {
+                            var description = jQuery.trim(jQuery('#newWordDetails').val());
+                            if (description.length == 0) {
+                                bootbox.alert("Please enter a description.", function() {
+                                    addToDictionary(word, wordId);
+                                });
+                            } else {
+                                var paras = description.split("\n");
+                                var docbook = "<section><title>" + word + "</title>";
 
-                        for (var parasIndex = 0, parasCount = paras.length; parasIndex < parasCount; ++parasIndex) {
-                            var trimmedPara = encodeXml(jQuery.trim(paras[parasIndex]));
+                                for (var parasIndex = 0, parasCount = paras.length; parasIndex < parasCount; ++parasIndex) {
+                                    var trimmedPara = encodeXml(jQuery.trim(paras[parasIndex]));
 
-                            if (trimmedPara.length != 0) {
-                                docbook += "<para>" + trimmedPara + "</para>";
+                                    if (trimmedPara.length != 0) {
+                                        docbook += "<para>" + trimmedPara + "</para>";
+                                    }
+                                }
+
+                                docbook += "</section>";
+
+                                var createTopicURL = SERVER + "/topic/create/json?message=docbuilder%3A+New+dictionary+word+added&flag=2&userId=89";
+                                var postBody = '{"xml":"' + docbook + '", "locale":"en-US", "properties":{"items":[{"item":{"value":"' + word + '", "id":' + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + '}, "state":1}]}, "configuredParameters":["properties","locale","xml"]}';
+
+                                jQuery.ajax({
+                                    type: "POST",
+                                    contentType: "application/json",
+                                    url: createTopicURL,
+                                    data: postBody,
+                                    success: function(data) {
+                                        if (wordId) {
+                                            jQuery("#" + wordId).remove();
+                                        }
+                                        bootbox.alert("Topic <a href='http://" + BASE_SERVER + "/pressgang-ccms-ui/#SearchResultsAndTopicView;query;topicIds=" + data.id + "'>" + data.id + "</a> was successfully created to represent '" + word + "' in the custom dictionary.");
+                                    },
+                                    error: function() {
+                                        bootbox.alert("An error occured while trying to create the topic. Please try again later.");
+                                    },
+                                    dataType: "json"
+                                });
                             }
                         }
-
-                        docbook += "</section>";
-
-                        var createTopicURL = SERVER + "/topic/create/json?message=docbuilder%3A+New+dictionary+word+added&flag=2&userId=89";
-                        var postBody = '{"xml":"' + docbook + '", "locale":"en-US", "properties":{"items":[{"item":{"value":"' + word + '", "id":' + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + '}, "state":1}]}, "configuredParameters":["properties","locale","xml"]}';
-
-                        jQuery.ajax({
-                            type: "POST",
-                            contentType: "application/json",
-                            url: createTopicURL,
-                            data: postBody,
-                            success: function(data) {
-                                if (wordId) {
-                                    jQuery("#" + wordId).remove();
-                                }
-                                bootbox.alert("Topic <a href='http://" + BASE_SERVER + "/pressgang-ccms-ui/#SearchResultsAndTopicView;query;topicIds=" + data.id + "'>" + data.id + "</a> was successfully created to represent '" + word + "' in the custom dictionary.");
-                            },
-                            error: function() {
-                                bootbox.alert("An error occured while trying to create the topic. Please try again later.");
-                            },
-                            dataType: "json"
-                        });
                     }
                 }
-            }
+            });
+        } else {
+            bootbox.alert("This word has already been added. Please view <a href='http://docbuilder.ecs.eng.bne.redhat.com/22516/'>The ECS Custom Dictionary</a> to review the definition of the '" + word + "'");
         }
-    });
+    })
+
+
 }
 
 function encodeXml(text) {
