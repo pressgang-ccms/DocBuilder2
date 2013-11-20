@@ -2496,6 +2496,8 @@ function checkSpellingErrors(topic) {
                     "code",
                     "option",
                     "classname",
+                    "interfacename",
+                    "synopsis",
                     "term"
                 ];
 
