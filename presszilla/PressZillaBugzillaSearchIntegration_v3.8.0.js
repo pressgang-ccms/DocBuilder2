@@ -109,8 +109,8 @@
                                             </div>';
                                     }
 
-                                    // List the bugs that are assigned against this sepc first
-
+                                    // List the bugs that are assigned against this spec first
+                                    var matchedBugs = []; // keep a track of the bugs that were assigned to the spec
                                     for (var bugIndex = 0, bugCount = bugs.length; bugIndex < bugCount; ++bugIndex) {
                                         var bug = bugs[bugIndex];
 
@@ -131,6 +131,8 @@
                                             }
 
                                             cache[topicId].push(bug);
+
+                                            matchedBugs.push(bugIndex);
 
                                             if (unsafeWindow.topicSections[topicId]) {
 
@@ -166,17 +168,12 @@
 
                                     }
 
-                                    // List the bugs that are not assigned against this sepc last
+                                    // List the bugs that are not assigned against this spec last
 
                                     for (var bugIndex = 0, bugCount = bugs.length; bugIndex < bugCount; ++bugIndex) {
                                         var bug = bugs[bugIndex];
 
-                                        /*
-                                         Find the topic id from the environment field
-                                         */
-                                        var matches = /Topic ID: (\d+)/.exec(bug.cf_environment);
-
-                                        if (!matches || !unsafeWindow.topicSections[topicId]) {
+                                        if (jQuery.inArray(bugIndex, matchedBugs) == -1) {
 
                                             var link = buildLink("btn-default", '');
 
