@@ -2506,7 +2506,13 @@ function checkSpellingErrors(topic) {
                     "fieldsynopsis",
                     "cmdsynopsis",
                     "funcsynopsis",
-                    "term"
+                    "methodname",
+                    "exceptionname",
+                    "term",
+                    "uri",
+                    "keycap",
+                    "keysym",
+                    "symbol"
                 ];
 
                 // remove the contents of these elements
