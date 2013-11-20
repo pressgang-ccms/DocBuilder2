@@ -2705,7 +2705,7 @@ function getInfoFromREST() {
                     jQuery.getJSON(topicUrl, function(index, topicDetailsMap) {
                         return function(expandedTopics) {
 
-                            for (var topicIndex = index, topicCount = expandedTopics.items.length; topicIndex < topicCount; ++topicIndex) {
+                            for (var topicIndex = 0, topicCount = expandedTopics.items.length; topicIndex < topicCount; ++topicIndex) {
 
                                 var topic = expandedTopics.items[topicIndex].item;
 
