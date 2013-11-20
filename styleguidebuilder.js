@@ -29,7 +29,17 @@ Product = PressGang\n\
 Version = 1.3\n\
 Copyright Holder = Red Hat\n';
 
-    topics.items.sort(function(a, b) {return a.item.title.toLowerCase() > b.item.title.toLowerCase()});
+    topics.items.sort(function(a, b) {
+        if (a.item.title.toLowerCase() > b.item.title.toLowerCase()) {
+            return 1;
+        }
+
+        if (a.item.title.toLowerCase() == b.item.title.toLowerCase()) {
+            return 0;
+        }
+
+        return -1;
+    });
 
     for (var topicIndex = 0, topicCount = topics.items.length; topicIndex < topicCount; ++topicIndex) {
         var topic =  topics.items[topicIndex].item;
