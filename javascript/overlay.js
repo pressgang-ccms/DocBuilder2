@@ -2881,7 +2881,7 @@ function getDictionary() {
 
 function addCustomWord() {
     bootbox.prompt("Please enter the word to be added to the dictionary.", function(result) {
-        if (result !== null) {
+        if (result !== null && jQuery.trim(result).length != 0) {
             addToDictionary(result);
         }
     });
