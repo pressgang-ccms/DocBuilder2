@@ -29,7 +29,7 @@ Copyright Holder = Red Hat\n\
 \n\
 Chapter: Dictionary\n';
 
-    topics.items.sort(function(a, b) {return a.item.title < b.item.title});
+    topics.items.sort(function(a, b) {return a.item.title > b.item.title});
 
     for (var topicIndex = 0, topicCount = topics.items.length; topicIndex < topicCount; ++topicIndex) {
         var topic =  topics.items[topicIndex].item;
