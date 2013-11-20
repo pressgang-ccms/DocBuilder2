@@ -44,10 +44,6 @@ Chapter: Dictionary\n';
             var fixedContentSpec = contentSpec.replace(/\n/g, "\\n");
             var postBody = '{"text":"' + fixedContentSpec + '", "id":' + STYLE_GUIDE_SPEC_ID + ', "configuredParameters":["text"]}';
 
-            console.log(existingSpec.text);
-            console.log(contentSpec);
-            console.log(postBody);
-
             $.ajax({
                 type: "POST",
                 contentType: "application/json",

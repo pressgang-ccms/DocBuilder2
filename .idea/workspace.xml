@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/styleguidebuilder.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/styleguidebuilder.js" afterPath="$PROJECT_DIR$/styleguidebuilder.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384905788356" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384907469616" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384898860098" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -463,7 +463,7 @@
       <file leaf-file-name="styleguidebuilder.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/styleguidebuilder.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="64" selection-start="1800" selection-end="1800" vertical-scroll-proportion="0.5192604">
+            <state line="44" column="132" selection-start="1938" selection-end="1938" vertical-scroll-proportion="0.56548536">
               <folding />
             </state>
           </provider>
@@ -3106,7 +3106,11 @@
       <created>1384905789374</created>
       <updated>1384905789374</updated>
     </task>
-    <option name="localTasksCounter" value="560" />
+    <task id="LOCAL-00560" summary="Working on the ability to submit words to the custom dictionary">
+      <created>1384907471120</created>
+      <updated>1384907471120</updated>
+    </task>
+    <option name="localTasksCounter" value="561" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -3225,13 +3229,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/styleguidebuilder.js</url>
-          <line>50</line>
-          <option name="timeStamp" value="76" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="77" />
     </breakpoint-manager>
   </component>
@@ -3603,7 +3600,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/styleguidebuilder.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="64" selection-start="1800" selection-end="1800" vertical-scroll-proportion="0.5192604">
+        <state line="44" column="132" selection-start="1938" selection-end="1938" vertical-scroll-proportion="0.56548536">
           <folding />
         </state>
       </provider>
