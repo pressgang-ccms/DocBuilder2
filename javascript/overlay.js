@@ -1859,6 +1859,7 @@ function buildMenu() {
 				<div class="panel-body ">\
 		            <ul id="spellingErrorsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a href="javascript:addCustomWord();">Add custom word to dictionary</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -2878,6 +2879,14 @@ function getDictionary() {
     }
 }
 
+function addCustomWord() {
+    bootbox.prompt("Please enter the word to be added to the dictionary.", function(result) {
+        if (result !== null) {
+            addToDictionary(result);
+        }
+    });
+}
+
 function addToDictionary(word, wordId) {
     bootbox.dialog({
         message: "<textarea id='newWordDetails' style='width: 100%; height: 300px'></textarea>",
@@ -2918,7 +2927,9 @@ function addToDictionary(word, wordId) {
                             url: createTopicURL,
                             data: postBody,
                             success: function(data) {
-                                jQuery("#" + wordId).remove();
+                                if (wordId) {
+                                    jQuery("#" + wordId).remove();
+                                }
                                 bootbox.alert("Topic <a href='http://" + BASE_SERVER + "/pressgang-ccms-ui/#SearchResultsAndTopicView;query;topicIds=" + data.id + "'>" + data.id + "</a> was successfully created to represent '" + word + "' in the custom dictionary.");
                             },
                             error: function() {
