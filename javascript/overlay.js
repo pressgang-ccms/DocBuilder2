@@ -2940,33 +2940,36 @@ function addDictionaryPopovers(customWordsDict) {
                 var textNode = texts[textIndex];
                 var fixedText = textNode.textContent;
 
-                var replacementMarkers = {};
 
-                // Go through and replace all previously matches text with markers
-                var spanRE = /\<span.*?\<\/span\>/;
-                var spanMatch = null;
-                while ((spanMatch = fixedText.match(spanRE)) != null) {
-                    var spanLength = spanMatch[0].length;
-                    var replacementString = "[" + (Math.random() * 1000) + "]";
-
-                    while (fixedText.indexOf(replacementString) != -1) {
-                        replacementString = "[" + (Math.random() * 1000) + "]";
-                    }
-
-                    fixedText = fixedText.replace(spanRE, replacementString);
-                    replacementMarkers[replacementString] = spanMatch[0];
-                }
 
                 // mark up the dictionary matches
                 for (var customWordIndex = 0, customWordCount = customWordsKeyset.length; customWordIndex < customWordCount; ++customWordIndex) {
+                    var replacementMarkers = {};
+
+                    // Go through and replace all previously matches text with markers
+                    var spanRE = /\<span.*?\<\/span\>/;
+                    var spanMatch = null;
+                    while ((spanMatch = fixedText.match(spanRE)) != null) {
+                        var replacementString = "[" + (Math.random() * 1000) + "]";
+
+                        while (fixedText.indexOf(replacementString) != -1) {
+                            replacementString = "[" + (Math.random() * 1000) + "]";
+                        }
+
+                        fixedText = fixedText.replace(spanRE, replacementString);
+                        replacementMarkers[replacementString] = spanMatch[0];
+                    }
+
                     var customWord = customWordsKeyset[customWordIndex];
                     fixedText = fixedText.replace(new RegExp("\\b" + encodeRegex(customWord) + "\\b", "g"), "<span style='text-decoration: none; border-bottom: 1px dashed; border-color: green' onclick='javascript:displayDictionaryTopic(" + customWordsDict[customWord] + ")'>" + customWord + "</span>");
+
+                    // replace the markers with the original text
+                    for (var replacement in replacementMarkers) {
+                        fixedText = fixedText.replace(replacement, replacementMarkers[replacement]);
+                    }
                 }
 
-                // replace the markers with the original text
-                for (var replacement in replacementMarkers) {
-                    fixedText = fixedText.replace(replacement, replacementMarkers[replacement]);
-                }
+
 
                 jQuery(textNode).replaceWith(fixedText);
             }
