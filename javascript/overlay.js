@@ -2859,6 +2859,7 @@ function getDictionary() {
         jQuery.getJSON(customDicUrl, function(topics) {
             var customWords = "";
             var customWordsDict = {};
+
             for (var topicIndex = 0, topicCount = topics.items.length; topicIndex < topicCount; ++topicIndex) {
                 var topic =  topics.items[topicIndex].item;
 
@@ -2867,19 +2868,20 @@ function getDictionary() {
 
                     if (property.id == VALID_WORD_EXTENDED_PROPERTY_TAG_ID) {
                         if (!customWordsDict[property.value]) {
-                            customWordsDict[property.value] = 1;
+                            customWordsDict[property.value] = topic.id;
 
                             if (customWords.length != 0) {
                                 customWords += "\n";
                             }
 
                             customWords += property.value;
-                        } else {
-                            customWordsDict[property.value] = customWordsDict[property.value] + 1;
+
                         }
                     }
                 }
             }
+
+            addDictionaryPopovers(customWordsDict);
 
             jQuery.get("/dictionaries/en_US.aff", function(affData) {
                 jQuery.get("/dictionaries/en_US.dic", function(dicData) {
@@ -2893,6 +2895,109 @@ function getDictionary() {
             });
         });
     }
+}
+
+/**
+ * Scan the text in the page for any words that match those in the custom dictionary, and add a popover icon.
+ */
+function addDictionaryPopovers(customWordsDict) {
+
+    // create an array that sorts the keys in the customWordsDict by length
+    var customWordsKeyset = [];
+    for (var customWord in customWordsDict) {
+        customWordsKeyset.push(customWord);
+    }
+
+    customWordsKeyset.sort(function(a, b){
+        if (a.length > b.length) {
+            return -1;
+        }
+
+        if (a.length == b.length) {
+            return 0;
+        }
+
+        return 1;
+    });
+
+    function collectTextNodes(element, texts) {
+        for (var child= element.firstChild; child!==null; child= child.nextSibling) {
+            if (child.nodeType===3)
+                texts.push(child);
+            else if (child.nodeType===1)
+                collectTextNodes(child, texts);
+        }
+    }
+
+    var texts = [];
+    collectTextNodes(document.body, texts);
+
+    var batchsize = 20;
+
+    function processTextNodes(texts, index) {
+        if (index < texts.length) {
+            for (var textIndex = index, textCount = texts.length; textIndex < textCount && textIndex < index + batchsize; ++textIndex) {
+                var textNode = texts[textIndex];
+                var fixedText = textNode.textContent;
+
+                var replacementMarkers = {};
+
+                // Go through and replace all previously matches text with markers
+                var spanRE = /\<span.*?\<\/span\>/;
+                var spanMatch = null;
+                while ((spanMatch = fixedText.match(spanRE)) != null) {
+                    var spanLength = spanMatch[0].length;
+                    var replacementString = "[" + (Math.random() * 1000) + "]";
+
+                    while (fixedText.indexOf(replacementString) != -1) {
+                        replacementString = "[" + (Math.random() * 1000) + "]";
+                    }
+
+                    fixedText = fixedText.replace(spanRE, replacementString);
+                    replacementMarkers[replacementString] = spanMatch[0];
+                }
+
+                // mark up the dictionary matches
+                for (var customWordIndex = 0, customWordCount = customWordsKeyset.length; customWordIndex < customWordCount; ++customWordIndex) {
+                    var customWord = customWordsKeyset[customWordIndex];
+                    fixedText = fixedText.replace(new RegExp("\\b" + encodeRegex(customWord) + "\\b", "g"), "<span style='text-decoration: none; border-bottom: 1px dashed; border-color: green' onclick='javascript:displayDictionaryTopic(" + customWordsDict[customWord] + ")'>" + customWord + "</span>");
+                }
+
+                // replace the markers with the original text
+                for (var replacement in replacementMarkers) {
+                    fixedText = fixedText.replace(replacement, replacementMarkers[replacement]);
+                }
+
+                jQuery(textNode).replaceWith(fixedText);
+            }
+
+            setTimeout(function() {
+                processTextNodes(texts, index + batchsize);
+            }, 0);
+
+        }
+    }
+
+    processTextNodes(texts, 0);
+}
+
+function displayDictionaryTopic(topicId) {
+    bootbox.alert("<div id='dictionaryTopicViewPlaceholder'>Loading dictionary topic...</div>");
+
+    var topicDetailsUrl = SERVER + "/topic/get/json/" + topicId;
+    jQuery.getJSON(topicDetailsUrl, function(topic){
+        var holdXMLUrl = SERVER + "/holdxml";
+        jQuery.ajax({
+            type: "POST",
+            contentType: "application/xml",
+            url: holdXMLUrl,
+            data: "<?xml-stylesheet type='text/xsl' href='http://" + BASE_SERVER + "/pressgang-ccms-static/publican-docbook/html-single-renderonly.xsl'?>" + topic.xml,
+            success: function(holdId) {
+                jQuery('#dictionaryTopicViewPlaceholder').replaceWith(jQuery("<iframe width='100%' height='300px' frameborder='0' src='" + SERVER + "/echoxml?id=" + holdId.value + "'></iframe>"));
+            },
+            dataType: "json"
+        });
+    });
 }
 
 function addCustomWord() {
@@ -2967,11 +3072,14 @@ function addToDictionary(word, wordId) {
         } else {
             bootbox.alert("This word has already been added. Please view <a href='http://docbuilder.ecs.eng.bne.redhat.com/22516/'>The ECS Custom Dictionary</a> to review the definition of the '" + word + "'");
         }
-    })
-
-
+    });
 }
 
+/**
+ * Encode any special XML characters
+ * @param text t=The text to be encoded
+ * @returns The encoded text
+ */
 function encodeXml(text) {
     text = text.replace(/&/g, "&amp;");
     text = text.replace(/'/g, "&apos;");
@@ -2979,4 +3087,29 @@ function encodeXml(text) {
     text = text.replace(/</g, "&lt;");
     text = text.replace(/>/g, "&gt;");
     return text;
+}
+
+function encodeRegex(text) {
+    text = text.replace(/\\/g, "\\\\");
+    text = text.replace(/\./g, "\\.");
+    text = text.replace(/\+/g, "\\+");
+    text = text.replace(/\-/g, "\\-");
+    text = text.replace(/\*/g, "\\*");
+    text = text.replace(/\?/g, "\\?");
+    text = text.replace(/\[/g, "\\[");
+    text = text.replace(/\]/g, "\\]");
+    text = text.replace(/\^/g, "\\^");
+    text = text.replace(/\$/g, "\\$");
+    text = text.replace(/\(/g, "\\(");
+    text = text.replace(/\)/g, "\\)");
+    text = text.replace(/\{/g, "\\{");
+    text = text.replace(/\}/g, "\\}");
+    text = text.replace(/\=/g, "\\=");
+    text = text.replace(/\!/g, "\\!");
+    text = text.replace(/\</g, "\\<");
+    text = text.replace(/\>/g, "\\>");
+    text = text.replace(/\|/g, "\\|");
+    text = text.replace(/\:/g, "\\:");
+    return text;
+
 }
