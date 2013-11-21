@@ -53,6 +53,11 @@ var LICENSE_CATEGORY = 43;
  */
 var VALID_WORD_EXTENDED_PROPERTY_TAG_ID = 33;
 /**
+ * The id of the extended property that defines invalid dictionary words
+ * @type {number}
+ */
+var INVALID_WORD_EXTENDED_PROPERTY_TAG_ID = 32;
+/**
  * The ID of the tag that indicates the topic details the compatibility between two or more licenses
  * @type {number}
  */
@@ -1859,7 +1864,8 @@ function buildMenu() {
 				<div class="panel-body ">\
 		            <ul id="spellingErrorsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:addCustomWord();">Add custom word to dictionary</a></li>\
+						<li><a href="javascript:addCustomWord(true);">Add custom word to dictionary</a></li>\
+						<li><a href="javascript:addCustomWord(false);">Add invalid word to dictionary</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -2610,7 +2616,7 @@ function checkSpellingErrors(topic) {
                                  </button>');
                                 var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>');
                                 if (window.bootbox) {
-                                    var addToDictionary = jQuery("<li><a href='javascript:addToDictionary(\"" + word + "\", \"" + wordId + "\")'>Add to dictionary</a></li>");
+                                    var addToDictionary = jQuery("<li><a href='javascript:addToDictionary(true, \"" + word + "\", \"" + wordId + "\")'>Add to dictionary</a></li>");
                                     buttonList.append(addToDictionary);
                                 }
                                 jQuery(button).appendTo(buttonParent);
@@ -2940,8 +2946,6 @@ function addDictionaryPopovers(customWordsDict) {
                 var textNode = texts[textIndex];
                 var fixedText = textNode.textContent;
 
-
-
                 // mark up the dictionary matches
                 for (var customWordIndex = 0, customWordCount = customWordsKeyset.length; customWordIndex < customWordCount; ++customWordIndex) {
                     var replacementMarkers = {};
@@ -3003,18 +3007,18 @@ function displayDictionaryTopic(topicId) {
     });
 }
 
-function addCustomWord() {
+function addCustomWord(validWord) {
     bootbox.prompt("Please enter the word to be added to the dictionary.", function(result) {
         if (result !== null && jQuery.trim(result).length != 0) {
-            addToDictionary(result);
+            addToDictionary(validWord, result);
         }
     });
 }
 
-function addToDictionary(word, wordId) {
+function addToDictionary(validWord, word, wordId) {
     word = encodeXml(word);
 
-    var existingTopicUrl = SERVER + "/topics/get/json/query;propertyTag" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=" + encodeURIComponent(word) + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
+    var existingTopicUrl = SERVER + "/topics/get/json/query;propertyTag" + (validWord ? VALID_WORD_EXTENDED_PROPERTY_TAG_ID : INVALID_WORD_EXTENDED_PROPERTY_TAG_ID) + "=" + encodeURIComponent(word) + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
     jQuery.getJSON(existingTopicUrl, function(topics){
         if (topics.items.length == 0) {
             bootbox.dialog({
@@ -3032,7 +3036,7 @@ function addToDictionary(word, wordId) {
                             var description = jQuery.trim(jQuery('#newWordDetails').val());
                             if (description.length == 0) {
                                 bootbox.alert("Please enter a description.", function() {
-                                    addToDictionary(word, wordId);
+                                    addToDictionary(validWord, word, wordId);
                                 });
                             } else {
                                 var paras = description.split("\n");
@@ -3049,7 +3053,7 @@ function addToDictionary(word, wordId) {
                                 docbook += "</section>";
 
                                 var createTopicURL = SERVER + "/topic/create/json?message=docbuilder%3A+New+dictionary+word+added&flag=2&userId=89";
-                                var postBody = '{"xml":"' + docbook + '", "locale":"en-US", "properties":{"items":[{"item":{"value":"' + word + '", "id":' + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + '}, "state":1}]}, "configuredParameters":["properties","locale","xml"]}';
+                                var postBody = '{"xml":"' + docbook + '", "locale":"en-US", "properties":{"items":[{"item":{"value":"' + word + '", "id":' + (validWord ? VALID_WORD_EXTENDED_PROPERTY_TAG_ID : INVALID_WORD_EXTENDED_PROPERTY_TAG_ID) + '}, "state":1}]}, "configuredParameters":["properties","locale","xml"]}';
 
                                 jQuery.ajax({
                                     type: "POST",
