@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript/overlay.js" afterPath="$PROJECT_DIR$/javascript/overlay.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/styleguidebuilder.js" afterPath="$PROJECT_DIR$/styleguidebuilder.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385236959563" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385238129982" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384135183396" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -251,10 +251,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="overlay.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="overlay.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3028" column="329" selection-start="139309" selection-end="139309" vertical-scroll-proportion="0.622807">
+            <state line="3028" column="329" selection-start="139309" selection-end="139309" vertical-scroll-proportion="0.2">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <marker date="1385238124377" expanded="false" signature="12234:12332" placeholder="..." />
@@ -424,10 +424,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="styleguidebuilder.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="styleguidebuilder.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/styleguidebuilder.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="264" selection-start="742" selection-end="742" vertical-scroll-proportion="0.0">
+            <state line="32" column="0" selection-start="1272" selection-end="1272" vertical-scroll-proportion="0.7058824">
               <folding />
             </state>
           </provider>
@@ -515,8 +515,8 @@
         <option value="$PROJECT_DIR$/PressZilla.user.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/javascript/typo_proto.js" />
-        <option value="$PROJECT_DIR$/styleguidebuilder.js" />
         <option value="$PROJECT_DIR$/javascript/overlay.js" />
+        <option value="$PROJECT_DIR$/styleguidebuilder.js" />
       </list>
     </option>
   </component>
@@ -2751,7 +2751,11 @@
       <created>1385236961140</created>
       <updated>1385236961140</updated>
     </task>
-    <option name="localTasksCounter" value="501" />
+    <task id="LOCAL-00501" summary="Added the ability to highlight dictionary words in the document">
+      <created>1385238131425</created>
+      <updated>1385238131425</updated>
+    </task>
+    <option name="localTasksCounter" value="502" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2963,16 +2967,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/styleguidebuilder.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="264" selection-start="742" selection-end="742" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3028" column="329" selection-start="139309" selection-end="139309" vertical-scroll-proportion="0.622807">
+        <state line="3028" column="329" selection-start="139309" selection-end="139309" vertical-scroll-proportion="0.2">
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <marker date="1385238124377" expanded="false" signature="12234:12332" placeholder="..." />
@@ -3138,6 +3135,13 @@
             <marker date="1385238124377" expanded="true" signature="137655:137705" placeholder="..." />
             <marker date="1385238124377" expanded="false" signature="140079:140105" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/styleguidebuilder.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="0" selection-start="1272" selection-end="1272" vertical-scroll-proportion="0.7058824">
+          <folding />
         </state>
       </provider>
     </entry>
