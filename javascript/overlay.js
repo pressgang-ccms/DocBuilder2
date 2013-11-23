@@ -2861,7 +2861,7 @@ function getDictionary() {
     // load the dictionaries for spell checking
     if (window.Typo) {
 
-        var customDicUrl = SERVER + "/topics/get/json/query;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
+        var customDicUrl = SERVER + "/topics/get/json/query;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + INVALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;logic=Or?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
         jQuery.getJSON(customDicUrl, function(topics) {
             var customWords = "";
             var customWordsDict = {};
@@ -2874,7 +2874,7 @@ function getDictionary() {
 
                     if (property.id == VALID_WORD_EXTENDED_PROPERTY_TAG_ID) {
                         if (!customWordsDict[property.value]) {
-                            customWordsDict[property.value] = topic.id;
+                            customWordsDict[property.value] = {valid: true, id: topic.id};
 
                             if (customWords.length != 0) {
                                 customWords += "\n";
@@ -2882,6 +2882,12 @@ function getDictionary() {
 
                             customWords += property.value;
 
+                        }
+                    }
+
+                    if (property.id == INVALID_WORD_EXTENDED_PROPERTY_TAG_ID) {
+                        if (!customWordsDict[property.value]) {
+                            customWordsDict[property.value] = {valid: false, id: topic.id};
                         }
                     }
                 }
@@ -2965,7 +2971,9 @@ function addDictionaryPopovers(customWordsDict) {
                     }
 
                     var customWord = customWordsKeyset[customWordIndex];
-                    fixedText = fixedText.replace(new RegExp("\\b" + encodeRegex(customWord) + "\\b", "g"), "<span style='text-decoration: none; border-bottom: 1px dashed; border-color: green' onclick='javascript:displayDictionaryTopic(" + customWordsDict[customWord] + ")'>" + customWord + "</span>");
+                    var customWordDetails = customWordsDict[customWord];
+                    var borderStyle = customWordDetails.valid ? "border-color: green" : "border-color: red";
+                    fixedText = fixedText.replace(new RegExp("\\b" + encodeRegex(customWord) + "\\b", "g"), "<span style='text-decoration: none; border-bottom: 1px dashed; " + borderStyle + "' onclick='javascript:displayDictionaryTopic(" + customWordDetails.id + ")'>" + customWord + "</span>");
 
                     // replace the markers with the original text
                     for (var replacement in replacementMarkers) {
