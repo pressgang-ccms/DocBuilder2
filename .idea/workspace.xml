@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
+    <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="Added the ability to highlight dictionary words in the document">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/styleguidebuilder.js" afterPath="$PROJECT_DIR$/styleguidebuilder.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385238129982" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385240252030" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384135183396" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -254,7 +254,7 @@
       <file leaf-file-name="overlay.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3028" column="329" selection-start="139309" selection-end="139309" vertical-scroll-proportion="0.2">
+            <state line="49" column="0" selection-start="1945" selection-end="2548" vertical-scroll-proportion="-2.4">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <marker date="1385238124377" expanded="false" signature="12234:12332" placeholder="..." />
@@ -427,7 +427,7 @@
       <file leaf-file-name="styleguidebuilder.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/styleguidebuilder.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="0" selection-start="1272" selection-end="1272" vertical-scroll-proportion="0.7058824">
+            <state line="28" column="53" selection-start="846" selection-end="846" vertical-scroll-proportion="0.7058824">
               <folding />
             </state>
           </provider>
@@ -2755,7 +2755,11 @@
       <created>1385238131425</created>
       <updated>1385238131425</updated>
     </task>
-    <option name="localTasksCounter" value="502" />
+    <task id="LOCAL-00502" summary="Added the ability to highlight dictionary words in the document">
+      <created>1385238798372</created>
+      <updated>1385238798372</updated>
+    </task>
+    <option name="localTasksCounter" value="503" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2969,7 +2973,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3028" column="329" selection-start="139309" selection-end="139309" vertical-scroll-proportion="0.2">
+        <state line="49" column="0" selection-start="1945" selection-end="2548" vertical-scroll-proportion="-2.4">
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <marker date="1385238124377" expanded="false" signature="12234:12332" placeholder="..." />
@@ -3140,7 +3144,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/styleguidebuilder.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="0" selection-start="1272" selection-end="1272" vertical-scroll-proportion="0.7058824">
+        <state line="28" column="53" selection-start="846" selection-end="846" vertical-scroll-proportion="0.7058824">
           <folding />
         </state>
       </provider>
