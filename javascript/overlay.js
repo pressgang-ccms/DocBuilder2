@@ -3026,7 +3026,7 @@ function displayDictionaryTopic(topicId) {
             url: holdXMLUrl,
             data: "<?xml-stylesheet type='text/xsl' href='http://" + BASE_SERVER + "/pressgang-ccms-static/publican-docbook/html-single-renderonly.xsl'?>" + topic.xml,
             success: function(holdId) {
-                jQuery('#dictionaryTopicViewPlaceholder').replaceWith(jQuery("<iframe width='100%' height='300px' frameborder='0' src='" + SERVER + "/echoxml?id=" + holdId.value + "'></iframe>"));
+                jQuery('#dictionaryTopicViewPlaceholder').replaceWith(jQuery("<iframe width='100%' height='300px' frameborder='0' src='" + SERVER + "/echoxml?id=" + holdId.value + "'></iframe><a href='http://" + BASE_SERVER + "/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=" + topicId + "'>Edit this topic</a>"));
             },
             dataType: "json"
         });
