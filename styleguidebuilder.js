@@ -43,8 +43,8 @@ Title = ECS Custom Dictionary\n\
 Product = PressGang\n\
 Version = 1.3\n\
 Copyright Holder = Red Hat\n\
-BZProduct=PressGang CCMS\n\
-BZComponent=Documentation\n';
+BZProduct = PressGang CCMS\n\
+BZComponent = Documentation\n';
 
     topics.items.sort(function(a, b) {
         if (a.item.title.toLowerCase() > b.item.title.toLowerCase()) {
