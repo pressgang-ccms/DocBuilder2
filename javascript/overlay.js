@@ -58,6 +58,16 @@ var VALID_WORD_EXTENDED_PROPERTY_TAG_ID = 33;
  */
 var INVALID_WORD_EXTENDED_PROPERTY_TAG_ID = 32;
 /**
+ * The id of the extended property that defines discourages dictionary words
+ * @type {number}
+ */
+var DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID = 31;
+/**
+ * The id of the extended property that defines discourages dictionary phrases
+ * @type {number}
+ */
+var DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID = 33;
+/**
  * The ID of the tag that indicates the topic details the compatibility between two or more licenses
  * @type {number}
  */
@@ -1864,8 +1874,10 @@ function buildMenu() {
 				<div class="panel-body ">\
 		            <ul id="spellingErrorsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:addCustomWord(true);">Add custom word to dictionary</a></li>\
-						<li><a href="javascript:addCustomWord(false);">Add invalid word to dictionary</a></li>\
+						<li><a href="javascript:addCustomWord(VALID_WORD_EXTENDED_PROPERTY_TAG_ID);">Add custom word to dictionary</a></li>\
+						<li><a href="javascript:addCustomWord(INVALID_WORD_EXTENDED_PROPERTY_TAG_ID);">Add invalid word to dictionary</a></li>\
+						<li><a href="javascript:addCustomWord(DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID);">Add discouraged word to dictionary</a></li>\
+						<li><a href="javascript:addCustomWord(DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID);">Add discouraged phrase to dictionary</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -2861,7 +2873,7 @@ function getDictionary() {
     // load the dictionaries for spell checking
     if (window.Typo) {
 
-        var customDicUrl = SERVER + "/topics/get/json/query;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + INVALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;logic=Or?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
+        var customDicUrl = SERVER + "/topics/get/json/query;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + INVALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;;propertyTagExists" + DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID + "=true;logic=Or?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
         jQuery.getJSON(customDicUrl, function(topics) {
             var customWords = "";
             var customWordsDict = {};
@@ -2872,9 +2884,12 @@ function getDictionary() {
                 for (var propertyIndex = 0, propertyCount = topic.properties.items.length; propertyIndex < propertyCount; ++propertyIndex) {
                     var property = topic.properties.items[propertyIndex].item;
 
-                    if (property.id == VALID_WORD_EXTENDED_PROPERTY_TAG_ID) {
+                    if (property.id == VALID_WORD_EXTENDED_PROPERTY_TAG_ID ||
+                        INVALID_WORD_EXTENDED_PROPERTY_TAG_ID ||
+                        DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID ||
+                        DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID) {
                         if (!customWordsDict[property.value]) {
-                            customWordsDict[property.value] = {valid: true, id: topic.id};
+                            customWordsDict[property.value] = {tagId: property.id, id: topic.id};
 
                             if (customWords.length != 0) {
                                 customWords += "\n";
@@ -2882,12 +2897,6 @@ function getDictionary() {
 
                             customWords += property.value;
 
-                        }
-                    }
-
-                    if (property.id == INVALID_WORD_EXTENDED_PROPERTY_TAG_ID) {
-                        if (!customWordsDict[property.value]) {
-                            customWordsDict[property.value] = {valid: false, id: topic.id};
                         }
                     }
                 }
@@ -2972,7 +2981,16 @@ function addDictionaryPopovers(customWordsDict) {
 
                     var customWord = customWordsKeyset[customWordIndex];
                     var customWordDetails = customWordsDict[customWord];
-                    var borderStyle = customWordDetails.valid ? "border-color: green" : "border-color: red";
+                    var borderStyle = "";
+                    if (customWordDetails.tagId == VALID_WORD_EXTENDED_PROPERTY_TAG_ID) {
+                        borderStyle = "border-color: green";
+                    } else if (customWordDetails.tagId == INVALID_WORD_EXTENDED_PROPERTY_TAG_ID) {
+                        borderStyle = "border-color: red";
+                    } else if (customWordDetails.tagId == DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID) {
+                        borderStyle = "border-color: purple";
+                    } else if (customWordDetails.tagId == DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID) {
+                        borderStyle = "border-color: purple";
+                    }
                     fixedText = fixedText.replace(new RegExp("\\b" + encodeRegex(customWord) + "\\b", "g"), "<span style='text-decoration: none; border-bottom: 1px dashed; " + borderStyle + "' onclick='javascript:displayDictionaryTopic(" + customWordDetails.id + ")'>" + customWord + "</span>");
 
                     // replace the markers with the original text
@@ -3015,18 +3033,18 @@ function displayDictionaryTopic(topicId) {
     });
 }
 
-function addCustomWord(validWord) {
+function addCustomWord(id) {
     bootbox.prompt("Please enter the word to be added to the dictionary.", function(result) {
         if (result !== null && jQuery.trim(result).length != 0) {
-            addToDictionary(validWord, result);
+            addToDictionary(id, result);
         }
     });
 }
 
-function addToDictionary(validWord, word, wordId) {
+function addToDictionary(id, word, wordId) {
     word = encodeXml(word);
 
-    var existingTopicUrl = SERVER + "/topics/get/json/query;propertyTag" + (validWord ? VALID_WORD_EXTENDED_PROPERTY_TAG_ID : INVALID_WORD_EXTENDED_PROPERTY_TAG_ID) + "=" + encodeURIComponent(word) + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
+    var existingTopicUrl = SERVER + "/topics/get/json/query;propertyTag" + id + "=" + encodeURIComponent(word) + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
     jQuery.getJSON(existingTopicUrl, function(topics){
         if (topics.items.length == 0) {
             bootbox.dialog({
@@ -3061,7 +3079,7 @@ function addToDictionary(validWord, word, wordId) {
                                 docbook += "</section>";
 
                                 var createTopicURL = SERVER + "/topic/create/json?message=docbuilder%3A+New+dictionary+word+added&flag=2&userId=89";
-                                var postBody = '{"xml":"' + docbook + '", "locale":"en-US", "properties":{"items":[{"item":{"value":"' + word + '", "id":' + (validWord ? VALID_WORD_EXTENDED_PROPERTY_TAG_ID : INVALID_WORD_EXTENDED_PROPERTY_TAG_ID) + '}, "state":1}]}, "configuredParameters":["properties","locale","xml"]}';
+                                var postBody = '{"xml":"' + docbook.replace(/\\/g, "\\\\") + '", "locale":"en-US", "properties":{"items":[{"item":{"value":"' + word.replace(/\\/g, "\\\\") + '", "id":' + id + '}, "state":1}]}, "configuredParameters":["properties","locale","xml"]}';
 
                                 jQuery.ajax({
                                     type: "POST",
