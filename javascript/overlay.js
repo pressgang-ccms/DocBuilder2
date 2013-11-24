@@ -290,7 +290,8 @@ var doubleWordButtons = {};
 	When the page is loaded, start looking for the links that indicate the topics.
  */
 $(document).ready(function() {
-	firstPass();
+    findTopicsInHtml();
+    addPermLinks();
 	buildMenu();
 });
 
@@ -316,6 +317,15 @@ function getSpecIdFromURL() {
 	}
 
 	return null;
+}
+
+/**
+ * Adds links to section titles for easy bookmarking
+ */
+function addPermLinks() {
+    jQuery("h3>a[id]").each(function(index, element){
+        element.parent.append(jQuery(" <a style='font-size: smaller' href='#" + element.id + "'>permlink</a>"));
+    });
 }
 
 /**
@@ -989,10 +999,9 @@ function setupEvents(linkDiv, popover) {
     }(popover);
 }
 
-/*
- * Finds all the topic ids in a document and adds the icons under the topic
- */
-function firstPass() {
+
+
+function findTopicsInHtml() {
     var foundTopics = {};
     var elements = document.getElementsByTagName("div");
     for (var i = elements.length - 1; i >= 0; --i) {
@@ -1024,7 +1033,7 @@ function firstPass() {
         }
     }
 
-	secondPass(true, false, false);
+    secondPass(true, false, false);
 }
 
 /**
