@@ -24,6 +24,11 @@ var DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID = 33;
  */
 var SKIP_IDS = ["tinymce"];
 /**
+ * List of element to skip when looking for text nodes
+ * @type {Array}
+ */
+var SKIP_ELEMENTS = ["A"];
+/**
  * The server hostname and port
  * @type {string}
  */
@@ -90,11 +95,13 @@ jQuery( document ).ready(function() {
 
 function collectTextNodes(element, texts) {
     if (jQuery.inArray(element.id, SKIP_IDS) == -1) {
-        for (var child= element.firstChild; child!==null; child= child.nextSibling) {
-            if (child.nodeType===3)
-                texts.push(child);
-            else if (child.nodeType===1)
-                collectTextNodes(child, texts);
+        if (jQuery.inArray(element.nodeName, SKIP_ELEMENTS) == -1) {
+            for (var child= element.firstChild; child!==null; child= child.nextSibling) {
+                if (child.nodeType===3)
+                    texts.push(child);
+                else if (child.nodeType===1)
+                    collectTextNodes(child, texts);
+            }
         }
     }
 }
