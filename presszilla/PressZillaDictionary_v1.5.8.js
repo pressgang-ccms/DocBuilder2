@@ -27,7 +27,7 @@ var SKIP_IDS = ["tinymce"];
  * List of element to skip when looking for text nodes
  * @type {Array}
  */
-var SKIP_ELEMENTS = ["A", "SCRIPT"];
+var SKIP_ELEMENTS = ["A", "SCRIPT", "PRE"];
 /**
  * The server hostname and port
  * @type {string}
