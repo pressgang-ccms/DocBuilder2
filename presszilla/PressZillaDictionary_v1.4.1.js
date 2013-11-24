@@ -62,7 +62,7 @@ jQuery( document ).ready(function() {
             ontimeout: function() {},
             onload: function(topicsRaw) {
                 try {
-                    var topics = JSON.parse(topicsRaw);
+                    var topics = JSON.parse(topicsRaw.responseText);
                     var customWordsDict = {};
 
                     for (var topicIndex = 0, topicCount = topics.items.length; topicIndex < topicCount; ++topicIndex) {
