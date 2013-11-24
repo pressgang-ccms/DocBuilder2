@@ -39,11 +39,6 @@ var BASE_SERVER =  "topika.ecs.eng.bne.redhat.com:8080";
  */
 var SERVER = "http://" + BASE_SERVER + "/pressgang-ccms/rest/1";
 /**
- * a map of topic ids to html file names
- * @type {Array}
- */
-var dictionaryBookTopics = null;
-/**
  * Set to true once the page has been processed
  * @type {boolean}
  */
@@ -55,7 +50,7 @@ var processed = false;
  */
 function pressgang_website_callback(data) {
     console.log("pressgang_website_callback()");
-    dictionaryBookTopics = data;
+    unsafeWindow.dictionaryBookTopics = data;
 }
 
 jQuery( document ).ready(function() {

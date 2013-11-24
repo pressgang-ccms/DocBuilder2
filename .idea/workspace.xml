@@ -3,12 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.8.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.8.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript/overlay.js" afterPath="$PROJECT_DIR$/javascript/overlay.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385268605477" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385269232146" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384135183396" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -257,10 +256,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="overlay.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="overlay.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="156" column="44" selection-start="5950" selection-end="5950" vertical-scroll-proportion="0.32846716">
+            <state line="156" column="44" selection-start="5950" selection-end="5950" vertical-scroll-proportion="93.6">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <marker date="1385269228058" expanded="true" signature="10082:10097" placeholder="..." />
@@ -455,12 +454,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaDictionary_v1.5.8.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PressZillaDictionary_v1.5.8.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.8.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="44" selection-start="840" selection-end="840" vertical-scroll-proportion="-17.4">
+            <state line="39" column="64" selection-start="1101" selection-end="1101" vertical-scroll-proportion="0.27372262">
               <folding>
-                <marker date="1385269228053" expanded="true" signature="7541:7591" placeholder="..." />
+                <marker date="1385269691242" expanded="true" signature="7455:7505" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -548,8 +547,8 @@
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.6.js" />
         <option value="$PROJECT_DIR$/PressZillaDictionary.user.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.7.js" />
-        <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.8.js" />
         <option value="$PROJECT_DIR$/javascript/overlay.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.8.js" />
       </list>
     </option>
   </component>
@@ -2964,7 +2963,11 @@
       <created>1385268606365</created>
       <updated>1385268606365</updated>
     </task>
-    <option name="localTasksCounter" value="539" />
+    <task id="LOCAL-00539" summary="Started work on dictionary user script">
+      <created>1385269233268</created>
+      <updated>1385269233268</updated>
+    </task>
+    <option name="localTasksCounter" value="540" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -3184,18 +3187,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.8.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="44" selection-start="840" selection-end="840" vertical-scroll-proportion="-17.4">
-          <folding>
-            <marker date="1385269228053" expanded="true" signature="7541:7591" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="156" column="44" selection-start="5950" selection-end="5950" vertical-scroll-proportion="0.32846716">
+        <state line="156" column="44" selection-start="5950" selection-end="5950" vertical-scroll-proportion="93.6">
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <marker date="1385269228058" expanded="true" signature="10082:10097" placeholder="..." />
@@ -3361,6 +3355,15 @@
             <marker date="1385269228058" expanded="true" signature="121279:121397" placeholder="..." />
             <marker date="1385269228058" expanded="true" signature="138218:138268" placeholder="..." />
             <marker date="1385269228058" expanded="false" signature="140642:140668" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.8.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="64" selection-start="1101" selection-end="1101" vertical-scroll-proportion="0.27372262">
+          <folding>
+            <marker date="1385269691242" expanded="true" signature="7455:7505" placeholder="..." />
           </folding>
         </state>
       </provider>
