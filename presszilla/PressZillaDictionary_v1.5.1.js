@@ -188,7 +188,7 @@ unsafeWindow.displayDictionaryTopic = function(topicId) {
         for (var dicIndex = 0, dicCount = dictionaryBookTopics.length; dicIndex < dicCount; ++dicIndex) {
             var dicItem = dictionaryBookTopics[dicIndex];
             if (dicItem.topicId == topicId) {
-                window.open("http://docbuilder.ecs.eng.bne.redhat.com/22516/html/" + dicItem.target + ".html","PressGangDictWindow","config='toolbar=no, menubar=no,scrollbars=no,resizable=no,location=no,directories=no,atus=no'");
+                window.open("http://docbuilder.ecs.eng.bne.redhat.com/22516/html/" + dicItem.target + ".html","PressGangDictWindow","config='toolbar=no, menubar=no,scrollbars=no,resizable=no,location=no,directories=no,atus=no,width=400,height=300'");
                 break;
             }
         }
