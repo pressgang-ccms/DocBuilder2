@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name        PressZilla
+// @name        PressZilla Dictionary
 // @namespace   https://www.jboss.org/pressgang
-// @description PressGang BugZilla customization
+// @description PressGang Dictionary Overlay
 // @author      Matthew Casperson
 // @include     https://*
 // @include     http://*

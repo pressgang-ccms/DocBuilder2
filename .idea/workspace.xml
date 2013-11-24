@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/PressZillaDictionary.user.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.0.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZillaDictionary.user.js" afterPath="$PROJECT_DIR$/PressZillaDictionary.user.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385252907167" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385260169113" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384135183396" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -427,19 +426,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaDictionary.user.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PressZillaDictionary.user.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="70" selection-start="453" selection-end="473" vertical-scroll-proportion="0.0">
+            <state line="3" column="44" selection-start="148" selection-end="148" vertical-scroll-proportion="0.07679181">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaDictionary_v1.0.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PressZillaDictionary_v1.0.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.0.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="159" column="103" selection-start="6707" selection-end="6707" vertical-scroll-proportion="0.7120419">
+            <state line="159" column="103" selection-start="6707" selection-end="6707" vertical-scroll-proportion="0.0">
               <folding>
                 <marker date="1385260128795" expanded="false" signature="5631:5681" placeholder="..." />
               </folding>
@@ -540,8 +539,8 @@
         <option value="$PROJECT_DIR$/javascript/typo_proto.js" />
         <option value="$PROJECT_DIR$/styleguidebuilder.js" />
         <option value="$PROJECT_DIR$/javascript/overlay.js" />
-        <option value="$PROJECT_DIR$/PressZillaDictionary.user.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.0.js" />
+        <option value="$PROJECT_DIR$/PressZillaDictionary.user.js" />
       </list>
     </option>
   </component>
@@ -2844,7 +2843,11 @@
       <created>1385252908772</created>
       <updated>1385252908773</updated>
     </task>
-    <option name="localTasksCounter" value="511" />
+    <task id="LOCAL-00511" summary="Started work on dictionary user script">
+      <created>1385260170978</created>
+      <updated>1385260170978</updated>
+    </task>
+    <option name="localTasksCounter" value="512" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2921,7 +2924,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added perm links to section titles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Started work on dictionary user script" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -2958,6 +2961,7 @@
     <MESSAGE value="Working on adding custom words to dictionary" />
     <MESSAGE value="Added the ability to highlight dictionary words in the document" />
     <MESSAGE value="Added perm links to section titles" />
+    <MESSAGE value="Started work on dictionary user script" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -3224,19 +3228,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="70" selection-start="453" selection-end="473" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.0.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="159" column="103" selection-start="6707" selection-end="6707" vertical-scroll-proportion="0.7120419">
+        <state line="159" column="103" selection-start="6707" selection-end="6707" vertical-scroll-proportion="0.0">
           <folding>
             <marker date="1385260128795" expanded="false" signature="5631:5681" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="44" selection-start="148" selection-end="148" vertical-scroll-proportion="0.07679181">
+          <folding />
         </state>
       </provider>
     </entry>
