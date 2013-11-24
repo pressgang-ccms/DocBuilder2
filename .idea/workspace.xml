@@ -2,12 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.1.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.2.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.2.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.3.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZillaDictionary.user.js" afterPath="$PROJECT_DIR$/PressZillaDictionary.user.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385262356498" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385262490057" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384135183396" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -430,7 +431,7 @@
       <file leaf-file-name="PressZillaDictionary.user.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="93" selection-start="386" selection-end="386" vertical-scroll-proportion="0.0">
+            <state line="10" column="11" selection-start="415" selection-end="415" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -451,12 +452,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaDictionary_v1.5.2.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.2.js">
+      <file leaf-file-name="PressZillaDictionary_v1.5.3.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.3.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="104" column="9" selection-start="3979" selection-end="3979" vertical-scroll-proportion="0.80839413">
+            <state line="197" column="246" selection-start="8153" selection-end="8153" vertical-scroll-proportion="0.72627735">
               <folding>
-                <marker date="1385262480511" expanded="false" signature="6920:6970" placeholder="..." />
+                <marker date="1385262588917" expanded="false" signature="6920:6970" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -501,10 +502,8 @@
       <file leaf-file-name="PressZilla.user.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="1772" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state line="6" column="0" selection-start="222" selection-end="451" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -532,8 +531,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/copy_js_files.sh" />
-        <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.1.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.2.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.3.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.4.1.js" />
@@ -548,6 +545,8 @@
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.4.9.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.0.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.1.js" />
+        <option value="$PROJECT_DIR$/PressZillaDictionary.user.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.2.js" />
       </list>
     </option>
   </component>
@@ -2922,7 +2921,11 @@
       <created>1385262358435</created>
       <updated>1385262358436</updated>
     </task>
-    <option name="localTasksCounter" value="529" />
+    <task id="LOCAL-00529" summary="Started work on dictionary user script">
+      <created>1385262491720</created>
+      <updated>1385262491720</updated>
+    </task>
+    <option name="localTasksCounter" value="530" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -3104,22 +3107,6 @@
     <entry file="file://$PROJECT_DIR$/styleguidebuilder.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="46" column="14" selection-start="1719" selection-end="1719" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="1772" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="93" selection-start="386" selection-end="386" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -3316,11 +3303,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.2.js">
+    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="104" column="9" selection-start="3979" selection-end="3979" vertical-scroll-proportion="0.80839413">
+        <state line="6" column="0" selection-start="222" selection-end="451" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="11" selection-start="415" selection-end="415" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.3.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="197" column="246" selection-start="8153" selection-end="8153" vertical-scroll-proportion="0.72627735">
           <folding>
-            <marker date="1385262480511" expanded="false" signature="6920:6970" placeholder="..." />
+            <marker date="1385262588917" expanded="false" signature="6920:6970" placeholder="..." />
           </folding>
         </state>
       </provider>
