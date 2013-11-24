@@ -183,12 +183,12 @@ function addDictionaryPopovers(customWordsDict) {
     processTextNodes(texts, 0);
 }
 
-unsafeWindow.displayDictionaryTopic = function() {
+unsafeWindow.displayDictionaryTopic = function(topicId) {
     console.log("Attempting to open the dictionary topic");
     if (dictionaryBookTopics) {
         for (var dicIndex = 0, dicCount = dictionaryBookTopics.length; dicIndex < dicCount; ++dicIndex) {
             var dicItem = dictionaryBookTopics[dicIndex];
-            if (dicItem.topicId == this.getAttribute("data-pressgang-dic")) {
+            if (dicItem.topicId == topicId) {
                 window.open("http://docbuilder.ecs.eng.bne.redhat.com/22516/html/" + dicItem.target + ".html");
                 break;
             }
