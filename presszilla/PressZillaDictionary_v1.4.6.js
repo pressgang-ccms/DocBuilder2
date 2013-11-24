@@ -179,7 +179,7 @@ function addDictionaryPopovers(customWordsDict) {
             }, 0);
         } else {
             jQuery("[data-pressgang-dic]").each(function(index, elem) {
-                elmLink.addEventListener("click", displayDictionaryTopic, true);
+                elem.addEventListener("click", displayDictionaryTopic, true);
             });
         }
     }
