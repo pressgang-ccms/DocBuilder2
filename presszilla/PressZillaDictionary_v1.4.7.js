@@ -163,7 +163,7 @@ function addDictionaryPopovers(customWordsDict) {
                     } else if (customWordDetails.tagId == DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID) {
                         borderStyle = "border-color: purple";
                     }
-                    fixedText = fixedText.replace(new RegExp("\\b" + encodeRegex(customWord) + "\\b", "g"), "<span style='text-decoration: none; border-bottom: 1px dashed; " + borderStyle + "' data-pressgang-dict='" + customWordDetails.id + "'>" + customWord + "</span>");
+                    fixedText = fixedText.replace(new RegExp("\\b" + encodeRegex(customWord) + "\\b", "g"), "<span style='text-decoration: none; border-bottom: 1px dashed; " + borderStyle + "' onclick='javscript:displayDictionaryTopic(" + customWordDetails.id + ")'>" + customWord + "</span>");
 
                     // replace the markers with the original text
                     for (var replacement in replacementMarkers) {
@@ -177,17 +177,13 @@ function addDictionaryPopovers(customWordsDict) {
             setTimeout(function() {
                 processTextNodes(texts, index + batchsize);
             }, 0);
-        } else {
-            jQuery("[data-pressgang-dic]").each(function(index, elem) {
-                elem.addEventListener("click", displayDictionaryTopic, true);
-            });
         }
     }
 
     processTextNodes(texts, 0);
 }
 
-function displayDictionaryTopic() {
+unsafeWindow.displayDictionaryTopic = function() {
     console.log("Attempting to open the dictionary topic");
     if (dictionaryBookTopics) {
         for (var dicIndex = 0, dicCount = dictionaryBookTopics.length; dicIndex < dicCount; ++dicIndex) {
