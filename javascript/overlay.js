@@ -324,7 +324,7 @@ function getSpecIdFromURL() {
  */
 function addPermLinks() {
     jQuery("h3>a[id]").each(function(index, element){
-        element.parent.append(jQuery(" <a style='font-size: smaller' href='#" + element.id + "'>permlink</a>"));
+        jQuery(element.parentNode).append(jQuery(" <a style='font-size: smaller' href='#" + element.id + "'>permlink</a>"));
     });
 }
 
