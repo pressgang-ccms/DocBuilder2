@@ -323,7 +323,7 @@ function getSpecIdFromURL() {
  * Adds links to section titles for easy bookmarking
  */
 function addPermLinks() {
-    jQuery("h3[class='title']>a[id], h2[class='title']>a[id]").each(function(index, element){
+    jQuery("h5[class='title']>a[id], h4[class='title']>a[id], h3[class='title']>a[id], h2[class='title']>a[id]").each(function(index, element){
         jQuery(element.parentNode).append(jQuery("<span> <a style='font-size: 10px' href='#" + element.id + "'>permlink</a></span>"));
     });
 }
