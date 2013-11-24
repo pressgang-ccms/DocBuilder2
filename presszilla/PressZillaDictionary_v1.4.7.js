@@ -188,6 +188,7 @@ function addDictionaryPopovers(customWordsDict) {
 }
 
 function displayDictionaryTopic() {
+    console.log("Attempting to open the dictionary topic");
     if (dictionaryBookTopics) {
         for (var dicIndex = 0, dicCount = dictionaryBookTopics.length; dicIndex < dicCount; ++dicIndex) {
             var dicItem = dictionaryBookTopics[dicIndex];
