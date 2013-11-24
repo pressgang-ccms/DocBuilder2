@@ -194,3 +194,27 @@ function displayDictionaryTopic(topicId) {
         }
     }
 }
+
+function encodeRegex(text) {
+    text = text.replace(/\\/g, "\\\\");
+    text = text.replace(/\./g, "\\.");
+    text = text.replace(/\+/g, "\\+");
+    text = text.replace(/\-/g, "\\-");
+    text = text.replace(/\*/g, "\\*");
+    text = text.replace(/\?/g, "\\?");
+    text = text.replace(/\[/g, "\\[");
+    text = text.replace(/\]/g, "\\]");
+    text = text.replace(/\^/g, "\\^");
+    text = text.replace(/\$/g, "\\$");
+    text = text.replace(/\(/g, "\\(");
+    text = text.replace(/\)/g, "\\)");
+    text = text.replace(/\{/g, "\\{");
+    text = text.replace(/\}/g, "\\}");
+    text = text.replace(/\=/g, "\\=");
+    text = text.replace(/\!/g, "\\!");
+    text = text.replace(/\</g, "\\<");
+    text = text.replace(/\>/g, "\\>");
+    text = text.replace(/\|/g, "\\|");
+    text = text.replace(/\:/g, "\\:");
+    return text;
+}
