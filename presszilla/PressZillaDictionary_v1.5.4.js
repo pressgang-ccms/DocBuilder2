@@ -43,6 +43,11 @@ var SERVER = "http://" + BASE_SERVER + "/pressgang-ccms/rest/1";
  * @type {Array}
  */
 var dictionaryBookTopics = null;
+/**
+ * Set to true once the page has been processed
+ * @type {boolean}
+ */
+var processed = false;
 
 /**
  * This will be called by the dictionary content spec pressgang_website.js file
@@ -111,83 +116,87 @@ function collectTextNodes(element, texts) {
  */
 function addDictionaryPopovers(customWordsDict) {
 
-    // create an array that sorts the keys in the customWordsDict by length
-    var customWordsKeyset = [];
-    for (var customWord in customWordsDict) {
-        customWordsKeyset.push(customWord);
-    }
+    if (!processed) {
+        processed = true;
 
-    customWordsKeyset.sort(function(a, b){
-        if (a.length > b.length) {
-            return -1;
+        // create an array that sorts the keys in the customWordsDict by length
+        var customWordsKeyset = [];
+        for (var customWord in customWordsDict) {
+            customWordsKeyset.push(customWord);
         }
 
-        if (a.length == b.length) {
-            return 0;
-        }
-
-        return 1;
-    });
-
-    var texts = [];
-    collectTextNodes(document.body, texts);
-
-    var batchsize = 20;
-
-    function processTextNodes(texts, index) {
-        if (index < texts.length) {
-            for (var textIndex = index, textCount = texts.length; textIndex < textCount && textIndex < index + batchsize; ++textIndex) {
-                var textNode = texts[textIndex];
-                var fixedText = textNode.textContent;
-
-                // mark up the dictionary matches
-                for (var customWordIndex = 0, customWordCount = customWordsKeyset.length; customWordIndex < customWordCount; ++customWordIndex) {
-                    var replacementMarkers = {};
-
-                    // Go through and replace all previously matches text with markers
-                    var spanRE = /\<span.*?\<\/span\>/;
-                    var spanMatch = null;
-                    while ((spanMatch = fixedText.match(spanRE)) != null) {
-                        var replacementString = "[" + (Math.random() * 1000) + "]";
-
-                        while (fixedText.indexOf(replacementString) != -1) {
-                            replacementString = "[" + (Math.random() * 1000) + "]";
-                        }
-
-                        fixedText = fixedText.replace(spanRE, replacementString);
-                        replacementMarkers[replacementString] = spanMatch[0];
-                    }
-
-                    var customWord = customWordsKeyset[customWordIndex];
-                    var customWordDetails = customWordsDict[customWord];
-                    var borderStyle = "";
-                    if (customWordDetails.tagId == VALID_WORD_EXTENDED_PROPERTY_TAG_ID) {
-                        borderStyle = "border-color: green";
-                    } else if (customWordDetails.tagId == INVALID_WORD_EXTENDED_PROPERTY_TAG_ID) {
-                        borderStyle = "border-color: red";
-                    } else if (customWordDetails.tagId == DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID) {
-                        borderStyle = "border-color: purple";
-                    } else if (customWordDetails.tagId == DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID) {
-                        borderStyle = "border-color: purple";
-                    }
-                    fixedText = fixedText.replace(new RegExp("\\b" + encodeRegex(customWord) + "\\b", "g"), "<span style='text-decoration: none; border-bottom: 1px dashed; " + borderStyle + "' onclick='javscript:displayDictionaryTopic(" + customWordDetails.id + ")'>" + customWord + "</span>");
-
-                    // replace the markers with the original text
-                    for (var replacement in replacementMarkers) {
-                        fixedText = fixedText.replace(replacement, replacementMarkers[replacement]);
-                    }
-                }
-
-                jQuery(textNode).replaceWith(fixedText);
+        customWordsKeyset.sort(function(a, b){
+            if (a.length > b.length) {
+                return -1;
             }
 
-            setTimeout(function() {
-                processTextNodes(texts, index + batchsize);
-            }, 0);
-        }
-    }
+            if (a.length == b.length) {
+                return 0;
+            }
 
-    processTextNodes(texts, 0);
+            return 1;
+        });
+
+        var texts = [];
+        collectTextNodes(document.body, texts);
+
+        var batchsize = 20;
+
+        function processTextNodes(texts, index) {
+            if (index < texts.length) {
+                for (var textIndex = index, textCount = texts.length; textIndex < textCount && textIndex < index + batchsize; ++textIndex) {
+                    var textNode = texts[textIndex];
+                    var fixedText = textNode.textContent;
+
+                    // mark up the dictionary matches
+                    for (var customWordIndex = 0, customWordCount = customWordsKeyset.length; customWordIndex < customWordCount; ++customWordIndex) {
+                        var replacementMarkers = {};
+
+                        // Go through and replace all previously matches text with markers
+                        var spanRE = /\<span.*?\<\/span\>/;
+                        var spanMatch = null;
+                        while ((spanMatch = fixedText.match(spanRE)) != null) {
+                            var replacementString = "[" + (Math.random() * 1000) + "]";
+
+                            while (fixedText.indexOf(replacementString) != -1) {
+                                replacementString = "[" + (Math.random() * 1000) + "]";
+                            }
+
+                            fixedText = fixedText.replace(spanRE, replacementString);
+                            replacementMarkers[replacementString] = spanMatch[0];
+                        }
+
+                        var customWord = customWordsKeyset[customWordIndex];
+                        var customWordDetails = customWordsDict[customWord];
+                        var borderStyle = "";
+                        if (customWordDetails.tagId == VALID_WORD_EXTENDED_PROPERTY_TAG_ID) {
+                            borderStyle = "border-color: green";
+                        } else if (customWordDetails.tagId == INVALID_WORD_EXTENDED_PROPERTY_TAG_ID) {
+                            borderStyle = "border-color: red";
+                        } else if (customWordDetails.tagId == DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID) {
+                            borderStyle = "border-color: purple";
+                        } else if (customWordDetails.tagId == DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID) {
+                            borderStyle = "border-color: purple";
+                        }
+                        fixedText = fixedText.replace(new RegExp("\\b" + encodeRegex(customWord) + "\\b", "g"), "<span style='text-decoration: none; border-bottom: 1px dashed; " + borderStyle + "' onclick='javscript:displayDictionaryTopic(" + customWordDetails.id + ")'>" + customWord + "</span>");
+
+                        // replace the markers with the original text
+                        for (var replacement in replacementMarkers) {
+                            fixedText = fixedText.replace(replacement, replacementMarkers[replacement]);
+                        }
+                    }
+
+                    jQuery(textNode).replaceWith(fixedText);
+                }
+
+                setTimeout(function() {
+                    processTextNodes(texts, index + batchsize);
+                }, 0);
+            }
+        }
+
+        processTextNodes(texts, 0);
+    }
 }
 
 unsafeWindow.displayDictionaryTopic = function(topicId) {
