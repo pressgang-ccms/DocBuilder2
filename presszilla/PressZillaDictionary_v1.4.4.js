@@ -163,7 +163,7 @@ function addDictionaryPopovers(customWordsDict) {
                     } else if (customWordDetails.tagId == DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID) {
                         borderStyle = "border-color: purple";
                     }
-                    fixedText = fixedText.replace(new RegExp("\\b" + encodeRegex(customWord) + "\\b", "g"), "<span style='text-decoration: none; border-bottom: 1px dashed; " + borderStyle + "' onclick='javascript:displayDictionaryTopic(" + customWordDetails.id + ")'>" + customWord + "</span>");
+                    fixedText = fixedText.replace(new RegExp("\\b" + encodeRegex(customWord) + "\\b", "g"), "<span style='text-decoration: none; border-bottom: 1px dashed; " + borderStyle + "' data-pressgang-dict='" + customWordDetails.id + "'>" + customWord + "</span>");
 
                     // replace the markers with the original text
                     for (var replacement in replacementMarkers) {
@@ -177,17 +177,19 @@ function addDictionaryPopovers(customWordsDict) {
             setTimeout(function() {
                 processTextNodes(texts, index + batchsize);
             }, 0);
+        } else {
+            jQuery("[data-pressgang-dic]").onclick(displayDictionaryTopic());
         }
     }
 
     processTextNodes(texts, 0);
 }
 
-function displayDictionaryTopic(topicId) {
+function displayDictionaryTopic() {
     if (dictionaryBookTopics) {
         for (var dicIndex = 0, dicCount = dictionaryBookTopics.length; dicIndex < dicCount; ++dicIndex) {
             var dicItem = dictionaryBookTopics[dicIndex];
-            if (dicItem.topicId == topicId) {
+            if (dicItem.topicId == this.getAttribute("data-pressgang-dic")) {
                 window.open("http://docbuilder.ecs.eng.bne.redhat.com/22516/html/" + dicItem.target + ".html");
                 break;
             }
