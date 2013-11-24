@@ -27,7 +27,7 @@ var SKIP_IDS = ["tinymce"];
  * List of element to skip when looking for text nodes
  * @type {Array}
  */
-var SKIP_ELEMENTS = ["A", "SCRIPT"];
+var SKIP_ELEMENTS = ["A", "SCRIPT", "FORM"];
 /**
  * The server hostname and port
  * @type {string}
@@ -209,7 +209,7 @@ unsafeWindow.displayDictionaryTopic = function(topicId) {
         for (var dicIndex = 0, dicCount = dictionaryBookTopics.length; dicIndex < dicCount; ++dicIndex) {
             var dicItem = dictionaryBookTopics[dicIndex];
             if (dicItem.topicId == topicId) {
-                window.open("http://docbuilder.ecs.eng.bne.redhat.com/22516/html/" + dicItem.target + ".html","PressGangDictWindow","config='toolbar=no, menubar=no,scrollbars=no,resizable=no,location=no,directories=no,atus=no,width=640,height=480'");
+                unsafeWindow.open("http://docbuilder.ecs.eng.bne.redhat.com/22516/html/" + dicItem.target + ".html","PressGangDictWindow","config='toolbar=no, menubar=no,scrollbars=no,resizable=no,location=no,directories=no,atus=no,width=640,height=480'");
                 break;
             }
         }
