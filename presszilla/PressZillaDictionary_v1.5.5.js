@@ -54,6 +54,7 @@ var processed = false;
  * @param data a map of topic ids to html file names
  */
 function pressgang_website_callback(data) {
+    console.log("pressgang_website_callback()");
     dictionaryBookTopics = data;
 }
 
@@ -71,27 +72,30 @@ jQuery( document ).ready(function() {
             onerror: function() {},
             ontimeout: function() {},
             onload: function(topicsRaw) {
-                    var topics = JSON.parse(topicsRaw.responseText);
-                    var customWordsDict = {};
 
-                    for (var topicIndex = 0, topicCount = topics.items.length; topicIndex < topicCount; ++topicIndex) {
-                        var topic =  topics.items[topicIndex].item;
+                console.log("GM_xmlhttpRequest onload()");
 
-                        for (var propertyIndex = 0, propertyCount = topic.properties.items.length; propertyIndex < propertyCount; ++propertyIndex) {
-                            var property = topic.properties.items[propertyIndex].item;
+                var topics = JSON.parse(topicsRaw.responseText);
+                var customWordsDict = {};
 
-                            if (property.id == VALID_WORD_EXTENDED_PROPERTY_TAG_ID ||
-                                INVALID_WORD_EXTENDED_PROPERTY_TAG_ID ||
-                                DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID ||
-                                DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID) {
-                                if (!customWordsDict[property.value]) {
-                                    customWordsDict[property.value] = {tagId: property.id, id: topic.id};
-                                }
+                for (var topicIndex = 0, topicCount = topics.items.length; topicIndex < topicCount; ++topicIndex) {
+                    var topic =  topics.items[topicIndex].item;
+
+                    for (var propertyIndex = 0, propertyCount = topic.properties.items.length; propertyIndex < propertyCount; ++propertyIndex) {
+                        var property = topic.properties.items[propertyIndex].item;
+
+                        if (property.id == VALID_WORD_EXTENDED_PROPERTY_TAG_ID ||
+                            INVALID_WORD_EXTENDED_PROPERTY_TAG_ID ||
+                            DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID ||
+                            DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID) {
+                            if (!customWordsDict[property.value]) {
+                                customWordsDict[property.value] = {tagId: property.id, id: topic.id};
                             }
                         }
                     }
+                }
 
-                    addDictionaryPopovers(customWordsDict);
+                addDictionaryPopovers(customWordsDict);
 
             }
         })
@@ -99,6 +103,7 @@ jQuery( document ).ready(function() {
 });
 
 function collectTextNodes(element, texts) {
+    console.log("collectTextNodes()");
     if (jQuery.inArray(element.id, SKIP_IDS) == -1) {
         if (jQuery.inArray(element.nodeName, SKIP_ELEMENTS) == -1) {
             for (var child= element.firstChild; child!==null; child= child.nextSibling) {
@@ -115,7 +120,7 @@ function collectTextNodes(element, texts) {
  * Scan the text in the page for any words that match those in the custom dictionary, and add a popover icon.
  */
 function addDictionaryPopovers(customWordsDict) {
-
+    console.log("addDictionaryPopovers()");
     if (!processed) {
         processed = true;
 
