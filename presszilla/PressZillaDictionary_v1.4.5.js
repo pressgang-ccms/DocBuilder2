@@ -178,7 +178,9 @@ function addDictionaryPopovers(customWordsDict) {
                 processTextNodes(texts, index + batchsize);
             }, 0);
         } else {
-            jQuery("[data-pressgang-dic]").onclick(displayDictionaryTopic());
+            jQuery("[data-pressgang-dic]").each(function(index, elem) {
+                elmLink.addEventListener("click", displayDictionaryTopic, true);
+            });
         }
     }
 
