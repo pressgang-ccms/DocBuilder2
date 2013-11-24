@@ -3014,9 +3014,10 @@ function addDictionaryPopovers(customWordsDict) {
                     }
                 }
 
-
-
-                jQuery(textNode).replaceWith(fixedText);
+                // If the content has changed, ie a dictionary match was found, then update the text node
+                if (textNode.textContent !== fixedText) {
+                    jQuery(textNode).replaceWith(fixedText);
+                }
             }
 
             setTimeout(function() {
