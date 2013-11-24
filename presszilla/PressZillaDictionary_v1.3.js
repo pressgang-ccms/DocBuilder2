@@ -61,28 +61,31 @@ jQuery( document ).ready(function() {
             onerror: function() {},
             ontimeout: function() {},
             onload: function(topicsRaw) {
-                var topics = JSON.parse(topicsRaw);
-                var customWords = "";
-                var customWordsDict = {};
+                try {
+                    var topics = JSON.parse(topicsRaw);
+                    var customWordsDict = {};
 
-                for (var topicIndex = 0, topicCount = topics.items.length; topicIndex < topicCount; ++topicIndex) {
-                    var topic =  topics.items[topicIndex].item;
+                    for (var topicIndex = 0, topicCount = topics.items.length; topicIndex < topicCount; ++topicIndex) {
+                        var topic =  topics.items[topicIndex].item;
 
-                    for (var propertyIndex = 0, propertyCount = topic.properties.items.length; propertyIndex < propertyCount; ++propertyIndex) {
-                        var property = topic.properties.items[propertyIndex].item;
+                        for (var propertyIndex = 0, propertyCount = topic.properties.items.length; propertyIndex < propertyCount; ++propertyIndex) {
+                            var property = topic.properties.items[propertyIndex].item;
 
-                        if (property.id == VALID_WORD_EXTENDED_PROPERTY_TAG_ID ||
-                            INVALID_WORD_EXTENDED_PROPERTY_TAG_ID ||
-                            DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID ||
-                            DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID) {
-                            if (!customWordsDict[property.value]) {
-                                customWordsDict[property.value] = {tagId: property.id, id: topic.id};
+                            if (property.id == VALID_WORD_EXTENDED_PROPERTY_TAG_ID ||
+                                INVALID_WORD_EXTENDED_PROPERTY_TAG_ID ||
+                                DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID ||
+                                DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID) {
+                                if (!customWordsDict[property.value]) {
+                                    customWordsDict[property.value] = {tagId: property.id, id: topic.id};
+                                }
                             }
                         }
                     }
-                }
 
-                addDictionaryPopovers(customWordsDict);
+                    addDictionaryPopovers(customWordsDict);
+                } catch (ex) {
+                    console.log(ex);
+                }
             }
         })
     }, 0);

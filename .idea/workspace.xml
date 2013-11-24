@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.1.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.2.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.2.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.3.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385260491986" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385260582357" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384135183396" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -182,7 +182,7 @@
     <file path="$PROJECT_DIR$/../PressGangCCMSREST/src/main/java/org/jboss/pressgang/ccms/server/rest/v1/base/BaseRESTv1.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384670838131" ignored="false" />
     <file path="/BaseRESTv1.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384670252365" ignored="false" />
     <file path="/styleguidebuilder.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384984653645" ignored="false" />
-    <file path="/PressZillaDictionary_v1.0.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385260411253" ignored="false" />
+    <file path="/PressZillaDictionary_v1.0.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385260739573" ignored="false" />
     <file path="/PressZillaDictionary_v1.1.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385260405463" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -451,12 +451,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaDictionary_v1.2.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.2.js">
+      <file leaf-file-name="PressZillaDictionary_v1.3.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.3.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="53" selection-start="603" selection-end="603" vertical-scroll-proportion="0.4973822">
+            <state line="86" column="36" selection-start="3450" selection-end="3450" vertical-scroll-proportion="0.9424084">
               <folding>
-                <marker date="1385260571695" expanded="false" signature="6666:6716" placeholder="..." />
+                <marker date="1385260741985" expanded="false" signature="6804:6854" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -532,7 +532,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.6.8.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.6.9.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.0.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.1.js" />
@@ -548,6 +547,7 @@
         <option value="$PROJECT_DIR$/PressZillaDictionary.user.js" />
         <option value="$PROJECT_DIR$/copy_js_files.sh" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.1.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.2.js" />
       </list>
     </option>
   </component>
@@ -2866,7 +2866,11 @@
       <created>1385260493111</created>
       <updated>1385260493111</updated>
     </task>
-    <option name="localTasksCounter" value="515" />
+    <task id="LOCAL-00515" summary="Started work on dictionary user script">
+      <created>1385260583879</created>
+      <updated>1385260583879</updated>
+    </task>
+    <option name="localTasksCounter" value="516" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -3260,11 +3264,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.2.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.3.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="53" selection-start="603" selection-end="603" vertical-scroll-proportion="0.4973822">
+        <state line="86" column="36" selection-start="3450" selection-end="3450" vertical-scroll-proportion="0.9424084">
           <folding>
-            <marker date="1385260571695" expanded="false" signature="6666:6716" placeholder="..." />
+            <marker date="1385260741985" expanded="false" signature="6804:6854" placeholder="..." />
           </folding>
         </state>
       </provider>
