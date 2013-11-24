@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/copy_js_files.sh" afterPath="$PROJECT_DIR$/copy_js_files.sh" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.1.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.2.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385260445758" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385260491986" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384135183396" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -256,7 +256,7 @@
       <file leaf-file-name="overlay.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3023" column="1" selection-start="134749" selection-end="138680" vertical-scroll-proportion="-15.68">
+            <state line="49" column="0" selection-start="1945" selection-end="2548" vertical-scroll-proportion="-0.6">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <marker date="1385252901861" expanded="true" signature="9958:9973" placeholder="..." />
@@ -451,12 +451,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaDictionary_v1.1.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.1.js">
+      <file leaf-file-name="PressZillaDictionary_v1.2.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.2.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="35" selection-start="1517" selection-end="1517" vertical-scroll-proportion="0.0">
+            <state line="19" column="53" selection-start="603" selection-end="603" vertical-scroll-proportion="0.4973822">
               <folding>
-                <marker date="1385260441896" expanded="false" signature="6062:6112" placeholder="..." />
+                <marker date="1385260571695" expanded="false" signature="6666:6716" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -489,10 +489,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="copy_js_files.sh" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="copy_js_files.sh" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="26" selection-start="149" selection-end="149" vertical-scroll-proportion="0.07679181">
+            <state line="3" column="26" selection-start="149" selection-end="149" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -546,8 +546,8 @@
         <option value="$PROJECT_DIR$/javascript/overlay.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.0.js" />
         <option value="$PROJECT_DIR$/PressZillaDictionary.user.js" />
-        <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.1.js" />
         <option value="$PROJECT_DIR$/copy_js_files.sh" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.1.js" />
       </list>
     </option>
   </component>
@@ -2862,7 +2862,11 @@
       <created>1385260447179</created>
       <updated>1385260447179</updated>
     </task>
-    <option name="localTasksCounter" value="514" />
+    <task id="LOCAL-00514" summary="Started work on dictionary user script">
+      <created>1385260493111</created>
+      <updated>1385260493111</updated>
+    </task>
+    <option name="localTasksCounter" value="515" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2887,7 +2891,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21558164" sideWeight="0.67625135" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21558164" sideWeight="0.67625135" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32873806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -3057,9 +3061,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.8.0.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="57" selection-start="761" selection-end="1166" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1384978906992" expanded="false" signature="5039:5058" placeholder="..." />
+            <marker date="1384978906992" expanded="true" signature="5059:5142" placeholder="..." />
+            <marker date="1384978906992" expanded="true" signature="5729:5796" placeholder="..." />
+            <marker date="1384978906992" expanded="false" signature="22807:22871" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="93" selection-start="386" selection-end="386" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="26" selection-start="149" selection-end="149" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3023" column="1" selection-start="134749" selection-end="138680" vertical-scroll-proportion="-15.68">
+        <state line="49" column="0" selection-start="1945" selection-end="2548" vertical-scroll-proportion="-0.6">
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <marker date="1385252901861" expanded="true" signature="9958:9973" placeholder="..." />
@@ -3229,39 +3260,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.8.0.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.2.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="57" selection-start="761" selection-end="1166" vertical-scroll-proportion="0.0">
+        <state line="19" column="53" selection-start="603" selection-end="603" vertical-scroll-proportion="0.4973822">
           <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1384978906992" expanded="false" signature="5039:5058" placeholder="..." />
-            <marker date="1384978906992" expanded="true" signature="5059:5142" placeholder="..." />
-            <marker date="1384978906992" expanded="true" signature="5729:5796" placeholder="..." />
-            <marker date="1384978906992" expanded="false" signature="22807:22871" placeholder="..." />
+            <marker date="1385260571695" expanded="false" signature="6666:6716" placeholder="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="93" selection-start="386" selection-end="386" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="35" selection-start="1517" selection-end="1517" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1385260441896" expanded="false" signature="6062:6112" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="26" selection-start="149" selection-end="149" vertical-scroll-proportion="0.07679181">
-          <folding />
         </state>
       </provider>
     </entry>

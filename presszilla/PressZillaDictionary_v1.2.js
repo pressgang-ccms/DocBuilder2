@@ -1,4 +1,24 @@
 /**
+ * The id of the extended property that defines valid dictionary words
+ * @type {number}
+ */
+var VALID_WORD_EXTENDED_PROPERTY_TAG_ID = 33;
+/**
+ * The id of the extended property that defines invalid dictionary words
+ * @type {number}
+ */
+var INVALID_WORD_EXTENDED_PROPERTY_TAG_ID = 32;
+/**
+ * The id of the extended property that defines discourages dictionary words
+ * @type {number}
+ */
+var DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID = 31;
+/**
+ * The id of the extended property that defines discourages dictionary phrases
+ * @type {number}
+ */
+var DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID = 33;
+/**
  * List of element ids to skip when looking for text nodes
  * @type {Array}
  */
