@@ -61,7 +61,6 @@ jQuery( document ).ready(function() {
             onerror: function() {},
             ontimeout: function() {},
             onload: function(topicsRaw) {
-                try {
                     var topics = JSON.parse(topicsRaw.responseText);
                     var customWordsDict = {};
 
@@ -83,9 +82,7 @@ jQuery( document ).ready(function() {
                     }
 
                     addDictionaryPopovers(customWordsDict);
-                } catch (ex) {
-                    console.log(ex);
-                }
+
             }
         })
     }, 0);
