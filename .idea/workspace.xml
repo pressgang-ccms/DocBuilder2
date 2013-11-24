@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.0.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.1.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZillaDictionary.user.js" afterPath="$PROJECT_DIR$/PressZillaDictionary.user.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/copy_js_files.sh" afterPath="$PROJECT_DIR$/copy_js_files.sh" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385260265992" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385260445758" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384135183396" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -130,7 +129,7 @@
     <file path="/PressZillaBugzillaIntegration.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382657662505" ignored="false" />
     <file path="/PressZillaSolutionsIntegration.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382664646361" ignored="false" />
     <file path="/PressZillaMojoIntegration_v2.1.2.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382667797016" ignored="false" />
-    <file path="/copy_js_files.sh" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383772998835" ignored="false" />
+    <file path="/copy_js_files.sh" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385260481062" ignored="false" />
     <file path="/PressZillaJbossOrgIntegration_v2.1.7.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382671095230" ignored="false" />
     <file path="/PressZillaJbossOrgIntegration_v2.1.8.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382671487610" ignored="false" />
     <file path="/PressZillaJbossOrgIntegration_v2.1.9.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382671929733" ignored="false" />
@@ -452,10 +451,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaDictionary_v1.1.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PressZillaDictionary_v1.1.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.1.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="35" selection-start="1517" selection-end="1517" vertical-scroll-proportion="0.31937173">
+            <state line="41" column="35" selection-start="1517" selection-end="1517" vertical-scroll-proportion="0.0">
               <folding>
                 <marker date="1385260441896" expanded="false" signature="6062:6112" placeholder="..." />
               </folding>
@@ -490,10 +489,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="copy_js_files.sh" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="copy_js_files.sh" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="3" column="26" selection-start="149" selection-end="149" vertical-scroll-proportion="0.07679181">
               <folding />
             </state>
           </provider>
@@ -533,7 +532,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.6.7.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.6.8.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.6.9.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.0.js" />
@@ -549,6 +547,7 @@
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.0.js" />
         <option value="$PROJECT_DIR$/PressZillaDictionary.user.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.1.js" />
+        <option value="$PROJECT_DIR$/copy_js_files.sh" />
       </list>
     </option>
   </component>
@@ -2859,7 +2858,11 @@
       <created>1385260267284</created>
       <updated>1385260267284</updated>
     </task>
-    <option name="localTasksCounter" value="513" />
+    <task id="LOCAL-00513" summary="Started work on dictionary user script">
+      <created>1385260447179</created>
+      <updated>1385260447179</updated>
+    </task>
+    <option name="localTasksCounter" value="514" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -3020,13 +3023,6 @@
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="382" column="91" selection-start="15982" selection-end="15982" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -3255,10 +3251,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.1.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="35" selection-start="1517" selection-end="1517" vertical-scroll-proportion="0.31937173">
+        <state line="41" column="35" selection-start="1517" selection-end="1517" vertical-scroll-proportion="0.0">
           <folding>
             <marker date="1385260441896" expanded="false" signature="6062:6112" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="26" selection-start="149" selection-end="149" vertical-scroll-proportion="0.07679181">
+          <folding />
         </state>
       </provider>
     </entry>
