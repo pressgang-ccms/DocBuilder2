@@ -150,7 +150,11 @@ var TOPIC_BATCH_SIZE = 20;
  * @type {string}
  */
 var BUG_LINK = "https://bugzilla.redhat.com/enter_bug.cgi?alias=&assigned_to=pressgang-ccms-dev%40redhat.com&bug_status=NEW&component=DocBook-builder&product=PressGang%20CCMS&version=1.2";
-
+/**
+ * List of element to skip when looking for text nodes
+ * @type {Array}
+ */
+var SKIP_ELEMENTS = ["A", "SCRIPT"];
 /**
  * Maintains the topic to source URL info
  * @type {{}}
@@ -2951,11 +2955,13 @@ function addDictionaryPopovers(customWordsDict) {
     });
 
     function collectTextNodes(element, texts) {
-        for (var child= element.firstChild; child!==null; child= child.nextSibling) {
-            if (child.nodeType===3)
-                texts.push(child);
-            else if (child.nodeType===1)
-                collectTextNodes(child, texts);
+        if (jQuery.inArray(element.nodeName, SKIP_ELEMENTS) == -1) {
+            for (var child= element.firstChild; child!==null; child= child.nextSibling) {
+                if (child.nodeType===3)
+                    texts.push(child);
+                else if (child.nodeType===1)
+                    collectTextNodes(child, texts);
+            }
         }
     }
 
