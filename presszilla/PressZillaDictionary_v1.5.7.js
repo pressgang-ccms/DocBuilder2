@@ -62,17 +62,17 @@ jQuery( document ).ready(function() {
     var texts = [];
     collectTextNodes(document.body, texts);
 
-    console.log("collectTextNodes() done");
-
     var customDicUrl = SERVER + "/topics/get/json/query;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + INVALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID + "=true;logic=Or?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
+
+    console.log("opening " + customDicUrl);
 
     setTimeout(function() {
         GM_xmlhttpRequest({
             method: 'GET',
             url: customDicUrl,
-            onabort: function() {},
-            onerror: function() {},
-            ontimeout: function() {},
+            onabort: function() {console.log("GM_xmlhttpRequest onabort()");},
+            onerror: function() {console.log("GM_xmlhttpRequest onerror()");},
+            ontimeout: function() {console.log("GM_xmlhttpRequest ontimeout()");},
             onload: function(topicsRaw) {
 
                 console.log("GM_xmlhttpRequest onload()");
@@ -98,14 +98,12 @@ jQuery( document ).ready(function() {
                 }
 
                 addDictionaryPopovers(customWordsDict);
-
             }
         })
     }, 0);
 });
 
 function collectTextNodes(element, texts) {
-    console.log("collectTextNodes()");
     if (jQuery.inArray(element.id, SKIP_IDS) == -1) {
         if (jQuery.inArray(element.nodeName, SKIP_ELEMENTS) == -1) {
             for (var child= element.firstChild; child!==null; child= child.nextSibling) {
