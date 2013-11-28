@@ -96,7 +96,7 @@ function obsoleteSpec(remove, restServer, id) {
         dataType:"json",
         success: function(){
             window.alert("Content specifications " + id + " is now marked as obsolete. This will be reflected when DocBuilder completes the next build cycle.\n\n" +
-                "Use the obsolete option in the filters at the top of the page to view or hide frozen content specifications.");
+                "Use the obsolete option in the filters at the top of the page to view or hide obsolete content specifications.");
         }
     });
 }
