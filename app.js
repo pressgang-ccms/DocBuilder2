@@ -327,8 +327,8 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 
                 var isFrozen = false;
 
-                for (var tagIndex = 0, tagCount = specDetailsCache[specId].tags.length; tagIndex < tagCount; ++tagIndex ) {
-                    if (specDetailsCache[specId].tags[tagIndex] == FROZEN_TAG) {
+                for (var tagIndex = 0, tagCount = fixedSpecDetails.tags.length; tagIndex < tagCount; ++tagIndex ) {
+                    if (fixedSpecDetails.tags[tagIndex] == FROZEN_TAG) {
                         isFrozen = true;
                         break;
                     }
@@ -336,8 +336,8 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 
                 var isObsolete = false;
 
-                for (var tagIndex = 0, tagCount = specDetailsCache[specId].tags.length; tagIndex < tagCount; ++tagIndex ) {
-                    if (specDetailsCache[specId].tags[tagIndex] == OBSOLETE_TAG) {
+                for (var tagIndex = 0, tagCount = fixedSpecDetails.tags.length; tagIndex < tagCount; ++tagIndex ) {
+                    if (fixedSpecDetails.tags[tagIndex] == OBSOLETE_TAG) {
                         isObsolete = true;
                         break;
                     }
