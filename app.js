@@ -360,8 +360,8 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 					publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>',\n\
 					tags: [" + fixedSpecDetails.tags.toString() + "],\n\
                     status: '<div style=\"width: 32px; height: 32px; background-image: " + image + "; background-size: cover\"/>'\n\
-                    freeze: '<button onclick=\"javascript:freezeSpec(" + isFrozen + ", \"" + REST_SERVER + "\", " + specId + ")\">" + freezeLabel + "</button>',\n\
-                    obsolete: '<button onclick=\"javascript:obsoleteSpec(" + isObsolete + ", \"" + REST_SERVER + "\", " + specId + ")\">" + obsoleteLabel + "</button>',\n\
+                    freeze: '<button onclick=\"javascript:freezeSpec(" + isFrozen + ", '" + REST_SERVER + "', " + specId + ")\">" + freezeLabel + "</button>',\n\
+                    obsolete: '<button onclick=\"javascript:obsoleteSpec(" + isObsolete + ", '" + REST_SERVER + "', " + specId + ")\">" + obsoleteLabel + "</button>',\n\
 				},\n";
 
 				processSpecDetails(++processIndex);
