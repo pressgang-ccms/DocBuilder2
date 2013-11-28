@@ -73,8 +73,13 @@ function freezeSpec(remove, restServer, id) {
         contentType:"application/json",
         dataType:"json",
         success: function(){
-            window.alert("Content specifications " + id + " is now marked as frozen. This will be reflected when DocBuilder completes the next build cycle.\n\n" +
-                "Use the frozen option in the filters at the top of the page to view or hide frozen content specifications.");
+            if (remove) {
+                window.alert("Content specifications " + id + " is now not marked as frozen. This will be reflected when DocBuilder completes the next build cycle.\n\n" +
+                    "Use the frozen option in the filters at the top of the page to view or hide frozen content specifications.");
+            } else {
+                window.alert("Content specifications " + id + " is now marked as frozen. This will be reflected when DocBuilder completes the next build cycle.\n\n" +
+                    "Use the frozen option in the filters at the top of the page to view or hide frozen content specifications.");
+            }
         }
     });
 }
@@ -95,8 +100,13 @@ function obsoleteSpec(remove, restServer, id) {
         contentType:"application/json",
         dataType:"json",
         success: function(){
-            window.alert("Content specifications " + id + " is now marked as obsolete. This will be reflected when DocBuilder completes the next build cycle.\n\n" +
+            if (remove) {
+                window.alert("Content specifications " + id + " is now not marked as obsolete. This will be reflected when DocBuilder completes the next build cycle.\n\n" +
+                    "Use the obsolete option in the filters at the top of the page to view or hide obsolete content specifications.");
+            } else {
+                window.alert("Content specifications " + id + " is now marked as obsolete. This will be reflected when DocBuilder completes the next build cycle.\n\n" +
                 "Use the obsolete option in the filters at the top of the page to view or hide obsolete content specifications.");
+            }
         }
     });
 }
