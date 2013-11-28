@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions-1.1.js" afterPath="$PROJECT_DIR$/functions-1.1.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385672834766" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385672917113" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385672201129" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -278,7 +278,7 @@
     <file path="/TopicSourceURLsView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385357006926" ignored="false" />
     <file path="/GetCurrentTopic.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385357301289" ignored="false" />
     <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/topic/base/GetCurrentTopic.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385357674074" ignored="false" />
-    <file path="/functions-1.1.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385671899232" ignored="false" />
+    <file path="/functions-1.1.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385673116659" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -339,10 +339,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="363" column="169" selection-start="14635" selection-end="14635" vertical-scroll-proportion="0.5045767">
+            <state line="363" column="169" selection-start="14635" selection-end="14635" vertical-scroll-proportion="-17.64">
               <folding>
                 <marker date="1385672913388" expanded="true" signature="3843:4814" placeholder="..." />
                 <marker date="1385672913388" expanded="true" signature="3855:4168" placeholder="..." />
@@ -386,10 +386,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="functions-1.1.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="functions-1.1.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/functions-1.1.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="77" selection-start="1578" selection-end="1578" vertical-scroll-proportion="0.0">
+            <state line="89" column="0" selection-start="2809" selection-end="2809" vertical-scroll-proportion="0.516129">
               <folding />
             </state>
           </provider>
@@ -622,8 +622,8 @@
         <option value="$PROJECT_DIR$/PressZillaDictionary.user.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.8.js" />
         <option value="$PROJECT_DIR$/javascript/overlay.js" />
-        <option value="$PROJECT_DIR$/functions-1.1.js" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/functions-1.1.js" />
       </list>
     </option>
   </component>
@@ -3070,7 +3070,11 @@
       <created>1385672835566</created>
       <updated>1385672835566</updated>
     </task>
-    <option name="localTasksCounter" value="554" />
+    <task id="LOCAL-00554" summary="Added buttons to freeze and obsolete specs">
+      <created>1385672918205</created>
+      <updated>1385672918205</updated>
+    </task>
+    <option name="localTasksCounter" value="555" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -3391,16 +3395,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/functions-1.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="77" selection-start="1578" selection-end="1578" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="363" column="169" selection-start="14635" selection-end="14635" vertical-scroll-proportion="0.5045767">
+        <state line="363" column="169" selection-start="14635" selection-end="14635" vertical-scroll-proportion="-17.64">
           <folding>
             <marker date="1385672913388" expanded="true" signature="3843:4814" placeholder="..." />
             <marker date="1385672913388" expanded="true" signature="3855:4168" placeholder="..." />
@@ -3440,6 +3437,13 @@
             <marker date="1385672913388" expanded="true" signature="16080:16139" placeholder="..." />
             <marker date="1385672913388" expanded="true" signature="17703:17900" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/functions-1.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="89" column="0" selection-start="2809" selection-end="2809" vertical-scroll-proportion="0.516129">
+          <folding />
         </state>
       </provider>
     </entry>

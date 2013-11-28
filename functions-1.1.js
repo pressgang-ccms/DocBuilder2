@@ -65,9 +65,17 @@ function setSelectedLang(langSelect, pageLang) {
  */
 function freezeSpec(remove, restServer, id) {
     var postBody = '{"id":'+id+', "tags":{"items":[{"item":{"id":'+FROZEN_TAG+'}, "state":' + (remove ? REMOVE_STATE : ADD_STATE) + '}]},"configuredParameters":["tags"]}';
-    jQuery.post( restServer + "/1/contentspec/update/json", postBody, function( data ) {
-        window.alert("Content specifications " + id + " is now marked as frozen. This will be reflected when DocBuilder completes the next build cycle.\n" +
-            "Use the frozen option in the filters at the top of the page to view or hide frozen content specifications.");
+
+    jQuery.ajax({
+        url:restServer + "/1/contentspec/update/json",
+        type:"POST",
+        data:postBody,
+        contentType:"application/json",
+        dataType:"json",
+        success: function(){
+            window.alert("Content specifications " + id + " is now marked as frozen. This will be reflected when DocBuilder completes the next build cycle.\n" +
+                "Use the frozen option in the filters at the top of the page to view or hide frozen content specifications.");
+        }
     });
 }
 
@@ -79,9 +87,17 @@ function freezeSpec(remove, restServer, id) {
  */
 function obsoleteSpec(remove, restServer, id) {
     var postBody = '{"id":'+id+', "tags":{"items":[{"item":{"id":'+OBSOLETE_TAG+'}, "state":' + (remove ? REMOVE_STATE : ADD_STATE) + '}]},"configuredParameters":["tags"]}';
-    jQuery.post( restServer + "/1/contentspec/update/json", postBody, function( data ) {
-        window.alert("Content specifications " + id + " is now marked as obsolete. This will be reflected when DocBuilder completes the next build cycle.\n" +
-            "Use the obsolete option in the filters at the top of the page to view or hide frozen content specifications.");
+
+    jQuery.ajax({
+        url:restServer + "/1/contentspec/update/json",
+        type:"POST",
+        data:postBody,
+        contentType:"application/json",
+        dataType:"json",
+        success: function(){
+            window.alert("Content specifications " + id + " is now marked as obsolete. This will be reflected when DocBuilder completes the next build cycle.\n" +
+                "Use the obsolete option in the filters at the top of the page to view or hide frozen content specifications.");
+        }
     });
 }
 
