@@ -325,8 +325,8 @@ function buildBooks(updatedSpecs, allSpecsArray) {
                 // select an image based on the presence of the index.html file
                 var image = fs.existsSync(deployment.APACHE_HTML_DIR + "/" + specId + "/index.html") ? 'url(/images/tick.png)' : 'url(/images/cross.png)';
 
-                var isFrozen = jQuery.inArray(FROZEN_TAG, specDetailsCache[specId].tags) == -1;
-                var isObsolete = jQuery.inArray(OBSOLETE_TAG, specDetailsCache[specId].tags) == -1;
+                var isFrozen = jQuery.inArray(FROZEN_TAG, specDetailsCache[specId].tags) != -1;
+                var isObsolete = jQuery.inArray(OBSOLETE_TAG, specDetailsCache[specId].tags) != -1;
 
                 var freezeLabel = isFrozen ? "Unfreeze" : "Freeze";
                 var obsoleteLabel = isObsolete ? "Unobsolete" : "Obsolete";
