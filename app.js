@@ -53,6 +53,16 @@ var BUILD_BOOK_SCRIPT = "/home/pressgang/DocBuilder2/build_original_books.sh";
  * @type {number}
  */
 var DELAY_WHEN_NO_UPDATES = 60000;
+/**
+ * The frozen tag id
+ * @type {number}
+ */
+var FROZEN_TAG = 669;
+/**
+ * The obsolete tag id
+ * @type {number}
+ */
+var OBSOLETE_TAG = 652;
 
 /**
  * true when the modified topics have been processed.
@@ -110,6 +120,8 @@ var contentSpecRESTCallFailed = false;
  * @type {boolean}
  */
 var topicRESTCallFailed = false;
+
+
 
 /**
  * Called when the modified topics and specs have been found. Once both
@@ -313,6 +325,12 @@ function buildBooks(updatedSpecs, allSpecsArray) {
                 // select an image based on the presence of the index.html file
                 var image = fs.existsSync(deployment.APACHE_HTML_DIR + "/" + specId + "/index.html") ? 'url(/images/tick.png)' : 'url(/images/cross.png)';
 
+                var isFrozen = jQuery.inArray(FROZEN_TAG, specDetailsCache[specId].tags) == -1;
+                var isObsolete = jQuery.inArray(OBSOLETE_TAG, specDetailsCache[specId].tags) == -1;
+
+                var freezeLabel = isFrozen ? "Unfreeze" : "Freeze";
+                var obsoleteLabel = isObsolete ? "Unobsolete" : "Obsolete";
+
 				indexHtml += "{\n\
 					idRaw: " + specId + ",\n\
 					id: '<a href=\"" + deployment.EDIT_LINK.replace(deployment.OPEN_LINK_ID_REPLACE, specId) + "\" target=\"_top\">" + specId + "</a>',\n\
@@ -327,6 +345,8 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 					publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>',\n\
 					tags: [" + fixedSpecDetails.tags.toString() + "],\n\
                     status: '<div style=\"width: 32px; height: 32px; background-image: " + image + "; background-size: cover\"/>'\n\
+                    freeze: '<button onclick=\"javascript:freezeSpec(" + isFrozen + ", \"" + REST_SERVER + "\", " + specId + ")\">" + freezeLabel + "</button>',\n\
+                    obsolete: '<button onclick=\"javascript:obsoleteSpec(" + isObsolete + ", \"" + REST_SERVER + "\", " + specId + ")\">" + obsoleteLabel + "</button>',\n\
 				},\n";
 
 				processSpecDetails(++processIndex);

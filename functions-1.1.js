@@ -4,6 +4,8 @@
  */
 var OBSOLETE_TAG = 652;
 var FROZEN_TAG = 669;
+var ADD_STATE = 1;
+var REMOVE_STATE = 2;
 
 function changeLang() {
     var langSelect = document.getElementById("lang");
@@ -53,6 +55,34 @@ function setSelectedLang(langSelect, pageLang) {
         }
     }
     langSelect.selectedIndex = langIndex;
+}
+
+/**
+ * Adds the frozen tag to a spec
+ * @param remove true if the tag is to be removed, false if it is to be added
+ * @param restServer The PressGang REST server
+ * @param id The spec id
+ */
+function freezeSpec(remove, restServer, id) {
+    var postBody = '{"id":'+id+', "tags":{"items":[{"item":{"id":'+FROZEN_TAG+'}, "state":' + (remove ? REMOVE_STATE : ADD_STATE) + '}]},"configuredParameters":["tags"]}';
+    jQuery.post( restServer + "/1/contentspec/update/json", postBody, function( data ) {
+        window.alert("Content specifications " + id + " is now marked as frozen. This will be reflected when DocBuilder completes the next build cycle.\n" +
+            "Use the frozen option in the filters at the top of the page to view or hide frozen content specifications.");
+    });
+}
+
+/**
+ * Adds the obsolete tag to a spec
+ * @param remove true if the tag is to be removed, false if it is to be added
+ * @param restServer The PressGang REST server
+ * @param id The spec id
+ */
+function obsoleteSpec(remove, restServer, id) {
+    var postBody = '{"id":'+id+', "tags":{"items":[{"item":{"id":'+OBSOLETE_TAG+'}, "state":' + (remove ? REMOVE_STATE : ADD_STATE) + '}]},"configuredParameters":["tags"]}';
+    jQuery.post( restServer + "/1/contentspec/update/json", postBody, function( data ) {
+        window.alert("Content specifications " + id + " is now marked as obsolete. This will be reflected when DocBuilder completes the next build cycle.\n" +
+            "Use the obsolete option in the filters at the top of the page to view or hide frozen content specifications.");
+    });
 }
 
 function build_table(data) {
@@ -118,10 +148,20 @@ function build_table(data) {
             key: "publicanbook",
             label: "Publican ZIP",
             allowHTML: true
-        }   ,
+        },
         {
             key: "status",
             label: "Status",
+            allowHTML: true
+        },
+        {
+            key: "freeze",
+            label: "Freeze",
+            allowHTML: true
+        },
+        {
+            key: "obsolete",
+            label: "Obsolete",
             allowHTML: true
         }
     ];
