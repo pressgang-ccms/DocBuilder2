@@ -2915,13 +2915,12 @@ function getInfoFromREST() {
                     // Finally we need to get the list of any similar topics
                     var similarTopicsUrl = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topics/get/json/query;minHash=" + topicNode.entityId + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
                     jQuery.getJSON(similarTopicsUrl, function(data){
+                        if (!dupTopicsCache[topicNode.entityId].data) {
+                            dupTopicsCache[topicNode.entityId].data = [];
+                        }
+
                         for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
-                            if (!dupTopicsCache[topicNode.entityId].data) {
-                                dupTopicsCache[topicNode.entityId].data = [];
-                            }
-
                             dupTopicsCache[topicNode.entityId].data.push(data.items[topicIndex].item.id);
-
                         }
 
                         updateCount(topicNode.entityId + "duplicateIcon", dupTopicsCache[topicNode.entityId].data.length);
