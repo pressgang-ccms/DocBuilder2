@@ -473,7 +473,7 @@ function createDuplicatedTopicPopover(topicId, parent) {
 
     dupTopicsCache[topicId] = {popover: popover};
 
-    popover.popoverContent.innerHTML = '<p>This popover displays PnT content that match the keywords in the topic.</p>'
+    popover.popoverContent.innerHTML = '<p>This popover displays topics that are at least 50% similar to this topic.</p>'
 
     linkDiv.onmouseover=function(){
         openPopover(popover, linkDiv);
