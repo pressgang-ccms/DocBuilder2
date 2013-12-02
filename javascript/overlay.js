@@ -53,6 +53,21 @@ var LICENSE_CATEGORY = 43;
  */
 var VALID_WORD_EXTENDED_PROPERTY_TAG_ID = 33;
 /**
+ * The id of the extended property that defines invalid dictionary words
+ * @type {number}
+ */
+var INVALID_WORD_EXTENDED_PROPERTY_TAG_ID = 32;
+/**
+ * The id of the extended property that defines discourages dictionary words
+ * @type {number}
+ */
+var DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID = 31;
+/**
+ * The id of the extended property that defines discourages dictionary phrases
+ * @type {number}
+ */
+var DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID = 33;
+/**
  * The ID of the tag that indicates the topic details the compatibility between two or more licenses
  * @type {number}
  */
@@ -135,7 +150,11 @@ var TOPIC_BATCH_SIZE = 20;
  * @type {string}
  */
 var BUG_LINK = "https://bugzilla.redhat.com/enter_bug.cgi?alias=&assigned_to=pressgang-ccms-dev%40redhat.com&bug_status=NEW&component=DocBook-builder&product=PressGang%20CCMS&version=1.2";
-
+/**
+ * List of element to skip when looking for text nodes
+ * @type {Array}
+ */
+var SKIP_ELEMENTS = ["A", "SCRIPT", "PRE"];
 /**
  * Maintains the topic to source URL info
  * @type {{}}
@@ -275,7 +294,8 @@ var doubleWordButtons = {};
 	When the page is loaded, start looking for the links that indicate the topics.
  */
 $(document).ready(function() {
-	firstPass();
+    findTopicsInHtml();
+    addPermLinks();
 	buildMenu();
 });
 
@@ -301,6 +321,15 @@ function getSpecIdFromURL() {
 	}
 
 	return null;
+}
+
+/**
+ * Adds links to section titles for easy bookmarking
+ */
+function addPermLinks() {
+    jQuery("h5[class='title']>a[id], h4[class='title']>a[id], h3[class='title']>a[id], h2[class='title']>a[id]").each(function(index, element){
+        jQuery(element.parentNode).append(jQuery("<span data-pressgangtopic='25677'> <a style='font-size: 10px' href='#" + element.id + "'>permlink</a></span>"));
+    });
 }
 
 /**
@@ -974,10 +1003,9 @@ function setupEvents(linkDiv, popover) {
     }(popover);
 }
 
-/*
- * Finds all the topic ids in a document and adds the icons under the topic
- */
-function firstPass() {
+
+
+function findTopicsInHtml() {
     var foundTopics = {};
     var elements = document.getElementsByTagName("div");
     for (var i = elements.length - 1; i >= 0; --i) {
@@ -1009,7 +1037,7 @@ function firstPass() {
         }
     }
 
-	secondPass(true, false, false);
+    secondPass(true, false, false);
 }
 
 /**
@@ -1859,7 +1887,10 @@ function buildMenu() {
 				<div class="panel-body ">\
 		            <ul id="spellingErrorsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:addCustomWord();">Add custom word to dictionary</a></li>\
+						<li><a href="javascript:addCustomWord(VALID_WORD_EXTENDED_PROPERTY_TAG_ID);">Add custom word to dictionary</a></li>\
+						<li><a href="javascript:addCustomWord(INVALID_WORD_EXTENDED_PROPERTY_TAG_ID);">Add invalid word to dictionary</a></li>\
+						<li><a href="javascript:addCustomWord(DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID);">Add discouraged word to dictionary</a></li>\
+						<li><a href="javascript:addCustomWord(DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID);">Add discouraged phrase to dictionary</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -2496,7 +2527,23 @@ function checkSpellingErrors(topic) {
                     "code",
                     "option",
                     "classname",
-                    "term"
+                    "interfacename",
+                    "synopsis",
+                    "classsynopsis",
+                    "classsynopsisinfo",
+                    "constructorsynopsis",
+                    "destructorsynopsis",
+                    "methodsynopsis",
+                    "fieldsynopsis",
+                    "cmdsynopsis",
+                    "funcsynopsis",
+                    "methodname",
+                    "exceptionname",
+                    "term",
+                    "uri",
+                    "keycap",
+                    "keysym",
+                    "symbol"
                 ];
 
                 // remove the contents of these elements
@@ -2594,7 +2641,7 @@ function checkSpellingErrors(topic) {
                                  </button>');
                                 var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>');
                                 if (window.bootbox) {
-                                    var addToDictionary = jQuery("<li><a href='javascript:addToDictionary(\"" + word + "\", \"" + wordId + "\")'>Add to dictionary</a></li>");
+                                    var addToDictionary = jQuery("<li><a href='javascript:addToDictionary(true, \"" + word + "\", \"" + wordId + "\")'>Add to dictionary</a></li>");
                                     buttonList.append(addToDictionary);
                                 }
                                 jQuery(button).appendTo(buttonParent);
@@ -2839,31 +2886,36 @@ function getDictionary() {
     // load the dictionaries for spell checking
     if (window.Typo) {
 
-        var customDicUrl = SERVER + "/topics/get/json/query;;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
+        var customDicUrl = SERVER + "/topics/get/json/query;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + INVALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID + "=true;logic=Or?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
         jQuery.getJSON(customDicUrl, function(topics) {
             var customWords = "";
             var customWordsDict = {};
+
             for (var topicIndex = 0, topicCount = topics.items.length; topicIndex < topicCount; ++topicIndex) {
                 var topic =  topics.items[topicIndex].item;
 
                 for (var propertyIndex = 0, propertyCount = topic.properties.items.length; propertyIndex < propertyCount; ++propertyIndex) {
                     var property = topic.properties.items[propertyIndex].item;
 
-                    if (property.id == VALID_WORD_EXTENDED_PROPERTY_TAG_ID) {
+                    if (property.id == VALID_WORD_EXTENDED_PROPERTY_TAG_ID ||
+                        INVALID_WORD_EXTENDED_PROPERTY_TAG_ID ||
+                        DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID ||
+                        DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID) {
                         if (!customWordsDict[property.value]) {
-                            customWordsDict[property.value] = 1;
+                            customWordsDict[property.value] = {tagId: property.id, id: topic.id};
 
                             if (customWords.length != 0) {
                                 customWords += "\n";
                             }
 
                             customWords += property.value;
-                        } else {
-                            customWordsDict[property.value] = customWordsDict[property.value] + 1;
+
                         }
                     }
                 }
             }
+
+            addDictionaryPopovers(customWordsDict);
 
             jQuery.get("/dictionaries/en_US.aff", function(affData) {
                 jQuery.get("/dictionaries/en_US.dic", function(dicData) {
@@ -2879,79 +2931,233 @@ function getDictionary() {
     }
 }
 
-function addCustomWord() {
-    bootbox.prompt("Please enter the word to be added to the dictionary.", function(result) {
-        if (result !== null && jQuery.trim(result).length != 0) {
-            addToDictionary(result);
+/**
+ * Scan the text in the page for any words that match those in the custom dictionary, and add a popover icon.
+ */
+function addDictionaryPopovers(customWordsDict) {
+
+    // create an array that sorts the keys in the customWordsDict by length
+    var customWordsKeyset = [];
+    for (var customWord in customWordsDict) {
+        customWordsKeyset.push(customWord);
+    }
+
+    customWordsKeyset.sort(function(a, b){
+        if (a.length > b.length) {
+            return -1;
         }
+
+        if (a.length == b.length) {
+            return 0;
+        }
+
+        return 1;
     });
-}
 
-function addToDictionary(word, wordId) {
-    word = encodeXml(word);
-
-    bootbox.dialog({
-        message: "<textarea id='newWordDetails' style='width: 100%; height: 300px'></textarea>",
-        title: "Please enter a plain text description for '" + word + "'. This description will be displayed in the ECS custom dictionary.",
-        buttons: {
-            danger: {
-                label: "Cancel",
-                className: "btn-default"
-            },
-            success: {
-                label: "OK",
-                className: "btn-primary",
-                callback: function() {
-                    var description = jQuery.trim(jQuery('#newWordDetails').val());
-                    if (description.length == 0) {
-                        bootbox.alert("Please enter a description.", function() {
-                            addToDictionary(word, wordId);
-                        });
-                    } else {
-                        var paras = description.split("\n");
-                        var docbook = "<section><title>" + word + "</title>";
-
-                        for (var parasIndex = 0, parasCount = paras.length; parasIndex < parasCount; ++parasIndex) {
-                            var trimmedPara = encodeXml(jQuery.trim(paras[parasIndex]));
-
-                            if (trimmedPara.length != 0) {
-                                docbook += "<para>" + trimmedPara + "</para>";
-                            }
-                        }
-
-                        docbook += "</section>";
-
-                        var createTopicURL = SERVER + "/topic/create/json?message=docbuilder%3A+New+dictionary+word+added&flag=2&userId=89";
-                        var postBody = '{"xml":"' + docbook + '", "locale":"en-US", "properties":{"items":[{"item":{"value":"' + word + '", "id":' + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + '}, "state":1}]}, "configuredParameters":["properties","locale","xml"]}';
-
-                        jQuery.ajax({
-                            type: "POST",
-                            contentType: "application/json",
-                            url: createTopicURL,
-                            data: postBody,
-                            success: function(data) {
-                                if (wordId) {
-                                    jQuery("#" + wordId).remove();
-                                }
-                                bootbox.alert("Topic <a href='http://" + BASE_SERVER + "/pressgang-ccms-ui/#SearchResultsAndTopicView;query;topicIds=" + data.id + "'>" + data.id + "</a> was successfully created to represent '" + word + "' in the custom dictionary.");
-                            },
-                            error: function() {
-                                bootbox.alert("An error occured while trying to create the topic. Please try again later.");
-                            },
-                            dataType: "json"
-                        });
-                    }
-                }
+    function collectTextNodes(element, texts) {
+        if (jQuery.inArray(element.nodeName, SKIP_ELEMENTS) == -1) {
+            for (var child= element.firstChild; child!==null; child= child.nextSibling) {
+                if (child.nodeType===3)
+                    texts.push(child);
+                else if (child.nodeType===1)
+                    collectTextNodes(child, texts);
             }
         }
+    }
+
+    var texts = [];
+    collectTextNodes(document.body, texts);
+
+    var batchsize = 20;
+
+    function processTextNodes(texts, index) {
+        if (index < texts.length) {
+            for (var textIndex = index, textCount = texts.length; textIndex < textCount && textIndex < index + batchsize; ++textIndex) {
+                var textNode = texts[textIndex];
+                var fixedText = textNode.textContent;
+
+                // mark up the dictionary matches
+                for (var customWordIndex = 0, customWordCount = customWordsKeyset.length; customWordIndex < customWordCount; ++customWordIndex) {
+                    var replacementMarkers = {};
+
+                    // Go through and replace all previously matches text with markers
+                    var spanRE = /\<span.*?\<\/span\>/;
+                    var spanMatch = null;
+                    while ((spanMatch = fixedText.match(spanRE)) != null) {
+                        var replacementString = "[" + (Math.random() * 1000) + "]";
+
+                        while (fixedText.indexOf(replacementString) != -1) {
+                            replacementString = "[" + (Math.random() * 1000) + "]";
+                        }
+
+                        fixedText = fixedText.replace(spanRE, replacementString);
+                        replacementMarkers[replacementString] = spanMatch[0];
+                    }
+
+                    var customWord = customWordsKeyset[customWordIndex];
+                    var customWordDetails = customWordsDict[customWord];
+                    var borderStyle = "";
+                    if (customWordDetails.tagId == VALID_WORD_EXTENDED_PROPERTY_TAG_ID) {
+                        borderStyle = "border-color: green";
+                    } else if (customWordDetails.tagId == INVALID_WORD_EXTENDED_PROPERTY_TAG_ID) {
+                        borderStyle = "border-color: red";
+                    } else if (customWordDetails.tagId == DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID) {
+                        borderStyle = "border-color: purple";
+                    } else if (customWordDetails.tagId == DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID) {
+                        borderStyle = "border-color: purple";
+                    }
+                    fixedText = fixedText.replace(new RegExp("\\b" + encodeRegex(customWord) + "\\b", "g"), "<span style='text-decoration: none; border-bottom: 1px dashed; " + borderStyle + "' onclick='javascript:displayDictionaryTopic(" + customWordDetails.id + ")'>" + customWord + "</span>");
+
+                    // replace the markers with the original text
+                    for (var replacement in replacementMarkers) {
+                        fixedText = fixedText.replace(replacement, replacementMarkers[replacement]);
+                    }
+                }
+
+                // If the content has changed, ie a dictionary match was found, then update the text node
+                if (textNode.textContent !== fixedText) {
+                    jQuery(textNode).replaceWith(fixedText);
+                }
+            }
+
+            setTimeout(function() {
+                processTextNodes(texts, index + batchsize);
+            }, 0);
+
+        }
+    }
+
+    processTextNodes(texts, 0);
+}
+
+function displayDictionaryTopic(topicId) {
+    bootbox.alert("<div id='dictionaryTopicViewPlaceholder'>Loading dictionary topic...</div>");
+
+    var topicDetailsUrl = SERVER + "/topic/get/json/" + topicId;
+    jQuery.getJSON(topicDetailsUrl, function(topic){
+        var holdXMLUrl = SERVER + "/holdxml";
+        jQuery.ajax({
+            type: "POST",
+            contentType: "application/xml",
+            url: holdXMLUrl,
+            data: "<?xml-stylesheet type='text/xsl' href='http://" + BASE_SERVER + "/pressgang-ccms-static/publican-docbook/html-single-renderonly.xsl'?>" + topic.xml,
+            success: function(holdId) {
+                jQuery('#dictionaryTopicViewPlaceholder').replaceWith(jQuery("<iframe width='100%' height='300px' frameborder='0' src='" + SERVER + "/echoxml?id=" + holdId.value + "'></iframe><a href='http://" + BASE_SERVER + "/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=" + topicId + "'>Edit this topic</a>"));
+            },
+            dataType: "json"
+        });
     });
 }
 
+function addCustomWord(id) {
+    bootbox.prompt("Please enter the word to be added to the dictionary.", function(result) {
+        if (result !== null && jQuery.trim(result).length != 0) {
+            addToDictionary(id, result);
+        }
+    });
+}
+
+function addToDictionary(id, word, wordId) {
+    word = encodeXml(word);
+
+    var existingTopicUrl = SERVER + "/topics/get/json/query;propertyTag" + id + "=" + encodeURIComponent(word) + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
+    jQuery.getJSON(existingTopicUrl, function(topics){
+        if (topics.items.length == 0) {
+            bootbox.dialog({
+                message: "<textarea id='newWordDetails' style='width: 100%; height: 300px'></textarea>",
+                title: "Please enter a plain text description for '" + word + "'. This description will be displayed in the ECS custom dictionary.",
+                buttons: {
+                    danger: {
+                        label: "Cancel",
+                        className: "btn-default"
+                    },
+                    success: {
+                        label: "OK",
+                        className: "btn-primary",
+                        callback: function() {
+                            var description = jQuery.trim(jQuery('#newWordDetails').val());
+                            if (description.length == 0) {
+                                bootbox.alert("Please enter a description.", function() {
+                                    addToDictionary(validWord, word, wordId);
+                                });
+                            } else {
+                                var paras = description.split("\n");
+                                var docbook = "<section><title>" + word + "</title>";
+
+                                for (var parasIndex = 0, parasCount = paras.length; parasIndex < parasCount; ++parasIndex) {
+                                    var trimmedPara = encodeXml(jQuery.trim(paras[parasIndex]));
+
+                                    if (trimmedPara.length != 0) {
+                                        docbook += "<para>" + trimmedPara + "</para>";
+                                    }
+                                }
+
+                                docbook += "</section>";
+
+                                var createTopicURL = SERVER + "/topic/create/json?message=docbuilder%3A+New+dictionary+word+added&flag=2&userId=89";
+                                var postBody = '{"xml":"' + docbook.replace(/\\/g, "\\\\") + '", "locale":"en-US", "properties":{"items":[{"item":{"value":"' + word.replace(/\\/g, "\\\\") + '", "id":' + id + '}, "state":1}]}, "configuredParameters":["properties","locale","xml"]}';
+
+                                jQuery.ajax({
+                                    type: "POST",
+                                    contentType: "application/json",
+                                    url: createTopicURL,
+                                    data: postBody,
+                                    success: function(data) {
+                                        if (wordId) {
+                                            jQuery("#" + wordId).remove();
+                                        }
+                                        bootbox.alert("Topic <a href='http://" + BASE_SERVER + "/pressgang-ccms-ui/#SearchResultsAndTopicView;query;topicIds=" + data.id + "'>" + data.id + "</a> was successfully created to represent '" + word + "' in the custom dictionary.");
+                                    },
+                                    error: function() {
+                                        bootbox.alert("An error occured while trying to create the topic. Please try again later.");
+                                    },
+                                    dataType: "json"
+                                });
+                            }
+                        }
+                    }
+                }
+            });
+        } else {
+            bootbox.alert("This word has already been added. Please view <a href='http://docbuilder.ecs.eng.bne.redhat.com/22516/'>The ECS Custom Dictionary</a> to review the definition of the '" + word + "'");
+        }
+    });
+}
+
+/**
+ * Encode any special XML characters
+ * @param text t=The text to be encoded
+ * @returns The encoded text
+ */
 function encodeXml(text) {
     text = text.replace(/&/g, "&amp;");
     text = text.replace(/'/g, "&apos;");
     text = text.replace(/"/g, "&quot;");
     text = text.replace(/</g, "&lt;");
     text = text.replace(/>/g, "&gt;");
+    return text;
+}
+
+function encodeRegex(text) {
+    text = text.replace(/\\/g, "\\\\");
+    text = text.replace(/\./g, "\\.");
+    text = text.replace(/\+/g, "\\+");
+    text = text.replace(/\-/g, "\\-");
+    text = text.replace(/\*/g, "\\*");
+    text = text.replace(/\?/g, "\\?");
+    text = text.replace(/\[/g, "\\[");
+    text = text.replace(/\]/g, "\\]");
+    text = text.replace(/\^/g, "\\^");
+    text = text.replace(/\$/g, "\\$");
+    text = text.replace(/\(/g, "\\(");
+    text = text.replace(/\)/g, "\\)");
+    text = text.replace(/\{/g, "\\{");
+    text = text.replace(/\}/g, "\\}");
+    text = text.replace(/\=/g, "\\=");
+    text = text.replace(/\!/g, "\\!");
+    text = text.replace(/\</g, "\\<");
+    text = text.replace(/\>/g, "\\>");
+    text = text.replace(/\|/g, "\\|");
+    text = text.replace(/\:/g, "\\:");
     return text;
 }

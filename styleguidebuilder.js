@@ -12,12 +12,27 @@ var REST_SERVER = "http://" + deployment.BASE_SERVER + "/pressgang-ccms/rest";
  * @type {number}
  */
 var VALID_WORD_EXTENDED_PROPERTY_TAG_ID = 33;
+/**
+ * The id of the extended property that defines invalid dictionary words
+ * @type {number}
+ */
+var INVALID_WORD_EXTENDED_PROPERTY_TAG_ID = 32;
+/**
+ * The id of the extended property that defines discourages dictionary words
+ * @type {number}
+ */
+var DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID = 31;
+/**
+ * The id of the extended property that defines discourages dictionary phrases
+ * @type {number}
+ */
+var DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID = 33;
 
 var STYLE_GUIDE_SPEC_ID = 22516;
 
 // get all topics with the valid word extended property
 
-var customDicUrl = REST_SERVER + "/1/topics/get/json/query;;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
+var customDicUrl = REST_SERVER + "/1/topics/get/json/query;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + INVALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID + "=true;logic=Or?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
 
 $.getJSON(customDicUrl, function(topics) {
 
@@ -28,16 +43,27 @@ Title = ECS Custom Dictionary\n\
 Product = PressGang\n\
 Version = 1.3\n\
 Copyright Holder = Red Hat\n\
-\n';
+BZProduct = PressGang CCMS\n\
+BZComponent = Documentation\n';
 
-    topics.items.sort(function(a, b) {return a.item.title.toLowerCase() > b.item.title.toLowerCase()});
+    topics.items.sort(function(a, b) {
+        if (a.item.title.toLowerCase() > b.item.title.toLowerCase()) {
+            return 1;
+        }
+
+        if (a.item.title.toLowerCase() == b.item.title.toLowerCase()) {
+            return 0;
+        }
+
+        return -1;
+    });
 
     for (var topicIndex = 0, topicCount = topics.items.length; topicIndex < topicCount; ++topicIndex) {
         var topic =  topics.items[topicIndex].item;
         var firstLetter = topic.title.substring(0, 1).toUpperCase();
         if (firstLetter != lastLetter) {
             lastLetter = firstLetter;
-            contentSpec += "Chapter: " + firstLetter + "\n";
+            contentSpec += "\nChapter: " + firstLetter + "\n";
         }
 
         contentSpec += "  " + topic.title + " [" + topic.id + "]\n";
