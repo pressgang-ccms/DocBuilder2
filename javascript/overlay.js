@@ -2796,12 +2796,12 @@ function getInfoFromREST() {
                         topicDetailsMap[topicNode.entityId] = topicNode.entityRevision;
 
                         // get the specific topic revision
-                        if (topicNode.entityRevision) {
+                        /*if (topicNode.entityRevision) {
                             var topicRevisionUrl = SERVER + "/topic/get/json/" + topicNode.entityId + "/r/" + topicNode.entityRevision;
                             jQuery.getJSON(topicRevisionUrl, function(data) {
                                 checkSpellingErrors(data);
                             });
-                        }
+                        }*/
 
                         // Finally we need to get the list of any similar topics
                         /*var similarTopicsUrl = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topics/get/json/query;minHash=" + topicNode.entityId + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
@@ -2827,9 +2827,9 @@ function getInfoFromREST() {
 
                                 var topic = expandedTopics.items[topicIndex].item;
 
-                                if (!topicDetailsMap[topic.id]) {
+                                //if (!topicDetailsMap[topic.id]) {
                                     checkSpellingErrors(topic);
-                                }
+                                //}
 
                                 if (!topicNames[topic.id]) {
                                     topicNames[topic.id] = topic.title;
