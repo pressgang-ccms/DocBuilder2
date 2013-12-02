@@ -177,6 +177,11 @@ var tagsCache = {};
  */
 var specCache = {};
 /**
+ * Maintains the duplicated topics cache
+ * @type {{}}
+ */
+var dupTopicsCache = {};
+/**
  * Maintains the topic history cache.
  * keys are topic ids with values being revisions for the topic
  * summary key contains counts of last revisions
@@ -359,6 +364,7 @@ function addOverlayIcons(topicId, RoleCreatePara) {
         createMojoPopover(topicId, bubbleDiv);
         createJBossPopover(topicId, bubbleDiv);
         createPnTPopover(topicId, bubbleDiv);
+        createDuplicatedTopicPopover(topicId, bubbleDiv);
     }
 }
 
@@ -455,6 +461,48 @@ function createPnTPopover(topicId, parent) {
     };
 
     setupEvents(linkDiv, popover);
+}
+
+function createDuplicatedTopicPopover(topicId, parent) {
+    var linkDiv = createIcon("duplicate", topicId, 24798);
+
+    parent.appendChild(linkDiv);
+
+    var popover = createPopover("Duplicate Topics", topicId);
+    document.body.appendChild(popover);
+
+    dupTopicsCache[topicId] = {popover: popover};
+
+    popover.popoverContent.innerHTML = '<p>This popover displays PnT content that match the keywords in the topic.</p>'
+
+    linkDiv.onmouseover=function(){
+        openPopover(popover, linkDiv);
+
+        if (dupTopicsCache[topicId].data) {
+            renderDuplicatedTopic(topicId);
+        }
+    };
+
+    setupEvents(linkDiv, popover);
+}
+
+function renderDuplicatedTopic(topicId) {
+    dupTopicsCache[topicId].popover.popoverContent.innerHTML = '';
+
+    if (dupTopicsCache[topicId].data) {
+        for (var index = 0, count = dupTopicsCache[topicId].data.length; index < count; ++index) {
+
+            var dupTopic =  dupTopicsCache[topicId].data[index];
+
+            var container = document.createElement("div");
+            var link = document.createElement("a");
+            container.appendChild(link);
+
+            $(link).text(topicId + ": " + topicNames[topicId]);
+            link.setAttribute("href", 'http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + topicId);
+            dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
+        }
+    }
 }
 
 function createMojoPopover(topicId, parent) {
@@ -2863,6 +2911,21 @@ function getInfoFromREST() {
                             checkSpellingErrors(data);
                         });
                     }
+
+                    // Finally we need to get the list of any similar topics
+                    var similarTopicsUrl = "http://skynet-dev.usersys.redhat.com/pressgang-ccms/rest/1/topics/get/json/query;minHash=" + topicNode.entityId + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
+                    jQuery.getJSON(similarTopicsUrl, function(data){
+                        for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
+                            if (!dupTopicsCache[topicNode.entityId].data) {
+                                dupTopicsCache[topicNode.entityId].data = [];
+                            }
+
+                            dupTopicsCache[topicNode.entityId].data.push(data.items[topicIndex].item.id);
+
+                        }
+
+                        updateCount(topicNode.entityId + "duplicateIcon", dupTopicsCache[topicNode.entityId].data.length);
+                    });
                 } else {
                     jQuery("#spellingErrorsBadge").remove();
                     jQuery("#doubledWordsErrorsBadge").remove();
