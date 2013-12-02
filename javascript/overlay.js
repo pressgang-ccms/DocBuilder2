@@ -2794,6 +2794,28 @@ function getInfoFromREST() {
                         }
                         topicIdList += topicNode.entityId;
                         topicDetailsMap[topicNode.entityId] = topicNode.entityRevision;
+
+                        // get the specific topic revision
+                        if (topicNode.entityRevision) {
+                            var topicRevisionUrl = SERVER + "/topic/get/json/" + topicNode.entityId + "/r/" + topicNode.entityRevision;
+                            jQuery.getJSON(topicRevisionUrl, function(data) {
+                                checkSpellingErrors(data);
+                            });
+                        }
+
+                        // Finally we need to get the list of any similar topics
+                        var similarTopicsUrl = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topics/get/json/query;minHash=" + topicNode.entityId + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
+                        jQuery.getJSON(similarTopicsUrl, function(data){
+                            if (!dupTopicsCache[topicNode.entityId].data) {
+                                dupTopicsCache[topicNode.entityId].data = [];
+                            }
+
+                            for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
+                                dupTopicsCache[topicNode.entityId].data.push(data.items[topicIndex].item.id);
+                            }
+
+                            updateCount(topicNode.entityId + "duplicateIcon", dupTopicsCache[topicNode.entityId].data.length);
+                        });
                     }
 
                     // for each topic we need the latest revision, and the specific revision included in the spec (if the revision is defined)
@@ -2904,27 +2926,7 @@ function getInfoFromREST() {
                         }
                     }(index, topicDetailsMap));
 
-                    // get the specific topic revision
-                    if (topicNode.entityRevision) {
-                        var topicRevisionUrl = SERVER + "/topic/get/json/" + topicNode.entityId + "/r/" + topicNode.entityRevision;
-                        jQuery.getJSON(topicRevisionUrl, function(data) {
-                            checkSpellingErrors(data);
-                        });
-                    }
 
-                    // Finally we need to get the list of any similar topics
-                    /*var similarTopicsUrl = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topics/get/json/query;minHash=" + topicNode.entityId + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
-                    jQuery.getJSON(similarTopicsUrl, function(data){
-                        if (!dupTopicsCache[topicNode.entityId].data) {
-                            dupTopicsCache[topicNode.entityId].data = [];
-                        }
-
-                        for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
-                            dupTopicsCache[topicNode.entityId].data.push(data.items[topicIndex].item.id);
-                        }
-
-                        updateCount(topicNode.entityId + "duplicateIcon", dupTopicsCache[topicNode.entityId].data.length);
-                    }); */
                 } else {
                     jQuery("#spellingErrorsBadge").remove();
                     jQuery("#doubledWordsErrorsBadge").remove();
