@@ -2805,18 +2805,18 @@ function getInfoFromREST() {
     if (specId) {
         var topicsUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=0,9,10;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
         jQuery.getJSON(topicsUrl, function(topicNodes) {
-            getRevisionInfoFromREST(topicNodes, 0);
+            getRevisionInfoFromREST(specId, topicNodes, 0);
         });
     }
 }
 
-function getTopicDetailsInBatches(topicNodes, index) {
+function getTopicDetailsInBatches(specId, topicNodes, index) {
     if (index < topicNodes.items.length) {
 
         jQuery("#spellingErrorsBadge").remove();
         jQuery("#doubledWordsErrorsBadge").remove();
-        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Pass 1 ' + (index / topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
-        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Pass 1 ' + (index / topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
+        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Pass 2 ' + (index / topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
+        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Pass 2 ' + (index / topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
 
         // the list of topic ids to send tp the query url
         var topicIdList = "";
@@ -2938,9 +2938,14 @@ function getTopicDetailsInBatches(topicNodes, index) {
                 }
             }
 
-            getTopicDetailsInBatches(topicNodes, index + TOPIC_BATCH_SIZE);
+            getTopicDetailsInBatches(specId, topicNodes, index + TOPIC_BATCH_SIZE);
         });
     } else {
+        jQuery("#spellingErrorsBadge").remove();
+        jQuery("#doubledWordsErrorsBadge").remove();
+        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + '</span>'));
+        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + '</span>'));
+
         console.log("Retrieved all topic data");
 
         buildTopicEditedInChart();
@@ -2953,13 +2958,13 @@ function getTopicDetailsInBatches(topicNodes, index) {
  * Once all the information from the latest versions of the topics is found, we go through and
  * get the details on the topic revisions
  */
-function getRevisionInfoFromREST(topicNodes, index) {
+function getRevisionInfoFromREST(specId, topicNodes, index) {
      if (index <  topicNodes.items.length) {
 
         jQuery("#spellingErrorsBadge").remove();
         jQuery("#doubledWordsErrorsBadge").remove();
-        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Step 2 ' + (index /  topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
-        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Step 2 ' + (index /  topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
+        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Step 1 ' + (index /  topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
+        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Step 1 ' + (index /  topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
 
         var topicNode = topicNodes.items[index].item;
         var topicID = topicNode.entityId;
@@ -2969,22 +2974,17 @@ function getRevisionInfoFromREST(topicNodes, index) {
             var topicRevisionUrl = SERVER + "/topic/get/json/" + topicID + "/r/" + topicRevision;
             jQuery.getJSON(topicRevisionUrl, function(data) {
                 checkSpellingErrors(data);
-                getRevisionInfoFromREST(topicNodes, ++index);
+                getRevisionInfoFromREST(specId, topicNodes, ++index);
             });
         } else {
-            getRevisionInfoFromREST(topicNodes, ++index);
+            getRevisionInfoFromREST(specId, topicNodes, ++index);
         }
     } else {
-         jQuery("#spellingErrorsBadge").remove();
-         jQuery("#doubledWordsErrorsBadge").remove();
-         jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + '</span>'));
-         jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + '</span>'));
-
-         getDuplicatedTopics(topicNodes, 0);
+         getDuplicatedTopics(specId, topicNodes, 0);
     }
 }
 
-function getDuplicatedTopics(topicNodes, index) {
+function getDuplicatedTopics(specId, topicNodes, index) {
     if (index <  topicNodes.items.length) {
         var topicNode = topicNodes.items[index].item;
         var topicID = topicNode.entityId;
@@ -3010,10 +3010,10 @@ function getDuplicatedTopics(topicNodes, index) {
             }
 
             updateCount(topicID + "duplicateIcon", dupTopicsCache[topicID].data.length);
-            getDuplicatedTopics(topicNodes, ++index);
+            getDuplicatedTopics(specId, topicNodes, ++index);
         });
     } else {
-        getTopicDetailsInBatches(topicNodes, 0);
+        getTopicDetailsInBatches(specId, topicNodes, 0);
     }
 }
 
