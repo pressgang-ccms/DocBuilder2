@@ -32,6 +32,11 @@
  */
 
 /**
+ * The message to add to a bage while data is still downloading
+ * @type {string}
+ */
+var PROCESSING_MESSAGE = "Thinking...";
+/**
  * Time to delay the closing of a popover window.
  * @type {number}
  */
@@ -177,6 +182,11 @@ var tagsCache = {};
  */
 var specCache = {};
 /**
+ * Maintains the duplicated topics cache
+ * @type {{}}
+ */
+var dupTopicsCache = {};
+/**
  * Maintains the topic history cache.
  * keys are topic ids with values being revisions for the topic
  * summary key contains counts of last revisions
@@ -193,6 +203,11 @@ var topicIds = [];
  * @type {{}}
  */
 var topicNames = {};
+/**
+ * Maps topic ids to topic revisions;
+ * @type {{}}
+ */
+var topicLatestRevisions = {};
 /**
  * A mapping of topic IDs to the section elements
  * @type {{}}
@@ -359,6 +374,7 @@ function addOverlayIcons(topicId, RoleCreatePara) {
         createMojoPopover(topicId, bubbleDiv);
         createJBossPopover(topicId, bubbleDiv);
         createPnTPopover(topicId, bubbleDiv);
+        createDuplicatedTopicPopover(topicId, bubbleDiv);
     }
 }
 
@@ -455,6 +471,99 @@ function createPnTPopover(topicId, parent) {
     };
 
     setupEvents(linkDiv, popover);
+}
+
+function createDuplicatedTopicPopover(topicId, parent) {
+    var linkDiv = createIcon("duplicate", topicId, 24798);
+
+    parent.appendChild(linkDiv);
+
+    var popover = createPopover("Duplicate Topics", topicId);
+    document.body.appendChild(popover);
+
+    dupTopicsCache[topicId] = {popover: popover};
+
+    popover.popoverContent.innerHTML = '<p>This popover displays topics that are at least 50% similar to this topic.</p>';
+
+    linkDiv.onmouseover=function(){
+        openPopover(popover, linkDiv);
+
+        if (!dupTopicsCache[topicId].data) {
+            var similarTopicsUrl = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topics/get/json/query;minHash=" + topicId + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
+            jQuery.getJSON(similarTopicsUrl, function(popover) {
+                return function(data){
+                    if (!dupTopicsCache[topicId].data) {
+                        dupTopicsCache[topicId].data = [];
+                    }
+
+                    data.items.sort(function(a, b){
+                        if (a.item.revision < b.item.revision) {
+                            return 1;
+                        }
+                        if (a.item.revision == b.item.revision) {
+                            return 0;
+                        }
+                        return -1;
+                    });
+
+                    for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
+                        dupTopicsCache[topicId].data.push(data.items[topicIndex].item);
+                    }
+
+                    updateCount(topicId + "duplicateIcon", dupTopicsCache[topicId].data.length);
+                    renderDuplicatedTopic(topicId);
+                }
+            }(popover));
+        } else {
+            renderDuplicatedTopic(topicId);
+        }
+    };
+
+    setupEvents(linkDiv, popover);
+}
+
+function renderDuplicatedTopic(topicId) {
+
+    jQuery.getJSON( SERVER + "/topic/get/json/" + topicId, function(topic){
+        function addThisTopic() {
+            var container = document.createElement("div");
+            jQuery(container).text("THIS TOPIC " + topicId + " rev: " + topic.revision + " - " + topic.title);
+            dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
+        }
+
+        dupTopicsCache[topicId].popover.popoverContent.innerHTML = '<p>No duplicate topics found.</p>';
+
+        if (dupTopicsCache[topicId].data) {
+            var foundPlaceForThisTopic = false;
+            if (dupTopicsCache[topicId].data.length != 0) {
+                dupTopicsCache[topicId].popover.popoverContent.innerHTML = '<p>Duplicated topics are listed in descending order by revision number.\
+                This means that the most recently edited topics are listed first. </p>\
+                <p>The listing for this topic is prefixed with "THIS TOPIC". Topics above this topic have been edited more recently, and may contain content that can be merged into this topic.</p>';
+
+                for (var index = 0, count = dupTopicsCache[topicId].data.length; index < count; ++index) {
+
+                    var dupTopic =  dupTopicsCache[topicId].data[index];
+
+                    if (!foundPlaceForThisTopic && dupTopic.revision < topic.revision) {
+                        foundPlaceForThisTopic = true;
+                        addThisTopic();
+                    }
+
+                    var container = document.createElement("div");
+                    var link = document.createElement("a");
+                    container.appendChild(link);
+
+                    jQuery(link).text(dupTopic.id + " rev: " + dupTopic.revision + " - " + dupTopic.title);
+                    link.setAttribute("href", 'http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + dupTopic.id);
+                    dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
+                }
+
+                if (!foundPlaceForThisTopic) {
+                    addThisTopic();
+                }
+            }
+        }
+    });
 }
 
 function createMojoPopover(topicId, parent) {
@@ -1220,7 +1329,7 @@ function getTopicNodes(specId, topics, index, count) {
     if (index < topics.length) {
         var topic = topics[index];
         var topicNodesUrl = SERVER + "/contentspecnodes/get/json/query;csNodeEntityId=" + topic.id + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpec%22%7D%7D%5D%7D%5D%7D%0A%0A";
-        $.getJSON(topicNodesUrl, function(topicNodeData) {
+        jQuery.getJSON(topicNodesUrl, function(topicNodeData) {
             var newerTopicRevisions = [];
             for (var topicNodeIndex = 0, topicNodeCount = topicNodeData.items.length; topicNodeIndex < topicNodeCount; ++topicNodeIndex) {
                 var topicNode = topicNodeData.items[topicNodeIndex].item;
@@ -1254,7 +1363,8 @@ function getTopicNodes(specId, topics, index, count) {
             getTopicNodes(specId, topics, ++index, count);
         });
     } else {
-        $('#topicsUpdatedInOtherSpecs').append($('<span class="badge pull-right">' + count + '</span>'));
+        jQuery("#topicsUpdatedInOtherSpecsBadge").remove();
+        jQuery('#topicsUpdatedInOtherSpecs').append($('<span id="topicsUpdatedInOtherSpecsBadge" class="badge pull-right">' + count + '</span>'));
     }
 }
 
@@ -1329,48 +1439,56 @@ function getModifiedTopics(specId) {
             thirdPass(false, true);
 
             // add the results to the menu
+            jQuery("#topicsAddedSince1DayBadge").remove();
             $('#topicsAddedIn1Day').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.day].added.length + '</span>'));
             for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.day].added.length; topicIndex < topicCount; ++topicIndex) {
                 var topic = specRevisionCache[specRevisionCache.day].added[topicIndex];
                 $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1DayItems"));
             }
 
+            jQuery("#topicsAddedSince1WeekBadge").remove();
             $('#topicsAddedIn1Week').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.week].added.length + '</span>'));
             for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.week].added.length; topicIndex < topicCount; ++topicIndex) {
                 var topic = specRevisionCache[specRevisionCache.week].added[topicIndex];
                 $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1WeekItems"));
             }
 
+            jQuery("#topicsAddedSince1MonthBadge").remove();
             $('#topicsAddedIn1Month').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.month].added.length + '</span>'));
             for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.month].added.length; topicIndex < topicCount; ++topicIndex) {
                 var topic = specRevisionCache[specRevisionCache.month].added[topicIndex];
                 $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1MonthItems"));
             }
 
+            jQuery("#topicsAddedSince1YearBadge").remove();
             $('#topicsAddedIn1Year').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.year].added.length + '</span>'));
             for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.year].added.length; topicIndex < topicCount; ++topicIndex) {
                 var topic = specRevisionCache[specRevisionCache.year].added[topicIndex];
                 $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1YearItems"));
             }
 
+            jQuery("#topicsRemovedIn1DayBadge").remove();
             $('#topicsRemovedIn1Day').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.day].removed.length + '</span>'));
             for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.day].removed.length; topicIndex < topicCount; ++topicIndex) {
                 var topic = specRevisionCache[specRevisionCache.day].removed[topicIndex];
                 $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1DayItems"));
             }
 
+            jQuery("#topicsRemovedIn1WeekBadge").remove();
             $('#topicsRemovedIn1Week').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.week].removed.length + '</span>'));
             for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.week].removed.length; topicIndex < topicCount; ++topicIndex) {
                 var topic = specRevisionCache[specRevisionCache.week].removed[topicIndex];
                 $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1WeekItems"));
             }
 
+            jQuery("#topicsRemovedIn1MonthBadge").remove();
             $('#topicsRemovedIn1Month').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.month].removed.length + '</span>'));
             for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.month].removed.length; topicIndex < topicCount; ++topicIndex) {
                 var topic = specRevisionCache[specRevisionCache.month].removed[topicIndex];
                 $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1MonthItems"));
             }
 
+            jQuery("#topicsRemovedIn1YearBadge").remove();
             $('#topicsRemovedIn1Year').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.year].removed.length + '</span>'));
             for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.year].removed.length; topicIndex < topicCount; ++topicIndex) {
                 var topic = specRevisionCache[specRevisionCache.year].removed[topicIndex];
@@ -1857,7 +1975,7 @@ function buildMenu() {
 						<li data-pressgangtopic="24792" style="background-color: white"><a href="javascript:hideAllMenus(); topicsRemovedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">Topics Removed In</a></li>\
 						<li data-pressgangtopic="24800" style="background-color: white"><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">Licenses</a></li>\
 						<li data-pressgangtopic="24787" style="background-color: white"><a id="bugzillaBugs" href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">Bugzilla Bugs</a></li>\
-						<li data-pressgangtopic="24789" style="background-color: white"><a id="topicsUpdatedInOtherSpecs" href="javascript:hideAllMenus(); topicsUpdatedInOtherSpecs.show(); localStorage.setItem(\'lastMenu\', \'topicsUpdatedInOtherSpecs\');">Updated Topics</a></li>\
+						<li data-pressgangtopic="24789" style="background-color: white"><a id="topicsUpdatedInOtherSpecs" href="javascript:hideAllMenus(); topicsUpdatedInOtherSpecs.show(); localStorage.setItem(\'lastMenu\', \'topicsUpdatedInOtherSpecs\');">Updated Topics<span id="topicsUpdatedInOtherSpecsBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a id="spellingErrors" href="javascript:hideAllMenus(); spellingErrors.show(); localStorage.setItem(\'lastMenu\', \'spellingErrors\');">Spelling Errors</a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a id="doubledWordsErrors" href="javascript:hideAllMenus(); doubledWords.show(); localStorage.setItem(\'lastMenu\', \'doubledWords\');">Doubled Words</a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a href="' + BUG_LINK + '&cf_build_id=Content%20Spec%20ID:%20' + SPEC_ID + '">Report a bug</a></li>\
@@ -1924,16 +2042,17 @@ function buildMenu() {
     $(document.body).append(topicsUpdatedInOtherSpecs);
     sideMenus.push(topicsUpdatedInOtherSpecs);
 
+
 	topicsAddedSince = $('\
 		<div data-pressgangtopic="24794" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics Added In</div>\
 				<div id="topicsAddedSincePanel" class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li ><a id="topicsAddedIn1Day" href="javascript:hideAllMenus(); topicsAddedSince1Day.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Day\');"><div style="background-image: url(/images/history-blue.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Day</a></li>\
-						<li ><a id="topicsAddedIn1Week" href="javascript:hideAllMenus(); topicsAddedSince1Week.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Week\');"><div style="background-image: url(/images/history-green.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Week</a></li>\
-						<li ><a id="topicsAddedIn1Month" href="javascript:hideAllMenus(); topicsAddedSince1Month.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Month\');"><div style="background-image: url(/images/history-yellow.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Month</a></li>\
-						<li ><a id="topicsAddedIn1Year" href="javascript:hideAllMenus(); topicsAddedSince1Year.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Year\');"><div style="background-image: url(/images/history-orange.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Year</a></li>\
+						<li ><a id="topicsAddedIn1Day" href="javascript:hideAllMenus(); topicsAddedSince1Day.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Day\');"><div style="background-image: url(/images/history-blue.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Day<span id="topicsAddedSince1DayBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
+						<li ><a id="topicsAddedIn1Week" href="javascript:hideAllMenus(); topicsAddedSince1Week.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Week\');"><div style="background-image: url(/images/history-green.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Week<span id="topicsAddedSince1WeekBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
+						<li ><a id="topicsAddedIn1Month" href="javascript:hideAllMenus(); topicsAddedSince1Month.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Month\');"><div style="background-image: url(/images/history-yellow.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Month<span id="topicsAddedSince1MonthBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
+						<li ><a id="topicsAddedIn1Year" href="javascript:hideAllMenus(); topicsAddedSince1Year.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Year\');"><div style="background-image: url(/images/history-orange.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Year<span id="topicsAddedSince1YearBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -2003,10 +2122,10 @@ function buildMenu() {
 				<div id="topicsRemovedSincePanel" class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li ><a id="topicsRemovedIn1Day" href="javascript:hideAllMenus(); topicsRemovedSince1Day.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince1Day\');"><div style="background-image: url(/images/history-blue.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Day</a></li>\
-						<li ><a id="topicsRemovedIn1Week" href="javascript:hideAllMenus(); topicsRemovedSince1Week.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince1Week\');"><div style="background-image: url(/images/history-green.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Week</a></li>\
-						<li ><a id="topicsRemovedIn1Month" href="javascript:hideAllMenus(); topicsRemovedSince1Month.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince1Month\');"><div style="background-image: url(/images/history-yellow.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Month</a></li>\
-						<li ><a id="topicsRemovedIn1Year" href="javascript:hideAllMenus(); topicsRemovedSince1Year.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince1Year\');"><div style="background-image: url(/images/history-orange.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Year</a></li>\
+						<li ><a id="topicsRemovedIn1Day" href="javascript:hideAllMenus(); topicsRemovedSince1Day.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince1Day\');"><div style="background-image: url(/images/history-blue.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Day<span id="topicsRemovedIn1DayBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
+						<li ><a id="topicsRemovedIn1Week" href="javascript:hideAllMenus(); topicsRemovedSince1Week.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince1Week\');"><div style="background-image: url(/images/history-green.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Week<span id="topicsRemovedIn1WeekBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
+						<li ><a id="topicsRemovedIn1Month" href="javascript:hideAllMenus(); topicsRemovedSince1Month.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince1Month\');"><div style="background-image: url(/images/history-yellow.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Month<span id="topicsRemovedIn1MonthBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
+						<li ><a id="topicsRemovedIn1Year" href="javascript:hideAllMenus(); topicsRemovedSince1Year.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince1Year\');"><div style="background-image: url(/images/history-orange.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Year<span id="topicsRemovedIn1YearBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -2710,6 +2829,8 @@ function checkSpellingErrors(topic) {
     }
 }
 
+
+
 /**
  * The side menus require various information about topics and specs. This function is where
  * we pull down this information.
@@ -2723,162 +2844,222 @@ function getInfoFromREST() {
     var specId = getSpecIdFromURL();
     if (specId) {
         var topicsUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=0,9,10;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
-        jQuery.getJSON(topicsUrl, function(data) {
+        jQuery.getJSON(topicsUrl, function(topicNodes) {
+            getRevisionInfoFromREST(specId, topicNodes, 0);
+        });
+    }
+}
 
-            function getTopic(index, topics) {
-                if (index < topics.items.length) {
+function getTopicDetailsInBatches(specId, topicNodes, index) {
+    if (index < topicNodes.items.length) {
 
-                    jQuery("#spellingErrorsBadge").remove();
-                    jQuery("#doubledWordsErrorsBadge").remove();
-                    jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (' + (index / topics.items.length * 100).toFixed(2) + '% complete)</span>'));
-                    jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (' + (index / topics.items.length * 100).toFixed(2) + '% complete)</span>'));
+        jQuery("#spellingErrorsBadge").remove();
+        jQuery("#doubledWordsErrorsBadge").remove();
+        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Pass 2 ' + (index / topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
+        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Pass 2 ' + (index / topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
 
-                    // make a note of the topic IDs and revisions
-                    var topicDetailsMap = {};
-                    // the list of topic ids to send tp the query url
-                    var topicIdList = "";
+        // the list of topic ids to send tp the query url
+        var topicIdList = "";
 
-                    for (var topicIndex = index; topicIndex < index + TOPIC_BATCH_SIZE && topicIndex < data.items.length; ++topicIndex) {
-                        var topicNode = data.items[topicIndex].item;
+        for (var topicIndex = index; topicIndex < index + TOPIC_BATCH_SIZE && topicIndex < topicNodes.items.length; ++topicIndex) {
+            var topicNode = topicNodes.items[topicIndex].item;
 
-                        if (topicIdList.length != 0) {
-                            topicIdList += ",";
-                        }
-                        topicIdList += topicNode.entityId;
-                        topicDetailsMap[topicNode.entityId] = topicNode.entityRevision;
+            if (topicIdList.length != 0) {
+                topicIdList += ",";
+            }
+            topicIdList += topicNode.entityId;
+        }
+
+        // for each topic we need the latest revision, and the specific revision included in the spec (if the revision is defined)
+        var topicUrl = BACKGROUND_QUERY_PREFIX + topicIdList + BACKGROUND_QUERY_POSTFIX;
+        jQuery.getJSON(topicUrl, function(expandedTopics) {
+
+            for (var topicIndex = 0, topicCount = expandedTopics.items.length; topicIndex < topicCount; ++topicIndex) {
+
+                var topicNode = topicNodes.items[topicIndex].item;
+                var topic = expandedTopics.items[topicIndex].item;
+
+                if (!topicNode.entityRevision) {
+                    checkSpellingErrors(topic);
+                }
+
+                if (!topicLatestRevisions[topic.id]){
+                    topicLatestRevisions[topic.id] = topic.revision;
+                }
+
+                if (!topicNames[topic.id]) {
+                    topicNames[topic.id] = topic.title;
+                }
+
+                // set the description
+                if (descriptionCache[topic.id]) {
+                    descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
+                }
+
+                // set the revisions
+                if (historyCache[topic.id]) {
+                    historyCache[topic.id].data = [];
+                    for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
+                        var revision = topic.revisions.items[revisionIndex].item;
+                        historyCache[topic.id].data.push({
+                            revision: revision.revision,
+                            message: revision.logDetails.message,
+                            lastModified: revision.lastModified});
                     }
 
-                    // for each topic we need the latest revision, and the specific revision included in the spec (if the revision is defined)
-                    var topicUrl = BACKGROUND_QUERY_PREFIX + topicIdList + BACKGROUND_QUERY_POSTFIX;
-                    jQuery.getJSON(topicUrl, function(index, topicDetailsMap) {
-                        return function(expandedTopics) {
+                    updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
+                    updateHistoryIcon(topic.id, topic.title);
+                }
 
-                            for (var topicIndex = 0, topicCount = expandedTopics.items.length; topicIndex < topicCount; ++topicIndex) {
-
-                                var topic = expandedTopics.items[topicIndex].item;
-
-                                if (!topicDetailsMap[topic.id]) {
-                                    checkSpellingErrors(topic);
-                                }
-
-                                if (!topicNames[topic.id]) {
-                                    topicNames[topic.id] = topic.title;
-                                }
-
-                                // set the description
-                                if (descriptionCache[topic.id]) {
-                                    descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
-                                }
-
-                                // set the revisions
-                                if (historyCache[topic.id]) {
-                                    historyCache[topic.id].data = [];
-                                    for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
-                                        var revision = topic.revisions.items[revisionIndex].item;
-                                        historyCache[topic.id].data.push({
-                                            revision: revision.revision,
-                                            message: revision.logDetails.message,
-                                            lastModified: revision.lastModified});
-                                    }
-
-                                    updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
-                                    updateHistoryIcon(topic.id, topic.title);
-                                }
-
-                                // set the tags
-                                if (tagsCache[topic.id]) {
-                                    tagsCache[topic.id].data = [];
-                                    for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
-                                        var tag = topic.tags.items[tagIndex].item;
-                                        tagsCache[topic.id].data.push({
-                                            name: tag.name,
-                                            id: tag.id
-                                        });
-                                    }
-
-                                    updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
-                                }
-
-                                // set the urls
-                                if (urlCache[topic.id]) {
-                                    urlCache[topic.id].data = [];
-
-                                    var match = null;
-                                    while (match = COMMENT_RE.exec(topic.xml)) {
-                                        var comment = match[1];
-
-                                        var match2 = null;
-                                        while (match2 = URL_RE.exec(comment)) {
-                                            var url = match2[0];
-                                            urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
-                                        }
-                                    }
-
-                                    for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
-                                        var url = topic.sourceUrls_OTM.items[urlsIndex].item;
-                                        urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
-                                    }
-
-                                    updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
-                                }
-
-                                // set the specs
-                                if (specCache[topic.id]) {
-                                    specCache[topic.id].data = [];
-                                    var specs = {};
-                                    for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
-                                        var spec = topic.contentSpecs_OTM.items[specIndex].item;
-                                        if (!specs[spec.id]) {
-                                            var specDetails = {id: spec.id, title: "", product: "", version: ""};
-                                            for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
-                                                var child = spec.children_OTM.items[specChildrenIndex].item;
-                                                if (child.title == "Product") {
-                                                    specDetails.product = child.additionalText;
-                                                } else if (child.title == "Version") {
-                                                    specDetails.version = child.additionalText;
-                                                } if (child.title == "Title") {
-                                                    specDetails.title = child.additionalText;
-                                                }
-                                            }
-                                            specs[spec.id] = specDetails;
-                                        }
-                                    }
-
-                                    for (spec in specs) {
-                                        specCache[topic.id].data.push(specs[spec]);
-                                    }
-
-                                    updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
-                                }
-                            }
-
-                            getTopic(index + TOPIC_BATCH_SIZE, topics);
-                        }
-                    }(index, topicDetailsMap));
-
-                    // get the specific topic revision
-                    if (topicNode.entityRevision) {
-                        var topicRevisionUrl = SERVER + "/topic/get/json/" + topicNode.entityId + "/r/" + topicNode.entityRevision;
-                        jQuery.getJSON(topicRevisionUrl, function(data) {
-                            checkSpellingErrors(data);
+                // set the tags
+                if (tagsCache[topic.id]) {
+                    tagsCache[topic.id].data = [];
+                    for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
+                        var tag = topic.tags.items[tagIndex].item;
+                        tagsCache[topic.id].data.push({
+                            name: tag.name,
+                            id: tag.id
                         });
                     }
-                } else {
-                    jQuery("#spellingErrorsBadge").remove();
-                    jQuery("#doubledWordsErrorsBadge").remove();
-                    jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + '</span>'));
-                    jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + '</span>'));
 
-                    console.log("Retrieved all topic data");
+                    updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
+                }
 
-                    buildTopicEditedInChart();
+                // set the urls
+                if (urlCache[topic.id]) {
+                    urlCache[topic.id].data = [];
 
-                    getTopicNodes(specId, topics, 0, 0);
+                    var match = null;
+                    while (match = COMMENT_RE.exec(topic.xml)) {
+                        var comment = match[1];
+
+                        var match2 = null;
+                        while (match2 = URL_RE.exec(comment)) {
+                            var url = match2[0];
+                            urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
+                        }
+                    }
+
+                    for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
+                        var url = topic.sourceUrls_OTM.items[urlsIndex].item;
+                        urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
+                    }
+
+                    updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
+                }
+
+                // set the specs
+                if (specCache[topic.id]) {
+                    specCache[topic.id].data = [];
+                    var specs = {};
+                    for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
+                        var spec = topic.contentSpecs_OTM.items[specIndex].item;
+                        if (!specs[spec.id]) {
+                            var specDetails = {id: spec.id, title: "", product: "", version: ""};
+                            for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
+                                var child = spec.children_OTM.items[specChildrenIndex].item;
+                                if (child.title == "Product") {
+                                    specDetails.product = child.additionalText;
+                                } else if (child.title == "Version") {
+                                    specDetails.version = child.additionalText;
+                                } if (child.title == "Title") {
+                                    specDetails.title = child.additionalText;
+                                }
+                            }
+                            specs[spec.id] = specDetails;
+                        }
+                    }
+
+                    for (spec in specs) {
+                        specCache[topic.id].data.push(specs[spec]);
+                    }
+
+                    updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
                 }
             }
 
-            getTopic(0, data);
+            getTopicDetailsInBatches(specId, topicNodes, index + TOPIC_BATCH_SIZE);
         });
+    } else {
+        jQuery("#spellingErrorsBadge").remove();
+        jQuery("#doubledWordsErrorsBadge").remove();
+        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + '</span>'));
+        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + '</span>'));
+
+        console.log("Retrieved all topic data");
+
+        buildTopicEditedInChart();
+
+        getTopicNodes(specId, topicNodes, 0, 0);
+    }
+}
+
+/**
+ * Once all the information from the latest versions of the topics is found, we go through and
+ * get the details on the topic revisions
+ */
+function getRevisionInfoFromREST(specId, topicNodes, index) {
+     if (index <  topicNodes.items.length) {
+
+        jQuery("#spellingErrorsBadge").remove();
+        jQuery("#doubledWordsErrorsBadge").remove();
+        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Step 1 ' + (index /  topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
+        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Step 1 ' + (index /  topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
+
+        var topicNode = topicNodes.items[index].item;
+        var topicID = topicNode.entityId;
+        var topicRevision = topicNode.entityRevision;
+
+        if (topicRevision) {
+            var topicRevisionUrl = SERVER + "/topic/get/json/" + topicID + "/r/" + topicRevision;
+            jQuery.getJSON(topicRevisionUrl, function(data) {
+                checkSpellingErrors(data);
+                getRevisionInfoFromREST(specId, topicNodes, ++index);
+            });
+        } else {
+            getRevisionInfoFromREST(specId, topicNodes, ++index);
+        }
+    } else {
+         jQuery("#spellingErrorsBadge").remove();
+         jQuery("#doubledWordsErrorsBadge").remove();
+         jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Pass 2 0%)</span>'));
+         jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Pass 2 0%)</span>'));
+
+
+         getDuplicatedTopics(specId, topicNodes, 0);
+    }
+}
+
+function getDuplicatedTopics(specId, topicNodes, index) {
+    if (index <  topicNodes.items.length) {
+        var topicNode = topicNodes.items[index].item;
+        var topicID = topicNode.entityId;
+        //var similarTopicsUrl = SERVER + "/topics/get/json/query;minHash=" + topicID + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
+        var similarTopicsUrl = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topics/get/json/query;minHash=" + topicID + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
+        jQuery.getJSON(similarTopicsUrl, function(data){
+            if (!dupTopicsCache[topicID].data) {
+                dupTopicsCache[topicID].data = [];
+            }
+
+            data.items.sort(function(a, b){
+                if (a.item.revision < b.item.revision) {
+                    return 1;
+                }
+                if (a.item.revision == b.item.revision) {
+                    return 0;
+                }
+                return -1;
+            });
+
+            for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
+                dupTopicsCache[topicID].data.push(data.items[topicIndex].item);
+            }
+
+            updateCount(topicID + "duplicateIcon", dupTopicsCache[topicID].data.length);
+            getDuplicatedTopics(specId, topicNodes, ++index);
+        });
+    } else {
+        getTopicDetailsInBatches(specId, topicNodes, 0);
     }
 }
 
