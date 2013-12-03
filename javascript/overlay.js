@@ -483,12 +483,12 @@ function createDuplicatedTopicPopover(topicId, parent) {
 
     dupTopicsCache[topicId] = {popover: popover};
 
-    popover.popoverContent.innerHTML = '<p>This popover displays topics that are at least 50% similar to this topic.</p>'
+    popover.popoverContent.innerHTML = '<p>This popover displays topics that are at least 50% similar to this topic.</p><p>It can take a minute or two for the list of duplicate topics to be populated.</p>'
 
     linkDiv.onmouseover=function(){
         openPopover(popover, linkDiv);
 
-        if (!dupTopicsCache[topicId].data) {
+        /*if (!dupTopicsCache[topicId].data) {
             var similarTopicsUrl = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topics/get/json/query;minHash=" + topicId + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
             jQuery.getJSON(similarTopicsUrl, function(popover) {
                 return function(data){
@@ -510,11 +510,15 @@ function createDuplicatedTopicPopover(topicId, parent) {
                         dupTopicsCache[topicId].data.push(data.items[topicIndex].item);
                     }
 
-                    updateCount(topicID + "duplicateIcon", dupTopicsCache[topicId].data.length);
+                    updateCount(topicId + "duplicateIcon", dupTopicsCache[topicId].data.length);
                     renderDuplicatedTopic(topicId);
                 }
             }(popover));
         } else {
+            renderDuplicatedTopic(topicId);
+        }*/
+
+        if (dupTopicsCache[topicId].data) {
             renderDuplicatedTopic(topicId);
         }
     };
