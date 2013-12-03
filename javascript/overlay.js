@@ -528,47 +528,46 @@ function createDuplicatedTopicPopover(topicId, parent) {
 
 function renderDuplicatedTopic(topicId) {
 
-    function addThisTopic() {
-        var latestRevision = topicLatestRevisions[topicId];
-        var title = topicNames[topicId];
-        var container = document.createElement("div");
-        $(container).text("THIS TOPIC " + topicId + " rev: " + latestRevision + " - " + title);
-        dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
-    }
+    jQuery.getJSON( SERVER + "/topic/get/json/" + topicId, function(topic){
+        function addThisTopic() {
+            var container = document.createElement("div");
+            jQuery(container).text("THIS TOPIC " + topicId + " rev: " + topic.revision + " - " + topic.title);
+            dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
+        }
 
-    dupTopicsCache[topicId].popover.popoverContent.innerHTML = '<p>No duplicate topics found.</p>';
+        dupTopicsCache[topicId].popover.popoverContent.innerHTML = '<p>No duplicate topics found.</p>';
 
-    if (dupTopicsCache[topicId].data) {
-        var latestRevision = topicLatestRevisions[topicId];
-        var foundPlaceForThisTopic = false;
-        if (dupTopicsCache[topicId].data.length != 0) {
-            dupTopicsCache[topicId].popover.popoverContent.innerHTML = '<p>Duplicated topics are listed in descending order by revision number.\
+        if (dupTopicsCache[topicId].data) {
+            var foundPlaceForThisTopic = false;
+            if (dupTopicsCache[topicId].data.length != 0) {
+                dupTopicsCache[topicId].popover.popoverContent.innerHTML = '<p>Duplicated topics are listed in descending order by revision number.\
                 This means that the most recently edited topics are listed first. </p>\
                 <p>The listing for this topic is prefixed with "THIS TOPIC". Topics above this topic have been edited more recently, and may contain content that can be merged into this topic.</p>';
 
-            for (var index = 0, count = dupTopicsCache[topicId].data.length; index < count; ++index) {
+                for (var index = 0, count = dupTopicsCache[topicId].data.length; index < count; ++index) {
 
-                var dupTopic =  dupTopicsCache[topicId].data[index];
+                    var dupTopic =  dupTopicsCache[topicId].data[index];
 
-                if (!foundPlaceForThisTopic && dupTopic.revision < latestRevision) {
-                    foundPlaceForThisTopic = true;
-                    addThisTopic();
+                    if (!foundPlaceForThisTopic && dupTopic.revision < topic.revision) {
+                        foundPlaceForThisTopic = true;
+                        addThisTopic();
+                    }
+
+                    var container = document.createElement("div");
+                    var link = document.createElement("a");
+                    container.appendChild(link);
+
+                    jQuery(link).text(dupTopic.id + " rev: " + dupTopic.revision + " - " + dupTopic.title);
+                    link.setAttribute("href", 'http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + dupTopic.id);
+                    dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
                 }
 
-                var container = document.createElement("div");
-                var link = document.createElement("a");
-                container.appendChild(link);
-
-                $(link).text(dupTopic.id + " rev: " + dupTopic.revision + " - " + dupTopic.title);
-                link.setAttribute("href", 'http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + dupTopic.id);
-                dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
-            }
-
-            if (!foundPlaceForThisTopic) {
-                addThisTopic();
+                if (!foundPlaceForThisTopic) {
+                    addThisTopic();
+                }
             }
         }
-    }
+    });
 }
 
 function createMojoPopover(topicId, parent) {
