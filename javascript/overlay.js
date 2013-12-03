@@ -1268,7 +1268,7 @@ function getTopicNodes(specId, topics, index, count) {
     if (index < topics.length) {
         var topic = topics[index];
         var topicNodesUrl = SERVER + "/contentspecnodes/get/json/query;csNodeEntityId=" + topic.id + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpec%22%7D%7D%5D%7D%5D%7D%0A%0A";
-        $.getJSON(topicNodesUrl, function(topicNodeData) {
+        jQuery.getJSON(topicNodesUrl, function(topicNodeData) {
             var newerTopicRevisions = [];
             for (var topicNodeIndex = 0, topicNodeCount = topicNodeData.items.length; topicNodeIndex < topicNodeCount; ++topicNodeIndex) {
                 var topicNode = topicNodeData.items[topicNodeIndex].item;
@@ -1302,7 +1302,8 @@ function getTopicNodes(specId, topics, index, count) {
             getTopicNodes(specId, topics, ++index, count);
         });
     } else {
-        $('#topicsUpdatedInOtherSpecs').append($('<span class="badge pull-right">' + count + '</span>'));
+        jQuery("#topicsUpdatedInOtherSpecsBadge").remove();
+        jQuery('#topicsUpdatedInOtherSpecs').append($('<span id="topicsUpdatedInOtherSpecsBadge" class="badge pull-right">' + count + '</span>'));
     }
 }
 
@@ -1905,7 +1906,7 @@ function buildMenu() {
 						<li data-pressgangtopic="24792" style="background-color: white"><a href="javascript:hideAllMenus(); topicsRemovedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">Topics Removed In</a></li>\
 						<li data-pressgangtopic="24800" style="background-color: white"><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">Licenses</a></li>\
 						<li data-pressgangtopic="24787" style="background-color: white"><a id="bugzillaBugs" href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">Bugzilla Bugs</a></li>\
-						<li data-pressgangtopic="24789" style="background-color: white"><a id="topicsUpdatedInOtherSpecs" href="javascript:hideAllMenus(); topicsUpdatedInOtherSpecs.show(); localStorage.setItem(\'lastMenu\', \'topicsUpdatedInOtherSpecs\');">Updated Topics</a></li>\
+						<li data-pressgangtopic="24789" style="background-color: white"><a id="topicsUpdatedInOtherSpecs" href="javascript:hideAllMenus(); topicsUpdatedInOtherSpecs.show(); localStorage.setItem(\'lastMenu\', \'topicsUpdatedInOtherSpecs\');">Updated Topics<span id="topicsUpdatedInOtherSpecsBadge" class="badge pull-right">...</span></a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a id="spellingErrors" href="javascript:hideAllMenus(); spellingErrors.show(); localStorage.setItem(\'lastMenu\', \'spellingErrors\');">Spelling Errors</a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a id="doubledWordsErrors" href="javascript:hideAllMenus(); doubledWords.show(); localStorage.setItem(\'lastMenu\', \'doubledWords\');">Doubled Words</a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a href="' + BUG_LINK + '&cf_build_id=Content%20Spec%20ID:%20' + SPEC_ID + '">Report a bug</a></li>\
@@ -1971,6 +1972,7 @@ function buildMenu() {
 		</div>')
     $(document.body).append(topicsUpdatedInOtherSpecs);
     sideMenus.push(topicsUpdatedInOtherSpecs);
+
 
 	topicsAddedSince = $('\
 		<div data-pressgangtopic="24794" class="panel panel-default pressgangMenu">\
@@ -2773,6 +2775,9 @@ function getInfoFromREST() {
         var topicsUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=0,9,10;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
         jQuery.getJSON(topicsUrl, function(data) {
 
+            // make a note of the topic IDs and revisions
+            var topicDetailsMap = {};
+
             function getTopic(index, topics) {
                 if (index < topics.items.length) {
 
@@ -2781,8 +2786,6 @@ function getInfoFromREST() {
                     jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Pass 1 ' + (index / topics.items.length * 100).toFixed(2) + '%)</span>'));
                     jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Pass 1 ' + (index / topics.items.length * 100).toFixed(2) + '%)</span>'));
 
-                    // make a note of the topic IDs and revisions
-                    var topicDetailsMap = {};
                     // the list of topic ids to send tp the query url
                     var topicIdList = "";
 
@@ -2798,113 +2801,109 @@ function getInfoFromREST() {
 
                     // for each topic we need the latest revision, and the specific revision included in the spec (if the revision is defined)
                     var topicUrl = BACKGROUND_QUERY_PREFIX + topicIdList + BACKGROUND_QUERY_POSTFIX;
-                    jQuery.getJSON(topicUrl, function(index, topicDetailsMap) {
-                        return function(expandedTopics) {
+                    jQuery.getJSON(topicUrl, function(expandedTopics) {
 
-                            for (var topicIndex = 0, topicCount = expandedTopics.items.length; topicIndex < topicCount; ++topicIndex) {
+                        for (var topicIndex = 0, topicCount = expandedTopics.items.length; topicIndex < topicCount; ++topicIndex) {
 
-                                var topic = expandedTopics.items[topicIndex].item;
+                            var topic = expandedTopics.items[topicIndex].item;
 
-                                //if (!topicDetailsMap[topic.id]) {
-                                    checkSpellingErrors(topic);
-                                //}
+                            //if (!topicDetailsMap[topic.id]) {
+                                checkSpellingErrors(topic);
+                            //}
 
-                                if (!topicNames[topic.id]) {
-                                    topicNames[topic.id] = topic.title;
-                                }
-
-                                // set the description
-                                if (descriptionCache[topic.id]) {
-                                    descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
-                                }
-
-                                // set the revisions
-                                if (historyCache[topic.id]) {
-                                    historyCache[topic.id].data = [];
-                                    for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
-                                        var revision = topic.revisions.items[revisionIndex].item;
-                                        historyCache[topic.id].data.push({
-                                            revision: revision.revision,
-                                            message: revision.logDetails.message,
-                                            lastModified: revision.lastModified});
-                                    }
-
-                                    updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
-                                    updateHistoryIcon(topic.id, topic.title);
-                                }
-
-                                // set the tags
-                                if (tagsCache[topic.id]) {
-                                    tagsCache[topic.id].data = [];
-                                    for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
-                                        var tag = topic.tags.items[tagIndex].item;
-                                        tagsCache[topic.id].data.push({
-                                            name: tag.name,
-                                            id: tag.id
-                                        });
-                                    }
-
-                                    updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
-                                }
-
-                                // set the urls
-                                if (urlCache[topic.id]) {
-                                    urlCache[topic.id].data = [];
-
-                                    var match = null;
-                                    while (match = COMMENT_RE.exec(topic.xml)) {
-                                        var comment = match[1];
-
-                                        var match2 = null;
-                                        while (match2 = URL_RE.exec(comment)) {
-                                            var url = match2[0];
-                                            urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
-                                        }
-                                    }
-
-                                    for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
-                                        var url = topic.sourceUrls_OTM.items[urlsIndex].item;
-                                        urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
-                                    }
-
-                                    updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
-                                }
-
-                                // set the specs
-                                if (specCache[topic.id]) {
-                                    specCache[topic.id].data = [];
-                                    var specs = {};
-                                    for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
-                                        var spec = topic.contentSpecs_OTM.items[specIndex].item;
-                                        if (!specs[spec.id]) {
-                                            var specDetails = {id: spec.id, title: "", product: "", version: ""};
-                                            for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
-                                                var child = spec.children_OTM.items[specChildrenIndex].item;
-                                                if (child.title == "Product") {
-                                                    specDetails.product = child.additionalText;
-                                                } else if (child.title == "Version") {
-                                                    specDetails.version = child.additionalText;
-                                                } if (child.title == "Title") {
-                                                    specDetails.title = child.additionalText;
-                                                }
-                                            }
-                                            specs[spec.id] = specDetails;
-                                        }
-                                    }
-
-                                    for (spec in specs) {
-                                        specCache[topic.id].data.push(specs[spec]);
-                                    }
-
-                                    updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
-                                }
+                            if (!topicNames[topic.id]) {
+                                topicNames[topic.id] = topic.title;
                             }
 
-                            getTopic(index + TOPIC_BATCH_SIZE, topics);
+                            // set the description
+                            if (descriptionCache[topic.id]) {
+                                descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
+                            }
+
+                            // set the revisions
+                            if (historyCache[topic.id]) {
+                                historyCache[topic.id].data = [];
+                                for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
+                                    var revision = topic.revisions.items[revisionIndex].item;
+                                    historyCache[topic.id].data.push({
+                                        revision: revision.revision,
+                                        message: revision.logDetails.message,
+                                        lastModified: revision.lastModified});
+                                }
+
+                                updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
+                                updateHistoryIcon(topic.id, topic.title);
+                            }
+
+                            // set the tags
+                            if (tagsCache[topic.id]) {
+                                tagsCache[topic.id].data = [];
+                                for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
+                                    var tag = topic.tags.items[tagIndex].item;
+                                    tagsCache[topic.id].data.push({
+                                        name: tag.name,
+                                        id: tag.id
+                                    });
+                                }
+
+                                updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
+                            }
+
+                            // set the urls
+                            if (urlCache[topic.id]) {
+                                urlCache[topic.id].data = [];
+
+                                var match = null;
+                                while (match = COMMENT_RE.exec(topic.xml)) {
+                                    var comment = match[1];
+
+                                    var match2 = null;
+                                    while (match2 = URL_RE.exec(comment)) {
+                                        var url = match2[0];
+                                        urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
+                                    }
+                                }
+
+                                for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
+                                    var url = topic.sourceUrls_OTM.items[urlsIndex].item;
+                                    urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
+                                }
+
+                                updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
+                            }
+
+                            // set the specs
+                            if (specCache[topic.id]) {
+                                specCache[topic.id].data = [];
+                                var specs = {};
+                                for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
+                                    var spec = topic.contentSpecs_OTM.items[specIndex].item;
+                                    if (!specs[spec.id]) {
+                                        var specDetails = {id: spec.id, title: "", product: "", version: ""};
+                                        for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
+                                            var child = spec.children_OTM.items[specChildrenIndex].item;
+                                            if (child.title == "Product") {
+                                                specDetails.product = child.additionalText;
+                                            } else if (child.title == "Version") {
+                                                specDetails.version = child.additionalText;
+                                            } if (child.title == "Title") {
+                                                specDetails.title = child.additionalText;
+                                            }
+                                        }
+                                        specs[spec.id] = specDetails;
+                                    }
+                                }
+
+                                for (spec in specs) {
+                                    specCache[topic.id].data.push(specs[spec]);
+                                }
+
+                                updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
+                            }
                         }
-                    }(index, topicDetailsMap));
 
-
+                        getTopic(index + TOPIC_BATCH_SIZE, topics);
+                    });
                 } else {
                     getRevisionInfoFromREST(topicDetailsMap, 0);
 
@@ -2926,18 +2925,24 @@ function getInfoFromREST() {
  * get the details on the topic revisions
  */
 function getRevisionInfoFromREST(topicDetailsMap, index) {
-     if (index < topicDetailsMap.keys().length) {
+     if (index <  Object.keys(topicDetailsMap).length) {
 
-        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Step 2 ' + (index / topicDetailsMap.keys().length * 100).toFixed(2) + '%)</span>'));
-        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Step 2 ' + (index / topicDetailsMap.keys().length * 100).toFixed(2) + '%)</span>'));
+         jQuery("#spellingErrorsBadge").remove();
+         jQuery("#doubledWordsErrorsBadge").remove();
+         jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Step 2 ' + (index /  Object.keys(topicDetailsMap).length * 100).toFixed(2) + '%)</span>'));
+        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Step 2 ' + (index /  Object.keys(topicDetailsMap).length * 100).toFixed(2) + '%)</span>'));
 
-        var topicNode = topicDetailsMap[topicDetailsMap.keys()[index]];
-        if (topicNode.entityRevision) {
-            var topicRevisionUrl = SERVER + "/topic/get/json/" + topicNode.entityId + "/r/" + topicNode.entityRevision;
+         var topicID =  Object.keys(topicDetailsMap)[index];
+         var topicRevision = topicDetailsMap[topicID];
+
+        if (topicRevision) {
+            var topicRevisionUrl = SERVER + "/topic/get/json/" + topicID + "/r/" + topicRevision;
             jQuery.getJSON(topicRevisionUrl, function(data) {
                 checkSpellingErrors(data);
                 getRevisionInfoFromREST(topicDetailsMap, ++index);
             });
+        } else {
+            getRevisionInfoFromREST(topicDetailsMap, ++index);
         }
     } else {
 
@@ -2951,19 +2956,19 @@ function getRevisionInfoFromREST(topicDetailsMap, index) {
 }
 
 function getDuplicatedTopics(topicDetailsMap, index) {
-    if (index < topicDetailsMap.keys().length) {
-        var topicNode = topicDetailsMap[topicDetailsMap.keys()[index]];
-        var similarTopicsUrl = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topics/get/json/query;minHash=" + topicNode.entityId + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
+    if (index <  Object.keys(topicDetailsMap).length) {
+        var topicID = Object.keys(topicDetailsMap)[index];
+        var similarTopicsUrl = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topics/get/json/query;minHash=" + topicID + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
         jQuery.getJSON(similarTopicsUrl, function(data){
-            if (!dupTopicsCache[topicNode.entityId].data) {
-                dupTopicsCache[topicNode.entityId].data = [];
+            if (!dupTopicsCache[topicID].data) {
+                dupTopicsCache[topicID].data = [];
             }
 
             for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
-                dupTopicsCache[topicNode.entityId].data.push(data.items[topicIndex].item.id);
+                dupTopicsCache[topicID].data.push(data.items[topicIndex].item.id);
             }
 
-            updateCount(topicNode.entityId + "duplicateIcon", dupTopicsCache[topicNode.entityId].data.length);
+            updateCount(topicID + "duplicateIcon", dupTopicsCache[topicID].data.length);
             getDuplicatedTopics(topicDetailsMap, ++index);
         });
     }
