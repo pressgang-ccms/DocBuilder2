@@ -542,6 +542,10 @@ function renderDuplicatedTopic(topicId) {
         var latestRevision = topicLatestRevisions[topicId];
         var foundPlaceForThisTopic = false;
         if (dupTopicsCache[topicId].data.length != 0) {
+            dupTopicsCache[topicId].popover.popoverContent.innerHTML = '<p>Duplicated topics are listed in descending order by revision number.\
+                This means that the most recently edited topics are listed first. </p>\
+                <p>The listing for this topic is prefixed with "THIS TOPIC". Topics above this topic have been edited more recently, and may contain content that can be merged into this topic.</p>';
+
             for (var index = 0, count = dupTopicsCache[topicId].data.length; index < count; ++index) {
 
                 var dupTopic =  dupTopicsCache[topicId].data[index];
