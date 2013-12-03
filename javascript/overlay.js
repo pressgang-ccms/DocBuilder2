@@ -489,7 +489,7 @@ function createDuplicatedTopicPopover(topicId, parent) {
         openPopover(popover, linkDiv);
 
         if (!dupTopicsCache[topicId].data) {
-            var similarTopicsUrl = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topics/get/json/query;minHash=" + topicId + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
+            var similarTopicsUrl = SERVER + "/topics/get/json/query;minHash=" + topicId + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
             jQuery.getJSON(similarTopicsUrl, function(popover) {
                 return function(data){
                     if (!dupTopicsCache[topicId].data) {
@@ -3034,8 +3034,7 @@ function getDuplicatedTopics(specId, topicNodes, index) {
     if (index <  topicNodes.items.length) {
         var topicNode = topicNodes.items[index].item;
         var topicID = topicNode.entityId;
-        //var similarTopicsUrl = SERVER + "/topics/get/json/query;minHash=" + topicID + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
-        var similarTopicsUrl = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topics/get/json/query;minHash=" + topicID + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
+        var similarTopicsUrl = SERVER + "/topics/get/json/query;minHash=" + topicID + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
         jQuery.getJSON(similarTopicsUrl, function(data){
             if (!dupTopicsCache[topicID].data) {
                 dupTopicsCache[topicID].data = [];
