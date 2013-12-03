@@ -529,6 +529,8 @@ function createDuplicatedTopicPopover(topicId, parent) {
 function renderDuplicatedTopic(topicId) {
 
     function addThisTopic() {
+        var latestRevision = topicLatestRevisions[topicId];
+        var title = topicNames[topicId];
         var container = document.createElement("div");
         $(container).text("THIS TOPIC " + topicId + " rev: " + latestRevision + " - " + title);
         dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
@@ -538,7 +540,6 @@ function renderDuplicatedTopic(topicId) {
 
     if (dupTopicsCache[topicId].data) {
         var latestRevision = topicLatestRevisions[topicId];
-        var title = topicNames[topicId];
         var foundPlaceForThisTopic = false;
         if (dupTopicsCache[topicId].data.length != 0) {
             for (var index = 0, count = dupTopicsCache[topicId].data.length; index < count; ++index) {
