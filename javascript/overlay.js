@@ -204,6 +204,11 @@ var topicIds = [];
  */
 var topicNames = {};
 /**
+ * Maps topic ids to topic revisions;
+ * @type {{}}
+ */
+var topicLatestRevisions = {};
+/**
  * A mapping of topic IDs to the section elements
  * @type {{}}
  */
@@ -495,15 +500,26 @@ function renderDuplicatedTopic(topicId) {
     dupTopicsCache[topicId].popover.popoverContent.innerHTML = '';
 
     if (dupTopicsCache[topicId].data) {
+        var latestRevision = topicLatestRevisions[topicId];
+        var title = topicNames[topicId];
+        var foundPlaceForThisTopic = false;
         for (var index = 0, count = dupTopicsCache[topicId].data.length; index < count; ++index) {
 
             var dupTopic =  dupTopicsCache[topicId].data[index];
+
+            if (!foundPlaceForThisTopic && dupTopic.revision < latestRevision) {
+                foundPlaceForThisTopic = true;
+
+                var container = document.createElement("div");
+                $(container).text("THIS TOPIC " + topicId + " rev: " + latestRevision + " - " + title);
+                dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
+            }
 
             var container = document.createElement("div");
             var link = document.createElement("a");
             container.appendChild(link);
 
-            $(link).text(dupTopic + ": " + dupTopic.title);
+            $(link).text(dupTopic.id + " rev: " + dupTopic.revision + " - " + dupTopic.title);
             link.setAttribute("href", 'http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + dupTopic.id);
             dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
         }
@@ -2820,9 +2836,13 @@ function getInfoFromREST() {
 
                             var topic = expandedTopics.items[topicIndex].item;
 
-                            //if (!topicDetailsMap[topic.id]) {
+                            if (!topicDetailsMap[topic.id]) {
                                 checkSpellingErrors(topic);
-                            //}
+                            }
+
+                            if (!topicLatestRevisions[topic.id]){
+                                topicLatestRevisions[topic.id] = topic.revision;
+                            }
 
                             if (!topicNames[topic.id]) {
                                 topicNames[topic.id] = topic.title;
@@ -2971,11 +2991,22 @@ function getRevisionInfoFromREST(topicDetailsMap, index) {
 function getDuplicatedTopics(topicDetailsMap, index) {
     if (index <  Object.keys(topicDetailsMap).length) {
         var topicID = Object.keys(topicDetailsMap)[index];
+        //var similarTopicsUrl = SERVER + "/topics/get/json/query;minHash=" + topicID + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
         var similarTopicsUrl = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topics/get/json/query;minHash=" + topicID + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
         jQuery.getJSON(similarTopicsUrl, function(data){
             if (!dupTopicsCache[topicID].data) {
                 dupTopicsCache[topicID].data = [];
             }
+
+            data.items.sort(function(a, b){
+                if (a.item.revision < b.item.revision) {
+                    return 1;
+                }
+                if (a.item.revision == b.item.revision) {
+                    return 0;
+                }
+                return -1;
+            });
 
             for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
                 dupTopicsCache[topicID].data.push(data.items[topicIndex].item);
