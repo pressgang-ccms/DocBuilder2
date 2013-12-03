@@ -2980,6 +2980,12 @@ function getRevisionInfoFromREST(specId, topicNodes, index) {
             getRevisionInfoFromREST(specId, topicNodes, ++index);
         }
     } else {
+         jQuery("#spellingErrorsBadge").remove();
+         jQuery("#doubledWordsErrorsBadge").remove();
+         jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Pass 2 0%)</span>'));
+         jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Pass 2 0%)</span>'));
+
+
          getDuplicatedTopics(specId, topicNodes, 0);
     }
 }
