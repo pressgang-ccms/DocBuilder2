@@ -483,7 +483,7 @@ function createDuplicatedTopicPopover(topicId, parent) {
 
     dupTopicsCache[topicId] = {popover: popover};
 
-    popover.popoverContent.innerHTML = '<p>This popover displays topics that are at least 50% similar to this topic.</p><p>It can take a minute or two for the list of duplicate topics to be populated.</p>'
+    popover.popoverContent.innerHTML = '<p>This popover displays topics that are at least 50% similar to this topic.</p>';
 
     linkDiv.onmouseover=function(){
         openPopover(popover, linkDiv);
