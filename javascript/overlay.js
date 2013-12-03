@@ -31,8 +31,11 @@
 
  */
 
-var PROCESSING_MESSAGE = "...";
-
+/**
+ * The message to add to a bage while data is still downloading
+ * @type {string}
+ */
+var PROCESSING_MESSAGE = "Thinking...";
 /**
  * Time to delay the closing of a popover window.
  * @type {number}
