@@ -2789,6 +2789,8 @@ function checkSpellingErrors(topic) {
     }
 }
 
+
+
 /**
  * The side menus require various information about topics and specs. This function is where
  * we pull down this information.
@@ -2802,154 +2804,148 @@ function getInfoFromREST() {
     var specId = getSpecIdFromURL();
     if (specId) {
         var topicsUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=0,9,10;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
-        jQuery.getJSON(topicsUrl, function(data) {
+        jQuery.getJSON(topicsUrl, function(topicNodes) {
+            getRevisionInfoFromREST(topicNodes, 0);
+        });
+    }
+}
 
-            // make a note of the topic IDs and revisions
-            var topicDetailsMap = {};
+function getTopicDetailsInBatches(topicNodes, index) {
+    if (index < topicNodes.items.length) {
 
-            function getTopic(index, topics) {
-                if (index < topics.items.length) {
+        jQuery("#spellingErrorsBadge").remove();
+        jQuery("#doubledWordsErrorsBadge").remove();
+        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Pass 1 ' + (index / topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
+        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Pass 1 ' + (index / topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
 
-                    jQuery("#spellingErrorsBadge").remove();
-                    jQuery("#doubledWordsErrorsBadge").remove();
-                    jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Pass 1 ' + (index / topics.items.length * 100).toFixed(2) + '%)</span>'));
-                    jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Pass 1 ' + (index / topics.items.length * 100).toFixed(2) + '%)</span>'));
+        // the list of topic ids to send tp the query url
+        var topicIdList = "";
 
-                    // the list of topic ids to send tp the query url
-                    var topicIdList = "";
+        for (var topicIndex = index; topicIndex < index + TOPIC_BATCH_SIZE && topicIndex < topicNodes.items.length; ++topicIndex) {
+            var topicNode = topicNodes.items[topicIndex].item;
 
-                    for (var topicIndex = index; topicIndex < index + TOPIC_BATCH_SIZE && topicIndex < data.items.length; ++topicIndex) {
-                        var topicNode = data.items[topicIndex].item;
+            if (topicIdList.length != 0) {
+                topicIdList += ",";
+            }
+            topicIdList += topicNode.entityId;
+        }
 
-                        if (topicIdList.length != 0) {
-                            topicIdList += ",";
-                        }
-                        topicIdList += topicNode.entityId;
-                        topicDetailsMap[topicNode.entityId] = topicNode.entityRevision;
+        // for each topic we need the latest revision, and the specific revision included in the spec (if the revision is defined)
+        var topicUrl = BACKGROUND_QUERY_PREFIX + topicIdList + BACKGROUND_QUERY_POSTFIX;
+        jQuery.getJSON(topicUrl, function(expandedTopics) {
+
+            for (var topicIndex = 0, topicCount = expandedTopics.items.length; topicIndex < topicCount; ++topicIndex) {
+
+                var topicNode = topicNodes.items[topicIndex].item;
+                var topic = expandedTopics.items[topicIndex].item;
+
+                if (!topicNode.entityRevision) {
+                    checkSpellingErrors(topic);
+                }
+
+                if (!topicLatestRevisions[topic.id]){
+                    topicLatestRevisions[topic.id] = topic.revision;
+                }
+
+                if (!topicNames[topic.id]) {
+                    topicNames[topic.id] = topic.title;
+                }
+
+                // set the description
+                if (descriptionCache[topic.id]) {
+                    descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
+                }
+
+                // set the revisions
+                if (historyCache[topic.id]) {
+                    historyCache[topic.id].data = [];
+                    for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
+                        var revision = topic.revisions.items[revisionIndex].item;
+                        historyCache[topic.id].data.push({
+                            revision: revision.revision,
+                            message: revision.logDetails.message,
+                            lastModified: revision.lastModified});
                     }
 
-                    // for each topic we need the latest revision, and the specific revision included in the spec (if the revision is defined)
-                    var topicUrl = BACKGROUND_QUERY_PREFIX + topicIdList + BACKGROUND_QUERY_POSTFIX;
-                    jQuery.getJSON(topicUrl, function(expandedTopics) {
+                    updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
+                    updateHistoryIcon(topic.id, topic.title);
+                }
 
-                        for (var topicIndex = 0, topicCount = expandedTopics.items.length; topicIndex < topicCount; ++topicIndex) {
+                // set the tags
+                if (tagsCache[topic.id]) {
+                    tagsCache[topic.id].data = [];
+                    for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
+                        var tag = topic.tags.items[tagIndex].item;
+                        tagsCache[topic.id].data.push({
+                            name: tag.name,
+                            id: tag.id
+                        });
+                    }
 
-                            var topic = expandedTopics.items[topicIndex].item;
+                    updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
+                }
 
-                            if (!topicDetailsMap[topic.id]) {
-                                checkSpellingErrors(topic);
-                            }
+                // set the urls
+                if (urlCache[topic.id]) {
+                    urlCache[topic.id].data = [];
 
-                            if (!topicLatestRevisions[topic.id]){
-                                topicLatestRevisions[topic.id] = topic.revision;
-                            }
+                    var match = null;
+                    while (match = COMMENT_RE.exec(topic.xml)) {
+                        var comment = match[1];
 
-                            if (!topicNames[topic.id]) {
-                                topicNames[topic.id] = topic.title;
-                            }
-
-                            // set the description
-                            if (descriptionCache[topic.id]) {
-                                descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
-                            }
-
-                            // set the revisions
-                            if (historyCache[topic.id]) {
-                                historyCache[topic.id].data = [];
-                                for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
-                                    var revision = topic.revisions.items[revisionIndex].item;
-                                    historyCache[topic.id].data.push({
-                                        revision: revision.revision,
-                                        message: revision.logDetails.message,
-                                        lastModified: revision.lastModified});
-                                }
-
-                                updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
-                                updateHistoryIcon(topic.id, topic.title);
-                            }
-
-                            // set the tags
-                            if (tagsCache[topic.id]) {
-                                tagsCache[topic.id].data = [];
-                                for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
-                                    var tag = topic.tags.items[tagIndex].item;
-                                    tagsCache[topic.id].data.push({
-                                        name: tag.name,
-                                        id: tag.id
-                                    });
-                                }
-
-                                updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
-                            }
-
-                            // set the urls
-                            if (urlCache[topic.id]) {
-                                urlCache[topic.id].data = [];
-
-                                var match = null;
-                                while (match = COMMENT_RE.exec(topic.xml)) {
-                                    var comment = match[1];
-
-                                    var match2 = null;
-                                    while (match2 = URL_RE.exec(comment)) {
-                                        var url = match2[0];
-                                        urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
-                                    }
-                                }
-
-                                for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
-                                    var url = topic.sourceUrls_OTM.items[urlsIndex].item;
-                                    urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
-                                }
-
-                                updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
-                            }
-
-                            // set the specs
-                            if (specCache[topic.id]) {
-                                specCache[topic.id].data = [];
-                                var specs = {};
-                                for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
-                                    var spec = topic.contentSpecs_OTM.items[specIndex].item;
-                                    if (!specs[spec.id]) {
-                                        var specDetails = {id: spec.id, title: "", product: "", version: ""};
-                                        for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
-                                            var child = spec.children_OTM.items[specChildrenIndex].item;
-                                            if (child.title == "Product") {
-                                                specDetails.product = child.additionalText;
-                                            } else if (child.title == "Version") {
-                                                specDetails.version = child.additionalText;
-                                            } if (child.title == "Title") {
-                                                specDetails.title = child.additionalText;
-                                            }
-                                        }
-                                        specs[spec.id] = specDetails;
-                                    }
-                                }
-
-                                for (spec in specs) {
-                                    specCache[topic.id].data.push(specs[spec]);
-                                }
-
-                                updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
-                            }
+                        var match2 = null;
+                        while (match2 = URL_RE.exec(comment)) {
+                            var url = match2[0];
+                            urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
                         }
+                    }
 
-                        getTopic(index + TOPIC_BATCH_SIZE, topics);
-                    });
-                } else {
-                    getRevisionInfoFromREST(topicDetailsMap, 0);
+                    for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
+                        var url = topic.sourceUrls_OTM.items[urlsIndex].item;
+                        urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
+                    }
 
-                    console.log("Retrieved all topic data");
+                    updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
+                }
 
-                    buildTopicEditedInChart();
+                // set the specs
+                if (specCache[topic.id]) {
+                    specCache[topic.id].data = [];
+                    var specs = {};
+                    for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
+                        var spec = topic.contentSpecs_OTM.items[specIndex].item;
+                        if (!specs[spec.id]) {
+                            var specDetails = {id: spec.id, title: "", product: "", version: ""};
+                            for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
+                                var child = spec.children_OTM.items[specChildrenIndex].item;
+                                if (child.title == "Product") {
+                                    specDetails.product = child.additionalText;
+                                } else if (child.title == "Version") {
+                                    specDetails.version = child.additionalText;
+                                } if (child.title == "Title") {
+                                    specDetails.title = child.additionalText;
+                                }
+                            }
+                            specs[spec.id] = specDetails;
+                        }
+                    }
 
-                    getTopicNodes(specId, topics, 0, 0);
+                    for (spec in specs) {
+                        specCache[topic.id].data.push(specs[spec]);
+                    }
+
+                    updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
                 }
             }
 
-            getTopic(0, data);
+            getTopicDetailsInBatches(topicNodes, index + TOPIC_BATCH_SIZE);
         });
+    } else {
+        console.log("Retrieved all topic data");
+
+        buildTopicEditedInChart();
+
+        getTopicNodes(specId, topicNodes, 0, 0);
     }
 }
 
@@ -2957,40 +2953,41 @@ function getInfoFromREST() {
  * Once all the information from the latest versions of the topics is found, we go through and
  * get the details on the topic revisions
  */
-function getRevisionInfoFromREST(topicDetailsMap, index) {
-     if (index <  Object.keys(topicDetailsMap).length) {
+function getRevisionInfoFromREST(topicNodes, index) {
+     if (index <  topicNodes.items.length) {
 
-         jQuery("#spellingErrorsBadge").remove();
-         jQuery("#doubledWordsErrorsBadge").remove();
-         jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Step 2 ' + (index /  Object.keys(topicDetailsMap).length * 100).toFixed(2) + '%)</span>'));
-        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Step 2 ' + (index /  Object.keys(topicDetailsMap).length * 100).toFixed(2) + '%)</span>'));
+        jQuery("#spellingErrorsBadge").remove();
+        jQuery("#doubledWordsErrorsBadge").remove();
+        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Step 2 ' + (index /  topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
+        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Step 2 ' + (index /  topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
 
-         var topicID =  Object.keys(topicDetailsMap)[index];
-         var topicRevision = topicDetailsMap[topicID];
+        var topicNode = topicNodes.items[index].item;
+        var topicID = topicNode.entityId;
+        var topicRevision = topicNode.entityRevision;
 
         if (topicRevision) {
             var topicRevisionUrl = SERVER + "/topic/get/json/" + topicID + "/r/" + topicRevision;
             jQuery.getJSON(topicRevisionUrl, function(data) {
                 checkSpellingErrors(data);
-                getRevisionInfoFromREST(topicDetailsMap, ++index);
+                getRevisionInfoFromREST(topicNodes, ++index);
             });
         } else {
-            getRevisionInfoFromREST(topicDetailsMap, ++index);
+            getRevisionInfoFromREST(topicNodes, ++index);
         }
     } else {
-
          jQuery("#spellingErrorsBadge").remove();
          jQuery("#doubledWordsErrorsBadge").remove();
          jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + '</span>'));
          jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + '</span>'));
 
-         getDuplicatedTopics(topicDetailsMap, 0);
+         getDuplicatedTopics(topicNodes, 0);
     }
 }
 
-function getDuplicatedTopics(topicDetailsMap, index) {
-    if (index <  Object.keys(topicDetailsMap).length) {
-        var topicID = Object.keys(topicDetailsMap)[index];
+function getDuplicatedTopics(topicNodes, index) {
+    if (index <  topicNodes.items.length) {
+        var topicNode = topicNodes.items[index].item;
+        var topicID = topicNode.entityId;
         //var similarTopicsUrl = SERVER + "/topics/get/json/query;minHash=" + topicID + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
         var similarTopicsUrl = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topics/get/json/query;minHash=" + topicID + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
         jQuery.getJSON(similarTopicsUrl, function(data){
@@ -3013,8 +3010,10 @@ function getDuplicatedTopics(topicDetailsMap, index) {
             }
 
             updateCount(topicID + "duplicateIcon", dupTopicsCache[topicID].data.length);
-            getDuplicatedTopics(topicDetailsMap, ++index);
+            getDuplicatedTopics(topicNodes, ++index);
         });
+    } else {
+        getTopicDetailsInBatches(topicNodes, 0);
     }
 }
 
