@@ -534,28 +534,30 @@ function renderDuplicatedTopic(topicId) {
         dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
     }
 
-    dupTopicsCache[topicId].popover.popoverContent.innerHTML = '';
+    dupTopicsCache[topicId].popover.popoverContent.innerHTML = '<p>No duplicate topics found.</p>';
 
     if (dupTopicsCache[topicId].data) {
         var latestRevision = topicLatestRevisions[topicId];
         var title = topicNames[topicId];
         var foundPlaceForThisTopic = false;
-        for (var index = 0, count = dupTopicsCache[topicId].data.length; index < count; ++index) {
+        if (dupTopicsCache[topicId].data.length != 0) {
+            for (var index = 0, count = dupTopicsCache[topicId].data.length; index < count; ++index) {
 
-            var dupTopic =  dupTopicsCache[topicId].data[index];
+                var dupTopic =  dupTopicsCache[topicId].data[index];
 
-            if (!foundPlaceForThisTopic && dupTopic.revision < latestRevision) {
-                foundPlaceForThisTopic = true;
-                addThisTopic();
+                if (!foundPlaceForThisTopic && dupTopic.revision < latestRevision) {
+                    foundPlaceForThisTopic = true;
+                    addThisTopic();
+                }
+
+                var container = document.createElement("div");
+                var link = document.createElement("a");
+                container.appendChild(link);
+
+                $(link).text(dupTopic.id + " rev: " + dupTopic.revision + " - " + dupTopic.title);
+                link.setAttribute("href", 'http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + dupTopic.id);
+                dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
             }
-
-            var container = document.createElement("div");
-            var link = document.createElement("a");
-            container.appendChild(link);
-
-            $(link).text(dupTopic.id + " rev: " + dupTopic.revision + " - " + dupTopic.title);
-            link.setAttribute("href", 'http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + dupTopic.id);
-            dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
         }
 
         if (!foundPlaceForThisTopic) {
