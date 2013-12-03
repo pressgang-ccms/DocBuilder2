@@ -558,10 +558,10 @@ function renderDuplicatedTopic(topicId) {
                 link.setAttribute("href", 'http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + dupTopic.id);
                 dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
             }
-        }
 
-        if (!foundPlaceForThisTopic) {
-            addThisTopic();
+            if (!foundPlaceForThisTopic) {
+                addThisTopic();
+            }
         }
     }
 }
