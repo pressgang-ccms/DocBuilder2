@@ -2778,8 +2778,8 @@ function getInfoFromREST() {
 
                     jQuery("#spellingErrorsBadge").remove();
                     jQuery("#doubledWordsErrorsBadge").remove();
-                    jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (' + (index / topics.items.length * 100).toFixed(2) + '% complete)</span>'));
-                    jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (' + (index / topics.items.length * 100).toFixed(2) + '% complete)</span>'));
+                    jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Pass 1 ' + (index / topics.items.length * 100).toFixed(2) + '%)</span>'));
+                    jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Pass 1 ' + (index / topics.items.length * 100).toFixed(2) + '%)</span>'));
 
                     // make a note of the topic IDs and revisions
                     var topicDetailsMap = {};
@@ -2794,28 +2794,6 @@ function getInfoFromREST() {
                         }
                         topicIdList += topicNode.entityId;
                         topicDetailsMap[topicNode.entityId] = topicNode.entityRevision;
-
-                        // get the specific topic revision
-                        /*if (topicNode.entityRevision) {
-                            var topicRevisionUrl = SERVER + "/topic/get/json/" + topicNode.entityId + "/r/" + topicNode.entityRevision;
-                            jQuery.getJSON(topicRevisionUrl, function(data) {
-                                checkSpellingErrors(data);
-                            });
-                        }*/
-
-                        // Finally we need to get the list of any similar topics
-                        /*var similarTopicsUrl = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topics/get/json/query;minHash=" + topicNode.entityId + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
-                        jQuery.getJSON(similarTopicsUrl, function(data){
-                            if (!dupTopicsCache[topicNode.entityId].data) {
-                                dupTopicsCache[topicNode.entityId].data = [];
-                            }
-
-                            for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
-                                dupTopicsCache[topicNode.entityId].data.push(data.items[topicIndex].item.id);
-                            }
-
-                            updateCount(topicNode.entityId + "duplicateIcon", dupTopicsCache[topicNode.entityId].data.length);
-                        });*/
                     }
 
                     // for each topic we need the latest revision, and the specific revision included in the spec (if the revision is defined)
@@ -2928,10 +2906,7 @@ function getInfoFromREST() {
 
 
                 } else {
-                    jQuery("#spellingErrorsBadge").remove();
-                    jQuery("#doubledWordsErrorsBadge").remove();
-                    jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + '</span>'));
-                    jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + '</span>'));
+                    getRevisionInfoFromREST(topicDetailsMap, 0);
 
                     console.log("Retrieved all topic data");
 
@@ -2942,6 +2917,54 @@ function getInfoFromREST() {
             }
 
             getTopic(0, data);
+        });
+    }
+}
+
+/**
+ * Once all the information from the latest versions of the topics is found, we go through and
+ * get the details on the topic revisions
+ */
+function getRevisionInfoFromREST(topicDetailsMap, index) {
+     if (index < topicDetailsMap.keys().length) {
+
+        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Step 2 ' + (index / topicDetailsMap.keys().length * 100).toFixed(2) + '%)</span>'));
+        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Step 2 ' + (index / topicDetailsMap.keys().length * 100).toFixed(2) + '%)</span>'));
+
+        var topicNode = topicDetailsMap[topicDetailsMap.keys()[index]];
+        if (topicNode.entityRevision) {
+            var topicRevisionUrl = SERVER + "/topic/get/json/" + topicNode.entityId + "/r/" + topicNode.entityRevision;
+            jQuery.getJSON(topicRevisionUrl, function(data) {
+                checkSpellingErrors(data);
+                getRevisionInfoFromREST(topicDetailsMap, ++index);
+            });
+        }
+    } else {
+
+         jQuery("#spellingErrorsBadge").remove();
+         jQuery("#doubledWordsErrorsBadge").remove();
+         jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + '</span>'));
+         jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + '</span>'));
+
+         getDuplicatedTopics(topicDetailsMap, 0);
+    }
+}
+
+function getDuplicatedTopics(topicDetailsMap, index) {
+    if (index < topicDetailsMap.keys().length) {
+        var topicNode = topicDetailsMap[topicDetailsMap.keys()[index]];
+        var similarTopicsUrl = "http://skynet-dev.usersys.redhat.com:8080/pressgang-ccms/rest/1/topics/get/json/query;minHash=" + topicNode.entityId + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
+        jQuery.getJSON(similarTopicsUrl, function(data){
+            if (!dupTopicsCache[topicNode.entityId].data) {
+                dupTopicsCache[topicNode.entityId].data = [];
+            }
+
+            for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
+                dupTopicsCache[topicNode.entityId].data.push(data.items[topicIndex].item.id);
+            }
+
+            updateCount(topicNode.entityId + "duplicateIcon", dupTopicsCache[topicNode.entityId].data.length);
+            getDuplicatedTopics(topicDetailsMap, ++index);
         });
     }
 }
