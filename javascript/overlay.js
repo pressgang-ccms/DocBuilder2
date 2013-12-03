@@ -503,8 +503,8 @@ function renderDuplicatedTopic(topicId) {
             var link = document.createElement("a");
             container.appendChild(link);
 
-            $(link).text(topicId + ": " + topicNames[topicId]);
-            link.setAttribute("href", 'http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + topicId);
+            $(link).text(dupTopic + ": " + dupTopic.title);
+            link.setAttribute("href", 'http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + dupTopic.id);
             dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
         }
     }
@@ -2978,7 +2978,7 @@ function getDuplicatedTopics(topicDetailsMap, index) {
             }
 
             for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
-                dupTopicsCache[topicID].data.push(data.items[topicIndex].item.id);
+                dupTopicsCache[topicID].data.push(data.items[topicIndex].item);
             }
 
             updateCount(topicID + "duplicateIcon", dupTopicsCache[topicID].data.length);
