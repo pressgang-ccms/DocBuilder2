@@ -524,7 +524,7 @@ function createDuplicatedTopicPopover(topicId, parent) {
 
 function renderDuplicatedTopic(topicId) {
 
-    if (!dupTopicsCache[topicId] || !dupTopicsCache[topicId].loading) {
+    if (!dupTopicsCache[topicId].loading) {
 
         dupTopicsCache[topicId].loading = true;
 
