@@ -3041,9 +3041,8 @@ function getDuplicatedTopics(specId, topicNodes, index) {
         var topicID = topicNode.entityId;
         var similarTopicsUrl = SERVER + "/topics/get/json/query;minHash=" + topicID + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
         jQuery.getJSON(similarTopicsUrl, function(data){
-            if (!dupTopicsCache[topicID].data) {
-                dupTopicsCache[topicID].data = [];
-            }
+
+            dupTopicsCache[topicID].data = [];
 
             data.items.sort(function(a, b){
                 if (a.item.revision < b.item.revision) {
