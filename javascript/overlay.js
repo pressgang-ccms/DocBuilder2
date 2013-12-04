@@ -495,9 +495,7 @@ function createDuplicatedTopicPopover(topicId, parent) {
                 return function(data){
                     dupTopicsCache[topicId].loading = false;
 
-                    if (!dupTopicsCache[topicId].data) {
-                        dupTopicsCache[topicId].data = [];
-                    }
+                    dupTopicsCache[topicId].data = [];
 
                     data.items.sort(function(a, b){
                         if (a.item.revision < b.item.revision) {
@@ -526,8 +524,6 @@ function createDuplicatedTopicPopover(topicId, parent) {
 }
 
 function renderDuplicatedTopic(topicId) {
-
-
 
         dupTopicsCache[topicId].loading = true;
 
