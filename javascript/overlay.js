@@ -488,10 +488,13 @@ function createDuplicatedTopicPopover(topicId, parent) {
     linkDiv.onmouseover=function(){
         openPopover(popover, linkDiv);
 
-        if (!dupTopicsCache[topicId].data) {
+        if (!dupTopicsCache[topicId].data && !dupTopicsCache[topicId].loading) {
+            dupTopicsCache[topicId].loading = true;
             var similarTopicsUrl = SERVER + "/topics/get/json/query;minHash=" + topicId + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
             jQuery.getJSON(similarTopicsUrl, function(popover) {
                 return function(data){
+                    dupTopicsCache[topicId].loading = false;
+
                     if (!dupTopicsCache[topicId].data) {
                         dupTopicsCache[topicId].data = [];
                     }
@@ -524,13 +527,11 @@ function createDuplicatedTopicPopover(topicId, parent) {
 
 function renderDuplicatedTopic(topicId) {
 
-    if (!dupTopicsCache[topicId].loading) {
+
 
         dupTopicsCache[topicId].loading = true;
 
         jQuery.getJSON( SERVER + "/topic/get/json/" + topicId, function(topic){
-
-            dupTopicsCache[topicId].loading = false;
 
             function addThisTopic() {
                 var container = document.createElement("div");
@@ -571,7 +572,7 @@ function renderDuplicatedTopic(topicId) {
                 }
             }
         });
-    }
+
 }
 
 function createMojoPopover(topicId, parent) {
