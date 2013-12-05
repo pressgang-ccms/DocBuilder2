@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="Fixed issue where duplicate topics where being loaded more than once when the popup was shown">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript/overlay.js" afterPath="$PROJECT_DIR$/javascript/overlay.js" />
+    <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docbuilder-translation" afterPath="$PROJECT_DIR$/docbuilder-translation" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386211053959" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386214145498" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385672201129" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -368,17 +368,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="overlay.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="overlay.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1076" column="19" selection-start="40423" selection-end="40423" vertical-scroll-proportion="-0.1821366">
+            <state line="1076" column="19" selection-start="40423" selection-end="40423" vertical-scroll-proportion="0.0">
               <folding>
                 <marker date="1386211375142" expanded="false" signature="10387:10404" placeholder="..." />
                 <marker date="1386211375142" expanded="false" signature="10445:10460" placeholder="..." />
                 <marker date="1386211375142" expanded="false" signature="13186:13284" placeholder="..." />
                 <marker date="1386211375142" expanded="false" signature="13386:13396" placeholder="..." />
                 <marker date="1386211375142" expanded="true" signature="13397:13573" placeholder="..." />
-                <marker date="1386211375142" expanded="true" signature="13453:13467" placeholder="..." />
                 <marker date="1386211375142" expanded="false" signature="13453:13467" placeholder="..." />
                 <marker date="1386211375142" expanded="false" signature="13524:13538" placeholder="..." />
                 <marker date="1386211375142" expanded="true" signature="19167:19327" placeholder="..." />
@@ -397,7 +396,6 @@
                 <marker date="1386211375142" expanded="false" signature="36378:36442" placeholder="..." />
                 <marker date="1386211375142" expanded="false" signature="50798:50817" placeholder="..." />
                 <marker date="1386211375142" expanded="true" signature="50818:50962" placeholder="..." />
-                <marker date="1386211375142" expanded="true" signature="50894:50927" placeholder="..." />
                 <marker date="1386211375142" expanded="false" signature="50894:50927" placeholder="..." />
                 <marker date="1386211375142" expanded="false" signature="51168:51204" placeholder="..." />
                 <marker date="1386211375142" expanded="true" signature="51205:51289" placeholder="..." />
@@ -542,6 +540,15 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="docbuilder-translation" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/docbuilder-translation">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="45" selection-start="527" selection-end="527" vertical-scroll-proportion="0.23522316">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="build_books.sh" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build_books.sh">
           <provider selected="true" editor-type-id="text-editor">
@@ -595,7 +602,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.4.7.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.4.8.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.4.9.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.0.js" />
@@ -611,14 +617,14 @@
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/functions-1.1.js" />
         <option value="$PROJECT_DIR$/javascript/overlay.js" />
+        <option value="$PROJECT_DIR$/docbuilder-translation" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-2" />
     <option name="y" value="-3" />
-    <option name="width" value="1924" />
-    <option name="height" value="1087" />
+    <option name="width" value="1920" />
+    <option name="height" value="1015" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -670,8 +676,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -692,6 +696,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -707,8 +713,8 @@
     <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -738,19 +744,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -777,6 +770,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -3109,11 +3115,15 @@
       <created>1386121342543</created>
       <updated>1386121342543</updated>
     </task>
-    <option name="localTasksCounter" value="567" />
+    <task id="LOCAL-00567" summary="Added delay for opening popovers">
+      <created>1386211496847</created>
+      <updated>1386211496847</updated>
+    </task>
+    <option name="localTasksCounter" value="568" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-2" y="-3" width="1924" height="1087" extended-state="6" />
+    <frame x="0" y="-3" width="1920" height="1015" extended-state="2" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -3126,14 +3136,14 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3226837" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32220945" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21558164" sideWeight="0.6773163" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21550801" sideWeight="0.6777906" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32873806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -3186,7 +3196,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed issue where duplicate topics where being loaded more than once when the popup was shown" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added delay for opening popovers" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -3200,7 +3210,6 @@
     <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Working on jboss.org integration" />
     <MESSAGE value="An exception was being thrown:&#10;&#10;/home/pressgang/DocBuilder2/app.js:766&#10;&#9;&#9;&#9;if (file.toString().match(filter)) {&#10;&#9;&#9;&#9;                    ^&#10;RangeError: Maximum call stack size exceeded&#10;" />
     <MESSAGE value="Fixed npe" />
     <MESSAGE value="Working on Bugzilla searching in PressZilla" />
@@ -3225,6 +3234,7 @@
     <MESSAGE value="Added buttons to freeze and obsolete specs" />
     <MESSAGE value="Merge branch 'devel' of github.com:pressgang-ccms/DocBuilder2 into devel&#10;&#10;Conflicts:&#10;&#9;.idea/workspace.xml&#10;" />
     <MESSAGE value="Fixed issue where duplicate topics where being loaded more than once when the popup was shown" />
+    <MESSAGE value="Added delay for opening popovers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -3236,16 +3246,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/build_books.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="32" selection-start="1332" selection-end="1332" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="26" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0">
@@ -3283,7 +3283,6 @@
             <marker date="1386211375142" expanded="false" signature="13186:13284" placeholder="..." />
             <marker date="1386211375142" expanded="false" signature="13386:13396" placeholder="..." />
             <marker date="1386211375142" expanded="true" signature="13397:13573" placeholder="..." />
-            <marker date="1386211375142" expanded="true" signature="13453:13467" placeholder="..." />
             <marker date="1386211375142" expanded="false" signature="13453:13467" placeholder="..." />
             <marker date="1386211375142" expanded="false" signature="13524:13538" placeholder="..." />
             <marker date="1386211375142" expanded="true" signature="19167:19327" placeholder="..." />
@@ -3302,7 +3301,6 @@
             <marker date="1386211375142" expanded="false" signature="36378:36442" placeholder="..." />
             <marker date="1386211375142" expanded="false" signature="50798:50817" placeholder="..." />
             <marker date="1386211375142" expanded="true" signature="50818:50962" placeholder="..." />
-            <marker date="1386211375142" expanded="true" signature="50894:50927" placeholder="..." />
             <marker date="1386211375142" expanded="false" signature="50894:50927" placeholder="..." />
             <marker date="1386211375142" expanded="false" signature="51168:51204" placeholder="..." />
             <marker date="1386211375142" expanded="true" signature="51205:51289" placeholder="..." />
@@ -3510,14 +3508,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1076" column="19" selection-start="40423" selection-end="40423" vertical-scroll-proportion="-0.1821366">
+        <state line="1076" column="19" selection-start="40423" selection-end="40423" vertical-scroll-proportion="0.0">
           <folding>
             <marker date="1386211375142" expanded="false" signature="10387:10404" placeholder="..." />
             <marker date="1386211375142" expanded="false" signature="10445:10460" placeholder="..." />
             <marker date="1386211375142" expanded="false" signature="13186:13284" placeholder="..." />
             <marker date="1386211375142" expanded="false" signature="13386:13396" placeholder="..." />
             <marker date="1386211375142" expanded="true" signature="13397:13573" placeholder="..." />
-            <marker date="1386211375142" expanded="true" signature="13453:13467" placeholder="..." />
             <marker date="1386211375142" expanded="false" signature="13453:13467" placeholder="..." />
             <marker date="1386211375142" expanded="false" signature="13524:13538" placeholder="..." />
             <marker date="1386211375142" expanded="true" signature="19167:19327" placeholder="..." />
@@ -3536,7 +3533,6 @@
             <marker date="1386211375142" expanded="false" signature="36378:36442" placeholder="..." />
             <marker date="1386211375142" expanded="false" signature="50798:50817" placeholder="..." />
             <marker date="1386211375142" expanded="true" signature="50818:50962" placeholder="..." />
-            <marker date="1386211375142" expanded="true" signature="50894:50927" placeholder="..." />
             <marker date="1386211375142" expanded="false" signature="50894:50927" placeholder="..." />
             <marker date="1386211375142" expanded="false" signature="51168:51204" placeholder="..." />
             <marker date="1386211375142" expanded="true" signature="51205:51289" placeholder="..." />
@@ -3677,6 +3673,13 @@
             <marker date="1386211375142" expanded="false" signature="145431:145481" placeholder="..." />
             <marker date="1386211375142" expanded="false" signature="148039:148065" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docbuilder-translation">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="45" selection-start="527" selection-end="527" vertical-scroll-proportion="0.23522316">
+          <folding />
         </state>
       </provider>
     </entry>
