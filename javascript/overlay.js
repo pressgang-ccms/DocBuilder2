@@ -305,6 +305,7 @@ var buttons = {};
  */
 var doubleWordButtons = {};
 
+
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
  */
@@ -1068,9 +1069,11 @@ function openPopover(popover, linkDiv) {
         popover.timeout = null;
     }
 
-    popover.style.left= linkDiv.parentNode.offsetLeft + 'px';
-    popover.style.top= (linkDiv.offsetTop - 300) + 'px';
-    popover.style.display = '';
+    popover.timeout = setTimeout(function() {
+        popover.style.left= linkDiv.parentNode.offsetLeft + 'px';
+        popover.style.top= (linkDiv.offsetTop - 300) + 'px';
+        popover.style.display = '';
+    }, POPOVER_DELAY);
 }
 
 /**
