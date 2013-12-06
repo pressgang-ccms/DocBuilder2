@@ -727,14 +727,8 @@ function renderSpecs(topicId) {
 	for (var index = 0, count = specCache[topicId].data.length; index < count; ++index) {
 
 		var spec =  specCache[topicId].data[index];
-
-		var container = document.createElement("div");
-		var link = document.createElement("a");
-		container.appendChild(link);
-
-		$(link).text(spec.id + ":  " + spec.title + ", " + spec.product + " " + spec.version);
-		link.setAttribute("href", "/" + spec);
-		specCache[topicId].popover.popoverContent.appendChild(container);
+        var link = $("<div><a target='_blank' href='http://" + BASE_SERVER + "/pressgang-ccms-ui-next/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=13968" + spec.id + "'><div style='width: 16px; height: 16px; margin-right: 8px; background-image: url(/images/edit.png); background-size: contain; float: left'></div></a><a href='/" + spec.id + "'>" + spec.id + ":  " + spec.title + ", " + spec.product + " " + spec.version + "</a></div>");
+		specCache[topicId].popover.popoverContent.appendChild(link);
 	}
 }
 
