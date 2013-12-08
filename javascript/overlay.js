@@ -3065,15 +3065,6 @@ function getDuplicatedTopics(specId, topicNodes, index) {
         var similarTopicsUrl = SERVER + "/topics/get/json/query;minHash=" + topicID + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
         jQuery.getJSON(similarTopicsUrl, function(data){
 
-            var myDuplicatedTopicCount = dupTopicsCache[topicID].data.length;
-
-            duplicatedTopicsCount += myDuplicatedTopicCount;
-
-            if (myDuplicatedTopicCount != 0) {
-                var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topicID + '].scrollIntoView()">Topic: ' + topicID + '</button>');
-                button.appendTo($("#duplicatedTopicsItems"));
-            }
-
             dupTopicsCache[topicID].data = [];
 
             data.items.sort(function(a, b){
@@ -3088,6 +3079,15 @@ function getDuplicatedTopics(specId, topicNodes, index) {
 
             for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
                 dupTopicsCache[topicID].data.push(data.items[topicIndex].item);
+            }
+
+            var myDuplicatedTopicCount = dupTopicsCache[topicID].data.length;
+
+            duplicatedTopicsCount += myDuplicatedTopicCount;
+
+            if (myDuplicatedTopicCount != 0) {
+                var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topicID + '].scrollIntoView()">Topic: ' + topicID + '</button>');
+                button.appendTo($("#duplicatedTopicsItems"));
             }
 
             updateCount(topicID + "duplicateIcon", dupTopicsCache[topicID].data.length);
