@@ -562,7 +562,9 @@ function renderDuplicatedTopic(topicId) {
                         var link = document.createElement("a");
                         container.appendChild(link);
 
-                        jQuery(link).text(dupTopic.id + " rev: " + dupTopic.revision + " - " + dupTopic.title);
+                        var revisionDate = new moment(dupTopic.lastModified).format("DD MMM YYYY");
+
+                        jQuery(link).text(dupTopic.id + " Rev: " + dupTopic.revision + " Date: " + revisionDate + " - " + dupTopic.title);
                         link.setAttribute("href", 'http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + dupTopic.id);
                         dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
                     }
