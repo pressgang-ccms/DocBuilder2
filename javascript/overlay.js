@@ -3087,9 +3087,8 @@ function getDuplicatedTopics(specId, topicNodes, index) {
                  */
                 var myDuplicatedTopicCount = dupTopicsCache[topicID].data.length;
 
-                duplicatedTopicsCount += myDuplicatedTopicCount;
-
                 if (myDuplicatedTopicCount != 0) {
+                    ++duplicatedTopicsCount;
                     var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
                     var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topicID + '].scrollIntoView()">Topic: ' + topicID + '</button>');
                     button.appendTo(buttonParent);
