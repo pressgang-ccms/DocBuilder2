@@ -540,7 +540,7 @@ function renderDuplicatedTopic(topicId) {
                 var link = document.createElement("a");
                 container.appendChild(link);
 
-                container.style.color = "red";
+                link.style.color = "red";
 
                 var revisionDate = new moment(topic.lastModified).format("DD MMM YYYY");
 
