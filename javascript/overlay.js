@@ -3058,7 +3058,7 @@ function getDuplicatedTopics(specId, topicNodes, index) {
     if (index <  topicNodes.items.length) {
 
         jQuery("#duplicatedTopicsBadge").remove();
-        jQuery('#duplicatedTopics').append($('<span id="duplicatedTopicsBadge" class="badge pull-right">' + duplicatedTopicsCount + " (" +(index / topicNodes.items.length).toFixed(2) + '%)</span>'));
+        jQuery('#duplicatedTopics').append($('<span id="duplicatedTopicsBadge" class="badge pull-right">' + duplicatedTopicsCount + " (" +(index / topicNodes.items.length * 100.0).toFixed(2) + '%)</span>'));
 
         var topicNode = topicNodes.items[index].item;
         var topicID = topicNode.entityId;
@@ -3081,6 +3081,9 @@ function getDuplicatedTopics(specId, topicNodes, index) {
                 dupTopicsCache[topicID].data.push(data.items[topicIndex].item);
             }
 
+            /*
+                Add the menu items
+             */
             var myDuplicatedTopicCount = dupTopicsCache[topicID].data.length;
 
             duplicatedTopicsCount += myDuplicatedTopicCount;
