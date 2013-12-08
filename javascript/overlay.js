@@ -535,8 +535,10 @@ function renderDuplicatedTopic(topicId) {
         jQuery.getJSON( SERVER + "/topic/get/json/" + topicId, function(topic){
 
             function addThisTopic() {
+                var revisionDate = new moment(topic.lastModified).format("DD MMM YYYY");
+
                 var container = document.createElement("div");
-                jQuery(container).text("THIS TOPIC " + topicId + " rev: " + topic.revision + " - " + topic.title);
+                jQuery(container).text("THIS TOPIC " + topicId + " Rev: " + topic.revision + " Date: " + revisionDate + " - " + topic.title);
                 dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
             }
 
