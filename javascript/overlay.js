@@ -556,7 +556,7 @@ function renderDuplicatedTopic(topicId) {
                 if (dupTopicsCache[topicId].data.length != 0) {
                     dupTopicsCache[topicId].popover.popoverContent.innerHTML = '<p>Duplicated topics are listed in descending order by revision number.\
                     This means that the most recently edited topics are listed first. </p>\
-                    <p>The topic used by this content specification is shown in red. Topics listed above the red listing should be reviewed for any updated content that may be relevant to this content specification.</p>';
+                    <p>The topic used by this content specification is shown in red. Topics listed above the one shown in red should be reviewed for any updated content that may be relevant to this content specification.</p>';
 
                     for (var index = 0, count = dupTopicsCache[topicId].data.length; index < count; ++index) {
 
