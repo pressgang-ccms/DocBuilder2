@@ -3065,37 +3065,39 @@ function getDuplicatedTopics(specId, topicNodes, index) {
         var similarTopicsUrl = SERVER + "/topics/get/json/query;minHash=" + topicID + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
         jQuery.getJSON(similarTopicsUrl, function(data){
 
-            dupTopicsCache[topicID].data = [];
+            if (dupTopicsCache[topicID]) {
+                dupTopicsCache[topicID].data = [];
 
-            data.items.sort(function(a, b){
-                if (a.item.revision < b.item.revision) {
-                    return 1;
+                data.items.sort(function(a, b){
+                    if (a.item.revision < b.item.revision) {
+                        return 1;
+                    }
+                    if (a.item.revision == b.item.revision) {
+                        return 0;
+                    }
+                    return -1;
+                });
+
+                for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
+                    dupTopicsCache[topicID].data.push(data.items[topicIndex].item);
                 }
-                if (a.item.revision == b.item.revision) {
-                    return 0;
+
+                /*
+                    Add the menu items
+                 */
+                var myDuplicatedTopicCount = dupTopicsCache[topicID].data.length;
+
+                duplicatedTopicsCount += myDuplicatedTopicCount;
+
+                if (myDuplicatedTopicCount != 0) {
+                    var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
+                    var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topicID + '].scrollIntoView()">Topic: ' + topicID + '</button>');
+                    button.appendTo(buttonParent);
+                    buttonParent.appendTo($("#duplicatedTopicsItems"));
                 }
-                return -1;
-            });
 
-            for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
-                dupTopicsCache[topicID].data.push(data.items[topicIndex].item);
+                updateCount(topicID + "duplicateIcon", dupTopicsCache[topicID].data.length);
             }
-
-            /*
-                Add the menu items
-             */
-            var myDuplicatedTopicCount = dupTopicsCache[topicID].data.length;
-
-            duplicatedTopicsCount += myDuplicatedTopicCount;
-
-            if (myDuplicatedTopicCount != 0) {
-                var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
-                var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topicID + '].scrollIntoView()">Topic: ' + topicID + '</button>');
-                button.appendTo(buttonParent);
-                buttonParent.appendTo($("#duplicatedTopicsItems"));
-            }
-
-            updateCount(topicID + "duplicateIcon", dupTopicsCache[topicID].data.length);
             getDuplicatedTopics(specId, topicNodes, ++index);
         });
     } else {
