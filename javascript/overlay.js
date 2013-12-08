@@ -291,6 +291,10 @@ var dictionary;
  */
 var spellingErrorsCount = 0;
 /**
+ * Duplicated topics count
+ */
+var duplicatedTopicsCount = 0;
+/**
  * Double word counter
  */
 var doubleWordErrors = 0;
@@ -1980,6 +1984,7 @@ function buildMenu() {
 						<li data-pressgangtopic="24789" style="background-color: white"><a id="topicsUpdatedInOtherSpecs" href="javascript:hideAllMenus(); topicsUpdatedInOtherSpecs.show(); localStorage.setItem(\'lastMenu\', \'topicsUpdatedInOtherSpecs\');">Updated Topics<span id="topicsUpdatedInOtherSpecsBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a id="spellingErrors" href="javascript:hideAllMenus(); spellingErrors.show(); localStorage.setItem(\'lastMenu\', \'spellingErrors\');">Spelling Errors</a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a id="doubledWordsErrors" href="javascript:hideAllMenus(); doubledWords.show(); localStorage.setItem(\'lastMenu\', \'doubledWords\');">Doubled Words</a></li>\
+						<li data-pressgangtopic="00000" style="background-color: white"><a id="duplicatedTopics" href="javascript:hideAllMenus(); duplicatedTopics.show(); localStorage.setItem(\'lastMenu\', \'duplicatedTopics\');">Duplicated Topics<span id="duplicatedTopicsBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a href="' + BUG_LINK + '&cf_build_id=Content%20Spec%20ID:%20' + SPEC_ID + '">Report a bug</a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a href="http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=' + SPEC_ID + '">Edit this spec</a></li>\
 					</ul>\
@@ -1988,6 +1993,19 @@ function buildMenu() {
 		</div>')
 	$(document.body).append(mainMenu);
     sideMenus.push(mainMenu);
+
+    duplicatedTopics = $('\
+		<div data-pressgangtopic="0000" class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">' + help + 'Duplicated Topics</div>\
+				<div class="panel-body ">\
+		            <ul id="duplicatedTopicsItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+    $(document.body).append(duplicatedTopics);
+    sideMenus.push(duplicatedTopics);
 
     doubledWords = $('\
 		<div data-pressgangtopic="0000" class="panel panel-default pressgangMenu">\
@@ -2569,6 +2587,9 @@ function buildMenu() {
     } else if (lastMenu == "doubledWords") {
         doubledWords.show();
         showMenu();
+    } else if (lastMenu == "duplicatedTopics") {
+        duplicatedTopics.show();
+        showMenu();
     } else {
 		menuIcon.show();
 		hideMenu();
@@ -3035,10 +3056,23 @@ function getRevisionInfoFromREST(specId, topicNodes, index) {
 
 function getDuplicatedTopics(specId, topicNodes, index) {
     if (index <  topicNodes.items.length) {
+
+        jQuery("#duplicatedTopicsBadge").remove();
+        jQuery('#duplicatedTopics').append($('<span id="duplicatedTopicsBadge" class="badge pull-right">' + duplicatedTopicsCount + " (" +(index / topicNodes.items.length).toFixed(2) + '%)</span>'));
+
         var topicNode = topicNodes.items[index].item;
         var topicID = topicNode.entityId;
         var similarTopicsUrl = SERVER + "/topics/get/json/query;minHash=" + topicID + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
         jQuery.getJSON(similarTopicsUrl, function(data){
+
+            var myDuplicatedTopicCount = dupTopicsCache[topicID].data.length;
+
+            duplicatedTopicsCount += myDuplicatedTopicCount;
+
+            if (myDuplicatedTopicCount != 0) {
+                var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topicID + '].scrollIntoView()">Topic: ' + topicID + '</button>');
+                button.appendTo($("#duplicatedTopicsItems"));
+            }
 
             dupTopicsCache[topicID].data = [];
 
@@ -3060,6 +3094,9 @@ function getDuplicatedTopics(specId, topicNodes, index) {
             getDuplicatedTopics(specId, topicNodes, ++index);
         });
     } else {
+        jQuery("#duplicatedTopicsBadge").remove();
+        jQuery('#duplicatedTopics').append($('<span id="duplicatedTopicsBadge" class="badge pull-right">' + duplicatedTopicsCount + '</span>'));
+
         getTopicDetailsInBatches(specId, topicNodes, 0);
     }
 }
