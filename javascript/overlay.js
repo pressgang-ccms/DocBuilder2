@@ -535,10 +535,17 @@ function renderDuplicatedTopic(topicId) {
         jQuery.getJSON( SERVER + "/topic/get/json/" + topicId, function(topic){
 
             function addThisTopic() {
-                var revisionDate = new moment(topic.lastModified).format("DD MMM YYYY");
 
                 var container = document.createElement("div");
-                jQuery(container).text("THIS TOPIC " + topicId + " Rev: " + topic.revision + " Date: " + revisionDate + " - " + topic.title);
+                var link = document.createElement("a");
+                container.appendChild(link);
+
+                container.style.color = "red";
+
+                var revisionDate = new moment(topic.lastModified).format("DD MMM YYYY");
+
+                jQuery(link).text(topic.id + " Rev: " + topic.revision + " Date: " + revisionDate + " - " + topic.title);
+                link.setAttribute("href", 'http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + topic.id);
                 dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
             }
 
@@ -549,7 +556,7 @@ function renderDuplicatedTopic(topicId) {
                 if (dupTopicsCache[topicId].data.length != 0) {
                     dupTopicsCache[topicId].popover.popoverContent.innerHTML = '<p>Duplicated topics are listed in descending order by revision number.\
                     This means that the most recently edited topics are listed first. </p>\
-                    <p>The listing for this topic is prefixed with "THIS TOPIC". Topics above this topic have been edited more recently, and may contain content that can be merged into this topic.</p>';
+                    <p>The topic used by this content specification is shown in red. Duplicate topics listed above the topic used by this content specification have been edited more recently, ans should be reviewed for any updated content that may be relevant to this content specification.</p>';
 
                     for (var index = 0, count = dupTopicsCache[topicId].data.length; index < count; ++index) {
 
