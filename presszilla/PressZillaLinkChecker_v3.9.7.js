@@ -96,13 +96,11 @@ function checkDeadLinks(links, index) {
             GM_xmlhttpRequest({
                 method: 'HEAD',
                 url: href,
-                onabort: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
-                onerror: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
-                ontimeout: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
+                onabort: function(link, href) { return function() {logURLNotLoading(link, href); }}(link, href),
+                onerror: function(link, href) { return function() {logURLNotLoading(link, href); }}(link, href),
+                ontimeout: function(link, href) { return function() {logURLNotLoading(link, href); }}(link, href),
                 onload: function(response) {
-                    if (response.status < 400) {
-                        checkDeadLinks(links, ++index);
-                    }
+                    checkDeadLinks(links, ++index);
                 }
             });
         }  else {
