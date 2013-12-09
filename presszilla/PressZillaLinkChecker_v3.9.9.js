@@ -97,9 +97,9 @@ function checkDeadLinks(links, index) {
                 method: 'HEAD',
                 url: href,
                 timeout: 10000,
-                onabort: function(link, href) { return function() {logURLNotLoading(link, href); }}(link, href),
+                onabort: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
                 onerror: function(link, href) { return function() {logURLNotLoading(link, href); }}(link, href),
-                ontimeout: function(link, href) { return function() {logURLNotLoading(link, href); }}(link, href),
+                ontimeout: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
                 onload: function(response) {
                     checkDeadLinks(links, ++index);
                 }
