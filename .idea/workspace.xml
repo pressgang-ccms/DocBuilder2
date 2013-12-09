@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.4.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.5.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.5.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.6.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386557770494" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386558175807" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385672201129" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -291,7 +291,7 @@
     <file path="$PROJECT_DIR$/../PressGangCCMSREST/src/main/java/org/jboss/pressgang/ccms/server/rest/v1/interceptor/RESTv1VersionInterceptor.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386103192776" ignored="false" />
     <file path="$PROJECT_DIR$/../PressGangCCMSREST/src/main/java/org/jboss/pressgang/ccms/server/rest/v1/utils/RESTv1Utilities.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386103192776" ignored="false" />
     <file path="/docbuilder-translation" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386214216701" ignored="false" />
-    <file path="/PressZillaLinkChecker_v3.8.1.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386557752350" ignored="false" />
+    <file path="/PressZillaLinkChecker_v3.8.1.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386558290120" ignored="false" />
     <file path="/PressZillaLinkChecker_v3.8.6.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386556076378" ignored="false" />
     <file path="/PressZillaLinkChecker_v3.8.8.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386556744370" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -579,13 +579,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaLinkChecker_v3.9.5.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.5.js">
+      <file leaf-file-name="PressZillaLinkChecker_v3.9.6.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.6.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="100" column="18" selection-start="28637" selection-end="28637" vertical-scroll-proportion="0.64788735">
+            <state line="104" column="21" selection-start="28934" selection-end="28934" vertical-scroll-proportion="0.7183099">
               <folding>
-                <marker date="1386558170529" expanded="true" signature="27136:27169" placeholder="..." />
-                <marker date="1386558170529" expanded="true" signature="27259:27278" placeholder="..." />
+                <marker date="1386558314407" expanded="true" signature="27136:27169" placeholder="..." />
+                <marker date="1386558314407" expanded="true" signature="27259:27278" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -664,7 +664,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.1.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.2.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.3.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.4.js" />
@@ -680,6 +679,7 @@
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.2.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.3.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.4.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.5.js" />
       </list>
     </option>
   </component>
@@ -3350,7 +3350,11 @@
       <created>1386557771411</created>
       <updated>1386557771411</updated>
     </task>
-    <option name="localTasksCounter" value="603" />
+    <task id="LOCAL-00603" summary="Started work on PressZilla link checker">
+      <created>1386558177491</created>
+      <updated>1386558177491</updated>
+    </task>
+    <option name="localTasksCounter" value="604" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -3771,12 +3775,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.5.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.6.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="18" selection-start="28637" selection-end="28637" vertical-scroll-proportion="0.64788735">
+        <state line="104" column="21" selection-start="28934" selection-end="28934" vertical-scroll-proportion="0.7183099">
           <folding>
-            <marker date="1386558170529" expanded="true" signature="27136:27169" placeholder="..." />
-            <marker date="1386558170529" expanded="true" signature="27259:27278" placeholder="..." />
+            <marker date="1386558314407" expanded="true" signature="27136:27169" placeholder="..." />
+            <marker date="1386558314407" expanded="true" signature="27259:27278" placeholder="..." />
           </folding>
         </state>
       </provider>
