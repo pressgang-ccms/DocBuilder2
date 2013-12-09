@@ -14,6 +14,8 @@ function checkDeadLinks() {
         var href = link.attr("href");
         if (href != null && href != "" && href.substr(0, 1) != "#" && jQuery.inArray(link.text(), IGNORED_LINK_CHECK_NAMES) == -1) {
 
+            console.log("Checking " + href);
+
             GM_xmlhttpRequest({
                 method: 'GET',
                 url: href,
