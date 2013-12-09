@@ -68,9 +68,11 @@ function logURLNotLoading(link, href){
     buttonParent.append(button);
     jQuery('#badLinksItems').append(buttonParent);
 
-    button.click(function() {
-        link[0].scrollIntoView();
-    });
+    button.click(function(link) {
+        return function() {
+            link.scrollIntoView();
+        }
+    }(link[0]));
 }
 
 function checkDeadLinks(links, index) {
@@ -94,9 +96,9 @@ function checkDeadLinks(links, index) {
             GM_xmlhttpRequest({
                 method: 'HEAD',
                 url: href,
-                //onabort: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
+                onabort: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
                 onerror: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
-                //ontimeout: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
+                ontimeout: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
                 onload: function() {
                     checkDeadLinks(links, ++index);
                 }
