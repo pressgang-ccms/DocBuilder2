@@ -57,6 +57,8 @@ function checkDeadLinks(links, index) {
                 });
             }, 0);
         }  else {
+            console.log("Skipping " + href);
+
             checkDeadLinks(links, ++index);
         }
     } else {
