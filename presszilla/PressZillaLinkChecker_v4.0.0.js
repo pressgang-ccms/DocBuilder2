@@ -93,17 +93,19 @@ function checkDeadLinks(links, index) {
 
             console.log("Checking " + href);
 
-            GM_xmlhttpRequest({
-                method: 'HEAD',
-                url: href,
-                timeout: 10000,
-                onabort: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
-                onerror: function(link, href) { return function() {logURLNotLoading(link, href); /* onload will be called anyway */}}(link, href),
-                ontimeout: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
-                onload: function(response) {
-                    checkDeadLinks(links, ++index);
-                }
-            });
+            setTimeout(function() {
+                GM_xmlhttpRequest({
+                    method: 'HEAD',
+                    url: href,
+                    timeout: 10000,
+                    onabort: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
+                    onerror: function(link, href) { return function() {logURLNotLoading(link, href); /* onload will be called anyway */}}(link, href),
+                    ontimeout: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
+                    onload: function(response) {
+                        checkDeadLinks(links, ++index);
+                    }
+                });
+            }, 0);
         }  else {
             checkDeadLinks(links, ++index);
         }
