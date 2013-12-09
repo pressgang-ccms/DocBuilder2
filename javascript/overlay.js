@@ -2615,7 +2615,7 @@ function buildMenu() {
     } else if (lastMenu == "duplicatedTopics") {
         duplicatedTopics.show();
         showMenu();
-    } else if (lastmenu == "badLinks") {
+    } else if (lastMenu == "badLinks") {
         badLinks.show();
         showMenu();
     } else {
