@@ -52,7 +52,7 @@
                 jQuery.inArray(link.text(), IGNORED_LINK_CHECK_NAMES) == -1 &&
                 unsafeWindow.URI(href).hostname() != "localhost" &&
                 unsafeWindow.URI(href).hostname() != "127.0.0.1" &&
-                unsafeWindow.URI(href).protocol() != "mailto") {
+                (unsafeWindow.URI(href).protocol() == "http" || unsafeWindow.URI(href).protocol() == "https")) {
 
                 console.log("Checking " + href);
 
