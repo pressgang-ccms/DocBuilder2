@@ -4,6 +4,7 @@
  */
 var IGNORED_LINK_CHECK_NAMES  = ["javascript:void", "#", "Edit this topic", "permlink", "Report a bug"];
 
+var badLinkCount = 0;
 
 // http://medialize.github.io/URI.js/
 (function(m,s){m.URI=s(m.punycode,m.IPv6,m.SecondLevelDomains,m)})(this,function(m,s,t,v){function e(a,b){if(!(this instanceof e))return new e(a,b);void 0===a&&(a="undefined"!==typeof location?location.href+"":"");this.href(a);return void 0!==b?this.absoluteTo(b):this}function p(a){return a.replace(/([.*+?^=!:${}()|[\]\/\\])/g,"\\$1")}function x(a){return void 0===a?"Undefined":String(Object.prototype.toString.call(a)).slice(8,-1)}function l(a){return"Array"===x(a)}function w(a,b){var c,e;if(l(b)){c=
@@ -56,13 +57,29 @@ var IGNORED_LINK_CHECK_NAMES  = ["javascript:void", "#", "Edit this topic", "per
         for(h in c)if(q.call(c,h)){if(!l(c[h])){if(c[h]!==d[h])return!1}else if(!z(c[h],d[h]))return!1;g[h]=!0}for(h in d)if(q.call(d,h)&&!g[h])return!1;return!0};d.duplicateQueryParameters=function(a){this._parts.duplicateQueryParameters=!!a;return this};d.escapeQuerySpace=function(a){this._parts.escapeQuerySpace=!!a;return this};return e});
 
 
-function logURLNotLoading(href){
+function logURLNotLoading(link, href){
     console.log(href + " was not loaded successfully");
+
+    ++badLinkCount;
+
+    var button = jQuery('<button type="button" class="btn ' + style + '" style="width:230px; white-space: normal;")">' + href + '</button>');
+    var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
+
+    buttonParent.append(button);
+    jQuery('#badLinksItems').append(buttonParent);
+
+    button.onClick(function() {
+        link.scrollIntoView();
+    });
 }
 
-function checkDeadLinks() {
-    jQuery('div[class=book] a').each(function(index, object){
-        var link = jQuery(object);
+function checkDeadLinks(links, index) {
+    if (index < links.length) {
+
+        jQuery('#badLinksBadge').remove();
+        jQuery('#badLinks').append($('<span class="badge pull-right">' + badLinkCount + ' (' + (index / links.length * 100.0).toFixed(2) + ')</span>'));
+
+        var link = jQuery(links[index]);
         var href = link.attr("href");
         if (href != null &&
             href != "" &&
@@ -77,12 +94,20 @@ function checkDeadLinks() {
             GM_xmlhttpRequest({
                 method: 'HEAD',
                 url: href,
-                onabort: function(href) { return function() {logURLNotLoading(href);}}(href),
-                onerror: function(href) { return function() {logURLNotLoading(href);}}(href),
-                ontimeout: function(href) { return function() {logURLNotLoading(href);}}(href)
+                onabort: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
+                onerror: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
+                ontimeout: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
+                onload: function() {
+                    checkDeadLinks(links, ++index);
+                }
             });
         }
-    });
+
+
+    } else {
+        jQuery('#badLinksBadge').remove();
+        jQuery('#badLinks').append($('<span class="badge pull-right">' + badLinkCount + '</span>'));
+    };
 }
 
-checkDeadLinks();
+checkDeadLinks(jQuery('div[class=book] a'), 0);
