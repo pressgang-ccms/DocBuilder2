@@ -7,8 +7,15 @@
 
     var badLinkCount = 0;
 
+    /**
+     * GreaseMonkey and TamperMonkey work in subtly but significantly different ways. TamperMonkey
+     * will call onload even if the GM_xmlhttpRequest load failed. GreaseMonkey won't. So we need
+     * to keep a track of which links lead to which calls of checkDeadLinks().
+     * @type {Array}
+     */
+    var processedLinks = [];
 
-    function logURLNotLoading(link, href){
+    function logURLNotLoading(link, href, links, index){
         console.log(href + " was not loaded successfully");
 
         ++badLinkCount;
@@ -24,6 +31,11 @@
                 link.scrollIntoView();
             }
         }(link[0]));
+
+        if (jQuery.inArray(index, processedLinks) == -1) {
+            processedLinks.push(index);
+            checkDeadLinks(links, ++index);
+        }
     }
 
     function checkDeadLinks(links, index) {
@@ -49,11 +61,14 @@
                         method: 'HEAD',
                         url: href,
                         timeout: 10000,
-                        onabort: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
-                        onerror: function(link, href) { return function() {logURLNotLoading(link, href); /* onload will be called anyway */}}(link, href),
-                        ontimeout: function(link, href) { return function() {logURLNotLoading(link, href); checkDeadLinks(links, ++index);}}(link, href),
+                        onabort: function(link, href) { return function() {logURLNotLoading(link, href, links, index); }}(link, href),
+                        onerror: function(link, href) { return function() {logURLNotLoading(link, href, links, index);}}(link, href),
+                        ontimeout: function(link, href) { return function() {logURLNotLoading(link, href, links, index);}}(link, href),
                         onload: function(response) {
-                            checkDeadLinks(links, ++index);
+                            if (jQuery.inArray(index, processedLinks) == -1) {
+                                processedLinks.push(index);
+                                checkDeadLinks(links, ++index);
+                            }
                         }
                     });
                 }, 0);
