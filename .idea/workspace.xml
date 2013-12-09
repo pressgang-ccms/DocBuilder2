@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.5.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.4.js" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.5.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.6.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386554681928" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386555190606" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385672201129" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -292,7 +291,7 @@
     <file path="$PROJECT_DIR$/../PressGangCCMSREST/src/main/java/org/jboss/pressgang/ccms/server/rest/v1/interceptor/RESTv1VersionInterceptor.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386103192776" ignored="false" />
     <file path="$PROJECT_DIR$/../PressGangCCMSREST/src/main/java/org/jboss/pressgang/ccms/server/rest/v1/utils/RESTv1Utilities.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386103192776" ignored="false" />
     <file path="/docbuilder-translation" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386214216701" ignored="false" />
-    <file path="/PressZillaLinkChecker_v3.8.1.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386555143594" ignored="false" />
+    <file path="/PressZillaLinkChecker_v3.8.1.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386555341816" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -574,10 +573,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaLinkChecker_v3.8.5.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.5.js">
+      <file leaf-file-name="PressZillaLinkChecker_v3.8.6.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.6.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="20" selection-start="26054" selection-end="26054" vertical-scroll-proportion="0.350057">
+            <state line="72" column="43" selection-start="27488" selection-end="27488" vertical-scroll-proportion="0.6579248">
               <folding />
             </state>
           </provider>
@@ -636,7 +635,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.3.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.4.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.5.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.6.js" />
@@ -652,6 +650,7 @@
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.2.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.3.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.4.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.5.js" />
       </list>
     </option>
   </component>
@@ -3278,7 +3277,11 @@
       <created>1386554683284</created>
       <updated>1386554683284</updated>
     </task>
-    <option name="localTasksCounter" value="592" />
+    <task id="LOCAL-00592" summary="Started work on PressZilla link checker">
+      <created>1386555191978</created>
+      <updated>1386555191978</updated>
+    </task>
+    <option name="localTasksCounter" value="593" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -3693,9 +3696,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.5.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.6.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="20" selection-start="26054" selection-end="26054" vertical-scroll-proportion="0.350057">
+        <state line="72" column="43" selection-start="27488" selection-end="27488" vertical-scroll-proportion="0.6579248">
           <folding />
         </state>
       </provider>

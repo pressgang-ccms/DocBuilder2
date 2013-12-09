@@ -69,7 +69,8 @@ function checkDeadLinks() {
             href.substr(0, 1) != "#" &&
             jQuery.inArray(link.text(), IGNORED_LINK_CHECK_NAMES) == -1 &&
             URI(href).hostname() != "localhost" &&
-            URI(href).hostname() != "127.0.0.1") {
+            URI(href).hostname() != "127.0.0.1" &&
+            URI(href).protocol() != "mailto") {
 
             console.log("Checking " + href);
 
