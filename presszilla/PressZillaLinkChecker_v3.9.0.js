@@ -62,7 +62,7 @@ function logURLNotLoading(link, href){
 
     ++badLinkCount;
 
-    var button = jQuery('<button type="button" class="btn ' + style + '" style="width:230px; white-space: normal;")">' + href + '</button>');
+    var button = jQuery('<button type="button" class="btn btn-info" style="width:230px; white-space: normal;")">' + href + '</button>');
     var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
 
     buttonParent.append(button);
