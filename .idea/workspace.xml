@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.1.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZilla.user.js" afterPath="$PROJECT_DIR$/PressZilla.user.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386536862152" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386554259568" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385672201129" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -370,10 +370,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="overlay.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="overlay.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="352" column="1" selection-start="10588" selection-end="10588" vertical-scroll-proportion="0.3993135">
+            <state line="352" column="1" selection-start="10588" selection-end="10588" vertical-scroll-proportion="-13.96">
               <folding>
                 <marker date="1386554240388" expanded="false" signature="10453:10470" placeholder="..." />
                 <marker date="1386554240388" expanded="false" signature="10511:10526" placeholder="..." />
@@ -564,10 +564,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZilla.user.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PressZilla.user.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="0" selection-start="222" selection-end="451" vertical-scroll-proportion="0.0">
+            <state line="20" column="99" selection-start="1563" selection-end="1563" vertical-scroll-proportion="0.32894737">
               <folding />
             </state>
           </provider>
@@ -620,7 +620,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.4.9.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.0.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.1.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.2.js" />
@@ -636,6 +635,7 @@
         <option value="$PROJECT_DIR$/docbuilder-translation" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.1.js" />
         <option value="$PROJECT_DIR$/javascript/overlay.js" />
+        <option value="$PROJECT_DIR$/PressZilla.user.js" />
       </list>
     </option>
   </component>
@@ -3242,7 +3242,11 @@
       <created>1386536863436</created>
       <updated>1386536863436</updated>
     </task>
-    <option name="localTasksCounter" value="587" />
+    <task id="LOCAL-00587" summary="Started work on PressZilla link checker">
+      <created>1386554261414</created>
+      <updated>1386554261414</updated>
+    </task>
+    <option name="localTasksCounter" value="588" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -3319,7 +3323,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added date of duplicated topics last update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Started work on PressZilla link checker" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -3333,7 +3337,6 @@
     <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Merge branch 'master' of github.com:pressgang-ccms/DocBuilder2&#10;&#10;Conflicts:&#10;&#9;.idea/workspace.xml&#10;" />
     <MESSAGE value="Working on new lucene query" />
     <MESSAGE value="Fixing docbook zip file deletion" />
     <MESSAGE value="Working on PnT integration" />
@@ -3358,6 +3361,7 @@
     <MESSAGE value="Fixing https://bugzilla.redhat.com/show_bug.cgi?id=982044" />
     <MESSAGE value="Added menu for duplicated topics" />
     <MESSAGE value="Added date of duplicated topics last update" />
+    <MESSAGE value="Started work on PressZilla link checker" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -3624,13 +3628,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="0" selection-start="222" selection-end="451" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="121" column="19" selection-start="2313" selection-end="6031" vertical-scroll-proportion="0.0">
@@ -3653,7 +3650,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="352" column="1" selection-start="10588" selection-end="10588" vertical-scroll-proportion="0.3993135">
+        <state line="352" column="1" selection-start="10588" selection-end="10588" vertical-scroll-proportion="-13.96">
           <folding>
             <marker date="1386554240388" expanded="false" signature="10453:10470" placeholder="..." />
             <marker date="1386554240388" expanded="false" signature="10511:10526" placeholder="..." />
@@ -3829,6 +3826,13 @@
             <marker date="1386554240388" expanded="false" signature="148779:148829" placeholder="..." />
             <marker date="1386554240388" expanded="false" signature="151387:151413" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="99" selection-start="1563" selection-end="1563" vertical-scroll-proportion="0.32894737">
+          <folding />
         </state>
       </provider>
     </entry>
