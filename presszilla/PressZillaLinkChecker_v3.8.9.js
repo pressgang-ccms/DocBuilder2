@@ -77,7 +77,7 @@ function checkDeadLinks(links, index) {
     if (index < links.length) {
 
         jQuery('#badLinksBadge').remove();
-        jQuery('#badLinks').append($('<span class="badge pull-right">' + badLinkCount + ' (' + (index / links.length * 100.0).toFixed(2) + '%)</span>'));
+        jQuery('#badLinks').append($('<span id="badLinksBadge" class="badge pull-right">' + badLinkCount + ' (' + (index / links.length * 100.0).toFixed(2) + '%)</span>'));
 
         var link = jQuery(links[index]);
         var href = link.attr("href");
@@ -106,7 +106,7 @@ function checkDeadLinks(links, index) {
         }
     } else {
         jQuery('#badLinksBadge').remove();
-        jQuery('#badLinks').append($('<span class="badge pull-right">' + badLinkCount + '</span>'));
+        jQuery('#badLinks').append($('<span id="badLinksBadge" class="badge pull-right">' + badLinkCount + '</span>'));
     };
 }
 
