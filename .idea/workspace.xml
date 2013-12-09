@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.6.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.7.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZilla.user.js" afterPath="$PROJECT_DIR$/PressZilla.user.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386558324139" ignored="false" />
+    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386558424249" ignored="false" />
     <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385672201129" ignored="false" />
     <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
     <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
@@ -570,19 +570,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZilla.user.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PressZilla.user.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="21" selection-start="1585" selection-end="1585" vertical-scroll-proportion="0.0">
+            <state line="20" column="96" selection-start="1560" selection-end="1560" vertical-scroll-proportion="0.33707866">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaLinkChecker_v3.9.7.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PressZillaLinkChecker_v3.9.7.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.7.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="100" column="99" selection-start="28654" selection-end="28654" vertical-scroll-proportion="0.6830986">
+            <state line="100" column="99" selection-start="28654" selection-end="28654" vertical-scroll-proportion="-23.28">
               <folding>
                 <marker date="1386558403609" expanded="true" signature="27136:27169" placeholder="..." />
                 <marker date="1386558403609" expanded="true" signature="27259:27278" placeholder="..." />
@@ -673,13 +673,13 @@
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.8.9.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.0.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.1.js" />
-        <option value="$PROJECT_DIR$/PressZilla.user.js" />
         <option value="$PROJECT_DIR$/javascript/overlay.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.2.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.3.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.4.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.5.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.6.js" />
+        <option value="$PROJECT_DIR$/PressZilla.user.js" />
       </list>
     </option>
   </component>
@@ -3358,7 +3358,11 @@
       <created>1386558325591</created>
       <updated>1386558325591</updated>
     </task>
-    <option name="localTasksCounter" value="605" />
+    <task id="LOCAL-00605" summary="Started work on PressZilla link checker">
+      <created>1386558425729</created>
+      <updated>1386558425729</updated>
+    </task>
+    <option name="localTasksCounter" value="606" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -3383,7 +3387,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2145144" sideWeight="0.6777906" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2145144" sideWeight="0.6777906" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32873806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -3587,13 +3591,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="21" selection-start="1585" selection-end="1585" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2611" column="44" selection-start="119575" selection-end="119575" vertical-scroll-proportion="-17.96">
@@ -3781,11 +3778,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.7.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="99" selection-start="28654" selection-end="28654" vertical-scroll-proportion="0.6830986">
+        <state line="100" column="99" selection-start="28654" selection-end="28654" vertical-scroll-proportion="-23.28">
           <folding>
             <marker date="1386558403609" expanded="true" signature="27136:27169" placeholder="..." />
             <marker date="1386558403609" expanded="true" signature="27259:27278" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="96" selection-start="1560" selection-end="1560" vertical-scroll-proportion="0.33707866">
+          <folding />
         </state>
       </provider>
     </entry>
