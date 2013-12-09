@@ -69,7 +69,7 @@ function logURLNotLoading(link, href){
     jQuery('#badLinksItems').append(buttonParent);
 
     button.click(function() {
-        link.scrollIntoView();
+        link[0].scrollIntoView();
     });
 }
 
