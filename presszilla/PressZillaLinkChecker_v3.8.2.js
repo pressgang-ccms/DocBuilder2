@@ -16,7 +16,7 @@ function checkDeadLinks() {
 
             GM_xmlhttpRequest({
                 method: 'GET',
-                url: url,
+                url: href,
                 onabort: function(href) { return function() {logURLNotLoading(href);}},
                 onerror: function(href) { return function() {logURLNotLoading(href);}},
                 ontimeout: function(href) { return function() {logURLNotLoading(href);}}
