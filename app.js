@@ -405,7 +405,7 @@ function processSpecs(updatedSpecs) {
                     var scriptFiles = "\
                                 <script type='application/javascript'>\n\
                                     var BASE_SERVER = '" + deployment.BASE_SERVER + "';\n\
-                                    var SPEC_ID = " + specId + ";\n\
+                                    var SPEC_ID = " + id + ";\n\
                                 </script>\n\
                                 <script type='application/javascript' src='/javascript/jquery-2.0.3.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/moment.min.js'></script>\n\
