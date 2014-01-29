@@ -8,8 +8,6 @@
 // @include     http://docbuilder.ecs.eng.bne.redhat.com/*
 // @include     https://docbuilder.usersys.redhat.com/*
 // @include     https://docbuilder.ecs.eng.bne.redhat.com/*
-// @include     http://documentation-devel.engineering.redhat.com/site/documentation/*
-// @include     https://documentation-devel.engineering.redhat.com/site/documentation/*
 // @require     http://code.jquery.com/jquery-2.0.3.min.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaCommonUtils_v2.1.1.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaKeywordExtraction_v2.2.8.js
