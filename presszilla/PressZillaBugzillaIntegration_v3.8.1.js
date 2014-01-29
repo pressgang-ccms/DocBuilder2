@@ -163,7 +163,7 @@
                 if (isDocbuilderWindow()) {
                     var left = jQuery(document.body).offset().left + jQuery(document.body).width() + 20;
                 } else if (isDocStageWindow()) {
-                    var left = jQuery("main").offset().left + jQuery("main").width() + 20;
+                    var left = jQuery("#main").offset().left + jQuery("#main").width() + 20;
                 }
 
                 logToConsole(selectedText);

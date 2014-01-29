@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        PressZilla
+// @name        PressZilla Docs Stage
 // @namespace   https://www.jboss.org/pressgang
 // @description PressGang BugZilla customization
 // @author      Matthew Casperson
