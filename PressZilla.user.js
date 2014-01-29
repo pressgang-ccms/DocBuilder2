@@ -11,7 +11,7 @@
 // @require     http://code.jquery.com/jquery-2.0.3.min.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaCommonUtils_v2.1.1.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaKeywordExtraction_v2.2.8.js
-// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaIntegration_v3.7.9.js
+// @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaIntegration_v3.8.0.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaSolutionsIntegration_v2.7.1.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaMojoIntegration_v2.6.8.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js
