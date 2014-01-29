@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.8.2.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.8.3.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZilla.user.js" afterPath="$PROJECT_DIR$/PressZilla.user.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZillaDocsStage.user.js" afterPath="$PROJECT_DIR$/PressZillaDocsStage.user.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
@@ -76,10 +77,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZilla.user.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PressZilla.user.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="107" selection-start="824" selection-end="824" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
+            <state line="13" column="104" selection-start="821" selection-end="821" vertical-scroll-proportion="0.2181208" vertical-offset="0" max-vertical-offset="894">
               <folding />
             </state>
           </provider>
@@ -88,10 +89,8 @@
       <file leaf-file-name="PressZillaDocsStage.user.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PressZillaDocsStage.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="0" selection-start="0" selection-end="893" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state line="9" column="104" selection-start="612" selection-end="612" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -107,10 +106,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaBugzillaIntegration_v3.8.3.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PressZillaBugzillaIntegration_v3.8.3.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.8.3.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="80" selection-start="2217" selection-end="2217" vertical-scroll-proportion="0.4028103" vertical-offset="556" max-vertical-offset="4920">
+            <state line="60" column="80" selection-start="2217" selection-end="2217" vertical-scroll-proportion="-12.740741" vertical-offset="556" max-vertical-offset="4920">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <marker date="1390958012299" expanded="true" signature="2206:2244" placeholder="..." />
@@ -247,11 +246,11 @@
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.4.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.5.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.7.9.js" />
-        <option value="$PROJECT_DIR$/PressZilla.user.js" />
-        <option value="$PROJECT_DIR$/PressZillaDocsStage.user.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.8.0.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.8.1.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.8.2.js" />
+        <option value="$PROJECT_DIR$/PressZillaDocsStage.user.js" />
+        <option value="$PROJECT_DIR$/PressZilla.user.js" />
       </list>
     </option>
   </component>
@@ -787,7 +786,7 @@
       <created>1378599524767</created>
       <updated>1378599524767</updated>
       <workItem from="1390956040896" duration="17000" />
-      <workItem from="1390956082951" duration="1936000" />
+      <workItem from="1390956082951" duration="2173000" />
     </task>
     <task id="LOCAL-00001" summary="Initial import.&#10;Will query the server and return spec IDs that need to be built">
       <created>1378604206266</created>
@@ -3281,11 +3280,15 @@
       <created>1390957925065</created>
       <updated>1390957925065</updated>
     </task>
-    <option name="localTasksCounter" value="624" />
+    <task id="LOCAL-00624" summary="Working on adding support for docs devel&#10;">
+      <created>1390958023986</created>
+      <updated>1390958023986</updated>
+    </task>
+    <option name="localTasksCounter" value="625" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1953000" />
+    <option name="totallyTimeSpent" value="2190000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1918" y="-3" width="1924" height="1087" extended-state="6" />
@@ -3310,7 +3313,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21246007" sideWeight="0.6709265" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21246007" sideWeight="0.6709265" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32873806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
@@ -3559,22 +3562,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="107" selection-start="824" selection-end="824" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PressZillaDocsStage.user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="0" selection-end="893" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.8.0.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="376" column="243" selection-start="22918" selection-end="22922" vertical-scroll-proportion="-24.962963" vertical-offset="4966" max-vertical-offset="5820">
@@ -3586,7 +3573,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.8.3.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="80" selection-start="2217" selection-end="2217" vertical-scroll-proportion="0.4028103" vertical-offset="556" max-vertical-offset="4920">
+        <state line="60" column="80" selection-start="2217" selection-end="2217" vertical-scroll-proportion="-12.740741" vertical-offset="556" max-vertical-offset="4920">
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <marker date="1390958012299" expanded="true" signature="2206:2244" placeholder="..." />
@@ -3630,6 +3617,20 @@
             <marker date="1390958012299" expanded="true" signature="15150:15277" placeholder="..." />
             <marker date="1390958012299" expanded="true" signature="15203:15242" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZillaDocsStage.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="104" selection-start="612" selection-end="612" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="104" selection-start="821" selection-end="821" vertical-scroll-proportion="0.2181208" vertical-offset="0" max-vertical-offset="894">
+          <folding />
         </state>
       </provider>
     </entry>
