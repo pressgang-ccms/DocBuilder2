@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.5.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.4.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZilla.user.js" afterPath="$PROJECT_DIR$/PressZilla.user.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.5.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
@@ -87,11 +85,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZilla.user.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PressZilla.user.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="96" selection-start="1737" selection-end="1737" vertical-scroll-proportion="0.3691275" vertical-offset="0" max-vertical-offset="894">
-              <folding />
+            <state line="31" column="0" selection-start="2046" selection-end="2046" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -183,13 +183,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaLinkChecker_v4.0.5.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.5.js">
+      <file leaf-file-name="PressZillaLinkChecker_v4.0.6.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="87" column="5" selection-start="3902" selection-end="3902" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1410">
+            <state line="1" column="29" selection-start="42" selection-end="42" vertical-scroll-proportion="0.016778523" vertical-offset="0" max-vertical-offset="1410">
               <folding>
-                <marker date="1390956665648" expanded="true" signature="899:932" placeholder="..." />
-                <marker date="1390956665648" expanded="true" signature="1030:1049" placeholder="..." />
+                <marker date="1390956831602" expanded="true" signature="900:933" placeholder="..." />
+                <marker date="1390956831602" expanded="true" signature="1031:1050" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -235,6 +235,7 @@
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.3.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.4.js" />
         <option value="$PROJECT_DIR$/PressZilla.user.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.5.js" />
       </list>
     </option>
   </component>
@@ -770,7 +771,7 @@
       <created>1378599524767</created>
       <updated>1378599524767</updated>
       <workItem from="1390956040896" duration="17000" />
-      <workItem from="1390956082951" duration="592000" />
+      <workItem from="1390956082951" duration="758000" />
     </task>
     <task id="LOCAL-00001" summary="Initial import.&#10;Will query the server and return spec IDs that need to be built">
       <created>1378604206266</created>
@@ -3240,11 +3241,15 @@
       <created>1390956111491</created>
       <updated>1390956111491</updated>
     </task>
-    <option name="localTasksCounter" value="618" />
+    <task id="LOCAL-00618" summary="Working on adding support for docs devel">
+      <created>1390956689262</created>
+      <updated>1390956689262</updated>
+    </task>
+    <option name="localTasksCounter" value="619" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="609000" />
+    <option name="totallyTimeSpent" value="775000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1918" y="-3" width="1924" height="1087" extended-state="6" />
@@ -3269,7 +3274,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21246007" sideWeight="0.6709265" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21246007" sideWeight="0.6709265" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32873806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
@@ -3295,7 +3300,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Fixing docbook zip file deletion" />
     <MESSAGE value="Working on PnT integration" />
     <MESSAGE value="Working on product pages integration" />
     <MESSAGE value="Working on displaying updated topics" />
@@ -3320,7 +3324,8 @@
     <MESSAGE value="Added date of duplicated topics last update" />
     <MESSAGE value="Started work on PressZilla link checker" />
     <MESSAGE value="Working on adding support for docs stage&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working on adding support for docs stage&#10;" />
+    <MESSAGE value="Working on adding support for docs devel" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working on adding support for docs devel" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -3349,7 +3354,9 @@
     <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="21" column="21" selection-start="1585" selection-end="1585" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="525">
-          <folding />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3374,12 +3381,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.5.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="54" column="110" selection-start="2181" selection-end="2181" vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="1380">
           <folding>
-            <marker date="1390956665648" expanded="true" signature="899:932" placeholder="..." />
-            <marker date="1390956665648" expanded="true" signature="1030:1049" placeholder="..." />
+            <marker date="1390956831602" expanded="true" signature="900:933" placeholder="..." />
+            <marker date="1390956831602" expanded="true" signature="1031:1050" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -3401,7 +3408,9 @@
     <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="21" column="21" selection-start="1585" selection-end="1585" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="525">
-          <folding />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3426,12 +3435,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.5.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="54" column="110" selection-start="2181" selection-end="2181" vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="1380">
           <folding>
-            <marker date="1390956665648" expanded="true" signature="899:932" placeholder="..." />
-            <marker date="1390956665648" expanded="true" signature="1030:1049" placeholder="..." />
+            <marker date="1390956831602" expanded="true" signature="900:933" placeholder="..." />
+            <marker date="1390956831602" expanded="true" signature="1031:1050" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -3562,20 +3571,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.5.js">
+    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="5" selection-start="3902" selection-end="3902" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1410">
+        <state line="31" column="0" selection-start="2046" selection-end="2046" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555">
           <folding>
-            <marker date="1390956665648" expanded="true" signature="899:932" placeholder="..." />
-            <marker date="1390956665648" expanded="true" signature="1030:1049" placeholder="..." />
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="96" selection-start="1737" selection-end="1737" vertical-scroll-proportion="0.3691275" vertical-offset="0" max-vertical-offset="894">
-          <folding />
+        <state line="1" column="29" selection-start="42" selection-end="42" vertical-scroll-proportion="0.016778523" vertical-offset="0" max-vertical-offset="1410">
+          <folding>
+            <marker date="1390956831602" expanded="true" signature="900:933" placeholder="..." />
+            <marker date="1390956831602" expanded="true" signature="1031:1050" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

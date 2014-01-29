@@ -1,5 +1,5 @@
 (function(){
-    if (isDocbuilderWindow() {
+    if (isDocbuilderWindow()) {
         /**
          * A list of links not to check for 404s
          * @type {Array}
