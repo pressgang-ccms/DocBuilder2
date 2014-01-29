@@ -2,208 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript/overlay.js" afterPath="$PROJECT_DIR$/javascript/overlay.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.7.8.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.7.9.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaCommonUtils_v2.1.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaCommonUtils_v2.1.1.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.8.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.9.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZilla.user.js" afterPath="$PROJECT_DIR$/PressZilla.user.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386025392014" ignored="false" />
-    <file path="/app.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384898860098" ignored="false" />
-    <file path="/fragment.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378759494865" ignored="false" />
-    <file path="/README.md" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378701179490" ignored="false" />
-    <file path="$PROJECT_DIR$/../AceGWT/src/main/java/edu/ycp/cs/dh/acegwt/client/ace/AceEditor.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382053124518" ignored="false" />
-    <file path="/AceEditor.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378766990924" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/constants/Constants.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385421619732" ignored="false" />
-    <file path="$MAVEN_REPOSITORY$/org/jboss/pressgang/ccms/acegwt-client/1.1-SNAPSHOT/acegwt-client-1.1-SNAPSHOT-sources.jar!/edu/ycp/cs/dh/acegwt/client/ace/AceEditor.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378705857004" ignored="false" />
-    <file path="$MAVEN_REPOSITORY$/org/jboss/pressgang/ccms/acegwt-client/1.1-SNAPSHOT/acegwt-client-1.1-SNAPSHOT.jar!/edu/ycp/cs/dh/acegwt/AceGWT.gwt.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378705937741" ignored="false" />
-    <file path="$PROJECT_DIR$/../AceGWT/pom.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378706694551" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/pom.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382566349264" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/topic/searchresults/topics/TopicFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385415145958" ignored="false" />
-    <file path="$MAVEN_REPOSITORY$/org/jboss/pressgang/ccms/acegwt-client/1.2-SNAPSHOT/acegwt-client-1.2-SNAPSHOT.jar!/edu/ycp/cs/dh/acegwt/AceGWT.gwt.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378766456463" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/.errai/BootstrapperImpl.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/topic/TopicRenderedPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378764508808" ignored="false" />
-    <file path="/TopicRenderedPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1378764261248" ignored="false" />
-    <file path="/overlay.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1386025193951" ignored="false" />
-    <file path="/pressgang.css" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1379556444928" ignored="false" />
-    <file path="/pie.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1379638501361" ignored="false" />
-    <file path="/deployment_details.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383722946128" ignored="false" />
-    <file path="/git_force_pull.sh" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1381524890881" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/webapp/App.html" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382053226540" ignored="false" />
-    <file path="/App.html" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382043663452" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/server/ServerDetails.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382567353539" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/base/EditorSettingsDialog.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382058248165" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/resources/org/jboss/pressgang/ccms/ui/App.gwt.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382058248165" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/topic/base/BaseRenderedDiffPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382058248165" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/preferences/Preferences.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382058248165" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/topic/TopicXMLView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382058248165" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/topic/TopicRenderedView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/base/BaseTemplatePresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/topic/searchresults/base/BaseTopicFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/restcalls/FailOverRESTCall.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/topic/searchresults/translatedtopic/TranslatedTopicResultsAndTranslatedTopicView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382058248165" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/topic/TranslatedTopicRenderedView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/topic/TranslatedTopicAdditionalXMLView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382058248165" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/contentspec/ContentSpecFilteredResultsAndDetailsView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416591950" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/resources/strings/PressGangCCMSUI.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/restcalls/FailOverRESTCallDatabase.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382058248165" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/WelcomePresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382058248165" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/ui/editor/contentspec/RESTTextContentSpecV1TextEditor.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382058248165" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/topic/TopicReviewView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/base/BaseTemplateView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382058248165" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/WelcomeView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/topic/searchresults/translatedtopics/TranslatedTopicFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385415145958" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/contentspec/ContentSpecFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385421619732" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/topic/base/BaseTopicXMLPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382058248165" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/topic/TopicReviewPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/topic/base/BaseTopicRenderedPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382058248165" ignored="false" />
-    <file path="/a.dummy" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384206738183" ignored="false" />
-    <file path="/PressZilla.user.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382657068623" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSREST/src/main/java/org/jboss/pressgang/ccms/server/rest/v1/TranslatedTopicV1Factory.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382301795436" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSRESTv1Common/pom.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382303255542" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSRESTv1Common/src/main/java/org/jboss/pressgang/ccms/rest/v1/entities/RESTTopicV1.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382303449819" ignored="false" />
-    <file path="/RESTTopicV1.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382303444555" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSREST/src/main/java/org/jboss/pressgang/ccms/server/rest/v1/TopicV1Factory.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382310683668" ignored="false" />
-    <file path="/TopicV1Factory.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382305385656" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSREST/pom.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382311760580" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSREST/.idea/libraries/Maven__org_jboss_pressgang_ccms_pressgang_ccms_restv1_1_3_SNAPSHOT.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382304205093" ignored="false" />
-    <file path="$USER_HOME$/.m2/settings.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382305021547" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSRESTCommon/pom.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382307044739" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSRESTCommon/.settings/org.eclipse.wst.common.project.facet.core.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382307032114" ignored="false" />
-    <file path="/pom.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382311757475" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSREST/src/main/java/org/apache/lucene/queries/mlt/MoreLikeThis.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382310821694" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/PressGang CCMS Handbook.html" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382562467895" ignored="false" />
-    <file path="/Constants.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382566405059" ignored="false" />
-    <file path="/TopicFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382569078925" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/blobconstants/BlobConstantFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382569112772" ignored="false" />
-    <file path="/BlobConstantFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382569111540" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/category/CategoriesFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382569121252" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/file/FilesFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382569136788" ignored="false" />
-    <file path="/FilesFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382568883062" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/image/ImagesFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382584655830" ignored="false" />
-    <file path="/ImagesFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382584638842" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/integerconstants/IntegerConstantFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382569159539" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/project/ProjectsFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382569167507" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/propertytag/PropertyTagFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382569171915" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/propertytagcategory/PropertyCategoryFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382569175828" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/stringconstants/StringConstantFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382569186532" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/tag/TagsFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382569194067" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/server/ServerTypes.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382566848018" ignored="false" />
-    <file path="/ServerTypes.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382566846805" ignored="false" />
-    <file path="/ServerDetails.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382567353236" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/config/ConfigPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382567635572" ignored="false" />
-    <file path="/ConfigPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382567634420" ignored="false" />
-    <file path="/IntegerConstantFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382569153765" ignored="false" />
-    <file path="/BaseTemplatePresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382574376966" ignored="false" />
-    <file path="/RESTLanguageImageCollectionV1Editor.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382581362556" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/ui/editor/image/RESTLanguageImageCollectionV1Editor.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382585130825" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/ui/editor/image/RESTLanguageImageV1Editor.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382584346335" ignored="false" />
-    <file path="/RESTLanguageImageV1Editor.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382584206589" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/ui/editor/image/RESTImageV1Editor.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382581553910" ignored="false" />
-    <file path="/RESTImageV1Editor.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382581517207" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/image/ImageView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382581552390" ignored="false" />
-    <file path="/ImageView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382581548087" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/tag/TagProjectsView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382581804162" ignored="false" />
-    <file path="/TagProjectsView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382581801223" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/common/CommonExtendedPropertyView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382581818228" ignored="false" />
-    <file path="/CommonExtendedPropertyView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382581817885" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/tag/TagCategoriesView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382582801176" ignored="false" />
-    <file path="/TagCategoriesView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382582788298" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/category/CategoryTagView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382582860617" ignored="false" />
-    <file path="/CategoryTagView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382582859776" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/project/ProjectTagView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382582056106" ignored="false" />
-    <file path="/ProjectTagView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382582053863" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/search/BaseTopicSearchTagsFieldsAndFiltersPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382583943501" ignored="false" />
-    <file path="/BaseTopicSearchTagsFieldsAndFiltersPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382582408712" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/ui/editor/blobconstant/RESTBlobConstantV1DetailsEditor.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382582489496" ignored="false" />
-    <file path="/RESTBlobConstantV1DetailsEditor.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382582488551" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/propertytag/PropertyTagCategoryView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382582643234" ignored="false" />
-    <file path="/PropertyTagCategoryView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382582581560" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/propertycategory/PropertyCategoryTagView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382582643234" ignored="false" />
-    <file path="/PropertyCategoryTagView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382582639228" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/topic/TopicContentSpecsView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382583116761" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/topic/TopicRevisionsView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382583297864" ignored="false" />
-    <file path="/TopicRevisionsView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382583261218" ignored="false" />
-    <file path="/README" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382655877376" ignored="false" />
-    <file path="/PressZillaKeywordExtraction.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382663612656" ignored="false" />
-    <file path="/PressZillaMojoIntegration.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382667472847" ignored="false" />
-    <file path="/PressZillaBugzillaIntegration.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382657662505" ignored="false" />
-    <file path="/PressZillaSolutionsIntegration.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382664646361" ignored="false" />
-    <file path="/PressZillaMojoIntegration_v2.1.2.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382667797016" ignored="false" />
-    <file path="/copy_js_files.sh" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383772998835" ignored="false" />
-    <file path="/PressZillaJbossOrgIntegration_v2.1.7.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382671095230" ignored="false" />
-    <file path="/PressZillaJbossOrgIntegration_v2.1.8.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382671487610" ignored="false" />
-    <file path="/PressZillaJbossOrgIntegration_v2.1.9.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382671929733" ignored="false" />
-    <file path="/PressZillaJbossOrgIntegration_v2.2.1.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382673253554" ignored="false" />
-    <file path="/PressZillaMojoIntegration_v2.1.7.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382674059811" ignored="false" />
-    <file path="/PressZillaJbossOrgIntegration_v2.2.6.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382674460936" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSVisualisation/.idea/workspace.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382933338311" ignored="false" />
-    <file path="/PressZillaBugzillaSearchIntegration_v2.2.8.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382931469101" ignored="false" />
-    <file path="/PressZillaBugzillaSearchIntegration_v2.3.8.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382929852105" ignored="false" />
-    <file path="/PressZillaBugzillaSearchIntegration_v2.4.5.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1382931435865" ignored="false" />
-    <file path="/PressZillaSolutionsIntegration_v2.1.4.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383082916104" ignored="false" />
-    <file path="/PressZillaPnTIntegration_v2.6.9.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383097680031" ignored="false" />
-    <file path="/PressZillaPnTIntegration_v2.7.0.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383096685672" ignored="false" />
-    <file path="/PressZillaPnTIntegration_v2.7.4.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383097973900" ignored="false" />
-    <file path="/impact.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383537506341" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v2.7.5.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383545402884" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSVisulaisationClient/javascript/PressGangCCMSVisualisationClient.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383536917260" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSVisulaisationClient/index.html" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383536917260" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSVisulaisationClient/.idea/workspace.xml" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383682117288" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v2.8.1.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383540340009" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v2.8.6.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383541201944" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v2.8.9.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383541849490" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v2.9.1.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383542658602" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v2.9.3.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383543354212" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v2.9.6.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383544142814" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v2.9.7.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383544226110" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v2.9.8.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383544343291" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v2.9.9.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383544636542" ignored="false" />
-    <file path="/PressZillaBugzillaSearchIntegration_v2.6.6.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383768947256" ignored="false" />
-    <file path="/pressgang_websites.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383856854543" ignored="false" />
-    <file path="/style.css" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383800629448" ignored="false" />
-    <file path="/PressZillaBugzillaSearchIntegration_v3.4.2.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383788592340" ignored="false" />
-    <file path="/PressZillaBugzillaSearchIntegration_v3.4.3.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383791686120" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangWebsites/pressgang_websites.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383862093064" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangWebsites/demo/overlay/index.html" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383862162246" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangWebsites/demo/injection/index.html" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383864784093" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangWebsites/demo/injection/js/jquery.bootstrap.wizard.min.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383862340382" ignored="false" />
-    <file path="/index.html" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383864777651" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangWebsites/demo/injection/js/jquery.bootstrap.wizard.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1383863538763" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v3.4.5.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384067349409" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v3.4.6.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384063151254" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v3.5.9.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384071705145" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v3.6.5.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384071251977" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v3.6.7.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384071700936" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v3.6.8.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384114781113" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v3.6.9.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384114971657" ignored="false" />
-    <file path="/PressZillaProductPagesIntegration_v3.7.1.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384125221583" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/webapp/javascript/typojs/en_US.dic" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384213002958" ignored="false" />
-    <file path="/en_US.dic" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384213002958" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/webapp/javascript/typojs/en_US-custom.dic" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384213007800" ignored="false" />
-    <file path="/en_US-custom.dic" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384213007800" ignored="false" />
-    <file path="/PressZillaBugzillaIntegration_v2.1.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384229518412" ignored="false" />
-    <file path="/styleguidebuilder.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384923363457" ignored="false" />
-    <file path="/PressZillaBugzillaSearchIntegration_v3.4.5.js" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1384925320158" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/AppController.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/ui/editor/topicview/RESTTopicV1BasicDetailsEditor.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385415145958" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/topic/TopicRevisionsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/topic/TopicContentSpecsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/common/CommonExtendedPropertiesPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="/ContentSpecFilteredResultsAndDetailsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385420612481" ignored="false" />
-    <file path="/ContentSpecFilteredResultsAndDetailsView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416141021" ignored="false" />
-    <file path="/PressGangCCMSUI.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385415267433" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/resources/org/jboss/pressgang/ccms/ui/client/local/resources/strings/PressGangCCMSUI.properties" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="/PressGangCCMSUI.properties" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385415277315" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/DocBuilderPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/topic/TopicSourceURLsView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/App.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/data/ServerSettings.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/ui/UIUtilities.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/.errai/beangraph.gv" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/topic/TranslatedTopicRenderedPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/presenter/topic/TopicSourceURLsPresenter.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/java/org/jboss/pressgang/ccms/ui/client/local/mvp/view/topic/TopicBIRTBugsView.java" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385416010174" ignored="false" />
-    <file path="$PROJECT_DIR$/../PressGangCCMSUI/src/main/webapp/css/App.css" changelist="7a464b10-21b0-4a7e-869c-58879dfe744e" time="1385420510657" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -264,222 +70,61 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app.js">
+      <file leaf-file-name="PressZillaDictionary_v1.5.9.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.9.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="0" selection-start="1286" selection-end="1446" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="overlay.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2926" column="65" selection-start="134318" selection-end="134318" vertical-scroll-proportion="0.65296054">
+            <state line="101" column="1" selection-start="3939" selection-end="3939" vertical-scroll-proportion="-1.400681" vertical-offset="2749" max-vertical-offset="3630">
               <folding>
-                <marker date="1386025323366" expanded="false" signature="10197:10212" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="12938:13036" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="13138:13148" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="13149:13325" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="13205:13219" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="13276:13290" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="29647:29745" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="29847:29857" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="29919:30006" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="30021:30031" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="30074:30162" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="30177:30187" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="30231:30320" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="30335:30345" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="30390:30479" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="30494:30504" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="30548:30634" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="30649:30659" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="33251:33315" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="47585:47604" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="47605:47749" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="47681:47714" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="47955:47991" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="47992:48076" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="65878:65935" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="66030:66675" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="66133:66675" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="75896:75943" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="76199:76351" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="76480:76510" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="76748:76780" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="76838:78920" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="76892:78920" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="77086:77109" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="77306:77329" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="77522:77545" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="77744:77767" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="77937:77960" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="78161:78184" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="78425:78448" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="78657:78680" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="78887:78910" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="79225:79257" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="79319:79566" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="79402:79554" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="79770:79802" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="79866:80630" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="79945:80618" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="80839:80871" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="80937:81181" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="81017:81169" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="81403:81435" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="81498:81752" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="81588:81740" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="81982:82014" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="82105:83648" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="82159:83636" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="82476:82604" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="82805:82934" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="83139:83269" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="83472:83602" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="83861:83893" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="83963:84374" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="84048:84362" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="84596:84628" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="84699:85111" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="84785:85099" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="85336:85368" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="85440:85853" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="85527:85841" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="86079:86111" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="86182:86594" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="86268:86582" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="86815:86847" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="86945:88512" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="86999:88500" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="87322:87450" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="87657:87786" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="87997:88127" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="88336:88466" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="88731:88763" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="88835:89254" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="88922:89242" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="89482:89514" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="89587:90007" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="89675:89995" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="90238:90270" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="90344:90765" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="90433:90753" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="90997:91029" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="91102:91522" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="91190:91510" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="91745:91777" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="91870:93762" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="91924:93750" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="92238:92366" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="92564:92693" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="92895:93025" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="93225:93355" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="93578:93705" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="93973:94005" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="94076:94489" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="94159:94477" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="94705:94737" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="94809:95223" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="94893:95211" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="95442:95474" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="95547:95962" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="95632:95950" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="96182:96214" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="96286:96700" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="96370:96688" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="96927:96959" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="97037:97459" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="97129:97447" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="97685:97717" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="97774:98348" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="97828:98336" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="98547:98579" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="98644:99027" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="98724:99015" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="99241:99273" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="99340:99724" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="99421:99712" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="99936:99968" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="100053:101724" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="100130:101712" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="101931:101963" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="102029:102564" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="102109:102552" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="102782:102814" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="102885:103430" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="102970:103418" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="103654:103686" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="103753:104290" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="103834:104278" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="104510:104542" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="104613:105158" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="104698:105146" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="105382:105414" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="105482:106019" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="105563:106007" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="106211:106243" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="106314:106859" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="106399:106847" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="107085:107117" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="107186:107727" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="107269:107715" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="107957:107989" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="108067:108624" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="108158:108612" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="119983:120002" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="120349:120385" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="120386:120496" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="122487:122506" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="122628:122661" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="122841:122877" placeholder="..." />
-                <marker date="1386025323366" expanded="true" signature="122878:122996" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="140789:140839" placeholder="..." />
-                <marker date="1386025323366" expanded="false" signature="143397:143423" placeholder="..." />
+                <marker date="1390955839665" expanded="false" signature="7623:7673" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="styleguidebuilder.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/styleguidebuilder.js">
+      <file leaf-file-name="PressZillaJbossOrgIntegration_v2.6.8.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="4" selection-start="1985" selection-end="1985" vertical-scroll-proportion="0.0">
+            <state line="4" column="4" selection-start="125" selection-end="150" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2070">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaBugzillaSearchIntegration_v3.8.0.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.8.0.js">
+      <file leaf-file-name="PressZillaKeywordExtraction_v2.2.8.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaKeywordExtraction_v2.2.8.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="175" column="67" selection-start="10252" selection-end="10252" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1695">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PressZillaMojoIntegration_v2.6.8.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.6.8.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2085">
               <folding>
-                <marker date="1384925396203" expanded="false" signature="5039:5058" placeholder="..." />
-                <marker date="1384925396203" expanded="true" signature="5059:5142" placeholder="..." />
-                <marker date="1384925396203" expanded="true" signature="5729:5796" placeholder="..." />
-                <marker date="1384925396203" expanded="false" signature="22807:22871" placeholder="..." />
+                <element signature="n#!!doc" expanded="true" />
+                <marker date="1390955499026" expanded="false" signature="3529:3605" placeholder="..." />
+                <marker date="1390955499026" expanded="true" signature="3606:3660" placeholder="..." />
+                <marker date="1390955499026" expanded="false" signature="6280:6356" placeholder="..." />
+                <marker date="1390955499026" expanded="true" signature="6357:6399" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="typo.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/javascript/typo.js">
+      <file leaf-file-name="PressZillaPnTIntegration_v2.7.4.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="57" selection-start="454" selection-end="456" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="copy_js_files.sh" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2325">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <marker date="1390955499026" expanded="false" signature="3975:4051" placeholder="..." />
+                <marker date="1390955499026" expanded="true" signature="4052:4110" placeholder="..." />
+                <marker date="1390955499026" expanded="false" signature="7154:7230" placeholder="..." />
+                <marker date="1390955499026" expanded="true" signature="7231:7273" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -487,10 +132,8 @@
       <file leaf-file-name="PressZilla.user.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="36" selection-start="1772" selection-end="1772" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state line="7" column="9" selection-start="286" selection-end="286" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -498,13 +141,89 @@
       <file leaf-file-name="PressZillaProductPagesIntegration_v3.7.9.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="277" column="40" selection-start="12691" selection-end="12691" vertical-scroll-proportion="0.0">
+            <state line="277" column="40" selection-start="12691" selection-end="12691" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6915">
               <folding>
-                <marker date="1384231240054" expanded="false" signature="4229:4278" placeholder="..." />
-                <marker date="1384231240054" expanded="false" signature="5399:5460" placeholder="..." />
-                <marker date="1384231240054" expanded="false" signature="5629:5690" placeholder="..." />
-                <marker date="1384231240054" expanded="false" signature="5849:5911" placeholder="..." />
+                <marker date="1390955499026" expanded="false" signature="4229:4278" placeholder="..." />
+                <marker date="1390955499026" expanded="false" signature="5399:5460" placeholder="..." />
+                <marker date="1390955499026" expanded="false" signature="5629:5690" placeholder="..." />
+                <marker date="1390955499026" expanded="false" signature="5849:5911" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PressZillaSolutionsIntegration_v2.7.1.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2220">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <marker date="1390955499026" expanded="false" signature="4030:4106" placeholder="..." />
+                <marker date="1390955499026" expanded="true" signature="4107:4165" placeholder="..." />
+                <marker date="1390955499026" expanded="false" signature="5391:5429" placeholder="..." />
+                <marker date="1390955499026" expanded="false" signature="5441:5448" placeholder="..." />
+                <marker date="1390955499026" expanded="false" signature="7247:7323" placeholder="..." />
+                <marker date="1390955499026" expanded="true" signature="7324:7366" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PressZillaBugzillaIntegration_v3.7.9.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.7.9.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="4" selection-start="224" selection-end="248" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4830">
+              <folding>
+                <marker date="1390955702486" expanded="false" signature="2206:2231" placeholder="..." />
+                <marker date="1390955702486" expanded="false" signature="2410:2604" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="2605:2990" placeholder="..." />
+                <marker date="1390955702486" expanded="false" signature="2698:2897" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="2898:2946" placeholder="..." />
+                <marker date="1390955702486" expanded="false" signature="3072:3167" placeholder="..." />
+                <marker date="1390955702486" expanded="false" signature="3331:3401" placeholder="..." />
+                <marker date="1390955702486" expanded="false" signature="3571:4247" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="4248:4358" placeholder="..." />
+                <marker date="1390955702486" expanded="false" signature="5006:5031" placeholder="..." />
+                <marker date="1390955702486" expanded="false" signature="5201:5395" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="5396:5769" placeholder="..." />
+                <marker date="1390955702486" expanded="false" signature="5485:5684" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="5685:5729" placeholder="..." />
+                <marker date="1390955702486" expanded="false" signature="5847:5942" placeholder="..." />
+                <marker date="1390955702486" expanded="false" signature="6097:6167" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="10259:11388" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="10292:11358" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="10326:10794" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="10378:10577" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="10444:10538" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="10615:10759" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="10828:11324" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="10880:11085" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="10949:11046" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="11123:11289" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="12759:13342" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="12792:13313" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="12826:12953" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="12879:12918" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="12987:13116" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="13042:13081" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="13150:13279" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="13205:13244" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="14702:15119" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="14735:15090" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="14769:14895" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="14821:14860" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="14929:15056" placeholder="..." />
+                <marker date="1390955702486" expanded="true" signature="14982:15021" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PressZillaCommonUtils_v2.1.1.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaCommonUtils_v2.1.1.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="25" selection-start="238" selection-end="254" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -546,16 +265,19 @@
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/styleguidebuilder.js" />
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.4.5.js" />
-        <option value="$PROJECT_DIR$/PressZilla.user.js" />
         <option value="$PROJECT_DIR$/javascript/overlay.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaCommonUtils_v2.1.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.7.8.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.8.js" />
+        <option value="$PROJECT_DIR$/PressZilla.user.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-2" />
+    <option name="x" value="1918" />
     <option name="y" value="-3" />
     <option name="width" value="1924" />
-    <option name="height" value="1207" />
+    <option name="height" value="1087" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -607,8 +329,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -682,7 +404,7 @@
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PressGangWebsites" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="239" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1149" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1145" />
@@ -719,11 +441,88 @@
       <recent name="$PROJECT_DIR$/javascript" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.styleguidebuilder.js">
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+  <component name="RunManager">
+    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails" singleton="true">
+      <module name="" />
+      <setting name="vmparams" value="" />
+      <setting name="cmdLine" value="run-app" />
+      <setting name="depsClasspath" value="false" />
+      <setting name="passParentEnv" value="true" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <setting name="launchBrowser" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin" singleton="true">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
       <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="DocBuilder2" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="TARGET" value="" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="py.test">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="DocBuilder2" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="testToRun" value="" />
+      <option name="keywords" value="" />
+      <option name="params" value="" />
+      <option name="USE_PARAM" value="false" />
+      <option name="USE_KEYWORD" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Nosetests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="DocBuilder2" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -734,7 +533,7 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="$PROJECT_DIR$">
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
       <method />
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -778,19 +577,24 @@
       <listeners />
       <method />
     </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
       <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="DocBuilder2" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
@@ -814,6 +618,188 @@
       <patterns />
       <method />
     </configuration>
+    <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
+      <option name="BCName" value="" />
+      <option name="IOSSimulatorSdkPath" value="" />
+      <option name="adlOptions" value="" />
+      <option name="airProgramParameters" value="" />
+      <option name="appDescriptorForEmulator" value="Android" />
+      <option name="debugTransport" value="USB" />
+      <option name="debuggerSdkRaw" value="BC SDK" />
+      <option name="emulator" value="NexusOne" />
+      <option name="emulatorAdlOptions" value="" />
+      <option name="fastPackaging" value="true" />
+      <option name="fullScreenHeight" value="0" />
+      <option name="fullScreenWidth" value="0" />
+      <option name="launchUrl" value="false" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browserFamily" value="FIREFOX" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="/usr/bin/flashplayerdebugger" />
+        </LauncherParameters>
+      </option>
+      <option name="mobileRunTarget" value="Emulator" />
+      <option name="moduleName" value="" />
+      <option name="overriddenMainClass" value="" />
+      <option name="overriddenOutputFileName" value="" />
+      <option name="overrideMainClass" value="false" />
+      <option name="runTrusted" value="true" />
+      <option name="screenDpi" value="0" />
+      <option name="screenHeight" value="0" />
+      <option name="screenWidth" value="0" />
+      <option name="url" value="http://" />
+      <option name="usbDebugPort" value="7936" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="DocBuilder2" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="DocBuilder2" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" output_log_level="null" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browserFamily" value="FIREFOX" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="/usr/bin/flashplayerdebugger" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="myFilePath" />
+      <option name="GLUE" />
+      <option name="myNameFilter" />
+      <option name="myGeneratedName" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Attests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="DocBuilder2" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
     <configuration default="false" name="styleguidebuilder.js" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="/usr/bin/node" path-to-js-file="styleguidebuilder.js" working-dir="$PROJECT_DIR$">
       <RunnerSettings RunnerId="NodeJS.debug" />
       <RunnerSettings RunnerId="NodeJS.run" />
@@ -821,10 +807,7 @@
       <ConfigurationWrapper RunnerId="NodeJS.run" />
       <method />
     </configuration>
-    <list size="2">
-      <item index="0" class="java.lang.String" itemvalue="Node.js.app.js" />
-      <item index="1" class="java.lang.String" itemvalue="Node.js.styleguidebuilder.js" />
-    </list>
+    <list size="0" />
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
       <Port>5050</Port>
@@ -853,6 +836,7 @@
       <changelist id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="" />
       <created>1378599524767</created>
       <updated>1378599524767</updated>
+      <workItem from="1390955517712" duration="498000" />
     </task>
     <task id="LOCAL-00001" summary="Initial import.&#10;Will query the server and return spec IDs that need to be built">
       <created>1378604206266</created>
@@ -3149,13 +3133,18 @@
     <option name="localTasksCounter" value="574" />
     <servers />
   </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="498000" />
+  </component>
   <component name="ToolWindowManager">
-    <frame x="-2" y="-3" width="1924" height="1207" extended-state="6" />
+    <frame x="1918" y="-3" width="1924" height="1087" extended-state="6" />
     <editor active="false" />
     <layout>
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32887402" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.6355052" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39943343" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -3163,80 +3152,39 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3644948" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36402115" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2054429" sideWeight="0.6355052" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20500532" sideWeight="0.6355052" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TunnelliJ" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.6355052" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USERS">
+      <collection />
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="myTodoPanelSettings">
-      <value>
-        <are-packages-shown value="false" />
-        <are-modules-shown value="false" />
-        <flatten-packages value="false" />
-        <is-autoscroll-to-source value="false" />
-      </value>
+      <TodoPanelSettings />
     </option>
-    <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true" />
-    <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true" />
-    <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
-    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
-    <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
-    <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
-    <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
-    <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
-    <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
-    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
-    <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
-    <option name="SHORT_DIFF_HORIZONTALLY" value="true" />
-    <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
-    <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
-    <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
-    <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
-    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
-    <option name="SHOW_DIRTY_RECURSIVELY" value="false" />
-    <option name="LIMIT_HISTORY" value="true" />
-    <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
-    <option name="UPDATE_FILTER_SCOPE_NAME" />
-    <option name="USE_COMMIT_MESSAGE_MARGIN" value="false" />
-    <option name="COMMIT_MESSAGE_MARGIN_SIZE" value="72" />
-    <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
-    <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working on adding popover for duplicated topics" />
-    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
-    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
-    <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
-    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
-    <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
-    <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
-    <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
-    <option name="ACTIVE_VCS_NAME" />
-    <option name="UPDATE_GROUP_BY_PACKAGES" value="false" />
-    <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
-    <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
-    <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
-    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
     <MESSAGE value="Working on jboss.org integration" />
     <MESSAGE value="An exception was being thrown:&#10;&#10;/home/pressgang/DocBuilder2/app.js:766&#10;&#9;&#9;&#9;if (file.toString().match(filter)) {&#10;&#9;&#9;&#9;                    ^&#10;RangeError: Maximum call stack size exceeded&#10;" />
     <MESSAGE value="Fixed npe" />
@@ -3262,6 +3210,7 @@
     <MESSAGE value="Working on the ability to submit words to the custom dictionary" />
     <MESSAGE value="Fixed issue where bugs were listed twice" />
     <MESSAGE value="Working on adding popover for duplicated topics" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working on adding popover for duplicated topics" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -3273,277 +3222,605 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/resources/html5-schema/common.rnc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="123" column="23" selection-start="3271" selection-end="3271" vertical-scroll-proportion="0.33258426" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/bootstrap.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="4" selection-start="125" selection-end="150" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/wordprocessor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/typo_proto.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="542" column="37" selection-start="13156" selection-end="13162" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.7.8.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="263" column="45" selection-start="13432" selection-end="13432" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="277" column="40" selection-start="12691" selection-end="12691" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1384231240054" expanded="false" signature="4229:4278" placeholder="..." />
-            <marker date="1384231240054" expanded="false" signature="5399:5460" placeholder="..." />
-            <marker date="1384231240054" expanded="false" signature="5629:5690" placeholder="..." />
-            <marker date="1384231240054" expanded="false" signature="5849:5911" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/typo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="57" selection-start="454" selection-end="456" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="1286" selection-end="1446" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dictionaries/en_US.aff">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dictionaries/en_US.dic">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29198" column="5" selection-start="331759" selection-end="331763" vertical-scroll-proportion="20170.84">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.8.0.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="175" column="67" selection-start="10252" selection-end="10252" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1384925396203" expanded="false" signature="5039:5058" placeholder="..." />
-            <marker date="1384925396203" expanded="true" signature="5059:5142" placeholder="..." />
-            <marker date="1384925396203" expanded="true" signature="5729:5796" placeholder="..." />
-            <marker date="1384925396203" expanded="false" signature="22807:22871" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="36" selection-start="1772" selection-end="1772" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/styleguidebuilder.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="4" selection-start="1985" selection-end="1985" vertical-scroll-proportion="0.0">
+        <state line="26" column="0" selection-start="1286" selection-end="1446" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="12405">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2926" column="65" selection-start="134318" selection-end="134318" vertical-scroll-proportion="0.65296054">
+        <state line="2926" column="65" selection-start="134318" selection-end="134318" vertical-scroll-proportion="0.0" vertical-offset="43890" max-vertical-offset="48390">
           <folding>
-            <marker date="1386025323366" expanded="false" signature="10197:10212" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="12938:13036" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="13138:13148" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="13149:13325" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="13205:13219" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="13276:13290" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="29647:29745" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="29847:29857" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="29919:30006" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="30021:30031" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="30074:30162" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="30177:30187" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="30231:30320" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="30335:30345" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="30390:30479" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="30494:30504" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="30548:30634" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="30649:30659" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="33251:33315" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="47585:47604" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="47605:47749" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="47681:47714" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="47955:47991" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="47992:48076" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="65878:65935" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="66030:66675" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="66133:66675" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="75896:75943" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="76199:76351" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="76480:76510" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="76748:76780" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="76838:78920" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="76892:78920" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="77086:77109" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="77306:77329" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="77522:77545" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="77744:77767" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="77937:77960" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="78161:78184" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="78425:78448" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="78657:78680" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="78887:78910" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="79225:79257" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="79319:79566" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="79402:79554" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="79770:79802" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="79866:80630" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="79945:80618" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="80839:80871" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="80937:81181" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="81017:81169" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="81403:81435" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="81498:81752" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="81588:81740" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="81982:82014" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="82105:83648" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="82159:83636" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="82476:82604" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="82805:82934" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="83139:83269" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="83472:83602" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="83861:83893" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="83963:84374" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="84048:84362" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="84596:84628" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="84699:85111" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="84785:85099" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="85336:85368" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="85440:85853" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="85527:85841" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="86079:86111" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="86182:86594" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="86268:86582" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="86815:86847" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="86945:88512" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="86999:88500" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="87322:87450" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="87657:87786" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="87997:88127" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="88336:88466" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="88731:88763" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="88835:89254" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="88922:89242" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="89482:89514" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="89587:90007" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="89675:89995" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="90238:90270" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="90344:90765" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="90433:90753" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="90997:91029" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="91102:91522" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="91190:91510" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="91745:91777" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="91870:93762" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="91924:93750" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="92238:92366" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="92564:92693" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="92895:93025" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="93225:93355" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="93578:93705" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="93973:94005" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="94076:94489" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="94159:94477" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="94705:94737" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="94809:95223" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="94893:95211" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="95442:95474" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="95547:95962" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="95632:95950" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="96182:96214" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="96286:96700" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="96370:96688" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="96927:96959" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="97037:97459" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="97129:97447" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="97685:97717" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="97774:98348" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="97828:98336" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="98547:98579" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="98644:99027" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="98724:99015" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="99241:99273" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="99340:99724" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="99421:99712" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="99936:99968" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="100053:101724" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="100130:101712" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="101931:101963" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="102029:102564" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="102109:102552" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="102782:102814" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="102885:103430" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="102970:103418" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="103654:103686" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="103753:104290" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="103834:104278" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="104510:104542" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="104613:105158" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="104698:105146" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="105382:105414" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="105482:106019" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="105563:106007" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="106211:106243" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="106314:106859" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="106399:106847" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="107085:107117" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="107186:107727" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="107269:107715" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="107957:107989" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="108067:108624" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="108158:108612" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="119983:120002" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="120349:120385" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="120386:120496" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="122487:122506" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="122628:122661" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="122841:122877" placeholder="..." />
-            <marker date="1386025323366" expanded="true" signature="122878:122996" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="140789:140839" placeholder="..." />
-            <marker date="1386025323366" expanded="false" signature="143397:143423" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/styleguidebuilder.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="0" selection-start="1985" selection-end="1985" vertical-scroll-proportion="0.0" vertical-offset="840" max-vertical-offset="1455">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.8.0.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="175" column="67" selection-start="10252" selection-end="10252" vertical-scroll-proportion="0.0" vertical-offset="2625" max-vertical-offset="5820">
+          <folding>
+            <marker date="1390955499025" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955499025" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955499025" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955499025" expanded="false" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/typo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="57" selection-start="454" selection-end="456" vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="1905">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="150">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="0" selection-start="1772" selection-end="1772" vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="510">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="277" column="40" selection-start="12691" selection-end="12691" vertical-scroll-proportion="0.0" vertical-offset="4155" max-vertical-offset="6915">
+          <folding>
+            <marker date="1390955499026" expanded="false" signature="4229:4278" placeholder="..." />
+            <marker date="1390955499026" expanded="false" signature="5399:5460" placeholder="..." />
+            <marker date="1390955499026" expanded="false" signature="5629:5690" placeholder="..." />
+            <marker date="1390955499026" expanded="false" signature="5849:5911" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/resources/html5-schema/common.rnc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="123" column="23" selection-start="3271" selection-end="3271" vertical-scroll-proportion="0.33258426" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/bootstrap.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/wordprocessor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/typo_proto.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="542" column="37" selection-start="13156" selection-end="13162" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/typo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="57" selection-start="454" selection-end="456" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="0" selection-start="1286" selection-end="1446" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dictionaries/en_US.aff">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dictionaries/en_US.dic">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29198" column="5" selection-start="331759" selection-end="331763" vertical-scroll-proportion="20170.84" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/styleguidebuilder.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="0" selection-start="1985" selection-end="1985" vertical-scroll-proportion="0.0" vertical-offset="840" max-vertical-offset="1455">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2926" column="65" selection-start="134318" selection-end="134318" vertical-scroll-proportion="0.0" vertical-offset="43890" max-vertical-offset="48390">
+          <folding>
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955498754" expanded="false" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="4" selection-start="125" selection-end="150" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2070">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaKeywordExtraction_v2.2.8.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1695">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.6.8.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2085">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1390955499026" expanded="false" signature="3529:3605" placeholder="..." />
+            <marker date="1390955499026" expanded="true" signature="3606:3660" placeholder="..." />
+            <marker date="1390955499026" expanded="false" signature="6280:6356" placeholder="..." />
+            <marker date="1390955499026" expanded="true" signature="6357:6399" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2325">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1390955499026" expanded="false" signature="3975:4051" placeholder="..." />
+            <marker date="1390955499026" expanded="true" signature="4052:4110" placeholder="..." />
+            <marker date="1390955499026" expanded="false" signature="7154:7230" placeholder="..." />
+            <marker date="1390955499026" expanded="true" signature="7231:7273" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="277" column="40" selection-start="12691" selection-end="12691" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <folding>
+            <marker date="1390955499026" expanded="false" signature="4229:4278" placeholder="..." />
+            <marker date="1390955499026" expanded="false" signature="5399:5460" placeholder="..." />
+            <marker date="1390955499026" expanded="false" signature="5629:5690" placeholder="..." />
+            <marker date="1390955499026" expanded="false" signature="5849:5911" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2220">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1390955499026" expanded="false" signature="4030:4106" placeholder="..." />
+            <marker date="1390955499026" expanded="true" signature="4107:4165" placeholder="..." />
+            <marker date="1390955499026" expanded="false" signature="5391:5429" placeholder="..." />
+            <marker date="1390955499026" expanded="false" signature="5441:5448" placeholder="..." />
+            <marker date="1390955499026" expanded="false" signature="7247:7323" placeholder="..." />
+            <marker date="1390955499026" expanded="true" signature="7324:7366" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.8.0.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="175" column="67" selection-start="10252" selection-end="10252" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <folding>
+            <marker date="1390955499025" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1390955499025" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955499025" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1390955499025" expanded="false" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaCommonUtils_v2.1.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="25" selection-start="238" selection-end="254" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.7.9.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="4" selection-start="224" selection-end="248" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4830">
+          <folding>
+            <marker date="1390955702486" expanded="false" signature="2206:2231" placeholder="..." />
+            <marker date="1390955702486" expanded="false" signature="2410:2604" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="2605:2990" placeholder="..." />
+            <marker date="1390955702486" expanded="false" signature="2698:2897" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="2898:2946" placeholder="..." />
+            <marker date="1390955702486" expanded="false" signature="3072:3167" placeholder="..." />
+            <marker date="1390955702486" expanded="false" signature="3331:3401" placeholder="..." />
+            <marker date="1390955702486" expanded="false" signature="3571:4247" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="4248:4358" placeholder="..." />
+            <marker date="1390955702486" expanded="false" signature="5006:5031" placeholder="..." />
+            <marker date="1390955702486" expanded="false" signature="5201:5395" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="5396:5769" placeholder="..." />
+            <marker date="1390955702486" expanded="false" signature="5485:5684" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="5685:5729" placeholder="..." />
+            <marker date="1390955702486" expanded="false" signature="5847:5942" placeholder="..." />
+            <marker date="1390955702486" expanded="false" signature="6097:6167" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="10259:11388" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="10292:11358" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="10326:10794" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="10378:10577" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="10444:10538" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="10615:10759" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="10828:11324" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="10880:11085" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="10949:11046" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="11123:11289" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="12759:13342" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="12792:13313" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="12826:12953" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="12879:12918" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="12987:13116" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="13042:13081" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="13150:13279" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="13205:13244" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="14702:15119" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="14735:15090" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="14769:14895" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="14821:14860" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="14929:15056" placeholder="..." />
+            <marker date="1390955702486" expanded="true" signature="14982:15021" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="9" selection-start="286" selection-end="286" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.9.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="101" column="1" selection-start="3939" selection-end="3939" vertical-scroll-proportion="-1.400681" vertical-offset="2749" max-vertical-offset="3630">
+          <folding>
+            <marker date="1390955839665" expanded="false" signature="7623:7673" placeholder="..." />
           </folding>
         </state>
       </provider>

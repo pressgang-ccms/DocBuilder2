@@ -8,7 +8,7 @@
      */
     var NEW_WINDOW_NAME = "PressZilla";
 
-    if (isDocbuilderWindow()) {
+    if (isDocbuilderWindow() || isDocStageWindow()) {
         var height = 250;
         var width = 200;
         var smallHeight = 150;
