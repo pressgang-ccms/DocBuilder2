@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docbuilder-translation" afterPath="$PROJECT_DIR$/docbuilder-translation" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
@@ -70,7 +69,7 @@
       <file leaf-file-name="docbuilder-translation" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/docbuilder-translation">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="70" column="41" selection-start="2755" selection-end="2755" vertical-scroll-proportion="-0.69807035" vertical-offset="1665" max-vertical-offset="4260">
+            <state line="19" column="81" selection-start="823" selection-end="858" vertical-scroll-proportion="0.07025761" vertical-offset="225" max-vertical-offset="4260">
               <folding />
             </state>
           </provider>
@@ -760,7 +759,7 @@
       <workItem from="1390956040896" duration="17000" />
       <workItem from="1390956082951" duration="2863000" />
       <workItem from="1390963191343" duration="18000" />
-      <workItem from="1391050218706" duration="103000" />
+      <workItem from="1391050218706" duration="1297000" />
     </task>
     <task id="LOCAL-00001" summary="Initial import.&#10;Will query the server and return spec IDs that need to be built">
       <created>1378604206266</created>
@@ -3262,11 +3261,15 @@
       <created>1390958260605</created>
       <updated>1390958260605</updated>
     </task>
-    <option name="localTasksCounter" value="626" />
+    <task id="LOCAL-00626" summary="Added some new languages">
+      <created>1391050332747</created>
+      <updated>1391050332748</updated>
+    </task>
+    <option name="localTasksCounter" value="627" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3001000" />
+    <option name="totallyTimeSpent" value="4195000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1918" y="-3" width="1924" height="1087" extended-state="6" />
@@ -3285,6 +3288,7 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32220945" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -3299,7 +3303,6 @@
       <window_info id="TunnelliJ" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3290735" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -3317,7 +3320,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Working on product pages integration" />
     <MESSAGE value="Working on displaying updated topics" />
     <MESSAGE value="Add badge for Bugzilla Bugs" />
     <MESSAGE value="Added help overlay" />
@@ -3342,7 +3344,8 @@
     <MESSAGE value="Working on adding support for docs stage&#10;" />
     <MESSAGE value="Working on adding support for docs devel" />
     <MESSAGE value="Working on adding support for docs devel&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working on adding support for docs devel&#10;" />
+    <MESSAGE value="Added some new languages" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added some new languages" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -3724,7 +3727,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/docbuilder-translation">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="41" selection-start="2755" selection-end="2755" vertical-scroll-proportion="-0.69807035" vertical-offset="1665" max-vertical-offset="4260">
+        <state line="19" column="81" selection-start="823" selection-end="858" vertical-scroll-proportion="0.07025761" vertical-offset="225" max-vertical-offset="4260">
           <folding />
         </state>
       </provider>
