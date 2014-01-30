@@ -147,6 +147,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
                                                 <option value=\"zh-TW\">Chinese (Taiwan)</option>\n\
                                                 <option value=\"fr\">French</option>\n\
                                                 <option value=\"de\">German</option>\n\
+                                                <option value=\"it\">Italian</option>\n\
                                                 <option value=\"ja\">Japanese</option>\n\
                                                 <option value=\"ko\">Korean</option>\n\
                                                 <option value=\"pt-BR\">Portuguese</option>\n\

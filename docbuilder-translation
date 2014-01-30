@@ -17,7 +17,7 @@ INDEX_TMP_FILE=/tmp/index-translation.html
 # Locale build information directory
 LANG_DATA_DIR=/home/pressgang/translations/
 # Languages to build in
-LANGS=("ja=ja-JP" "fr=fr-FR" "pt-BR=pt-BR" "de=de-DE" "es=es-ES" "zh-Hans=zh-CN" "ko=ko-KR" "ru=ru-RU" "zh-TW=zh-TW")
+LANGS=("ja=ja-JP" "fr=fr-FR" "pt-BR=pt-BR" "de=de-DE" "es=es-ES" "zh-Hans=zh-CN" "it=it-IT" "ko=ko-KR" "ru=ru-RU" "zh-TW=zh-TW")
 # Get the number of cores
 CORE_COUNT=`grep -c ^processor /proc/cpuinfo`
 
@@ -64,6 +64,7 @@ do
                     <option value=\"zh-TW\">Chinese (Taiwan)</option>
                     <option value=\"fr\">French</option>
                     <option value=\"de\">German</option>
+                    <option value=\"it\">Italian</option>
                     <option value=\"ja\">Japanese</option>
                     <option value=\"ko\">Korean</option>
                     <option value=\"pt-BR\">Portuguese</option>
