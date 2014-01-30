@@ -59,7 +59,7 @@ do
         <div class=\"container\">
             <div class=\"langBar\">Language:
                 <select id=\"lang\" class=\"langSelect\" onchange=\"changeLang(this)\">
-                    <<option selected value=\"\">English</option>
+                    <option selected value=\"\">English</option>
                     <option value=\"zh-Hans\">Chinese (Simplified)</option>
                     <option value=\"zh-TW\">Chinese (Taiwan)</option>
                     <option value=\"fr\">French</option>
