@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZilla.user.js" afterPath="$PROJECT_DIR$/PressZilla.user.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZillaDocsStage.user.js" afterPath="$PROJECT_DIR$/PressZillaDocsStage.user.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docbuilder-translation" afterPath="$PROJECT_DIR$/docbuilder-translation" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
@@ -68,28 +67,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PressZillaDictionary.user.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
+      <file leaf-file-name="docbuilder-translation" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/docbuilder-translation">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="90">
+            <state line="70" column="41" selection-start="2755" selection-end="2755" vertical-scroll-proportion="-0.69807035" vertical-offset="1665" max-vertical-offset="4260">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZilla.user.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
+      <file leaf-file-name="build_books.sh" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build_books.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="104" selection-start="821" selection-end="821" vertical-scroll-proportion="0.2181208" vertical-offset="0" max-vertical-offset="894">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="16.117647" vertical-offset="822" max-vertical-offset="3015">
               <folding />
             </state>
+          </provider>
+          <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
+            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="PressZillaDocsStage.user.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PressZillaDocsStage.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="104" selection-start="612" selection-end="612" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+            <state line="9" column="104" selection-start="612" selection-end="612" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="360">
               <folding />
             </state>
           </provider>
@@ -98,10 +100,8 @@
       <file leaf-file-name="PressZillaBugzillaSearchIntegration_v3.8.0.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.8.0.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="376" column="243" selection-start="22918" selection-end="22922" vertical-scroll-proportion="-24.962963" vertical-offset="4966" max-vertical-offset="5820">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state line="376" column="243" selection-start="22918" selection-end="22922" vertical-scroll-proportion="0.0" vertical-offset="5640" max-vertical-offset="5820">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -109,9 +109,8 @@
       <file leaf-file-name="PressZillaBugzillaIntegration_v3.8.3.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.8.3.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="80" selection-start="2217" selection-end="2217" vertical-scroll-proportion="-12.740741" vertical-offset="556" max-vertical-offset="4920">
+            <state line="60" column="80" selection-start="2217" selection-end="2217" vertical-scroll-proportion="0.0" vertical-offset="556" max-vertical-offset="4920">
               <folding>
-                <element signature="n#!!doc" expanded="true" />
                 <marker date="1390958012299" expanded="true" signature="2206:2244" placeholder="..." />
                 <marker date="1390958012299" expanded="false" signature="2423:2617" placeholder="..." />
                 <marker date="1390958012299" expanded="true" signature="2618:3003" placeholder="..." />
@@ -196,7 +195,7 @@
       <file leaf-file-name="PressZillaLinkChecker_v4.0.6.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="12" selection-start="1521" selection-end="1521" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1410">
+            <state line="41" column="12" selection-start="1521" selection-end="1521" vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="1410">
               <folding>
                 <marker date="1390956831602" expanded="true" signature="900:933" placeholder="..." />
                 <marker date="1390956831602" expanded="true" signature="1031:1050" placeholder="..." />
@@ -251,6 +250,7 @@
         <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.8.2.js" />
         <option value="$PROJECT_DIR$/PressZillaDocsStage.user.js" />
         <option value="$PROJECT_DIR$/PressZilla.user.js" />
+        <option value="$PROJECT_DIR$/docbuilder-translation" />
       </list>
     </option>
   </component>
@@ -311,7 +311,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -330,36 +329,9 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DocBuilder2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DocBuilder2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="presszilla" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DocBuilder2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DocBuilder2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="javascript" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -786,7 +758,9 @@
       <created>1378599524767</created>
       <updated>1378599524767</updated>
       <workItem from="1390956040896" duration="17000" />
-      <workItem from="1390956082951" duration="2173000" />
+      <workItem from="1390956082951" duration="2863000" />
+      <workItem from="1390963191343" duration="18000" />
+      <workItem from="1391050218706" duration="103000" />
     </task>
     <task id="LOCAL-00001" summary="Initial import.&#10;Will query the server and return spec IDs that need to be built">
       <created>1378604206266</created>
@@ -3284,11 +3258,15 @@
       <created>1390958023986</created>
       <updated>1390958023986</updated>
     </task>
-    <option name="localTasksCounter" value="625" />
+    <task id="LOCAL-00625" summary="Working on adding support for docs devel&#10;">
+      <created>1390958260605</created>
+      <updated>1390958260605</updated>
+    </task>
+    <option name="localTasksCounter" value="626" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2190000" />
+    <option name="totallyTimeSpent" value="3001000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1918" y="-3" width="1924" height="1087" extended-state="6" />
@@ -3307,13 +3285,12 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32220945" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21246007" sideWeight="0.6709265" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21192758" sideWeight="0.6709265" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32873806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
@@ -3322,6 +3299,7 @@
       <window_info id="TunnelliJ" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3290735" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -3376,13 +3354,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="369" column="344" selection-start="36271" selection-end="36271" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="52080">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
@@ -3392,190 +3363,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="21" selection-start="1585" selection-end="1585" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="525">
+        <state line="13" column="104" selection-start="821" selection-end="821" vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="525">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
+    <entry file="file://$PROJECT_DIR$/PressZillaDocsStage.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2100">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2220">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="74" selection-start="2511" selection-end="2516" vertical-scroll-proportion="0.0" vertical-offset="1215" max-vertical-offset="6915">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="110" selection-start="2181" selection-end="2181" vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="1380">
-          <folding>
-            <marker date="1390956831602" expanded="true" signature="900:933" placeholder="..." />
-            <marker date="1390956831602" expanded="true" signature="1031:1050" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="369" column="344" selection-start="36271" selection-end="36271" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="52080">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="21" selection-start="1585" selection-end="1585" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="525">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2100">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2220">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="74" selection-start="2511" selection-end="2516" vertical-scroll-proportion="0.0" vertical-offset="1215" max-vertical-offset="6915">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="110" selection-start="2181" selection-end="2181" vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="1380">
-          <folding>
-            <marker date="1390956831602" expanded="true" signature="900:933" placeholder="..." />
-            <marker date="1390956831602" expanded="true" signature="1031:1050" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docbuilder-translation">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="482" selection-end="499" vertical-scroll-proportion="-1.7775091" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="26" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/images/webdav.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="121" column="19" selection-start="2313" selection-end="6031" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/resources/html5-schema/common.rnc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="123" column="23" selection-start="3271" selection-end="3271" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.6.8.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="126" column="108" selection-start="6458" selection-end="6468" vertical-scroll-proportion="-26.28" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="369" column="344" selection-start="36271" selection-end="36271" vertical-scroll-proportion="0.0" vertical-offset="5535" max-vertical-offset="52080">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="74" selection-start="2511" selection-end="2516" vertical-scroll-proportion="0.0" vertical-offset="1215" max-vertical-offset="6915">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaCommonUtils_v2.1.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="894">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="12" selection-start="1521" selection-end="1521" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1410">
-          <folding>
-            <marker date="1390956831602" expanded="true" signature="900:933" placeholder="..." />
-            <marker date="1390956831602" expanded="true" signature="1031:1050" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+        <state line="9" column="104" selection-start="612" selection-end="612" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="360">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.8.0.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="376" column="243" selection-start="22918" selection-end="22922" vertical-scroll-proportion="-24.962963" vertical-offset="4966" max-vertical-offset="5820">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state line="376" column="243" selection-start="22918" selection-end="22922" vertical-scroll-proportion="0.0" vertical-offset="5640" max-vertical-offset="5820">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.8.3.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="80" selection-start="2217" selection-end="2217" vertical-scroll-proportion="-12.740741" vertical-offset="556" max-vertical-offset="4920">
+        <state line="60" column="80" selection-start="2217" selection-end="2217" vertical-scroll-proportion="0.0" vertical-offset="556" max-vertical-offset="4920">
           <folding>
-            <element signature="n#!!doc" expanded="true" />
             <marker date="1390958012299" expanded="true" signature="2206:2244" placeholder="..." />
             <marker date="1390958012299" expanded="false" signature="2423:2617" placeholder="..." />
             <marker date="1390958012299" expanded="true" signature="2618:3003" placeholder="..." />
@@ -3620,6 +3430,181 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaCommonUtils_v2.1.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2100">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2220">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="81" column="74" selection-start="2511" selection-end="2516" vertical-scroll-proportion="0.0" vertical-offset="1215" max-vertical-offset="6915">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="12" selection-start="1521" selection-end="1521" vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="1410">
+          <folding>
+            <marker date="1390956831602" expanded="true" signature="900:933" placeholder="..." />
+            <marker date="1390956831602" expanded="true" signature="1031:1050" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="369" column="344" selection-start="36271" selection-end="36271" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="52080" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="21" selection-start="1585" selection-end="1585" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="525">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2100">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2220">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="81" column="74" selection-start="2511" selection-end="2516" vertical-scroll-proportion="0.0" vertical-offset="1215" max-vertical-offset="6915">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="110" selection-start="2181" selection-end="2181" vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="1380">
+          <folding>
+            <marker date="1390956831602" expanded="true" signature="900:933" placeholder="..." />
+            <marker date="1390956831602" expanded="true" signature="1031:1050" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="369" column="344" selection-start="36271" selection-end="36271" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="52080" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="21" selection-start="1585" selection-end="1585" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="525">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2100">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2220">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="81" column="74" selection-start="2511" selection-end="2516" vertical-scroll-proportion="0.0" vertical-offset="1215" max-vertical-offset="6915">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="110" selection-start="2181" selection-end="2181" vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="1380">
+          <folding>
+            <marker date="1390956831602" expanded="true" signature="900:933" placeholder="..." />
+            <marker date="1390956831602" expanded="true" signature="1031:1050" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="26" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/webdav.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="121" column="19" selection-start="2313" selection-end="6031" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/resources/html5-schema/common.rnc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="123" column="23" selection-start="3271" selection-end="3271" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.6.8.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="126" column="108" selection-start="6458" selection-end="6468" vertical-scroll-proportion="-26.28" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="369" column="344" selection-start="36271" selection-end="36271" vertical-scroll-proportion="0.0" vertical-offset="5535" max-vertical-offset="52080" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/PressZillaDocsStage.user.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="104" selection-start="612" selection-end="612" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
@@ -3627,9 +3612,119 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.8.0.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="376" column="243" selection-start="22918" selection-end="22922" vertical-scroll-proportion="0.0" vertical-offset="4966" max-vertical-offset="5820">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.8.3.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="80" selection-start="2217" selection-end="2217" vertical-scroll-proportion="0.0" vertical-offset="556" max-vertical-offset="4920">
+          <folding>
+            <marker date="1390958012299" expanded="true" signature="2206:2244" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="2423:2617" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="2618:3003" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="2711:2910" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="2911:2959" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="3085:3180" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="3344:3414" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="3584:4260" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="4261:4371" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="5019:5044" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="5214:5408" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="5409:5782" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="5498:5697" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="5698:5742" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="5860:5955" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="6110:6180" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10480:11609" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10513:11579" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10547:11015" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10599:10798" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10665:10759" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10836:10980" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="11049:11545" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="11101:11306" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="11170:11267" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="11344:11510" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="12980:13563" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13013:13534" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13047:13174" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13100:13139" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13208:13337" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13263:13302" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13371:13500" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13426:13465" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="14923:15340" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="14956:15311" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="14990:15116" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="15042:15081" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="15150:15277" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="15203:15242" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaCommonUtils_v2.1.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="894">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="81" column="74" selection-start="2511" selection-end="2516" vertical-scroll-proportion="0.0" vertical-offset="1215" max-vertical-offset="6915">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="12" selection-start="1521" selection-end="1521" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1410">
+          <folding>
+            <marker date="1390956831602" expanded="true" signature="900:933" placeholder="..." />
+            <marker date="1390956831602" expanded="true" signature="1031:1050" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="104" selection-start="821" selection-end="821" vertical-scroll-proportion="0.2181208" vertical-offset="0" max-vertical-offset="894">
+        <state line="13" column="104" selection-start="821" selection-end="821" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build_books.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="16.117647" vertical-offset="822" max-vertical-offset="3015">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docbuilder-translation">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="70" column="41" selection-start="2755" selection-end="2755" vertical-scroll-proportion="-0.69807035" vertical-offset="1665" max-vertical-offset="4260">
           <folding />
         </state>
       </provider>
