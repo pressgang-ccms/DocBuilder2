@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/runConfigurations/app_js.xml" afterPath="$PROJECT_DIR$/.idea/runConfigurations/app_js.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
@@ -15,7 +14,7 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CreatePatchCommitExecutor">
-    <option name="PATCH_PATH" value="" />
+    <option name="PATCH_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
@@ -67,10 +66,99 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PressZillaDictionary_v1.5.9.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.9.js">
+      <file leaf-file-name="docbuilder-translation" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/docbuilder-translation">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="101" column="1" selection-start="3939" selection-end="3939" vertical-scroll-proportion="0.0" vertical-offset="2733" max-vertical-offset="3630">
+            <state line="19" column="81" selection-start="823" selection-end="858" vertical-scroll-proportion="0.07025761" vertical-offset="225" max-vertical-offset="4260">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build_books.sh" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build_books.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="16.117647" vertical-offset="822" max-vertical-offset="3015">
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PressZillaDocsStage.user.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PressZillaDocsStage.user.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="104" selection-start="612" selection-end="612" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="360">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PressZillaBugzillaSearchIntegration_v3.8.0.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.8.0.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="376" column="243" selection-start="22918" selection-end="22922" vertical-scroll-proportion="0.0" vertical-offset="5640" max-vertical-offset="5820">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PressZillaBugzillaIntegration_v3.8.3.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.8.3.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="60" column="80" selection-start="2217" selection-end="2217" vertical-scroll-proportion="0.0" vertical-offset="556" max-vertical-offset="4920">
+              <folding>
+                <marker date="1390958012299" expanded="true" signature="2206:2244" placeholder="..." />
+                <marker date="1390958012299" expanded="false" signature="2423:2617" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="2618:3003" placeholder="..." />
+                <marker date="1390958012299" expanded="false" signature="2711:2910" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="2911:2959" placeholder="..." />
+                <marker date="1390958012299" expanded="false" signature="3085:3180" placeholder="..." />
+                <marker date="1390958012299" expanded="false" signature="3344:3414" placeholder="..." />
+                <marker date="1390958012299" expanded="false" signature="3584:4260" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="4261:4371" placeholder="..." />
+                <marker date="1390958012299" expanded="false" signature="5019:5044" placeholder="..." />
+                <marker date="1390958012299" expanded="false" signature="5214:5408" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="5409:5782" placeholder="..." />
+                <marker date="1390958012299" expanded="false" signature="5498:5697" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="5698:5742" placeholder="..." />
+                <marker date="1390958012299" expanded="false" signature="5860:5955" placeholder="..." />
+                <marker date="1390958012299" expanded="false" signature="6110:6180" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="10480:11609" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="10513:11579" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="10547:11015" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="10599:10798" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="10665:10759" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="10836:10980" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="11049:11545" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="11101:11306" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="11170:11267" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="11344:11510" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="12980:13563" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="13013:13534" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="13047:13174" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="13100:13139" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="13208:13337" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="13263:13302" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="13371:13500" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="13426:13465" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="14923:15340" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="14956:15311" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="14990:15116" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="15042:15081" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="15150:15277" placeholder="..." />
+                <marker date="1390958012299" expanded="true" signature="15203:15242" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PressZillaCommonUtils_v2.1.1.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaCommonUtils_v2.1.1.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
               <folding />
             </state>
           </provider>
@@ -79,57 +167,7 @@
       <file leaf-file-name="PressZillaJbossOrgIntegration_v2.6.8.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="4" selection-start="125" selection-end="150" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="2100">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PressZillaKeywordExtraction_v2.2.8.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaKeywordExtraction_v2.2.8.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1695">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PressZillaMojoIntegration_v2.6.8.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.6.8.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="19" selection-start="2157" selection-end="5508" vertical-scroll-proportion="0.51305336" vertical-offset="1138" max-vertical-offset="2055">
-              <folding>
-                <marker date="1392787548792" expanded="false" signature="3529:3605" placeholder="..." />
-                <marker date="1392787548792" expanded="true" signature="3606:3660" placeholder="..." />
-                <marker date="1392787548792" expanded="false" signature="6280:6356" placeholder="..." />
-                <marker date="1392787548792" expanded="true" signature="6357:6399" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PressZillaPnTIntegration_v2.7.4.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2325">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PressZilla.user.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="1947" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PressZillaProductPagesIntegration_v3.7.9.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="277" column="40" selection-start="12691" selection-end="12691" vertical-scroll-proportion="0.0" vertical-offset="4155" max-vertical-offset="6915">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2100">
               <folding />
             </state>
           </provider>
@@ -144,20 +182,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaBugzillaIntegration_v3.7.9.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.7.9.js">
+      <file leaf-file-name="PressZillaProductPagesIntegration_v3.7.9.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="4" selection-start="224" selection-end="248" vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="4860">
+            <state line="81" column="74" selection-start="2511" selection-end="2516" vertical-scroll-proportion="0.0" vertical-offset="1215" max-vertical-offset="6915">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PressZillaCommonUtils_v2.1.1.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaCommonUtils_v2.1.1.js">
+      <file leaf-file-name="PressZillaLinkChecker_v4.0.6.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="25" selection-start="238" selection-end="254" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="240">
-              <folding />
+            <state line="41" column="12" selection-start="1521" selection-end="1521" vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="1410">
+              <folding>
+                <marker date="1390956831602" expanded="true" signature="900:933" placeholder="..." />
+                <marker date="1390956831602" expanded="true" signature="1031:1050" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -173,7 +214,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="devel" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
   </component>
@@ -185,25 +226,30 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.6.9.js" />
-        <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.0.js" />
-        <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.1.js" />
-        <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.2.js" />
-        <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.3.js" />
-        <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.4.js" />
-        <option value="$PROJECT_DIR$/javascript/typo_proto.js" />
-        <option value="$PROJECT_DIR$/dictionaries/en_US.dic" />
-        <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v2.1.js" />
-        <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.7.6.js" />
-        <option value="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.5.js" />
-        <option value="$PROJECT_DIR$/app.js" />
-        <option value="$PROJECT_DIR$/styleguidebuilder.js" />
-        <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.4.5.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.0.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.1.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.2.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.3.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.4.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.5.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.6.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.7.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.8.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v3.9.9.js" />
         <option value="$PROJECT_DIR$/javascript/overlay.js" />
-        <option value="$PROJECT_DIR$/presszilla/PressZillaCommonUtils_v2.1.js" />
-        <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.7.8.js" />
-        <option value="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.8.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.0.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.1.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.2.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.3.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.4.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.5.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.7.9.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.8.0.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.8.1.js" />
+        <option value="$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.8.2.js" />
+        <option value="$PROJECT_DIR$/PressZillaDocsStage.user.js" />
         <option value="$PROJECT_DIR$/PressZilla.user.js" />
+        <option value="$PROJECT_DIR$/docbuilder-translation" />
       </list>
     </option>
   </component>
@@ -263,7 +309,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -283,83 +328,25 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DocBuilder2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DocBuilder2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="presszilla" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DocBuilder2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DocBuilder2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="javascript" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DocBuilder2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DocBuilder2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dictionaries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="209" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="234" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="220" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="editor.preferences.appearance" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="239" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1149" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1145" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="236" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="230" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PressGangCCMSREST/pom.xml" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
-    <property name="MemberChooser.showClasses" value="true" />
     <property name="FullScreen" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="options.lastSelected" value="editor.preferences.appearance" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="restartRequiresConfirmation" value="true" />
     <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
@@ -470,23 +457,6 @@
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
       <method />
     </configuration>
-    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
-      <browser start="false" url="" with-js-debugger="false" />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -513,6 +483,23 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
+      <browser start="false" url="" with-js-debugger="false" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -738,17 +725,8 @@
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
-    <configuration default="false" name="styleguidebuilder.js" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="/usr/bin/node" path-to-js-file="styleguidebuilder.js" working-dir="$PROJECT_DIR$">
-      <browser start="false" url="" with-js-debugger="false" />
-      <RunnerSettings RunnerId="NodeJS.debug" />
-      <RunnerSettings RunnerId="NodeJS.run" />
-      <ConfigurationWrapper RunnerId="NodeJS.debug" />
-      <ConfigurationWrapper RunnerId="NodeJS.run" />
-      <method />
-    </configuration>
-    <list size="2">
+    <list size="1">
       <item index="0" class="java.lang.String" itemvalue="Node.js.app.js" />
-      <item index="1" class="java.lang.String" itemvalue="Node.js.styleguidebuilder.js" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -778,10 +756,10 @@
       <changelist id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="" />
       <created>1378599524767</created>
       <updated>1378599524767</updated>
-      <workItem from="1390955517712" duration="498000" />
-      <workItem from="1392846247661" duration="842000" />
-      <workItem from="1392851882932" duration="17000" />
-      <workItem from="1393185191602" duration="18000" />
+      <workItem from="1390956040896" duration="17000" />
+      <workItem from="1390956082951" duration="2863000" />
+      <workItem from="1390963191343" duration="18000" />
+      <workItem from="1391050218706" duration="1297000" />
     </task>
     <task id="LOCAL-00001" summary="Initial import.&#10;Will query the server and return spec IDs that need to be built">
       <created>1378604206266</created>
@@ -2707,417 +2685,629 @@
       <created>1384144356665</created>
       <updated>1384144356665</updated>
     </task>
-    <task id="LOCAL-00482" summary="Updated dictionary">
-      <created>1384205470819</created>
-      <updated>1384205470819</updated>
-    </task>
-    <task id="LOCAL-00483" summary="Updated dictionary">
-      <created>1384205662659</created>
-      <updated>1384205662659</updated>
-    </task>
-    <task id="LOCAL-00484" summary="Updated dictionary">
-      <created>1384206096981</created>
-      <updated>1384206096981</updated>
-    </task>
-    <task id="LOCAL-00485" summary="Updated dictionary">
-      <created>1384206743865</created>
-      <updated>1384206743865</updated>
-    </task>
-    <task id="LOCAL-00486" summary="Updated dictionary">
-      <created>1384207832623</created>
-      <updated>1384207832623</updated>
-    </task>
-    <task id="LOCAL-00487" summary="Updated dictionary">
-      <created>1384208874423</created>
-      <updated>1384208874423</updated>
-    </task>
-    <task id="LOCAL-00488" summary="Updated dictionary">
-      <created>1384211486486</created>
-      <updated>1384211486486</updated>
-    </task>
-    <task id="LOCAL-00489" summary="Updated dictionary">
-      <created>1384212237400</created>
-      <updated>1384212237400</updated>
-    </task>
-    <task id="LOCAL-00490" summary="Updated dictionary">
-      <created>1384212995979</created>
-      <updated>1384212995979</updated>
-    </task>
-    <task id="LOCAL-00491" summary="Added title to bugzilla integration">
-      <created>1384229590788</created>
-      <updated>1384229590788</updated>
-    </task>
-    <task id="LOCAL-00492" summary="Added title to bugzilla integration">
-      <created>1384229888040</created>
-      <updated>1384229888040</updated>
-    </task>
-    <task id="LOCAL-00493" summary="Added title to bugzilla integration">
-      <created>1384229986541</created>
-      <updated>1384229986541</updated>
-    </task>
-    <task id="LOCAL-00494" summary="Added title to bugzilla integration">
-      <created>1384230102072</created>
-      <updated>1384230102072</updated>
-    </task>
-    <task id="LOCAL-00495" summary="Added title to bugzilla integration">
-      <created>1384231263976</created>
-      <updated>1384231263976</updated>
-    </task>
-    <task id="LOCAL-00496" summary="Added title to bugzilla integration">
-      <created>1384723722803</created>
-      <updated>1384723722803</updated>
-    </task>
-    <task id="LOCAL-00497" summary="Added classname to list of ignored elements for spellchecking">
-      <created>1384723809030</created>
-      <updated>1384723809030</updated>
-    </task>
-    <task id="LOCAL-00498" summary="Added classname to list of ignored elements for spellchecking">
-      <created>1384724019852</created>
-      <updated>1384724019852</updated>
-    </task>
-    <task id="LOCAL-00499" summary="Added classname to list of ignored elements for spellchecking">
-      <created>1384724543263</created>
-      <updated>1384724543263</updated>
-    </task>
-    <task id="LOCAL-00500" summary="Added classname to list of ignored elements for spellchecking">
-      <created>1384724646321</created>
-      <updated>1384724646321</updated>
-    </task>
-    <task id="LOCAL-00501" summary="Added classname to list of ignored elements for spellchecking">
-      <created>1384724932602</created>
-      <updated>1384724932602</updated>
-    </task>
-    <task id="LOCAL-00502" summary="Fixing spell checking">
-      <created>1384725156902</created>
-      <updated>1384725156902</updated>
-    </task>
-    <task id="LOCAL-00503" summary="Fixing spell checking">
-      <created>1384725325396</created>
-      <updated>1384725325396</updated>
-    </task>
-    <task id="LOCAL-00504" summary="Fixing spell checking">
-      <created>1384725658393</created>
-      <updated>1384725658393</updated>
-    </task>
-    <task id="LOCAL-00505" summary="Fixing spell checking">
-      <created>1384725802860</created>
-      <updated>1384725802860</updated>
-    </task>
-    <task id="LOCAL-00506" summary="Fixing spell checking">
-      <created>1384725984223</created>
-      <updated>1384725984223</updated>
-    </task>
-    <task id="LOCAL-00507" summary="Fixing spell checking">
-      <created>1384726043641</created>
-      <updated>1384726043641</updated>
-    </task>
-    <task id="LOCAL-00508" summary="Fixing spell checking">
-      <created>1384737518610</created>
-      <updated>1384737518610</updated>
-    </task>
-    <task id="LOCAL-00509" summary="Fixing spell checking">
-      <created>1384737632275</created>
-      <updated>1384737632275</updated>
-    </task>
-    <task id="LOCAL-00510" summary="Added double word checker">
-      <created>1384743490276</created>
-      <updated>1384743490276</updated>
-    </task>
-    <task id="LOCAL-00511" summary="Added double word checker">
-      <created>1384743987159</created>
-      <updated>1384743987159</updated>
-    </task>
-    <task id="LOCAL-00512" summary="Added double word checker">
-      <created>1384744066478</created>
-      <updated>1384744066478</updated>
-    </task>
-    <task id="LOCAL-00513" summary="Added double word checker">
-      <created>1384744346653</created>
-      <updated>1384744346653</updated>
-    </task>
-    <task id="LOCAL-00514" summary="Added double word checker">
-      <created>1384744491129</created>
-      <updated>1384744491129</updated>
-    </task>
-    <task id="LOCAL-00515" summary="Added double word checker">
-      <created>1384744529408</created>
-      <updated>1384744529408</updated>
-    </task>
-    <task id="LOCAL-00516" summary="Added double word checker">
-      <created>1384744969404</created>
-      <updated>1384744969404</updated>
-    </task>
-    <task id="LOCAL-00517" summary="Added double word checker">
-      <created>1384745215101</created>
-      <updated>1384745215101</updated>
-    </task>
-    <task id="LOCAL-00518" summary="Added double word checker">
-      <created>1384745453050</created>
-      <updated>1384745453050</updated>
-    </task>
-    <task id="LOCAL-00519" summary="Added double word checker">
-      <created>1384746456075</created>
-      <updated>1384746456075</updated>
-    </task>
-    <task id="LOCAL-00520" summary="Added double word checker">
-      <created>1384746629725</created>
-      <updated>1384746629725</updated>
-    </task>
-    <task id="LOCAL-00521" summary="Added double word checker">
-      <created>1384746810231</created>
-      <updated>1384746810231</updated>
-    </task>
-    <task id="LOCAL-00522" summary="Added double word checker">
-      <created>1384747222561</created>
-      <updated>1384747222561</updated>
-    </task>
-    <task id="LOCAL-00523" summary="Added double word checker">
-      <created>1384747387668</created>
-      <updated>1384747387668</updated>
-    </task>
-    <task id="LOCAL-00524" summary="Added double word checker">
-      <created>1384747701947</created>
-      <updated>1384747701947</updated>
-    </task>
-    <task id="LOCAL-00525" summary="Added double word checker">
-      <created>1384747769083</created>
-      <updated>1384747769083</updated>
-    </task>
-    <task id="LOCAL-00526" summary="Added double word checker">
-      <created>1384747783598</created>
-      <updated>1384747783598</updated>
-    </task>
-    <task id="LOCAL-00527" summary="Added double word checker">
-      <created>1384747927690</created>
-      <updated>1384747927691</updated>
-    </task>
-    <task id="LOCAL-00528" summary="Added double word checker">
-      <created>1384748450125</created>
-      <updated>1384748450125</updated>
-    </task>
-    <task id="LOCAL-00529" summary="Added double word checker">
-      <created>1384748539998</created>
-      <updated>1384748539998</updated>
-    </task>
-    <task id="LOCAL-00530" summary="Added double word checker">
-      <created>1384749028093</created>
-      <updated>1384749028093</updated>
-    </task>
-    <task id="LOCAL-00531" summary="Added double word checker">
-      <created>1384749224816</created>
-      <updated>1384749224816</updated>
-    </task>
-    <task id="LOCAL-00532" summary="Added double word checker">
-      <created>1384750998655</created>
-      <updated>1384750998655</updated>
-    </task>
-    <task id="LOCAL-00533" summary="Added double word checker">
-      <created>1384752826648</created>
-      <updated>1384752826648</updated>
-    </task>
-    <task id="LOCAL-00534" summary="Added double word checker">
-      <created>1384753172327</created>
-      <updated>1384753172328</updated>
-    </task>
-    <task id="LOCAL-00535" summary="Added double word checker">
-      <created>1384753245140</created>
-      <updated>1384753245141</updated>
-    </task>
-    <task id="LOCAL-00536" summary="Added double word checker">
-      <created>1384753308047</created>
-      <updated>1384753308047</updated>
-    </task>
-    <task id="LOCAL-00537" summary="Added double word checker">
-      <created>1384753375150</created>
-      <updated>1384753375150</updated>
-    </task>
-    <task id="LOCAL-00538" summary="Added double word checker">
-      <created>1384754171138</created>
-      <updated>1384754171138</updated>
-    </task>
-    <task id="LOCAL-00539" summary="Added double word checker">
-      <created>1384754243932</created>
-      <updated>1384754243932</updated>
-    </task>
-    <task id="LOCAL-00540" summary="Added double word checker">
-      <created>1384755050984</created>
-      <updated>1384755050984</updated>
-    </task>
-    <task id="LOCAL-00541" summary="Added double word checker">
-      <created>1384763220655</created>
-      <updated>1384763220655</updated>
-    </task>
-    <task id="LOCAL-00542" summary="Added double word checker">
-      <created>1384763432296</created>
-      <updated>1384763432296</updated>
-    </task>
-    <task id="LOCAL-00543" summary="Added double word checker">
-      <created>1384763686342</created>
-      <updated>1384763686342</updated>
-    </task>
-    <task id="LOCAL-00544" summary="Started work on streamlining REST requests">
-      <created>1384840423940</created>
-      <updated>1384840423940</updated>
-    </task>
-    <task id="LOCAL-00545" summary="Started work on streamlining REST requests">
-      <created>1384842719399</created>
-      <updated>1384842719399</updated>
-    </task>
-    <task id="LOCAL-00546" summary="Started work on streamlining REST requests">
-      <created>1384843580778</created>
-      <updated>1384843580778</updated>
-    </task>
-    <task id="LOCAL-00547" summary="Started work on streamlining REST requests">
-      <created>1384843634957</created>
-      <updated>1384843634957</updated>
-    </task>
-    <task id="LOCAL-00548" summary="Started work on streamlining REST requests">
-      <created>1384843683209</created>
-      <updated>1384843683209</updated>
-    </task>
-    <task id="LOCAL-00549" summary="Started work on streamlining REST requests">
-      <created>1384843990910</created>
-      <updated>1384843990910</updated>
-    </task>
-    <task id="LOCAL-00550" summary="Started work on streamlining REST requests">
-      <created>1384844166662</created>
-      <updated>1384844166662</updated>
-    </task>
-    <task id="LOCAL-00551" summary="Started work on streamlining REST requests">
-      <created>1384844460436</created>
-      <updated>1384844460436</updated>
-    </task>
-    <task id="LOCAL-00552" summary="Started work on streamlining REST requests">
-      <created>1384844624901</created>
-      <updated>1384844624901</updated>
-    </task>
-    <task id="LOCAL-00553" summary="Started work on streamlining REST requests">
-      <created>1384844968326</created>
-      <updated>1384844968327</updated>
-    </task>
-    <task id="LOCAL-00554" summary="Batched up topic details requests">
-      <created>1384897226606</created>
-      <updated>1384897226606</updated>
-    </task>
-    <task id="LOCAL-00555" summary="Working on the ability to submit words to the custom dictionary">
-      <created>1384898692185</created>
-      <updated>1384898692185</updated>
-    </task>
-    <task id="LOCAL-00556" summary="Working on the ability to submit words to the custom dictionary">
-      <created>1384898881239</created>
-      <updated>1384898881239</updated>
-    </task>
-    <task id="LOCAL-00557" summary="Working on the ability to submit words to the custom dictionary">
-      <created>1384899654014</created>
-      <updated>1384899654014</updated>
-    </task>
-    <task id="LOCAL-00558" summary="Working on the ability to submit words to the custom dictionary">
-      <created>1384905598201</created>
-      <updated>1384905598201</updated>
-    </task>
-    <task id="LOCAL-00559" summary="Working on the ability to submit words to the custom dictionary">
-      <created>1384905789374</created>
-      <updated>1384905789374</updated>
-    </task>
-    <task id="LOCAL-00560" summary="Working on the ability to submit words to the custom dictionary">
-      <created>1384907471120</created>
-      <updated>1384907471120</updated>
-    </task>
-    <task id="LOCAL-00561" summary="Working on the ability to submit words to the custom dictionary">
-      <created>1384907484007</created>
-      <updated>1384907484007</updated>
-    </task>
-    <task id="LOCAL-00562" summary="Working on the ability to submit words to the custom dictionary">
-      <created>1384919597716</created>
-      <updated>1384919597716</updated>
-    </task>
-    <task id="LOCAL-00563" summary="Working on the ability to submit words to the custom dictionary">
-      <created>1384920308919</created>
-      <updated>1384920308919</updated>
-    </task>
-    <task id="LOCAL-00564" summary="Working on the ability to submit words to the custom dictionary">
-      <created>1384921319807</created>
-      <updated>1384921319807</updated>
-    </task>
-    <task id="LOCAL-00565" summary="Working on the ability to submit words to the custom dictionary">
-      <created>1384921983020</created>
-      <updated>1384921983020</updated>
-    </task>
-    <task id="LOCAL-00566" summary="Working on the ability to submit words to the custom dictionary">
-      <created>1384922692688</created>
-      <updated>1384922692688</updated>
-    </task>
-    <task id="LOCAL-00567" summary="Working on the ability to submit words to the custom dictionary">
-      <created>1384922860434</created>
-      <updated>1384922860434</updated>
-    </task>
-    <task id="LOCAL-00568" summary="Working on the ability to submit words to the custom dictionary">
-      <created>1384923197916</created>
-      <updated>1384923197917</updated>
-    </task>
-    <task id="LOCAL-00569" summary="Working on the ability to submit words to the custom dictionary">
-      <created>1384923382333</created>
-      <updated>1384923382333</updated>
-    </task>
-    <task id="LOCAL-00570" summary="Working on the ability to submit words to the custom dictionary">
-      <created>1384923800547</created>
-      <updated>1384923800547</updated>
-    </task>
-    <task id="LOCAL-00571" summary="Fixed issue where bugs were listed twice">
-      <created>1384925524901</created>
-      <updated>1384925524901</updated>
-    </task>
-    <task id="LOCAL-00572" summary="Fixed issue where bugs were listed twice">
-      <created>1386023593055</created>
-      <updated>1386023593055</updated>
-    </task>
-    <task id="LOCAL-00573" summary="Working on adding popover for duplicated topics">
-      <created>1386025394217</created>
-      <updated>1386025394217</updated>
-    </task>
-    <option name="localTasksCounter" value="574" />
+    <task id="LOCAL-00482" summary="Working on spell checking menu">
+      <created>1384144837315</created>
+      <updated>1384144837315</updated>
+    </task>
+    <task id="LOCAL-00483" summary="Working on spell checking menu">
+      <created>1384286993944</created>
+      <updated>1384286993944</updated>
+    </task>
+    <task id="LOCAL-00484" summary="Removed spellchecking for code and option">
+      <created>1384559505130</created>
+      <updated>1384559505130</updated>
+    </task>
+    <task id="LOCAL-00485" summary="Removed spellchecking for code and option">
+      <created>1384667694124</created>
+      <updated>1384667694124</updated>
+    </task>
+    <task id="LOCAL-00486" summary="Removed spellchecking for code and option">
+      <created>1384978895217</created>
+      <updated>1384978895217</updated>
+    </task>
+    <task id="LOCAL-00487" summary="Fixed styleguidebuilder so it generates a contant spec the way same way the rest service postporcesses it.">
+      <created>1384978960969</created>
+      <updated>1384978960969</updated>
+    </task>
+    <task id="LOCAL-00488" summary="Working on adding custom words to dictionary">
+      <created>1384980787096</created>
+      <updated>1384980787096</updated>
+    </task>
+    <task id="LOCAL-00489" summary="Working on adding custom words to dictionary">
+      <created>1384981665684</created>
+      <updated>1384981665684</updated>
+    </task>
+    <task id="LOCAL-00490" summary="Working on adding custom words to dictionary">
+      <created>1384984663946</created>
+      <updated>1384984663946</updated>
+    </task>
+    <task id="LOCAL-00491" summary="Working on adding custom words to dictionary">
+      <created>1384990578119</created>
+      <updated>1384990578119</updated>
+    </task>
+    <task id="LOCAL-00492" summary="Working on adding custom words to dictionary">
+      <created>1384990713104</created>
+      <updated>1384990713104</updated>
+    </task>
+    <task id="LOCAL-00493" summary="Working on adding custom words to dictionary">
+      <created>1384990798927</created>
+      <updated>1384990798927</updated>
+    </task>
+    <task id="LOCAL-00494" summary="Working on adding custom words to dictionary">
+      <created>1384991009091</created>
+      <updated>1384991009091</updated>
+    </task>
+    <task id="LOCAL-00495" summary="Added the ability to highlight dictionary words in the document">
+      <created>1385007288909</created>
+      <updated>1385007288909</updated>
+    </task>
+    <task id="LOCAL-00496" summary="Added the ability to highlight dictionary words in the document">
+      <created>1385007755827</created>
+      <updated>1385007755827</updated>
+    </task>
+    <task id="LOCAL-00497" summary="Added the ability to highlight dictionary words in the document">
+      <created>1385015625855</created>
+      <updated>1385015625855</updated>
+    </task>
+    <task id="LOCAL-00498" summary="Added the ability to highlight dictionary words in the document">
+      <created>1385178778225</created>
+      <updated>1385178778225</updated>
+    </task>
+    <task id="LOCAL-00499" summary="Added the ability to highlight dictionary words in the document">
+      <created>1385181671704</created>
+      <updated>1385181671704</updated>
+    </task>
+    <task id="LOCAL-00500" summary="Added the ability to highlight dictionary words in the document">
+      <created>1385236961140</created>
+      <updated>1385236961140</updated>
+    </task>
+    <task id="LOCAL-00501" summary="Added the ability to highlight dictionary words in the document">
+      <created>1385238131425</created>
+      <updated>1385238131425</updated>
+    </task>
+    <task id="LOCAL-00502" summary="Added the ability to highlight dictionary words in the document">
+      <created>1385238798372</created>
+      <updated>1385238798372</updated>
+    </task>
+    <task id="LOCAL-00503" summary="Added the ability to highlight dictionary words in the document">
+      <created>1385240965263</created>
+      <updated>1385240965263</updated>
+    </task>
+    <task id="LOCAL-00504" summary="Added the ability to highlight dictionary words in the document">
+      <created>1385247723971</created>
+      <updated>1385247723971</updated>
+    </task>
+    <task id="LOCAL-00505" summary="Added perm links to section titles">
+      <created>1385252259823</created>
+      <updated>1385252259823</updated>
+    </task>
+    <task id="LOCAL-00506" summary="Added perm links to section titles">
+      <created>1385252319976</created>
+      <updated>1385252319977</updated>
+    </task>
+    <task id="LOCAL-00507" summary="Added perm links to section titles">
+      <created>1385252595425</created>
+      <updated>1385252595425</updated>
+    </task>
+    <task id="LOCAL-00508" summary="Added perm links to section titles">
+      <created>1385252652354</created>
+      <updated>1385252652354</updated>
+    </task>
+    <task id="LOCAL-00509" summary="Added perm links to section titles">
+      <created>1385252708550</created>
+      <updated>1385252708550</updated>
+    </task>
+    <task id="LOCAL-00510" summary="Added perm links to section titles">
+      <created>1385252908772</created>
+      <updated>1385252908773</updated>
+    </task>
+    <task id="LOCAL-00511" summary="Started work on dictionary user script">
+      <created>1385260170978</created>
+      <updated>1385260170978</updated>
+    </task>
+    <task id="LOCAL-00512" summary="Started work on dictionary user script">
+      <created>1385260267284</created>
+      <updated>1385260267284</updated>
+    </task>
+    <task id="LOCAL-00513" summary="Started work on dictionary user script">
+      <created>1385260447179</created>
+      <updated>1385260447179</updated>
+    </task>
+    <task id="LOCAL-00514" summary="Started work on dictionary user script">
+      <created>1385260493111</created>
+      <updated>1385260493111</updated>
+    </task>
+    <task id="LOCAL-00515" summary="Started work on dictionary user script">
+      <created>1385260583879</created>
+      <updated>1385260583879</updated>
+    </task>
+    <task id="LOCAL-00516" summary="Started work on dictionary user script">
+      <created>1385260751544</created>
+      <updated>1385260751544</updated>
+    </task>
+    <task id="LOCAL-00517" summary="Started work on dictionary user script">
+      <created>1385260840127</created>
+      <updated>1385260840127</updated>
+    </task>
+    <task id="LOCAL-00518" summary="Started work on dictionary user script">
+      <created>1385260898938</created>
+      <updated>1385260898938</updated>
+    </task>
+    <task id="LOCAL-00519" summary="Started work on dictionary user script">
+      <created>1385261002538</created>
+      <updated>1385261002538</updated>
+    </task>
+    <task id="LOCAL-00520" summary="Started work on dictionary user script">
+      <created>1385261328056</created>
+      <updated>1385261328056</updated>
+    </task>
+    <task id="LOCAL-00521" summary="Started work on dictionary user script">
+      <created>1385261499092</created>
+      <updated>1385261499092</updated>
+    </task>
+    <task id="LOCAL-00522" summary="Started work on dictionary user script">
+      <created>1385261567349</created>
+      <updated>1385261567349</updated>
+    </task>
+    <task id="LOCAL-00523" summary="Started work on dictionary user script">
+      <created>1385261664046</created>
+      <updated>1385261664046</updated>
+    </task>
+    <task id="LOCAL-00524" summary="Started work on dictionary user script">
+      <created>1385261982892</created>
+      <updated>1385261982893</updated>
+    </task>
+    <task id="LOCAL-00525" summary="Started work on dictionary user script">
+      <created>1385261996125</created>
+      <updated>1385261996125</updated>
+    </task>
+    <task id="LOCAL-00526" summary="Started work on dictionary user script">
+      <created>1385262084228</created>
+      <updated>1385262084228</updated>
+    </task>
+    <task id="LOCAL-00527" summary="Started work on dictionary user script">
+      <created>1385262256652</created>
+      <updated>1385262256652</updated>
+    </task>
+    <task id="LOCAL-00528" summary="Started work on dictionary user script">
+      <created>1385262358435</created>
+      <updated>1385262358436</updated>
+    </task>
+    <task id="LOCAL-00529" summary="Started work on dictionary user script">
+      <created>1385262491720</created>
+      <updated>1385262491720</updated>
+    </task>
+    <task id="LOCAL-00530" summary="Started work on dictionary user script">
+      <created>1385262601031</created>
+      <updated>1385262601031</updated>
+    </task>
+    <task id="LOCAL-00531" summary="Started work on dictionary user script">
+      <created>1385263141609</created>
+      <updated>1385263141609</updated>
+    </task>
+    <task id="LOCAL-00532" summary="Started work on dictionary user script">
+      <created>1385263407168</created>
+      <updated>1385263407168</updated>
+    </task>
+    <task id="LOCAL-00533" summary="Started work on dictionary user script">
+      <created>1385263525143</created>
+      <updated>1385263525143</updated>
+    </task>
+    <task id="LOCAL-00534" summary="Started work on dictionary user script">
+      <created>1385263634250</created>
+      <updated>1385263634250</updated>
+    </task>
+    <task id="LOCAL-00535" summary="Started work on dictionary user script">
+      <created>1385267693202</created>
+      <updated>1385267693202</updated>
+    </task>
+    <task id="LOCAL-00536" summary="Started work on dictionary user script">
+      <created>1385268482577</created>
+      <updated>1385268482577</updated>
+    </task>
+    <task id="LOCAL-00537" summary="Started work on dictionary user script">
+      <created>1385268498497</created>
+      <updated>1385268498497</updated>
+    </task>
+    <task id="LOCAL-00538" summary="Started work on dictionary user script">
+      <created>1385268606365</created>
+      <updated>1385268606365</updated>
+    </task>
+    <task id="LOCAL-00539" summary="Started work on dictionary user script">
+      <created>1385269233268</created>
+      <updated>1385269233268</updated>
+    </task>
+    <task id="LOCAL-00540" summary="Started work on dictionary user script">
+      <created>1385269695852</created>
+      <updated>1385269695852</updated>
+    </task>
+    <task id="LOCAL-00541" summary="Started work on dictionary user script">
+      <created>1385269744527</created>
+      <updated>1385269744527</updated>
+    </task>
+    <task id="LOCAL-00542" summary="Started work on dictionary user script">
+      <created>1385270144758</created>
+      <updated>1385270144758</updated>
+    </task>
+    <task id="LOCAL-00543" summary="Started work on dictionary user script">
+      <created>1385270174389</created>
+      <updated>1385270174389</updated>
+    </task>
+    <task id="LOCAL-00544" summary="Started work on dictionary user script">
+      <created>1385270876356</created>
+      <updated>1385270876356</updated>
+    </task>
+    <task id="LOCAL-00545" summary="Added help overlay topic for permlinks">
+      <created>1385585822777</created>
+      <updated>1385585822777</updated>
+    </task>
+    <task id="LOCAL-00546" summary="Added help overlay topic for permlinks">
+      <created>1385670224186</created>
+      <updated>1385670224186</updated>
+    </task>
+    <task id="LOCAL-00547" summary="Added buttons to freeze and obsolete specs">
+      <created>1385671965451</created>
+      <updated>1385671965451</updated>
+    </task>
+    <task id="LOCAL-00548" summary="Added buttons to freeze and obsolete specs">
+      <created>1385672004245</created>
+      <updated>1385672004245</updated>
+    </task>
+    <task id="LOCAL-00549" summary="Added buttons to freeze and obsolete specs">
+      <created>1385672206967</created>
+      <updated>1385672206968</updated>
+    </task>
+    <task id="LOCAL-00550" summary="Added buttons to freeze and obsolete specs">
+      <created>1385672345703</created>
+      <updated>1385672345703</updated>
+    </task>
+    <task id="LOCAL-00551" summary="Added buttons to freeze and obsolete specs">
+      <created>1385672581933</created>
+      <updated>1385672581933</updated>
+    </task>
+    <task id="LOCAL-00552" summary="Added buttons to freeze and obsolete specs">
+      <created>1385672669242</created>
+      <updated>1385672669242</updated>
+    </task>
+    <task id="LOCAL-00553" summary="Added buttons to freeze and obsolete specs">
+      <created>1385672835566</created>
+      <updated>1385672835566</updated>
+    </task>
+    <task id="LOCAL-00554" summary="Added buttons to freeze and obsolete specs">
+      <created>1385672918205</created>
+      <updated>1385672918205</updated>
+    </task>
+    <task id="LOCAL-00555" summary="Added buttons to freeze and obsolete specs">
+      <created>1385673137614</created>
+      <updated>1385673137614</updated>
+    </task>
+    <task id="LOCAL-00556" summary="Added buttons to freeze and obsolete specs">
+      <created>1385673271004</created>
+      <updated>1385673271005</updated>
+    </task>
+    <task id="LOCAL-00557" summary="Added buttons to freeze and obsolete specs">
+      <created>1385673401126</created>
+      <updated>1385673401127</updated>
+    </task>
+    <task id="LOCAL-00558" summary="Added buttons to freeze and obsolete specs">
+      <created>1385674025638</created>
+      <updated>1385674025638</updated>
+    </task>
+    <task id="LOCAL-00559" summary="Added buttons to freeze and obsolete specs">
+      <created>1386103212925</created>
+      <updated>1386103212925</updated>
+    </task>
+    <task id="LOCAL-00560" summary="Merge branch 'devel' of github.com:pressgang-ccms/DocBuilder2 into devel&#10;&#10;Conflicts:&#10;&#9;.idea/workspace.xml&#10;">
+      <created>1386103279022</created>
+      <updated>1386103279023</updated>
+    </task>
+    <task id="LOCAL-00561" summary="Merge branch 'devel' of github.com:pressgang-ccms/DocBuilder2 into devel&#10;&#10;Conflicts:&#10;&#9;.idea/workspace.xml&#10;">
+      <created>1386104551074</created>
+      <updated>1386104551074</updated>
+    </task>
+    <task id="LOCAL-00562" summary="Fixed issue where duplicate topics where being loaded more than once when the popup was shown">
+      <created>1386120494329</created>
+      <updated>1386120494330</updated>
+    </task>
+    <task id="LOCAL-00563" summary="Fixed issue where duplicate topics where being loaded more than once when the popup was shown">
+      <created>1386120527090</created>
+      <updated>1386120527090</updated>
+    </task>
+    <task id="LOCAL-00564" summary="Fixed issue where duplicate topics where being loaded more than once when the popup was shown">
+      <created>1386120774538</created>
+      <updated>1386120774538</updated>
+    </task>
+    <task id="LOCAL-00565" summary="Fixed issue where duplicate topics where being loaded more than once when the popup was shown">
+      <created>1386121309108</created>
+      <updated>1386121309108</updated>
+    </task>
+    <task id="LOCAL-00566" summary="Fixed issue where duplicate topics where being loaded more than once when the popup was shown">
+      <created>1386121342543</created>
+      <updated>1386121342543</updated>
+    </task>
+    <task id="LOCAL-00567" summary="Added delay for opening popovers">
+      <created>1386211496847</created>
+      <updated>1386211496847</updated>
+    </task>
+    <task id="LOCAL-00568" summary="Fixed location of build_books.sh">
+      <created>1386214176401</created>
+      <updated>1386214176401</updated>
+    </task>
+    <task id="LOCAL-00569" summary="Fixing https://bugzilla.redhat.com/show_bug.cgi?id=982044">
+      <created>1386298347880</created>
+      <updated>1386298347881</updated>
+    </task>
+    <task id="LOCAL-00570" summary="Fixing https://bugzilla.redhat.com/show_bug.cgi?id=982044">
+      <created>1386299131755</created>
+      <updated>1386299131755</updated>
+    </task>
+    <task id="LOCAL-00571" summary="Fixing https://bugzilla.redhat.com/show_bug.cgi?id=982044">
+      <created>1386299152929</created>
+      <updated>1386299152929</updated>
+    </task>
+    <task id="LOCAL-00572" summary="Fixing https://bugzilla.redhat.com/show_bug.cgi?id=982044">
+      <created>1386299248044</created>
+      <updated>1386299248044</updated>
+    </task>
+    <task id="LOCAL-00573" summary="Fixing https://bugzilla.redhat.com/show_bug.cgi?id=982044">
+      <created>1386299299647</created>
+      <updated>1386299299647</updated>
+    </task>
+    <task id="LOCAL-00574" summary="Added menu for duplicated topics">
+      <created>1386480446500</created>
+      <updated>1386480446500</updated>
+    </task>
+    <task id="LOCAL-00575" summary="Added menu for duplicated topics">
+      <created>1386480580918</created>
+      <updated>1386480580918</updated>
+    </task>
+    <task id="LOCAL-00576" summary="Added menu for duplicated topics">
+      <created>1386480653714</created>
+      <updated>1386480653714</updated>
+    </task>
+    <task id="LOCAL-00577" summary="Added menu for duplicated topics">
+      <created>1386481048593</created>
+      <updated>1386481048593</updated>
+    </task>
+    <task id="LOCAL-00578" summary="Added menu for duplicated topics">
+      <created>1386481168382</created>
+      <updated>1386481168382</updated>
+    </task>
+    <task id="LOCAL-00579" summary="Added menu for duplicated topics">
+      <created>1386483087724</created>
+      <updated>1386483087724</updated>
+    </task>
+    <task id="LOCAL-00580" summary="Added menu for duplicated topics">
+      <created>1386483337052</created>
+      <updated>1386483337052</updated>
+    </task>
+    <task id="LOCAL-00581" summary="Added date of duplicated topics last update">
+      <created>1386536140690</created>
+      <updated>1386536140691</updated>
+    </task>
+    <task id="LOCAL-00582" summary="Added date of duplicated topics last update">
+      <created>1386536308585</created>
+      <updated>1386536308585</updated>
+    </task>
+    <task id="LOCAL-00583" summary="Added date of duplicated topics last update">
+      <created>1386536593251</created>
+      <updated>1386536593251</updated>
+    </task>
+    <task id="LOCAL-00584" summary="Added date of duplicated topics last update">
+      <created>1386536773340</created>
+      <updated>1386536773340</updated>
+    </task>
+    <task id="LOCAL-00585" summary="Added date of duplicated topics last update">
+      <created>1386536844705</created>
+      <updated>1386536844705</updated>
+    </task>
+    <task id="LOCAL-00586" summary="Added date of duplicated topics last update">
+      <created>1386536863436</created>
+      <updated>1386536863436</updated>
+    </task>
+    <task id="LOCAL-00587" summary="Started work on PressZilla link checker">
+      <created>1386554261414</created>
+      <updated>1386554261414</updated>
+    </task>
+    <task id="LOCAL-00588" summary="Started work on PressZilla link checker">
+      <created>1386554298155</created>
+      <updated>1386554298155</updated>
+    </task>
+    <task id="LOCAL-00589" summary="Started work on PressZilla link checker">
+      <created>1386554420807</created>
+      <updated>1386554420807</updated>
+    </task>
+    <task id="LOCAL-00590" summary="Started work on PressZilla link checker">
+      <created>1386554526553</created>
+      <updated>1386554526554</updated>
+    </task>
+    <task id="LOCAL-00591" summary="Started work on PressZilla link checker">
+      <created>1386554683284</created>
+      <updated>1386554683284</updated>
+    </task>
+    <task id="LOCAL-00592" summary="Started work on PressZilla link checker">
+      <created>1386555191978</created>
+      <updated>1386555191978</updated>
+    </task>
+    <task id="LOCAL-00593" summary="Started work on PressZilla link checker">
+      <created>1386555363838</created>
+      <updated>1386555363838</updated>
+    </task>
+    <task id="LOCAL-00594" summary="Started work on PressZilla link checker">
+      <created>1386556469787</created>
+      <updated>1386556469787</updated>
+    </task>
+    <task id="LOCAL-00595" summary="Started work on PressZilla link checker">
+      <created>1386556707023</created>
+      <updated>1386556707023</updated>
+    </task>
+    <task id="LOCAL-00596" summary="Started work on PressZilla link checker">
+      <created>1386556764034</created>
+      <updated>1386556764034</updated>
+    </task>
+    <task id="LOCAL-00597" summary="Started work on PressZilla link checker">
+      <created>1386556894172</created>
+      <updated>1386556894172</updated>
+    </task>
+    <task id="LOCAL-00598" summary="Started work on PressZilla link checker">
+      <created>1386557050492</created>
+      <updated>1386557050492</updated>
+    </task>
+    <task id="LOCAL-00599" summary="Started work on PressZilla link checker">
+      <created>1386557149400</created>
+      <updated>1386557149400</updated>
+    </task>
+    <task id="LOCAL-00600" summary="Started work on PressZilla link checker">
+      <created>1386557349702</created>
+      <updated>1386557349702</updated>
+    </task>
+    <task id="LOCAL-00601" summary="Started work on PressZilla link checker">
+      <created>1386557570129</created>
+      <updated>1386557570129</updated>
+    </task>
+    <task id="LOCAL-00602" summary="Started work on PressZilla link checker">
+      <created>1386557771411</created>
+      <updated>1386557771411</updated>
+    </task>
+    <task id="LOCAL-00603" summary="Started work on PressZilla link checker">
+      <created>1386558177491</created>
+      <updated>1386558177491</updated>
+    </task>
+    <task id="LOCAL-00604" summary="Started work on PressZilla link checker">
+      <created>1386558325591</created>
+      <updated>1386558325591</updated>
+    </task>
+    <task id="LOCAL-00605" summary="Started work on PressZilla link checker">
+      <created>1386558425729</created>
+      <updated>1386558425729</updated>
+    </task>
+    <task id="LOCAL-00606" summary="Started work on PressZilla link checker">
+      <created>1386558500727</created>
+      <updated>1386558500727</updated>
+    </task>
+    <task id="LOCAL-00607" summary="Started work on PressZilla link checker">
+      <created>1386558644826</created>
+      <updated>1386558644826</updated>
+    </task>
+    <task id="LOCAL-00608" summary="Started work on PressZilla link checker">
+      <created>1386558833117</created>
+      <updated>1386558833117</updated>
+    </task>
+    <task id="LOCAL-00609" summary="Started work on PressZilla link checker">
+      <created>1386558917112</created>
+      <updated>1386558917112</updated>
+    </task>
+    <task id="LOCAL-00610" summary="Started work on PressZilla link checker">
+      <created>1386559284164</created>
+      <updated>1386559284164</updated>
+    </task>
+    <task id="LOCAL-00611" summary="Started work on PressZilla link checker">
+      <created>1386559549405</created>
+      <updated>1386559549405</updated>
+    </task>
+    <task id="LOCAL-00612" summary="Started work on PressZilla link checker">
+      <created>1386559604074</created>
+      <updated>1386559604074</updated>
+    </task>
+    <task id="LOCAL-00613" summary="Started work on PressZilla link checker">
+      <created>1386560127450</created>
+      <updated>1386560127450</updated>
+    </task>
+    <task id="LOCAL-00614" summary="Started work on PressZilla link checker">
+      <created>1386560632086</created>
+      <updated>1386560632086</updated>
+    </task>
+    <task id="LOCAL-00615" summary="Started work on PressZilla link checker">
+      <created>1386560695663</created>
+      <updated>1386560695663</updated>
+    </task>
+    <task id="LOCAL-00616" summary="Started work on PressZilla link checker">
+      <created>1386561163801</created>
+      <updated>1386561163801</updated>
+    </task>
+    <task id="LOCAL-00617" summary="Working on adding support for docs stage&#10;">
+      <created>1390956111491</created>
+      <updated>1390956111491</updated>
+    </task>
+    <task id="LOCAL-00618" summary="Working on adding support for docs devel">
+      <created>1390956689262</created>
+      <updated>1390956689262</updated>
+    </task>
+    <task id="LOCAL-00619" summary="Working on adding support for docs devel&#10;">
+      <created>1390956844840</created>
+      <updated>1390956844840</updated>
+    </task>
+    <task id="LOCAL-00620" summary="Working on adding support for docs devel&#10;">
+      <created>1390957206270</created>
+      <updated>1390957206270</updated>
+    </task>
+    <task id="LOCAL-00621" summary="Working on adding support for docs devel&#10;">
+      <created>1390957594503</created>
+      <updated>1390957594503</updated>
+    </task>
+    <task id="LOCAL-00622" summary="Working on adding support for docs devel&#10;">
+      <created>1390957748613</created>
+      <updated>1390957748613</updated>
+    </task>
+    <task id="LOCAL-00623" summary="Working on adding support for docs devel&#10;">
+      <created>1390957925065</created>
+      <updated>1390957925065</updated>
+    </task>
+    <task id="LOCAL-00624" summary="Working on adding support for docs devel&#10;">
+      <created>1390958023986</created>
+      <updated>1390958023986</updated>
+    </task>
+    <task id="LOCAL-00625" summary="Working on adding support for docs devel&#10;">
+      <created>1390958260605</created>
+      <updated>1390958260605</updated>
+    </task>
+    <task id="LOCAL-00626" summary="Added some new languages">
+      <created>1391050332747</created>
+      <updated>1391050332748</updated>
+    </task>
+    <option name="localTasksCounter" value="627" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1375000" />
+    <option name="totallyTimeSpent" value="4195000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1918" y="-3" width="1924" height="1087" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32887402" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39943343" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3997879" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36402115" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32220945" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20447284" sideWeight="0.6355052" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21192758" sideWeight="0.6709265" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32873806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.6355052" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="TunnelliJ" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3290735" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
-    <option name="RECENTLY_FILTERED_USER_GROUPS">
+    <option name="RECENTLY_FILTERED_USERS">
       <collection />
     </option>
   </component>
@@ -3130,36 +3320,36 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Working on jboss.org integration" />
-    <MESSAGE value="An exception was being thrown:&#10;&#10;/home/pressgang/DocBuilder2/app.js:766&#10;&#9;&#9;&#9;if (file.toString().match(filter)) {&#10;&#9;&#9;&#9;                    ^&#10;RangeError: Maximum call stack size exceeded&#10;" />
-    <MESSAGE value="Fixed npe" />
-    <MESSAGE value="Working on Bugzilla searching in PressZilla" />
-    <MESSAGE value="Tested new Lucene query" />
-    <MESSAGE value="Merge branch 'master' of github.com:pressgang-ccms/DocBuilder2&#10;&#10;Conflicts:&#10;&#9;.idea/workspace.xml&#10;" />
-    <MESSAGE value="Working on new lucene query" />
-    <MESSAGE value="Fixing docbook zip file deletion" />
-    <MESSAGE value="Working on PnT integration" />
-    <MESSAGE value="Working on product pages integration" />
     <MESSAGE value="Working on displaying updated topics" />
     <MESSAGE value="Add badge for Bugzilla Bugs" />
     <MESSAGE value="Added help overlay" />
     <MESSAGE value="Working on automatically mapping product and versions to product pages ids" />
     <MESSAGE value="Working on spell checking menu" />
-    <MESSAGE value="Updated dictionary" />
-    <MESSAGE value="Added title to bugzilla integration" />
-    <MESSAGE value="Added classname to list of ignored elements for spellchecking" />
-    <MESSAGE value="Fixing spell checking" />
-    <MESSAGE value="Added double word checker" />
-    <MESSAGE value="Started work on streamlining REST requests" />
-    <MESSAGE value="Batched up topic details requests" />
-    <MESSAGE value="Working on the ability to submit words to the custom dictionary" />
-    <MESSAGE value="Fixed issue where bugs were listed twice" />
-    <MESSAGE value="Working on adding popover for duplicated topics" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working on adding popover for duplicated topics" />
+    <MESSAGE value="Removed spellchecking for code and option" />
+    <MESSAGE value="Fixed styleguidebuilder so it generates a contant spec the way same way the rest service postporcesses it." />
+    <MESSAGE value="Working on adding custom words to dictionary" />
+    <MESSAGE value="Added the ability to highlight dictionary words in the document" />
+    <MESSAGE value="Added perm links to section titles" />
+    <MESSAGE value="Started work on dictionary user script" />
+    <MESSAGE value="Added help overlay topic for permlinks" />
+    <MESSAGE value="Added buttons to freeze and obsolete specs" />
+    <MESSAGE value="Merge branch 'devel' of github.com:pressgang-ccms/DocBuilder2 into devel&#10;&#10;Conflicts:&#10;&#9;.idea/workspace.xml&#10;" />
+    <MESSAGE value="Fixed issue where duplicate topics where being loaded more than once when the popup was shown" />
+    <MESSAGE value="Added delay for opening popovers" />
+    <MESSAGE value="Fixed location of build_books.sh" />
+    <MESSAGE value="Fixing https://bugzilla.redhat.com/show_bug.cgi?id=982044" />
+    <MESSAGE value="Added menu for duplicated topics" />
+    <MESSAGE value="Added date of duplicated topics last update" />
+    <MESSAGE value="Started work on PressZilla link checker" />
+    <MESSAGE value="Working on adding support for docs stage&#10;" />
+    <MESSAGE value="Working on adding support for docs devel" />
+    <MESSAGE value="Working on adding support for docs devel&#10;" />
+    <MESSAGE value="Added some new languages" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added some new languages" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="77" />
+      <option name="time" value="69" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -3167,339 +3357,378 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaCommonUtils_v2.1.1.js">
+    <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="25" selection-start="238" selection-end="254" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="240">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.9.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="1" selection-start="3939" selection-end="3939" vertical-scroll-proportion="0.0" vertical-offset="2733" max-vertical-offset="3630">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="4" selection-start="125" selection-end="150" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="2100">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaKeywordExtraction_v2.2.8.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1695">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.6.8.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="19" selection-start="2157" selection-end="5508" vertical-scroll-proportion="0.0" vertical-offset="1620" max-vertical-offset="2055">
-          <folding>
-            <marker date="1392787548792" expanded="false" signature="3529:3605" placeholder="..." />
-            <marker date="1392787548792" expanded="true" signature="3606:3660" placeholder="..." />
-            <marker date="1392787548792" expanded="false" signature="6280:6356" placeholder="..." />
-            <marker date="1392787548792" expanded="true" signature="6357:6399" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2325">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="1947" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
+        <state line="13" column="104" selection-start="821" selection-end="821" vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="525">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
+    <entry file="file://$PROJECT_DIR$/PressZillaDocsStage.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="277" column="40" selection-start="12691" selection-end="12691" vertical-scroll-proportion="0.0" vertical-offset="4155" max-vertical-offset="6915">
+        <state line="9" column="104" selection-start="612" selection-end="612" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="360">
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2220">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.7.9.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="4" selection-start="224" selection-end="248" vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="4860">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaCommonUtils_v2.1.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="25" selection-start="238" selection-end="254" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="240">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.9.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="1" selection-start="3939" selection-end="3939" vertical-scroll-proportion="0.0" vertical-offset="2749" max-vertical-offset="3630">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="4" selection-start="125" selection-end="150" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="2100">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaKeywordExtraction_v2.2.8.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1695">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.6.8.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2085">
-          <folding>
-            <marker date="1392787548792" expanded="false" signature="3529:3605" placeholder="..." />
-            <marker date="1392787548792" expanded="true" signature="3606:3660" placeholder="..." />
-            <marker date="1392787548792" expanded="false" signature="6280:6356" placeholder="..." />
-            <marker date="1392787548792" expanded="true" signature="6357:6399" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2325">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="9" selection-start="286" selection-end="286" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="540">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="277" column="40" selection-start="12691" selection-end="12691" vertical-scroll-proportion="0.0" vertical-offset="4155" max-vertical-offset="6915">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2220">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.7.9.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="4" selection-start="224" selection-end="248" vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="4860">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaCommonUtils_v2.1.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="25" selection-start="238" selection-end="254" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="240">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="1286" selection-end="1446" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="12405" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2926" column="65" selection-start="134318" selection-end="134318" vertical-scroll-proportion="0.0" vertical-offset="43890" max-vertical-offset="48390" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/styleguidebuilder.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="0" selection-start="1985" selection-end="1985" vertical-scroll-proportion="0.0" vertical-offset="840" max-vertical-offset="1455" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.8.0.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="175" column="67" selection-start="10252" selection-end="10252" vertical-scroll-proportion="0.0" vertical-offset="2625" max-vertical-offset="5820" />
+        <state line="376" column="243" selection-start="22918" selection-end="22922" vertical-scroll-proportion="0.0" vertical-offset="5640" max-vertical-offset="5820">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/typo.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.8.3.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="57" selection-start="454" selection-end="456" vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="1905" />
+        <state line="60" column="80" selection-start="2217" selection-end="2217" vertical-scroll-proportion="0.0" vertical-offset="556" max-vertical-offset="4920">
+          <folding>
+            <marker date="1390958012299" expanded="true" signature="2206:2244" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="2423:2617" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="2618:3003" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="2711:2910" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="2911:2959" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="3085:3180" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="3344:3414" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="3584:4260" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="4261:4371" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="5019:5044" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="5214:5408" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="5409:5782" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="5498:5697" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="5698:5742" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="5860:5955" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="6110:6180" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10480:11609" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10513:11579" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10547:11015" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10599:10798" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10665:10759" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10836:10980" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="11049:11545" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="11101:11306" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="11170:11267" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="11344:11510" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="12980:13563" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13013:13534" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13047:13174" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13100:13139" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13208:13337" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13263:13302" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13371:13500" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13426:13465" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="14923:15340" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="14956:15311" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="14990:15116" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="15042:15081" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="15150:15277" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="15203:15242" placeholder="..." />
+          </folding>
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaCommonUtils_v2.1.1.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="150" />
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="0" selection-start="1772" selection-end="1772" vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="510">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2100">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2220">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="277" column="40" selection-start="12691" selection-end="12691" vertical-scroll-proportion="0.0" vertical-offset="4155" max-vertical-offset="6915">
+        <state line="81" column="74" selection-start="2511" selection-end="2516" vertical-scroll-proportion="0.0" vertical-offset="1215" max-vertical-offset="6915">
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="12" selection-start="1521" selection-end="1521" vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="1410">
+          <folding>
+            <marker date="1390956831602" expanded="true" signature="900:933" placeholder="..." />
+            <marker date="1390956831602" expanded="true" signature="1031:1050" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="369" column="344" selection-start="36271" selection-end="36271" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="52080" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="21" selection-start="1585" selection-end="1585" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="525">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2100">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2220">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="81" column="74" selection-start="2511" selection-end="2516" vertical-scroll-proportion="0.0" vertical-offset="1215" max-vertical-offset="6915">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="110" selection-start="2181" selection-end="2181" vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="1380">
+          <folding>
+            <marker date="1390956831602" expanded="true" signature="900:933" placeholder="..." />
+            <marker date="1390956831602" expanded="true" signature="1031:1050" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="369" column="344" selection-start="36271" selection-end="36271" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="52080" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="21" selection-start="1585" selection-end="1585" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="525">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2100">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2220">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="81" column="74" selection-start="2511" selection-end="2516" vertical-scroll-proportion="0.0" vertical-offset="1215" max-vertical-offset="6915">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="110" selection-start="2181" selection-end="2181" vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="1380">
+          <folding>
+            <marker date="1390956831602" expanded="true" signature="900:933" placeholder="..." />
+            <marker date="1390956831602" expanded="true" signature="1031:1050" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="26" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/webdav.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="121" column="19" selection-start="2313" selection-end="6031" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/resources/html5-schema/common.rnc">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="123" column="23" selection-start="3271" selection-end="3271" vertical-scroll-proportion="0.33258426" vertical-offset="0" max-vertical-offset="0" />
+        <state line="123" column="23" selection-start="3271" selection-end="3271" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/bootstrap.min.css">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.6.8.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/wordprocessor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/typo_proto.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="542" column="37" selection-start="13156" selection-end="13162" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/typo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="57" selection-start="454" selection-end="456" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="1286" selection-end="1446" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/copy_js_files.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dictionaries/en_US.aff">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dictionaries/en_US.dic">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29198" column="5" selection-start="331759" selection-end="331763" vertical-scroll-proportion="20170.84" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/styleguidebuilder.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="0" selection-start="1985" selection-end="1985" vertical-scroll-proportion="0.0" vertical-offset="840" max-vertical-offset="1455" />
+        <state line="126" column="108" selection-start="6458" selection-end="6468" vertical-scroll-proportion="-26.28" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/javascript/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2926" column="65" selection-start="134318" selection-end="134318" vertical-scroll-proportion="0.0" vertical-offset="43890" max-vertical-offset="48390" />
+        <state line="369" column="344" selection-start="36271" selection-end="36271" vertical-scroll-proportion="0.0" vertical-offset="5535" max-vertical-offset="52080" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
+    <entry file="file://$PROJECT_DIR$/PressZillaDictionary.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="4" selection-start="125" selection-end="150" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2070">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaKeywordExtraction_v2.2.8.js">
+    <entry file="file://$PROJECT_DIR$/PressZillaDocsStage.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1695">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaPnTIntegration_v2.7.4.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2325">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="277" column="40" selection-start="12691" selection-end="12691" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2220">
+        <state line="9" column="104" selection-start="612" selection-end="612" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.8.0.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="175" column="67" selection-start="10252" selection-end="10252" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
+        <state line="376" column="243" selection-start="22918" selection-end="22922" vertical-scroll-proportion="0.0" vertical-offset="4966" max-vertical-offset="5820">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.8.3.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="80" selection-start="2217" selection-end="2217" vertical-scroll-proportion="0.0" vertical-offset="556" max-vertical-offset="4920">
+          <folding>
+            <marker date="1390958012299" expanded="true" signature="2206:2244" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="2423:2617" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="2618:3003" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="2711:2910" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="2911:2959" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="3085:3180" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="3344:3414" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="3584:4260" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="4261:4371" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="5019:5044" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="5214:5408" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="5409:5782" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="5498:5697" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="5698:5742" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="5860:5955" placeholder="..." />
+            <marker date="1390958012299" expanded="false" signature="6110:6180" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10480:11609" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10513:11579" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10547:11015" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10599:10798" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10665:10759" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="10836:10980" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="11049:11545" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="11101:11306" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="11170:11267" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="11344:11510" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="12980:13563" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13013:13534" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13047:13174" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13100:13139" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13208:13337" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13263:13302" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13371:13500" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="13426:13465" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="14923:15340" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="14956:15311" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="14990:15116" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="15042:15081" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="15150:15277" placeholder="..." />
+            <marker date="1390958012299" expanded="true" signature="15203:15242" placeholder="..." />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/presszilla/PressZillaCommonUtils_v2.1.1.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="25" selection-start="238" selection-end="254" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="894">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaBugzillaIntegration_v3.7.9.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="4" selection-start="224" selection-end="248" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4830">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.9.js">
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaSolutionsIntegration_v2.7.1.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="1" selection-start="3939" selection-end="3939" vertical-scroll-proportion="0.0" vertical-offset="2733" max-vertical-offset="3630">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="81" column="74" selection-start="2511" selection-end="2516" vertical-scroll-proportion="0.0" vertical-offset="1215" max-vertical-offset="6915">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaLinkChecker_v4.0.6.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="12" selection-start="1521" selection-end="1521" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1410">
+          <folding>
+            <marker date="1390956831602" expanded="true" signature="900:933" placeholder="..." />
+            <marker date="1390956831602" expanded="true" signature="1031:1050" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="1947" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="887">
+        <state line="13" column="104" selection-start="821" selection-end="821" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/presszilla/PressZillaMojoIntegration_v2.6.8.js">
+    <entry file="file://$PROJECT_DIR$/build_books.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="19" selection-start="2157" selection-end="5508" vertical-scroll-proportion="0.51305336" vertical-offset="1138" max-vertical-offset="2055">
-          <folding>
-            <marker date="1392787548792" expanded="false" signature="3529:3605" placeholder="..." />
-            <marker date="1392787548792" expanded="true" signature="3606:3660" placeholder="..." />
-            <marker date="1392787548792" expanded="false" signature="6280:6356" placeholder="..." />
-            <marker date="1392787548792" expanded="true" signature="6357:6399" placeholder="..." />
-          </folding>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="16.117647" vertical-offset="822" max-vertical-offset="3015">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docbuilder-translation">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="81" selection-start="823" selection-end="858" vertical-scroll-proportion="0.07025761" vertical-offset="225" max-vertical-offset="4260">
+          <folding />
         </state>
       </provider>
     </entry>

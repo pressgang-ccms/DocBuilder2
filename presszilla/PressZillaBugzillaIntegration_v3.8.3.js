@@ -58,7 +58,7 @@
 
                 logToConsole(iframeSrc);
 
-                callout = jQuery('<div id="PressZillaCallout" style="position: absolute; top: ' + top + 'px; left: ' + left + 'px; height: ' + smallHeight + 'px; width: ' + width + 'px">\
+                callout = jQuery('<div id="PressZillaCallout" style="z-index: 10; position: absolute; top: ' + top + 'px; left: ' + left + 'px; height: ' + smallHeight + 'px; width: ' + width + 'px">\
                                    <div id="PressZillaCalloutArrowBackground" style="height: 0; width: 0; border-right: 12px solid #ffffff; border-top: 12px dotted transparent; border-bottom: 12px dotted transparent; left: 0px; top: 0px; margin-top: 2px; z-index: 11; float: left">\
                                         <div id="PressZillaCalloutArrowForeground" style="position: relative; left: -10px; top: -12px; height: 0; width: 0; border-right: 10px solid rgb(66, 139, 202); border-top: 10px dotted transparent; border-bottom: 10px dotted transparent; z-index: 10;">\
                                         </div>\
@@ -160,7 +160,11 @@
 
                 var selectedText = jQuery.trim(selectionDetails.selection.toString());
                 var top = jQuery(selectionDetails.parent).offset().top;
-                var left = jQuery(document.body).offset().left + jQuery(document.body).width() + 20;
+                if (isDocbuilderWindow()) {
+                    var left = jQuery(document.body).offset().left + jQuery(document.body).width() + 20;
+                } else if (isDocStageWindow()) {
+                    var left = jQuery("#main").offset().left + jQuery("#main").width() + 20;
+                }
 
                 logToConsole(selectedText);
 

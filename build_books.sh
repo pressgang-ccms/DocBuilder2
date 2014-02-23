@@ -2,41 +2,47 @@
 
 function cleanHTMLDir()
 {
-	CLEAN_DIR=$1
+    CLEAN_DIR=$1
 
-	if [ -d /var/www/html/${CLEAN_DIR} ] || [ -e /var/www/html/${CLEAN_DIR} ]
-	then
-		rm -rf /var/www/html/${CLEAN_DIR}
-	fi
+    if [ -d /var/www/html/${CLEAN_DIR} ] || [ -e /var/www/html/${CLEAN_DIR} ]
+    then
+        rm -rf /var/www/html/${CLEAN_DIR}
+    fi
 
 }
 
 function backupAndCleanHTMLDir()
 {
-	CLEAN_DIR=$1
+    CLEAN_DIR=$1
 
-	if [ -d /var/www/html/${CLEAN_DIR} ] || [ -e /var/www/html/${CLEAN_DIR} ]
-	then
-		if [ -d /var/www/html/backup/${CLEAN_DIR} ] || [ -e /var/www/html/backup/${CLEAN_DIR} ]
-		then
-			rm -rf /var/www/html/backup/${CLEAN_DIR}
-		fi
+    if [ -d /var/www/html/${CLEAN_DIR} ] || [ -e /var/www/html/${CLEAN_DIR} ]
+    then
+        if [ -d /var/www/html/backup/${CLEAN_DIR} ] || [ -e /var/www/html/backup/${CLEAN_DIR} ]
+        then
+            rm -rf /var/www/html/backup/${CLEAN_DIR}
+        fi
 
-		mkdir -p /var/www/html/backup/${CLEAN_DIR}
-		cp -r /var/www/html/${CLEAN_DIR} /var/www/html/backup/${CLEAN_DIR}
-		rm -rf /var/www/html/${CLEAN_DIR}
-	fi
+        mkdir -p /var/www/html/backup/${CLEAN_DIR}
+        cp -r /var/www/html/${CLEAN_DIR} /var/www/html/backup/${CLEAN_DIR}
+        rm -rf /var/www/html/${CLEAN_DIR}
+    fi
 
 }
 
 TMP_DIR=/tmp/buildbooks
 BOOKNAME=Book
 EXPECTED_ARGS=2
+# The Apache root html directory
+APACHE_HTML_DIR=/var/www/html
+# The directory that holds the Publican ZIP files
+PUBLICAN_BOOK_ZIPS=/books
+# The complete directory that holds the Publican ZIP files
+PUBLICAN_BOOK_ZIPS_COMPLETE=${APACHE_HTML_DIR}${PUBLICAN_BOOK_ZIPS}
 
 if [ "$#" -lt ${EXPECTED_ARGS} ]
 then
-	echo ERROR! Expected more arguments.
-	exit 1
+    echo ERROR! Expected more arguments.
+    exit 1
 fi
 
 # Get the suffix on the directory
@@ -45,84 +51,121 @@ shift
 
 while (( "$#" ))
 do
-	IFS='=' read -ra ADDR <<< "$1"
+    IFS='=' read -ra ADDR <<< "$1"
 
-  # Extract the language, Common Content language and CSP id
-  # from the command line argument
-	BUILD_LANG=${ADDR[0]}
-	PUBLICAN_LANG=${ADDR[1]}
-	CSPID=${ADDR[2]}
+    # Extract the language, Common Content language and CSP id
+    # from the command line argument
+    BUILD_LANG=${ADDR[0]}
+    PUBLICAN_LANG=${ADDR[1]}
+    CSPID=${ADDR[2]}
 
-  # Shift the arguments down
-  shift
+    # Shift the arguments down
+    shift
 
-	# Start with a clean temp dir for every build
-	if [ -d ${TMP_DIR}${DIR_SUFFIX} ]
-	then
-		rm -rf ${TMP_DIR}${DIR_SUFFIX}
-	fi
-	
-	mkdir ${TMP_DIR}${DIR_SUFFIX}
+    # Start with a clean temp dir for every build
+    if [ -d ${TMP_DIR}${DIR_SUFFIX} ]
+    then
+        rm -rf ${TMP_DIR}${DIR_SUFFIX}
+    fi
 
-	# Enter the temp directory
-	pushd ${TMP_DIR}${DIR_SUFFIX}
+    mkdir ${TMP_DIR}${DIR_SUFFIX}
 
-	date > build.log
+    # Enter the temp directory
+    pushd ${TMP_DIR}${DIR_SUFFIX}
 
-		echo "csprocessor build --lang ${BUILD_LANG} --flatten --editor-links --show-report --target-lang ${PUBLICAN_LANG} --output ${BOOKNAME}.zip ${CSPID} >> build.log"
-		csprocessor build --lang ${BUILD_LANG} --flatten --editor-links --show-report --target-lang ${PUBLICAN_LANG} --output ${BOOKNAME}.zip ${CSPID} >> build.log
+        # Build the book as HTML-SINGLE with no overrides
+        date > build.log
 
-		# If the csp build failed then continue to the next item
-		if [ $? != 0 ]
-		then
-			cleanHTMLDir ${BUILD_LANG}/${CSPID}
+        echo "csprocessor build --lang ${BUILD_LANG} --flatten --editor-links --show-report --target-lang ${PUBLICAN_LANG} --output ${BOOKNAME}.zip ${CSPID} >> build.log"
+        csprocessor build --lang ${BUILD_LANG} --flatten --editor-links --show-report --target-lang ${PUBLICAN_LANG} --output ${BOOKNAME}.zip ${CSPID} >> build.log
 
-			mkdir -p /var/www/html/${BUILD_LANG}/${CSPID}
-			cp build.log /var/www/html/${BUILD_LANG}/${CSPID}
+        CSP_STATUS=$?
 
-			continue
-		fi		
+        backupAndCleanHTMLDir ${BUILD_LANG}/${CSPID}
+        mkdir -p /var/www/html/${BUILD_LANG}/${CSPID}
+        cp build.log /var/www/html/${BUILD_LANG}/${CSPID}
 
-		unzip ${BOOKNAME}.zip
+        # If the csp build failed then continue to the next item
+        if [ $CSP_STATUS != 0 ]
+        then
+            continue
+        fi
 
-		# The zip file will be extracted to a directory name that 
-		# refelcts the name of the book. We don't know this name,
-		# but we can loop over the subdirectories and then break
-		# once we have processed the first directory.
-		for dir in ./*/
-		do
+        unzip ${BOOKNAME}.zip
 
-			# Enter the extracted book directory
-			pushd ${dir}
+        # The zip file will be extracted to a directory name that
+        # refelcts the name of the book. We don't know this name,
+        # but we can loop over the subdirectories and then break
+        # once we have processed the first directory.
+        for dir in ./*/
+        do
 
-				echo "publican build --formats=html-single,pdf --langs=${PUBLICAN_LANG} &> publican.log"
-				publican build --formats=html-single,pdf --langs=${PUBLICAN_LANG} &> publican.log
+            # Enter the extracted book directory
+            pushd ${dir}
 
-				# If the publican build fails then put the log in the html dir
-				if [ $? != 0 ]
-				then
-					mkdir -p /var/www/html/${BUILD_LANG}/${CSPID}
-					cp publican.log /var/www/html/${BUILD_LANG}/${CSPID}
+                # Clone the publican.cfg for the remark builds
+                cp publican.cfg publican-remarks.cfg
 
-					# Leave the current directory and continue to the next spec
-					popd
-					break
-				fi
+                # Add the extra options for the html and remark builds
+                echo -e "\nchunk_first: 1" >> publican.cfg
+                echo -e "\nshow_remarks: 1" >> publican-remarks.cfg
 
-				backupAndCleanHTMLDir ${BUILD_LANG}/${CSPID}
-				mkdir -p /var/www/html/${BUILD_LANG}/${CSPID}
-				
-				cp -R tmp/${PUBLICAN_LANG}/html-single/* /var/www/html/${BUILD_LANG}/${CSPID}
-	 			cp -R tmp/${PUBLICAN_LANG}/pdf/* /var/www/html/${BUILD_LANG}/${CSPID}
+                # Do the original publican build
+                echo "publican build --formats=html-single,pdf,html --langs=${PUBLICAN_LANG} &> publican.log"
+                publican build --formats=html-single,pdf,html --langs=${PUBLICAN_LANG} &> publican.log
 
-				cp publican.log /var/www/html/${BUILD_LANG}/${CSPID}
-			popd
-			
-			# we only want to process one directory
-			break
+                PUBLICAN_STATUS=$?
 
-		done
+                cp -R tmp/${PUBLICAN_LANG}/html-single/* /var/www/html/${BUILD_LANG}/${CSPID}
+                cp -R tmp/${PUBLICAN_LANG}/pdf/* /var/www/html/${BUILD_LANG}/${CSPID}
+                cp publican.log /var/www/html/${BUILD_LANG}/${CSPID}
 
-		cp build.log /var/www/html/${BUILD_LANG}/${CSPID}
-	popd
+                # Copy the html to its own directory
+                cleanHTMLDir ${BUILD_LANG}/${CSPID}/html
+                mkdir /var/www/html/${BUILD_LANG}/${CSPID}/html
+
+                cp -R tmp/${PUBLICAN_LANG}/html/* /var/www/html/${BUILD_LANG}/${CSPID}/html
+                cp publican.log /var/www/html/${BUILD_LANG}/${CSPID}/html
+
+                # don't bother with the remark if the html-single failed
+                if [ $PUBLICAN_STATUS == 0 ]
+                then
+
+                    # Clean up
+                    rm -rf tmp
+                    rm publican.log
+
+                    # Do the remarks build
+                    echo "publican build --langs=${PUBLICAN_LANG} --formats=html-single --config=publican-remarks.cfg  &> publican.log"
+                    publican build --langs=${PUBLICAN_LANG} --formats=html-single --config=publican-remarks.cfg &> publican.log
+
+                    cleanHTMLDir ${BUILD_LANG}/${CSPID}/remarks
+                    mkdir -p /var/www/html/${BUILD_LANG}/${CSPID}/remarks
+
+                    cp -R tmp/${PUBLICAN_LANG}/html-single/* /var/www/html/${BUILD_LANG}/${CSPID}/remarks
+                    cp publican.log /var/www/html/${BUILD_LANG}/${CSPID}/remarks
+
+#                    # Build the publican zip file without editor links
+#                    DATE_MARKER=$(date '+%Y-%m-%dT%k:%M:%S.000%z')
+#                    BOOK_FILE_NAME="${PUBLICAN_BOOK_ZIPS_COMPLETE}/${BUILD_LANG}/${CSPID} ${DATE_MARKER}.zip"
+#
+#                    if [ -f "${BOOK_FILE_NAME}" ]
+#                    then
+#                       rm -rf "${BOOK_FILE_NAME}"
+#                    fi
+#
+#                    echo "csprocessor build --lang ${BUILD_LANG} --target-lang ${PUBLICAN_LANG} --hide-errors --output "${BOOK_FILE_NAME}" ${CSPID} >> build.log"
+#                    csprocessor build --lang ${BUILD_LANG} --target-lang ${PUBLICAN_LANG} --hide-errors --output "${BOOK_FILE_NAME}" ${CSPID} >> build.log
+
+                fi
+
+            popd
+
+            # we only want to process one directory
+            break
+
+        done
+
+        cp build.log /var/www/html/${BUILD_LANG}/${CSPID}
+    popd
 done

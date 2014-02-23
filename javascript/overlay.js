@@ -32,6 +32,11 @@
  */
 
 /**
+ * The message to add to a bage while data is still downloading
+ * @type {string}
+ */
+var PROCESSING_MESSAGE = "Thinking...";
+/**
  * Time to delay the closing of a popover window.
  * @type {number}
  */
@@ -199,6 +204,11 @@ var topicIds = [];
  */
 var topicNames = {};
 /**
+ * Maps topic ids to topic revisions;
+ * @type {{}}
+ */
+var topicLatestRevisions = {};
+/**
  * A mapping of topic IDs to the section elements
  * @type {{}}
  */
@@ -281,6 +291,10 @@ var dictionary;
  */
 var spellingErrorsCount = 0;
 /**
+ * Duplicated topics count
+ */
+var duplicatedTopicsCount = 0;
+/**
  * Double word counter
  */
 var doubleWordErrors = 0;
@@ -295,6 +309,11 @@ var buttons = {};
  */
 var doubleWordButtons = {};
 
+/**
+ * A regular expression that can be used to detect if a string is entirely whitespace.
+ */
+var whitespaceRE = /^\s*$/;
+
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
  */
@@ -303,6 +322,56 @@ $(document).ready(function() {
     addPermLinks();
 	buildMenu();
 });
+
+// http://medialize.github.io/URI.js/
+(function(m,s){m.URI=s(m.punycode,m.IPv6,m.SecondLevelDomains,m)})(this,function(m,s,t,v){function e(a,b){if(!(this instanceof e))return new e(a,b);void 0===a&&(a="undefined"!==typeof location?location.href+"":"");this.href(a);return void 0!==b?this.absoluteTo(b):this}function p(a){return a.replace(/([.*+?^=!:${}()|[\]\/\\])/g,"\\$1")}function x(a){return void 0===a?"Undefined":String(Object.prototype.toString.call(a)).slice(8,-1)}function l(a){return"Array"===x(a)}function w(a,b){var c,e;if(l(b)){c=
+    0;for(e=b.length;c<e;c++)if(!w(a,b[c]))return!1;return!0}var g=x(b);c=0;for(e=a.length;c<e;c++)if("RegExp"===g){if("string"===typeof a[c]&&a[c].match(b))return!0}else if(a[c]===b)return!0;return!1}function z(a,b){if(!l(a)||!l(b)||a.length!==b.length)return!1;a.sort();b.sort();for(var c=0,e=a.length;c<e;c++)if(a[c]!==b[c])return!1;return!0}function A(a){return escape(a)}function y(a){return encodeURIComponent(a).replace(/[!'()*]/g,A).replace(/\*/g,"%2A")}var B=v&&v.URI,d=e.prototype,q=Object.prototype.hasOwnProperty;
+    e._parts=function(){return{protocol:null,username:null,password:null,hostname:null,urn:null,port:null,path:null,query:null,fragment:null,duplicateQueryParameters:e.duplicateQueryParameters,escapeQuerySpace:e.escapeQuerySpace}};e.duplicateQueryParameters=!1;e.escapeQuerySpace=!0;e.protocol_expression=/^[a-z][a-z0-9-+-]*$/i;e.idn_expression=/[^a-z0-9\.-]/i;e.punycode_expression=/(xn--)/i;e.ip4_expression=/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;e.ip6_expression=/^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$/;
+    e.find_uri_expression=/\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?\u00ab\u00bb\u201c\u201d\u2018\u2019]))/ig;e.defaultPorts={http:"80",https:"443",ftp:"21",gopher:"70",ws:"80",wss:"443"};e.invalid_hostname_characters=/[^a-zA-Z0-9\.-]/;e.domAttributes={a:"href",blockquote:"cite",link:"href",base:"href",script:"src",form:"action",img:"src",area:"href",
+        iframe:"src",embed:"src",source:"src",track:"src",input:"src"};e.getDomAttribute=function(a){if(a&&a.nodeName){var b=a.nodeName.toLowerCase();return"input"===b&&"image"!==a.type?void 0:e.domAttributes[b]}};e.encode=y;e.decode=decodeURIComponent;e.iso8859=function(){e.encode=escape;e.decode=unescape};e.unicode=function(){e.encode=y;e.decode=decodeURIComponent};e.characters={pathname:{encode:{expression:/%(24|26|2B|2C|3B|3D|3A|40)/ig,map:{"%24":"$","%26":"&","%2B":"+","%2C":",","%3B":";","%3D":"=",
+        "%3A":":","%40":"@"}},decode:{expression:/[\/\?#]/g,map:{"/":"%2F","?":"%3F","#":"%23"}}},reserved:{encode:{expression:/%(21|23|24|26|27|28|29|2A|2B|2C|2F|3A|3B|3D|3F|40|5B|5D)/ig,map:{"%3A":":","%2F":"/","%3F":"?","%23":"#","%5B":"[","%5D":"]","%40":"@","%21":"!","%24":"$","%26":"&","%27":"'","%28":"(","%29":")","%2A":"*","%2B":"+","%2C":",","%3B":";","%3D":"="}}}};e.encodeQuery=function(a,b){var c=e.encode(a+"");return b?c.replace(/%20/g,"+"):c};e.decodeQuery=function(a,b){a+="";try{return e.decode(b?
+        a.replace(/\+/g,"%20"):a)}catch(c){return a}};e.recodePath=function(a){a=(a+"").split("/");for(var b=0,c=a.length;b<c;b++)a[b]=e.encodePathSegment(e.decode(a[b]));return a.join("/")};e.decodePath=function(a){a=(a+"").split("/");for(var b=0,c=a.length;b<c;b++)a[b]=e.decodePathSegment(a[b]);return a.join("/")};var n={encode:"encode",decode:"decode"},h,r=function(a,b){return function(c){return e[b](c+"").replace(e.characters[a][b].expression,function(c){return e.characters[a][b].map[c]})}};for(h in n)e[h+
+        "PathSegment"]=r("pathname",n[h]);e.encodeReserved=r("reserved","encode");e.parse=function(a,b){var c;b||(b={});c=a.indexOf("#");-1<c&&(b.fragment=a.substring(c+1)||null,a=a.substring(0,c));c=a.indexOf("?");-1<c&&(b.query=a.substring(c+1)||null,a=a.substring(0,c));"//"===a.substring(0,2)?(b.protocol=null,a=a.substring(2),a=e.parseAuthority(a,b)):(c=a.indexOf(":"),-1<c&&(b.protocol=a.substring(0,c)||null,b.protocol&&!b.protocol.match(e.protocol_expression)?b.protocol=void 0:"file"===b.protocol?a=a.substring(c+
+        3):"//"===a.substring(c+1,c+3)?(a=a.substring(c+3),a=e.parseAuthority(a,b)):(a=a.substring(c+1),b.urn=!0)));b.path=a;return b};e.parseHost=function(a,b){var c=a.indexOf("/"),e;-1===c&&(c=a.length);"["===a.charAt(0)?(e=a.indexOf("]"),b.hostname=a.substring(1,e)||null,b.port=a.substring(e+2,c)||null):a.indexOf(":")!==a.lastIndexOf(":")?(b.hostname=a.substring(0,c)||null,b.port=null):(e=a.substring(0,c).split(":"),b.hostname=e[0]||null,b.port=e[1]||null);b.hostname&&"/"!==a.substring(c).charAt(0)&&(c++,
+        a="/"+a);return a.substring(c)||"/"};e.parseAuthority=function(a,b){a=e.parseUserinfo(a,b);return e.parseHost(a,b)};e.parseUserinfo=function(a,b){var c=a.indexOf("/"),f=-1<c?a.lastIndexOf("@",c):a.indexOf("@");-1<f&&(-1===c||f<c)?(c=a.substring(0,f).split(":"),b.username=c[0]?e.decode(c[0]):null,c.shift(),b.password=c[0]?e.decode(c.join(":")):null,a=a.substring(f+1)):(b.username=null,b.password=null);return a};e.parseQuery=function(a,b){if(!a)return{};a=a.replace(/&+/g,"&").replace(/^\?*&*|&+$/g,
+        "");if(!a)return{};for(var c={},f=a.split("&"),g=f.length,d,k,l=0;l<g;l++)d=f[l].split("="),k=e.decodeQuery(d.shift(),b),d=d.length?e.decodeQuery(d.join("="),b):null,c[k]?("string"===typeof c[k]&&(c[k]=[c[k]]),c[k].push(d)):c[k]=d;return c};e.build=function(a){var b="";a.protocol&&(b+=a.protocol+":");a.urn||!b&&!a.hostname||(b+="//");b+=e.buildAuthority(a)||"";"string"===typeof a.path&&("/"!==a.path.charAt(0)&&"string"===typeof a.hostname&&(b+="/"),b+=a.path);"string"===typeof a.query&&a.query&&(b+=
+        "?"+a.query);"string"===typeof a.fragment&&a.fragment&&(b+="#"+a.fragment);return b};e.buildHost=function(a){var b="";if(a.hostname)e.ip6_expression.test(a.hostname)?b=a.port?b+("["+a.hostname+"]:"+a.port):b+a.hostname:(b+=a.hostname,a.port&&(b+=":"+a.port));else return"";return b};e.buildAuthority=function(a){return e.buildUserinfo(a)+e.buildHost(a)};e.buildUserinfo=function(a){var b="";a.username&&(b+=e.encode(a.username),a.password&&(b+=":"+e.encode(a.password)),b+="@");return b};e.buildQuery=
+        function(a,b,c){var f="",g,d,k,h;for(d in a)if(q.call(a,d)&&d)if(l(a[d]))for(g={},k=0,h=a[d].length;k<h;k++)void 0!==a[d][k]&&void 0===g[a[d][k]+""]&&(f+="&"+e.buildQueryParameter(d,a[d][k],c),!0!==b&&(g[a[d][k]+""]=!0));else void 0!==a[d]&&(f+="&"+e.buildQueryParameter(d,a[d],c));return f.substring(1)};e.buildQueryParameter=function(a,b,c){return e.encodeQuery(a,c)+(null!==b?"="+e.encodeQuery(b,c):"")};e.addQuery=function(a,b,c){if("object"===typeof b)for(var f in b)q.call(b,f)&&e.addQuery(a,f,b[f]);
+    else if("string"===typeof b)void 0===a[b]?a[b]=c:("string"===typeof a[b]&&(a[b]=[a[b]]),l(c)||(c=[c]),a[b]=a[b].concat(c));else throw new TypeError("URI.addQuery() accepts an object, string as the name parameter");};e.removeQuery=function(a,b,c){var f;if(l(b))for(c=0,f=b.length;c<f;c++)a[b[c]]=void 0;else if("object"===typeof b)for(f in b)q.call(b,f)&&e.removeQuery(a,f,b[f]);else if("string"===typeof b)if(void 0!==c)if(a[b]===c)a[b]=void 0;else{if(l(a[b])){f=a[b];var g={},d,k;if(l(c))for(d=0,k=c.length;d<
+        k;d++)g[c[d]]=!0;else g[c]=!0;d=0;for(k=f.length;d<k;d++)void 0!==g[f[d]]&&(f.splice(d,1),k--,d--);a[b]=f}}else a[b]=void 0;else throw new TypeError("URI.addQuery() accepts an object, string as the first parameter");};e.hasQuery=function(a,b,c,f){if("object"===typeof b){for(var d in b)if(q.call(b,d)&&!e.hasQuery(a,d,b[d]))return!1;return!0}if("string"!==typeof b)throw new TypeError("URI.hasQuery() accepts an object, string as the name parameter");switch(x(c)){case "Undefined":return b in a;case "Boolean":return a=
+        Boolean(l(a[b])?a[b].length:a[b]),c===a;case "Function":return!!c(a[b],b,a);case "Array":return l(a[b])?(f?w:z)(a[b],c):!1;case "RegExp":return l(a[b])?f?w(a[b],c):!1:Boolean(a[b]&&a[b].match(c));case "Number":c=String(c);case "String":return l(a[b])?f?w(a[b],c):!1:a[b]===c;default:throw new TypeError("URI.hasQuery() accepts undefined, boolean, string, number, RegExp, Function as the value parameter");}};e.commonPath=function(a,b){var c=Math.min(a.length,b.length),e;for(e=0;e<c;e++)if(a.charAt(e)!==
+        b.charAt(e)){e--;break}if(1>e)return a.charAt(0)===b.charAt(0)&&"/"===a.charAt(0)?"/":"";if("/"!==a.charAt(e)||"/"!==b.charAt(e))e=a.substring(0,e).lastIndexOf("/");return a.substring(0,e+1)};e.withinString=function(a,b){return a.replace(e.find_uri_expression,b)};e.ensureValidHostname=function(a){if(a.match(e.invalid_hostname_characters)){if(!m)throw new TypeError("Hostname '"+a+"' contains characters other than [A-Z0-9.-] and Punycode.js is not available");if(m.toASCII(a).match(e.invalid_hostname_characters))throw new TypeError("Hostname '"+
+        a+"' contains characters other than [A-Z0-9.-]");}};e.noConflict=function(a){if(a)return a={URI:this.noConflict()},URITemplate&&"function"==typeof URITemplate.noConflict&&(a.URITemplate=URITemplate.noConflict()),s&&"function"==typeof s.noConflict&&(a.IPv6=s.noConflict()),SecondLevelDomains&&"function"==typeof SecondLevelDomains.noConflict&&(a.SecondLevelDomains=SecondLevelDomains.noConflict()),a;v.URI===this&&(v.URI=B);return this};d.build=function(a){if(!0===a)this._deferred_build=!0;else if(void 0===
+        a||this._deferred_build)this._string=e.build(this._parts),this._deferred_build=!1;return this};d.clone=function(){return new e(this)};d.valueOf=d.toString=function(){return this.build(!1)._string};n={protocol:"protocol",username:"username",password:"password",hostname:"hostname",port:"port"};r=function(a){return function(b,c){if(void 0===b)return this._parts[a]||"";this._parts[a]=b||null;this.build(!c);return this}};for(h in n)d[h]=r(n[h]);n={query:"?",fragment:"#"};r=function(a,b){return function(c,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               e){if(void 0===c)return this._parts[a]||"";null!==c&&(c+="",c.charAt(0)===b&&(c=c.substring(1)));this._parts[a]=c;this.build(!e);return this}};for(h in n)d[h]=r(h,n[h]);n={search:["?","query"],hash:["#","fragment"]};r=function(a,b){return function(c,e){var d=this[a](c,e);return"string"===typeof d&&d.length?b+d:d}};for(h in n)d[h]=r(n[h][1],n[h][0]);d.pathname=function(a,b){if(void 0===a||!0===a){var c=this._parts.path||(this._parts.hostname?"/":"");return a?e.decodePath(c):c}this._parts.path=a?e.recodePath(a):
+        "/";this.build(!b);return this};d.path=d.pathname;d.href=function(a,b){var c;if(void 0===a)return this.toString();this._string="";this._parts=e._parts();var f=a instanceof e,d="object"===typeof a&&(a.hostname||a.path||a.pathname);a.nodeName&&(d=e.getDomAttribute(a),a=a[d]||"",d=!1);!f&&d&&void 0!==a.pathname&&(a=a.toString());if("string"===typeof a)this._parts=e.parse(a,this._parts);else if(f||d)for(c in f=f?a._parts:a,f)q.call(this._parts,c)&&(this._parts[c]=f[c]);else throw new TypeError("invalid input");
+        this.build(!b);return this};d.is=function(a){var b=!1,c=!1,f=!1,d=!1,u=!1,k=!1,l=!1,h=!this._parts.urn;this._parts.hostname&&(h=!1,c=e.ip4_expression.test(this._parts.hostname),f=e.ip6_expression.test(this._parts.hostname),b=c||f,u=(d=!b)&&t&&t.has(this._parts.hostname),k=d&&e.idn_expression.test(this._parts.hostname),l=d&&e.punycode_expression.test(this._parts.hostname));switch(a.toLowerCase()){case "relative":return h;case "absolute":return!h;case "domain":case "name":return d;case "sld":return u;
+        case "ip":return b;case "ip4":case "ipv4":case "inet4":return c;case "ip6":case "ipv6":case "inet6":return f;case "idn":return k;case "url":return!this._parts.urn;case "urn":return!!this._parts.urn;case "punycode":return l}return null};var C=d.protocol,D=d.port,E=d.hostname;d.protocol=function(a,b){if(void 0!==a&&a&&(a=a.replace(/:(\/\/)?$/,""),a.match(/[^a-zA-z0-9\.+-]/)))throw new TypeError("Protocol '"+a+"' contains characters other than [A-Z0-9.+-]");return C.call(this,a,b)};d.scheme=d.protocol;
+    d.port=function(a,b){if(this._parts.urn)return void 0===a?"":this;if(void 0!==a&&(0===a&&(a=null),a&&(a+="",":"===a.charAt(0)&&(a=a.substring(1)),a.match(/[^0-9]/))))throw new TypeError("Port '"+a+"' contains characters other than [0-9]");return D.call(this,a,b)};d.hostname=function(a,b){if(this._parts.urn)return void 0===a?"":this;if(void 0!==a){var c={};e.parseHost(a,c);a=c.hostname}return E.call(this,a,b)};d.host=function(a,b){if(this._parts.urn)return void 0===a?"":this;if(void 0===a)return this._parts.hostname?
+        e.buildHost(this._parts):"";e.parseHost(a,this._parts);this.build(!b);return this};d.authority=function(a,b){if(this._parts.urn)return void 0===a?"":this;if(void 0===a)return this._parts.hostname?e.buildAuthority(this._parts):"";e.parseAuthority(a,this._parts);this.build(!b);return this};d.userinfo=function(a,b){if(this._parts.urn)return void 0===a?"":this;if(void 0===a){if(!this._parts.username)return"";var c=e.buildUserinfo(this._parts);return c.substring(0,c.length-1)}"@"!==a[a.length-1]&&(a+=
+        "@");e.parseUserinfo(a,this._parts);this.build(!b);return this};d.resource=function(a,b){var c;if(void 0===a)return this.path()+this.search()+this.hash();c=e.parse(a);this._parts.path=c.path;this._parts.query=c.query;this._parts.fragment=c.fragment;this.build(!b);return this};d.subdomain=function(a,b){if(this._parts.urn)return void 0===a?"":this;if(void 0===a){if(!this._parts.hostname||this.is("IP"))return"";var c=this._parts.hostname.length-this.domain().length-1;return this._parts.hostname.substring(0,
+        c)||""}c=this._parts.hostname.length-this.domain().length;c=this._parts.hostname.substring(0,c);c=RegExp("^"+p(c));a&&"."!==a.charAt(a.length-1)&&(a+=".");a&&e.ensureValidHostname(a);this._parts.hostname=this._parts.hostname.replace(c,a);this.build(!b);return this};d.domain=function(a,b){if(this._parts.urn)return void 0===a?"":this;"boolean"===typeof a&&(b=a,a=void 0);if(void 0===a){if(!this._parts.hostname||this.is("IP"))return"";var c=this._parts.hostname.match(/\./g);if(c&&2>c.length)return this._parts.hostname;
+        c=this._parts.hostname.length-this.tld(b).length-1;c=this._parts.hostname.lastIndexOf(".",c-1)+1;return this._parts.hostname.substring(c)||""}if(!a)throw new TypeError("cannot set domain empty");e.ensureValidHostname(a);!this._parts.hostname||this.is("IP")?this._parts.hostname=a:(c=RegExp(p(this.domain())+"$"),this._parts.hostname=this._parts.hostname.replace(c,a));this.build(!b);return this};d.tld=function(a,b){if(this._parts.urn)return void 0===a?"":this;"boolean"===typeof a&&(b=a,a=void 0);if(void 0===
+        a){if(!this._parts.hostname||this.is("IP"))return"";var c=this._parts.hostname.lastIndexOf("."),c=this._parts.hostname.substring(c+1);return!0!==b&&t&&t.list[c.toLowerCase()]?t.get(this._parts.hostname)||c:c}if(a)if(a.match(/[^a-zA-Z0-9-]/))if(t&&t.is(a))c=RegExp(p(this.tld())+"$"),this._parts.hostname=this._parts.hostname.replace(c,a);else throw new TypeError("TLD '"+a+"' contains characters other than [A-Z0-9]");else{if(!this._parts.hostname||this.is("IP"))throw new ReferenceError("cannot set TLD on non-domain host");
+        c=RegExp(p(this.tld())+"$");this._parts.hostname=this._parts.hostname.replace(c,a)}else throw new TypeError("cannot set TLD empty");this.build(!b);return this};d.directory=function(a,b){if(this._parts.urn)return void 0===a?"":this;if(void 0===a||!0===a){if(!this._parts.path&&!this._parts.hostname)return"";if("/"===this._parts.path)return"/";var c=this._parts.path.length-this.filename().length-1,c=this._parts.path.substring(0,c)||(this._parts.hostname?"/":"");return a?e.decodePath(c):c}c=this._parts.path.length-
+        this.filename().length;c=this._parts.path.substring(0,c);c=RegExp("^"+p(c));this.is("relative")||(a||(a="/"),"/"!==a.charAt(0)&&(a="/"+a));a&&"/"!==a.charAt(a.length-1)&&(a+="/");a=e.recodePath(a);this._parts.path=this._parts.path.replace(c,a);this.build(!b);return this};d.filename=function(a,b){if(this._parts.urn)return void 0===a?"":this;if(void 0===a||!0===a){if(!this._parts.path||"/"===this._parts.path)return"";var c=this._parts.path.lastIndexOf("/"),c=this._parts.path.substring(c+1);return a?
+        e.decodePathSegment(c):c}c=!1;"/"===a.charAt(0)&&(a=a.substring(1));a.match(/\.?\//)&&(c=!0);var d=RegExp(p(this.filename())+"$");a=e.recodePath(a);this._parts.path=this._parts.path.replace(d,a);c?this.normalizePath(b):this.build(!b);return this};d.suffix=function(a,b){if(this._parts.urn)return void 0===a?"":this;if(void 0===a||!0===a){if(!this._parts.path||"/"===this._parts.path)return"";var c=this.filename(),d=c.lastIndexOf(".");if(-1===d)return"";c=c.substring(d+1);c=/^[a-z0-9%]+$/i.test(c)?c:
+        "";return a?e.decodePathSegment(c):c}"."===a.charAt(0)&&(a=a.substring(1));if(c=this.suffix())d=a?RegExp(p(c)+"$"):RegExp(p("."+c)+"$");else{if(!a)return this;this._parts.path+="."+e.recodePath(a)}d&&(a=e.recodePath(a),this._parts.path=this._parts.path.replace(d,a));this.build(!b);return this};d.segment=function(a,b,c){var e=this._parts.urn?":":"/",d=this.path(),u="/"===d.substring(0,1),d=d.split(e);void 0!==a&&"number"!==typeof a&&(c=b,b=a,a=void 0);if(void 0!==a&&"number"!==typeof a)throw Error("Bad segment '"+
+        a+"', must be 0-based integer");u&&d.shift();0>a&&(a=Math.max(d.length+a,0));if(void 0===b)return void 0===a?d:d[a];if(null===a||void 0===d[a])if(l(b)){d=[];a=0;for(var k=b.length;a<k;a++)if(b[a].length||d.length&&d[d.length-1].length)d.length&&!d[d.length-1].length&&d.pop(),d.push(b[a])}else{if(b||"string"===typeof b)""===d[d.length-1]?d[d.length-1]=b:d.push(b)}else b||"string"===typeof b&&b.length?d[a]=b:d.splice(a,1);u&&d.unshift("");return this.path(d.join(e),c)};d.segmentCoded=function(a,b,c){var d,
+        g;"number"!==typeof a&&(c=b,b=a,a=void 0);if(void 0===b){a=this.segment(a,b,c);if(l(a))for(d=0,g=a.length;d<g;d++)a[d]=e.decode(a[d]);else a=void 0!==a?e.decode(a):void 0;return a}if(l(b))for(d=0,g=b.length;d<g;d++)b[d]=e.decode(b[d]);else b="string"===typeof b?e.encode(b):b;return this.segment(a,b,c)};var F=d.query;d.query=function(a,b){if(!0===a)return e.parseQuery(this._parts.query,this._parts.escapeQuerySpace);if("function"===typeof a){var c=e.parseQuery(this._parts.query,this._parts.escapeQuerySpace),
+        d=a.call(this,c);this._parts.query=e.buildQuery(d||c,this._parts.duplicateQueryParameters,this._parts.escapeQuerySpace);this.build(!b);return this}return void 0!==a&&"string"!==typeof a?(this._parts.query=e.buildQuery(a,this._parts.duplicateQueryParameters,this._parts.escapeQuerySpace),this.build(!b),this):F.call(this,a,b)};d.setQuery=function(a,b,c){var d=e.parseQuery(this._parts.query,this._parts.escapeQuerySpace);if("object"===typeof a)for(var g in a)q.call(a,g)&&(d[g]=a[g]);else if("string"===
+        typeof a)d[a]=void 0!==b?b:null;else throw new TypeError("URI.addQuery() accepts an object, string as the name parameter");this._parts.query=e.buildQuery(d,this._parts.duplicateQueryParameters,this._parts.escapeQuerySpace);"string"!==typeof a&&(c=b);this.build(!c);return this};d.addQuery=function(a,b,c){var d=e.parseQuery(this._parts.query,this._parts.escapeQuerySpace);e.addQuery(d,a,void 0===b?null:b);this._parts.query=e.buildQuery(d,this._parts.duplicateQueryParameters,this._parts.escapeQuerySpace);
+        "string"!==typeof a&&(c=b);this.build(!c);return this};d.removeQuery=function(a,b,c){var d=e.parseQuery(this._parts.query,this._parts.escapeQuerySpace);e.removeQuery(d,a,b);this._parts.query=e.buildQuery(d,this._parts.duplicateQueryParameters,this._parts.escapeQuerySpace);"string"!==typeof a&&(c=b);this.build(!c);return this};d.hasQuery=function(a,b,c){var d=e.parseQuery(this._parts.query,this._parts.escapeQuerySpace);return e.hasQuery(d,a,b,c)};d.setSearch=d.setQuery;d.addSearch=d.addQuery;d.removeSearch=
+        d.removeQuery;d.hasSearch=d.hasQuery;d.normalize=function(){return this._parts.urn?this.normalizeProtocol(!1).normalizeQuery(!1).normalizeFragment(!1).build():this.normalizeProtocol(!1).normalizeHostname(!1).normalizePort(!1).normalizePath(!1).normalizeQuery(!1).normalizeFragment(!1).build()};d.normalizeProtocol=function(a){"string"===typeof this._parts.protocol&&(this._parts.protocol=this._parts.protocol.toLowerCase(),this.build(!a));return this};d.normalizeHostname=function(a){this._parts.hostname&&
+    (this.is("IDN")&&m?this._parts.hostname=m.toASCII(this._parts.hostname):this.is("IPv6")&&s&&(this._parts.hostname=s.best(this._parts.hostname)),this._parts.hostname=this._parts.hostname.toLowerCase(),this.build(!a));return this};d.normalizePort=function(a){"string"===typeof this._parts.protocol&&this._parts.port===e.defaultPorts[this._parts.protocol]&&(this._parts.port=null,this.build(!a));return this};d.normalizePath=function(a){if(this._parts.urn||!this._parts.path||"/"===this._parts.path)return this;
+        var b,c=this._parts.path,d,g;"/"!==c.charAt(0)&&(b=!0,c="/"+c);for(c=c.replace(/(\/(\.\/)+)|(\/\.$)/g,"/").replace(/\/{2,}/g,"/");;){d=c.indexOf("/../");if(-1===d)break;else if(0===d){c=c.substring(3);break}g=c.substring(0,d).lastIndexOf("/");-1===g&&(g=d);c=c.substring(0,g)+c.substring(d+3)}b&&this.is("relative")&&(c=c.substring(1));c=e.recodePath(c);this._parts.path=c;this.build(!a);return this};d.normalizePathname=d.normalizePath;d.normalizeQuery=function(a){"string"===typeof this._parts.query&&
+    (this._parts.query.length?this.query(e.parseQuery(this._parts.query,this._parts.escapeQuerySpace)):this._parts.query=null,this.build(!a));return this};d.normalizeFragment=function(a){this._parts.fragment||(this._parts.fragment=null,this.build(!a));return this};d.normalizeSearch=d.normalizeQuery;d.normalizeHash=d.normalizeFragment;d.iso8859=function(){var a=e.encode,b=e.decode;e.encode=escape;e.decode=decodeURIComponent;this.normalize();e.encode=a;e.decode=b;return this};d.unicode=function(){var a=
+        e.encode,b=e.decode;e.encode=y;e.decode=unescape;this.normalize();e.encode=a;e.decode=b;return this};d.readable=function(){var a=this.clone();a.username("").password("").normalize();var b="";a._parts.protocol&&(b+=a._parts.protocol+"://");a._parts.hostname&&(a.is("punycode")&&m?(b+=m.toUnicode(a._parts.hostname),a._parts.port&&(b+=":"+a._parts.port)):b+=a.host());a._parts.hostname&&a._parts.path&&"/"!==a._parts.path.charAt(0)&&(b+="/");b+=a.path(!0);if(a._parts.query){for(var c="",d=0,g=a._parts.query.split("&"),
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         l=g.length;d<l;d++){var k=(g[d]||"").split("="),c=c+("&"+e.decodeQuery(k[0],this._parts.escapeQuerySpace).replace(/&/g,"%26"));void 0!==k[1]&&(c+="="+e.decodeQuery(k[1],this._parts.escapeQuerySpace).replace(/&/g,"%26"))}b+="?"+c.substring(1)}return b+=e.decodeQuery(a.hash(),!0)};d.absoluteTo=function(a){var b=this.clone(),c=["protocol","username","password","hostname","port"],d,g;if(this._parts.urn)throw Error("URNs do not have any generally defined hierarchical components");a instanceof e||(a=new e(a));
+        b._parts.protocol||(b._parts.protocol=a._parts.protocol);if(this._parts.hostname)return b;for(d=0;g=c[d];d++)b._parts[g]=a._parts[g];c=["query","path"];for(d=0;g=c[d];d++)!b._parts[g]&&a._parts[g]&&(b._parts[g]=a._parts[g]);"/"!==b.path().charAt(0)&&(a=a.directory(),b._parts.path=(a?a+"/":"")+b._parts.path,b.normalizePath());b.build();return b};d.relativeTo=function(a){var b=this.clone().normalize(),c,d,g,l;if(b._parts.urn)throw Error("URNs do not have any generally defined hierarchical components");
+        a=(new e(a)).normalize();c=b._parts;d=a._parts;g=b.path();l=a.path();if("/"!==g.charAt(0))throw Error("URI is already relative");if("/"!==l.charAt(0))throw Error("Cannot calculate a URI relative to another relative URI");c.protocol===d.protocol&&(c.protocol=null);if(c.username===d.username&&c.password===d.password&&null===c.protocol&&null===c.username&&null===c.password&&c.hostname===d.hostname&&c.port===d.port)c.hostname=null,c.port=null;else return b.build();if(g===l)return c.path="",b.build();
+        a=e.commonPath(b.path(),a.path());if(!a)return b.build();d=d.path.substring(a.length).replace(/[^\/]*$/,"").replace(/.*?\//g,"../");c.path=d+c.path.substring(a.length);return b.build()};d.equals=function(a){var b=this.clone();a=new e(a);var c={},d={},g={},h;b.normalize();a.normalize();if(b.toString()===a.toString())return!0;c=b.query();d=a.query();b.query("");a.query("");if(b.toString()!==a.toString()||c.length!==d.length)return!1;c=e.parseQuery(c,this._parts.escapeQuerySpace);d=e.parseQuery(d,this._parts.escapeQuerySpace);
+        for(h in c)if(q.call(c,h)){if(!l(c[h])){if(c[h]!==d[h])return!1}else if(!z(c[h],d[h]))return!1;g[h]=!0}for(h in d)if(q.call(d,h)&&!g[h])return!1;return!0};d.duplicateQueryParameters=function(a){this._parts.duplicateQueryParameters=!!a;return this};d.escapeQuerySpace=function(a){this._parts.escapeQuerySpace=!!a;return this};return e});
 
 /**
  * When all the assets have been loaded, the second pass can start
@@ -333,7 +402,7 @@ function getSpecIdFromURL() {
  */
 function addPermLinks() {
     jQuery("h5[class='title']>a[id], h4[class='title']>a[id], h3[class='title']>a[id], h2[class='title']>a[id]").each(function(index, element){
-        jQuery(element.parentNode).append(jQuery("<span data-pressgangtopic='25677'> <a style='font-size: 10px' href='#" + element.id + "'>permlink</a></span>"));
+        jQuery(element.parentNode).append(jQuery("<span style='background: white' data-pressgangtopic='25677'> <a style='font-size: 10px' href='#" + element.id + "'>permlink</a></span>"));
     });
 }
 
@@ -473,12 +542,39 @@ function createDuplicatedTopicPopover(topicId, parent) {
 
     dupTopicsCache[topicId] = {popover: popover};
 
-    popover.popoverContent.innerHTML = '<p>This popover displays PnT content that match the keywords in the topic.</p>'
+    popover.popoverContent.innerHTML = '<p>This popover displays topics that are at least 50% similar to this topic.</p>';
 
     linkDiv.onmouseover=function(){
         openPopover(popover, linkDiv);
 
-        if (dupTopicsCache[topicId].data) {
+        if (!dupTopicsCache[topicId].data && !dupTopicsCache[topicId].loading) {
+            dupTopicsCache[topicId].loading = true;
+            var similarTopicsUrl = SERVER + "/topics/get/json/query;minHash=" + topicId + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
+            jQuery.getJSON(similarTopicsUrl, function(popover) {
+                return function(data){
+                    dupTopicsCache[topicId].loading = false;
+
+                    dupTopicsCache[topicId].data = [];
+
+                    data.items.sort(function(a, b){
+                        if (a.item.revision < b.item.revision) {
+                            return 1;
+                        }
+                        if (a.item.revision == b.item.revision) {
+                            return 0;
+                        }
+                        return -1;
+                    });
+
+                    for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
+                        dupTopicsCache[topicId].data.push(data.items[topicIndex].item);
+                    }
+
+                    updateCount(topicId + "duplicateIcon", dupTopicsCache[topicId].data.length);
+                    renderDuplicatedTopic(topicId);
+                }
+            }(popover));
+        } else {
             renderDuplicatedTopic(topicId);
         }
     };
@@ -487,22 +583,62 @@ function createDuplicatedTopicPopover(topicId, parent) {
 }
 
 function renderDuplicatedTopic(topicId) {
-    dupTopicsCache[topicId].popover.popoverContent.innerHTML = '';
 
-    if (dupTopicsCache[topicId].data) {
-        for (var index = 0, count = dupTopicsCache[topicId].data.length; index < count; ++index) {
+        dupTopicsCache[topicId].loading = true;
 
-            var dupTopic =  dupTopicsCache[topicId].data[index];
+        jQuery.getJSON( SERVER + "/topic/get/json/" + topicId, function(topic){
 
-            var container = document.createElement("div");
-            var link = document.createElement("a");
-            container.appendChild(link);
+            function addThisTopic() {
 
-            $(link).text(topicId + ": " + topicNames[topicId]);
-            link.setAttribute("href", 'http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + topicId);
-            dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
-        }
-    }
+                var container = document.createElement("div");
+                var link = document.createElement("a");
+                container.appendChild(link);
+
+                link.style.color = "red";
+
+                var revisionDate = new moment(topic.lastModified).format("DD MMM YYYY");
+
+                jQuery(link).text(topic.id + " Rev: " + topic.revision + " Date: " + revisionDate + " - " + topic.title);
+                link.setAttribute("href", 'http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + topic.id);
+                dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
+            }
+
+            dupTopicsCache[topicId].popover.popoverContent.innerHTML = '<p>No duplicate topics found.</p>';
+
+            if (dupTopicsCache[topicId].data) {
+                var foundPlaceForThisTopic = false;
+                if (dupTopicsCache[topicId].data.length != 0) {
+                    dupTopicsCache[topicId].popover.popoverContent.innerHTML = '<p>Duplicated topics are listed in descending order by revision number.\
+                    This means that the most recently edited topics are listed first. </p>\
+                    <p>The topic used by this content specification is shown in red. Topics listed above the one shown in red should be reviewed for any updated content that may be relevant to this content specification.</p>';
+
+                    for (var index = 0, count = dupTopicsCache[topicId].data.length; index < count; ++index) {
+
+                        var dupTopic =  dupTopicsCache[topicId].data[index];
+
+                        if (!foundPlaceForThisTopic && dupTopic.revision < topic.revision) {
+                            foundPlaceForThisTopic = true;
+                            addThisTopic();
+                        }
+
+                        var container = document.createElement("div");
+                        var link = document.createElement("a");
+                        container.appendChild(link);
+
+                        var revisionDate = new moment(dupTopic.lastModified).format("DD MMM YYYY");
+
+                        jQuery(link).text(dupTopic.id + " Rev: " + dupTopic.revision + " Date: " + revisionDate + " - " + dupTopic.title);
+                        link.setAttribute("href", 'http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#SearchResultsAndTopicView;query;topicIds=' + dupTopic.id);
+                        dupTopicsCache[topicId].popover.popoverContent.appendChild(container);
+                    }
+
+                    if (!foundPlaceForThisTopic) {
+                        addThisTopic();
+                    }
+                }
+            }
+        });
+
 }
 
 function createMojoPopover(topicId, parent) {
@@ -660,14 +796,8 @@ function renderSpecs(topicId) {
 	for (var index = 0, count = specCache[topicId].data.length; index < count; ++index) {
 
 		var spec =  specCache[topicId].data[index];
-
-		var container = document.createElement("div");
-		var link = document.createElement("a");
-		container.appendChild(link);
-
-		$(link).text(spec.id + ":  " + spec.title + ", " + spec.product + " " + spec.version);
-		link.setAttribute("href", "/" + spec);
-		specCache[topicId].popover.popoverContent.appendChild(container);
+        var link = $("<div><a target='_blank' href='http://" + BASE_SERVER + "/pressgang-ccms-ui-next/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=" + spec.id + "'><div style='width: 16px; height: 16px; margin-right: 8px; background-image: url(/images/edit.png); background-size: contain; float: left'></div></a><a href='/" + spec.id + "'>" + spec.id + ":  " + spec.title + ", " + spec.product + " " + spec.version + "</a></div>");
+		jQuery(specCache[topicId].popover.popoverContent).append(link);
 	}
 }
 
@@ -1002,9 +1132,11 @@ function openPopover(popover, linkDiv) {
         popover.timeout = null;
     }
 
-    popover.style.left= linkDiv.parentNode.offsetLeft + 'px';
-    popover.style.top= (linkDiv.offsetTop - 300) + 'px';
-    popover.style.display = '';
+    popover.timeout = setTimeout(function() {
+        popover.style.left= linkDiv.parentNode.offsetLeft + 'px';
+        popover.style.top= (linkDiv.offsetTop - 300) + 'px';
+        popover.style.display = '';
+    }, POPOVER_DELAY);
 }
 
 /**
@@ -1268,7 +1400,7 @@ function getTopicNodes(specId, topics, index, count) {
     if (index < topics.length) {
         var topic = topics[index];
         var topicNodesUrl = SERVER + "/contentspecnodes/get/json/query;csNodeEntityId=" + topic.id + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpec%22%7D%7D%5D%7D%5D%7D%0A%0A";
-        $.getJSON(topicNodesUrl, function(topicNodeData) {
+        jQuery.getJSON(topicNodesUrl, function(topicNodeData) {
             var newerTopicRevisions = [];
             for (var topicNodeIndex = 0, topicNodeCount = topicNodeData.items.length; topicNodeIndex < topicNodeCount; ++topicNodeIndex) {
                 var topicNode = topicNodeData.items[topicNodeIndex].item;
@@ -1302,7 +1434,8 @@ function getTopicNodes(specId, topics, index, count) {
             getTopicNodes(specId, topics, ++index, count);
         });
     } else {
-        $('#topicsUpdatedInOtherSpecs').append($('<span class="badge pull-right">' + count + '</span>'));
+        jQuery("#topicsUpdatedInOtherSpecsBadge").remove();
+        jQuery('#topicsUpdatedInOtherSpecs').append($('<span id="topicsUpdatedInOtherSpecsBadge" class="badge pull-right">' + count + '</span>'));
     }
 }
 
@@ -1377,48 +1510,56 @@ function getModifiedTopics(specId) {
             thirdPass(false, true);
 
             // add the results to the menu
+            jQuery("#topicsAddedSince1DayBadge").remove();
             $('#topicsAddedIn1Day').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.day].added.length + '</span>'));
             for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.day].added.length; topicIndex < topicCount; ++topicIndex) {
                 var topic = specRevisionCache[specRevisionCache.day].added[topicIndex];
                 $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1DayItems"));
             }
 
+            jQuery("#topicsAddedSince1WeekBadge").remove();
             $('#topicsAddedIn1Week').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.week].added.length + '</span>'));
             for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.week].added.length; topicIndex < topicCount; ++topicIndex) {
                 var topic = specRevisionCache[specRevisionCache.week].added[topicIndex];
                 $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1WeekItems"));
             }
 
+            jQuery("#topicsAddedSince1MonthBadge").remove();
             $('#topicsAddedIn1Month').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.month].added.length + '</span>'));
             for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.month].added.length; topicIndex < topicCount; ++topicIndex) {
                 var topic = specRevisionCache[specRevisionCache.month].added[topicIndex];
                 $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1MonthItems"));
             }
 
+            jQuery("#topicsAddedSince1YearBadge").remove();
             $('#topicsAddedIn1Year').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.year].added.length + '</span>'));
             for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.year].added.length; topicIndex < topicCount; ++topicIndex) {
                 var topic = specRevisionCache[specRevisionCache.year].added[topicIndex];
                 $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsAddedSince1YearItems"));
             }
 
+            jQuery("#topicsRemovedIn1DayBadge").remove();
             $('#topicsRemovedIn1Day').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.day].removed.length + '</span>'));
             for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.day].removed.length; topicIndex < topicCount; ++topicIndex) {
                 var topic = specRevisionCache[specRevisionCache.day].removed[topicIndex];
                 $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1DayItems"));
             }
 
+            jQuery("#topicsRemovedIn1WeekBadge").remove();
             $('#topicsRemovedIn1Week').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.week].removed.length + '</span>'));
             for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.week].removed.length; topicIndex < topicCount; ++topicIndex) {
                 var topic = specRevisionCache[specRevisionCache.week].removed[topicIndex];
                 $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1WeekItems"));
             }
 
+            jQuery("#topicsRemovedIn1MonthBadge").remove();
             $('#topicsRemovedIn1Month').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.month].removed.length + '</span>'));
             for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.month].removed.length; topicIndex < topicCount; ++topicIndex) {
                 var topic = specRevisionCache[specRevisionCache.month].removed[topicIndex];
                 $('<li><a href="javascript:topicSections[' + topic + '].scrollIntoView()">' + topic + '</a></li>').appendTo($("#topicsRemovedSince1MonthItems"));
             }
 
+            jQuery("#topicsRemovedIn1YearBadge").remove();
             $('#topicsRemovedIn1Year').append($('<span class="badge pull-right">' + specRevisionCache[specRevisionCache.year].removed.length + '</span>'));
             for (var topicIndex = 0, topicCount = specRevisionCache[specRevisionCache.year].removed.length; topicIndex < topicCount; ++topicIndex) {
                 var topic = specRevisionCache[specRevisionCache.year].removed[topicIndex];
@@ -1905,16 +2046,45 @@ function buildMenu() {
 						<li data-pressgangtopic="24792" style="background-color: white"><a href="javascript:hideAllMenus(); topicsRemovedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">Topics Removed In</a></li>\
 						<li data-pressgangtopic="24800" style="background-color: white"><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">Licenses</a></li>\
 						<li data-pressgangtopic="24787" style="background-color: white"><a id="bugzillaBugs" href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">Bugzilla Bugs</a></li>\
-						<li data-pressgangtopic="24789" style="background-color: white"><a id="topicsUpdatedInOtherSpecs" href="javascript:hideAllMenus(); topicsUpdatedInOtherSpecs.show(); localStorage.setItem(\'lastMenu\', \'topicsUpdatedInOtherSpecs\');">Updated Topics</a></li>\
+						<li data-pressgangtopic="24789" style="background-color: white"><a id="topicsUpdatedInOtherSpecs" href="javascript:hideAllMenus(); topicsUpdatedInOtherSpecs.show(); localStorage.setItem(\'lastMenu\', \'topicsUpdatedInOtherSpecs\');">Updated Topics<span id="topicsUpdatedInOtherSpecsBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
+						<li data-pressgangtopic="00000" style="background-color: white"><a id="duplicatedTopics" href="javascript:hideAllMenus(); duplicatedTopics.show(); localStorage.setItem(\'lastMenu\', \'duplicatedTopics\');">Duplicated Topics<span id="duplicatedTopicsBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a id="spellingErrors" href="javascript:hideAllMenus(); spellingErrors.show(); localStorage.setItem(\'lastMenu\', \'spellingErrors\');">Spelling Errors</a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a id="doubledWordsErrors" href="javascript:hideAllMenus(); doubledWords.show(); localStorage.setItem(\'lastMenu\', \'doubledWords\');">Doubled Words</a></li>\
+                        <li data-pressgangtopic="00000" style="background-color: white"><a id="badLinks" href="javascript:hideAllMenus(); badLinks.show(); localStorage.setItem(\'lastMenu\', \'badLinks\');">Bad Links<span id="badLinksBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a href="' + BUG_LINK + '&cf_build_id=Content%20Spec%20ID:%20' + SPEC_ID + '">Report a bug</a></li>\
+						<li data-pressgangtopic="00000" style="background-color: white"><a href="http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=' + SPEC_ID + '">Edit this spec</a></li>\
 					</ul>\
 				</div>\
 			</div>\
 		</div>')
 	$(document.body).append(mainMenu);
     sideMenus.push(mainMenu);
+
+    badLinks = $('\
+		<div data-pressgangtopic="0000" class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">' + help + 'Bad Links</div>\
+				<div class="panel-body ">\
+		            <ul id="badLinksItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+    $(document.body).append(badLinks);
+    sideMenus.push(badLinks);
+
+    duplicatedTopics = $('\
+		<div data-pressgangtopic="0000" class="panel panel-default pressgangMenu">\
+			<div class="panel-heading">' + help + 'Duplicated Topics</div>\
+				<div class="panel-body ">\
+		            <ul id="duplicatedTopicsItems" class="nav nav-pills nav-stacked">\
+						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+					</ul>\
+				</div>\
+			</div>\
+		</div>')
+    $(document.body).append(duplicatedTopics);
+    sideMenus.push(duplicatedTopics);
 
     doubledWords = $('\
 		<div data-pressgangtopic="0000" class="panel panel-default pressgangMenu">\
@@ -1972,16 +2142,17 @@ function buildMenu() {
     $(document.body).append(topicsUpdatedInOtherSpecs);
     sideMenus.push(topicsUpdatedInOtherSpecs);
 
+
 	topicsAddedSince = $('\
 		<div data-pressgangtopic="24794" class="panel panel-default pressgangMenu">\
 			<div class="panel-heading">' + help + 'Topics Added In</div>\
 				<div id="topicsAddedSincePanel" class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li ><a id="topicsAddedIn1Day" href="javascript:hideAllMenus(); topicsAddedSince1Day.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Day\');"><div style="background-image: url(/images/history-blue.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Day</a></li>\
-						<li ><a id="topicsAddedIn1Week" href="javascript:hideAllMenus(); topicsAddedSince1Week.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Week\');"><div style="background-image: url(/images/history-green.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Week</a></li>\
-						<li ><a id="topicsAddedIn1Month" href="javascript:hideAllMenus(); topicsAddedSince1Month.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Month\');"><div style="background-image: url(/images/history-yellow.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Month</a></li>\
-						<li ><a id="topicsAddedIn1Year" href="javascript:hideAllMenus(); topicsAddedSince1Year.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Year\');"><div style="background-image: url(/images/history-orange.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Year</a></li>\
+						<li ><a id="topicsAddedIn1Day" href="javascript:hideAllMenus(); topicsAddedSince1Day.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Day\');"><div style="background-image: url(/images/history-blue.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Day<span id="topicsAddedSince1DayBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
+						<li ><a id="topicsAddedIn1Week" href="javascript:hideAllMenus(); topicsAddedSince1Week.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Week\');"><div style="background-image: url(/images/history-green.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Week<span id="topicsAddedSince1WeekBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
+						<li ><a id="topicsAddedIn1Month" href="javascript:hideAllMenus(); topicsAddedSince1Month.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Month\');"><div style="background-image: url(/images/history-yellow.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Month<span id="topicsAddedSince1MonthBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
+						<li ><a id="topicsAddedIn1Year" href="javascript:hideAllMenus(); topicsAddedSince1Year.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince1Year\');"><div style="background-image: url(/images/history-orange.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Year<span id="topicsAddedSince1YearBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -2051,10 +2222,10 @@ function buildMenu() {
 				<div id="topicsRemovedSincePanel" class="panel-body ">\
 		            <ul class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li ><a id="topicsRemovedIn1Day" href="javascript:hideAllMenus(); topicsRemovedSince1Day.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince1Day\');"><div style="background-image: url(/images/history-blue.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Day</a></li>\
-						<li ><a id="topicsRemovedIn1Week" href="javascript:hideAllMenus(); topicsRemovedSince1Week.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince1Week\');"><div style="background-image: url(/images/history-green.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Week</a></li>\
-						<li ><a id="topicsRemovedIn1Month" href="javascript:hideAllMenus(); topicsRemovedSince1Month.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince1Month\');"><div style="background-image: url(/images/history-yellow.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Month</a></li>\
-						<li ><a id="topicsRemovedIn1Year" href="javascript:hideAllMenus(); topicsRemovedSince1Year.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince1Year\');"><div style="background-image: url(/images/history-orange.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Year</a></li>\
+						<li ><a id="topicsRemovedIn1Day" href="javascript:hideAllMenus(); topicsRemovedSince1Day.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince1Day\');"><div style="background-image: url(/images/history-blue.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Day<span id="topicsRemovedIn1DayBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
+						<li ><a id="topicsRemovedIn1Week" href="javascript:hideAllMenus(); topicsRemovedSince1Week.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince1Week\');"><div style="background-image: url(/images/history-green.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Week<span id="topicsRemovedIn1WeekBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
+						<li ><a id="topicsRemovedIn1Month" href="javascript:hideAllMenus(); topicsRemovedSince1Month.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince1Month\');"><div style="background-image: url(/images/history-yellow.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Month<span id="topicsRemovedIn1MonthBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
+						<li ><a id="topicsRemovedIn1Year" href="javascript:hideAllMenus(); topicsRemovedSince1Year.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince1Year\');"><div style="background-image: url(/images/history-orange.png); float: left; margin-right: 3px;height: 18px;width: 18px;background-size: cover;"></div>1 Year<span id="topicsRemovedIn1YearBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -2495,6 +2666,12 @@ function buildMenu() {
     } else if (lastMenu == "doubledWords") {
         doubledWords.show();
         showMenu();
+    } else if (lastMenu == "duplicatedTopics") {
+        duplicatedTopics.show();
+        showMenu();
+    } else if (lastMenu == "badLinks") {
+        badLinks.show();
+        showMenu();
     } else {
 		menuIcon.show();
 		hideMenu();
@@ -2622,7 +2799,7 @@ function checkSpellingErrors(topic) {
                 }
 
                 // remove all urls
-                var urlRe = /\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/i;
+                var urlRe = /\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?Â«Â»â€œâ€â€˜â€™]))/i;
                 var urlMatch = null;
                 while ((urlMatch = text.match(urlRe)) != null) {
                     var urlLength = urlMatch[0].length;
@@ -2758,6 +2935,8 @@ function checkSpellingErrors(topic) {
     }
 }
 
+
+
 /**
  * The side menus require various information about topics and specs. This function is where
  * we pull down this information.
@@ -2771,177 +2950,242 @@ function getInfoFromREST() {
     var specId = getSpecIdFromURL();
     if (specId) {
         var topicsUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=0,9,10;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
-        jQuery.getJSON(topicsUrl, function(data) {
+        jQuery.getJSON(topicsUrl, function(topicNodes) {
+            getRevisionInfoFromREST(specId, topicNodes, 0);
+        });
+    }
+}
 
-            function getTopic(index, topics) {
-                if (index < topics.items.length) {
+function getTopicDetailsInBatches(specId, topicNodes, index) {
+    if (index < topicNodes.items.length) {
 
-                    jQuery("#spellingErrorsBadge").remove();
-                    jQuery("#doubledWordsErrorsBadge").remove();
-                    jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (' + (index / topics.items.length * 100).toFixed(2) + '% complete)</span>'));
-                    jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (' + (index / topics.items.length * 100).toFixed(2) + '% complete)</span>'));
+        jQuery("#spellingErrorsBadge").remove();
+        jQuery("#doubledWordsErrorsBadge").remove();
+        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Pass 2 ' + (index / topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
+        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Pass 2 ' + (index / topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
 
-                    // make a note of the topic IDs and revisions
-                    var topicDetailsMap = {};
-                    // the list of topic ids to send tp the query url
-                    var topicIdList = "";
+        // the list of topic ids to send tp the query url
+        var topicIdList = "";
 
-                    for (var topicIndex = index; topicIndex < index + TOPIC_BATCH_SIZE && topicIndex < data.items.length; ++topicIndex) {
-                        var topicNode = data.items[topicIndex].item;
+        for (var topicIndex = index; topicIndex < index + TOPIC_BATCH_SIZE && topicIndex < topicNodes.items.length; ++topicIndex) {
+            var topicNode = topicNodes.items[topicIndex].item;
 
-                        if (topicIdList.length != 0) {
-                            topicIdList += ",";
-                        }
-                        topicIdList += topicNode.entityId;
-                        topicDetailsMap[topicNode.entityId] = topicNode.entityRevision;
+            if (topicIdList.length != 0) {
+                topicIdList += ",";
+            }
+            topicIdList += topicNode.entityId;
+        }
+
+        // for each topic we need the latest revision, and the specific revision included in the spec (if the revision is defined)
+        var topicUrl = BACKGROUND_QUERY_PREFIX + topicIdList + BACKGROUND_QUERY_POSTFIX;
+        jQuery.getJSON(topicUrl, function(expandedTopics) {
+
+            for (var topicIndex = 0, topicCount = expandedTopics.items.length; topicIndex < topicCount; ++topicIndex) {
+
+                var topicNode = topicNodes.items[topicIndex].item;
+                var topic = expandedTopics.items[topicIndex].item;
+
+                if (!topicNode.entityRevision) {
+                    checkSpellingErrors(topic);
+                }
+
+                if (!topicLatestRevisions[topic.id]){
+                    topicLatestRevisions[topic.id] = topic.revision;
+                }
+
+                if (!topicNames[topic.id]) {
+                    topicNames[topic.id] = topic.title;
+                }
+
+                // set the description
+                if (descriptionCache[topic.id]) {
+                    descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
+                }
+
+                // set the revisions
+                if (historyCache[topic.id]) {
+                    historyCache[topic.id].data = [];
+                    for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
+                        var revision = topic.revisions.items[revisionIndex].item;
+                        historyCache[topic.id].data.push({
+                            revision: revision.revision,
+                            message: revision.logDetails.message,
+                            lastModified: revision.lastModified});
                     }
 
-                    // for each topic we need the latest revision, and the specific revision included in the spec (if the revision is defined)
-                    var topicUrl = BACKGROUND_QUERY_PREFIX + topicIdList + BACKGROUND_QUERY_POSTFIX;
-                    jQuery.getJSON(topicUrl, function(index, topicDetailsMap) {
-                        return function(expandedTopics) {
+                    updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
+                    updateHistoryIcon(topic.id, topic.title);
+                }
 
-                            for (var topicIndex = 0, topicCount = expandedTopics.items.length; topicIndex < topicCount; ++topicIndex) {
-
-                                var topic = expandedTopics.items[topicIndex].item;
-
-                                if (!topicDetailsMap[topic.id]) {
-                                    checkSpellingErrors(topic);
-                                }
-
-                                if (!topicNames[topic.id]) {
-                                    topicNames[topic.id] = topic.title;
-                                }
-
-                                // set the description
-                                if (descriptionCache[topic.id]) {
-                                    descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
-                                }
-
-                                // set the revisions
-                                if (historyCache[topic.id]) {
-                                    historyCache[topic.id].data = [];
-                                    for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
-                                        var revision = topic.revisions.items[revisionIndex].item;
-                                        historyCache[topic.id].data.push({
-                                            revision: revision.revision,
-                                            message: revision.logDetails.message,
-                                            lastModified: revision.lastModified});
-                                    }
-
-                                    updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
-                                    updateHistoryIcon(topic.id, topic.title);
-                                }
-
-                                // set the tags
-                                if (tagsCache[topic.id]) {
-                                    tagsCache[topic.id].data = [];
-                                    for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
-                                        var tag = topic.tags.items[tagIndex].item;
-                                        tagsCache[topic.id].data.push({
-                                            name: tag.name,
-                                            id: tag.id
-                                        });
-                                    }
-
-                                    updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
-                                }
-
-                                // set the urls
-                                if (urlCache[topic.id]) {
-                                    urlCache[topic.id].data = [];
-
-                                    var match = null;
-                                    while (match = COMMENT_RE.exec(topic.xml)) {
-                                        var comment = match[1];
-
-                                        var match2 = null;
-                                        while (match2 = URL_RE.exec(comment)) {
-                                            var url = match2[0];
-                                            urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
-                                        }
-                                    }
-
-                                    for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
-                                        var url = topic.sourceUrls_OTM.items[urlsIndex].item;
-                                        urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
-                                    }
-
-                                    updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
-                                }
-
-                                // set the specs
-                                if (specCache[topic.id]) {
-                                    specCache[topic.id].data = [];
-                                    var specs = {};
-                                    for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
-                                        var spec = topic.contentSpecs_OTM.items[specIndex].item;
-                                        if (!specs[spec.id]) {
-                                            var specDetails = {id: spec.id, title: "", product: "", version: ""};
-                                            for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
-                                                var child = spec.children_OTM.items[specChildrenIndex].item;
-                                                if (child.title == "Product") {
-                                                    specDetails.product = child.additionalText;
-                                                } else if (child.title == "Version") {
-                                                    specDetails.version = child.additionalText;
-                                                } if (child.title == "Title") {
-                                                    specDetails.title = child.additionalText;
-                                                }
-                                            }
-                                            specs[spec.id] = specDetails;
-                                        }
-                                    }
-
-                                    for (spec in specs) {
-                                        specCache[topic.id].data.push(specs[spec]);
-                                    }
-
-                                    updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
-                                }
-                            }
-
-                            getTopic(index + TOPIC_BATCH_SIZE, topics);
-                        }
-                    }(index, topicDetailsMap));
-
-                    // get the specific topic revision
-                    if (topicNode.entityRevision) {
-                        var topicRevisionUrl = SERVER + "/topic/get/json/" + topicNode.entityId + "/r/" + topicNode.entityRevision;
-                        jQuery.getJSON(topicRevisionUrl, function(data) {
-                            checkSpellingErrors(data);
+                // set the tags
+                if (tagsCache[topic.id]) {
+                    tagsCache[topic.id].data = [];
+                    for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
+                        var tag = topic.tags.items[tagIndex].item;
+                        tagsCache[topic.id].data.push({
+                            name: tag.name,
+                            id: tag.id
                         });
                     }
 
-                    // Finally we need to get the list of any similar topics
-                    var similarTopicsUrl = "http://skynet-dev.usersys.redhat.com/pressgang-ccms/rest/1/topics/get/json/query;minHash=" + topicNode.entityId + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
-                    jQuery.getJSON(similarTopicsUrl, function(data){
-                        for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
-                            if (!dupTopicsCache[topicNode.entityId].data) {
-                                dupTopicsCache[topicNode.entityId].data = [];
-                            }
+                    updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
+                }
 
-                            dupTopicsCache[topicNode.entityId].data.push(data.items[topicIndex].item.id);
+                // set the urls
+                if (urlCache[topic.id]) {
+                    urlCache[topic.id].data = [];
 
+                    var match = null;
+                    while (match = COMMENT_RE.exec(topic.xml)) {
+                        var comment = match[1];
+
+                        var match2 = null;
+                        while (match2 = URL_RE.exec(comment)) {
+                            var url = match2[0];
+                            urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
                         }
+                    }
 
-                        updateCount(topicNode.entityId + "duplicateIcon", dupTopicsCache[topicNode.entityId].data.length);
-                    });
-                } else {
-                    jQuery("#spellingErrorsBadge").remove();
-                    jQuery("#doubledWordsErrorsBadge").remove();
-                    jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + '</span>'));
-                    jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + '</span>'));
+                    for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
+                        var url = topic.sourceUrls_OTM.items[urlsIndex].item;
+                        urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
+                    }
 
-                    console.log("Retrieved all topic data");
+                    updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
+                }
 
-                    buildTopicEditedInChart();
+                // set the specs
+                if (specCache[topic.id]) {
+                    specCache[topic.id].data = [];
+                    var specs = {};
+                    for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
+                        var spec = topic.contentSpecs_OTM.items[specIndex].item;
+                        if (!specs[spec.id]) {
+                            var specDetails = {id: spec.id, title: "", product: "", version: ""};
+                            for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
+                                var child = spec.children_OTM.items[specChildrenIndex].item;
+                                if (child.title == "Product") {
+                                    specDetails.product = child.additionalText;
+                                } else if (child.title == "Version") {
+                                    specDetails.version = child.additionalText;
+                                } if (child.title == "Title") {
+                                    specDetails.title = child.additionalText;
+                                }
+                            }
+                            specs[spec.id] = specDetails;
+                        }
+                    }
 
-                    getTopicNodes(specId, topics, 0, 0);
+                    for (spec in specs) {
+                        specCache[topic.id].data.push(specs[spec]);
+                    }
+
+                    updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
                 }
             }
 
-            getTopic(0, data);
+            getTopicDetailsInBatches(specId, topicNodes, index + TOPIC_BATCH_SIZE);
         });
+    } else {
+        jQuery("#spellingErrorsBadge").remove();
+        jQuery("#doubledWordsErrorsBadge").remove();
+        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + '</span>'));
+        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + '</span>'));
+
+        console.log("Retrieved all topic data");
+
+        buildTopicEditedInChart();
+
+        getTopicNodes(specId, topicNodes, 0, 0);
+    }
+}
+
+/**
+ * Once all the information from the latest versions of the topics is found, we go through and
+ * get the details on the topic revisions
+ */
+function getRevisionInfoFromREST(specId, topicNodes, index) {
+     if (index <  topicNodes.items.length) {
+
+        jQuery("#spellingErrorsBadge").remove();
+        jQuery("#doubledWordsErrorsBadge").remove();
+        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Step 1 ' + (index /  topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
+        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Step 1 ' + (index /  topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
+
+        var topicNode = topicNodes.items[index].item;
+        var topicID = topicNode.entityId;
+        var topicRevision = topicNode.entityRevision;
+
+        if (topicRevision) {
+            var topicRevisionUrl = SERVER + "/topic/get/json/" + topicID + "/r/" + topicRevision;
+            jQuery.getJSON(topicRevisionUrl, function(data) {
+                checkSpellingErrors(data);
+                getRevisionInfoFromREST(specId, topicNodes, ++index);
+            });
+        } else {
+            getRevisionInfoFromREST(specId, topicNodes, ++index);
+        }
+    } else {
+         jQuery("#spellingErrorsBadge").remove();
+         jQuery("#doubledWordsErrorsBadge").remove();
+         jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Pass 2 0%)</span>'));
+         jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Pass 2 0%)</span>'));
+
+
+         getDuplicatedTopics(specId, topicNodes, 0);
+    }
+}
+
+function getDuplicatedTopics(specId, topicNodes, index) {
+    if (index <  topicNodes.items.length) {
+
+        jQuery("#duplicatedTopicsBadge").remove();
+        jQuery('#duplicatedTopics').append($('<span id="duplicatedTopicsBadge" class="badge pull-right">' + duplicatedTopicsCount + " (" +(index / topicNodes.items.length * 100.0).toFixed(2) + '%)</span>'));
+
+        var topicNode = topicNodes.items[index].item;
+        var topicID = topicNode.entityId;
+        var similarTopicsUrl = SERVER + "/topics/get/json/query;minHash=" + topicID + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
+        jQuery.getJSON(similarTopicsUrl, function(data){
+
+            if (dupTopicsCache[topicID]) {
+                dupTopicsCache[topicID].data = [];
+
+                data.items.sort(function(a, b){
+                    if (a.item.revision < b.item.revision) {
+                        return 1;
+                    }
+                    if (a.item.revision == b.item.revision) {
+                        return 0;
+                    }
+                    return -1;
+                });
+
+                for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
+                    dupTopicsCache[topicID].data.push(data.items[topicIndex].item);
+                }
+
+                /*
+                    Add the menu items
+                 */
+                var myDuplicatedTopicCount = dupTopicsCache[topicID].data.length;
+
+                if (myDuplicatedTopicCount != 0) {
+                    ++duplicatedTopicsCount;
+                    var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
+                    var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topicID + '].scrollIntoView()">Topic: ' + topicID + '</button>');
+                    button.appendTo(buttonParent);
+                    buttonParent.appendTo($("#duplicatedTopicsItems"));
+                }
+
+                updateCount(topicID + "duplicateIcon", dupTopicsCache[topicID].data.length);
+            }
+            getDuplicatedTopics(specId, topicNodes, ++index);
+        });
+    } else {
+        jQuery("#duplicatedTopicsBadge").remove();
+        jQuery('#duplicatedTopics').append($('<span id="duplicatedTopicsBadge" class="badge pull-right">' + duplicatedTopicsCount + '</span>'));
+
+        getTopicDetailsInBatches(specId, topicNodes, 0);
     }
 }
 
@@ -3018,12 +3262,16 @@ function addDictionaryPopovers(customWordsDict) {
     });
 
     function collectTextNodes(element, texts) {
-        if (jQuery.inArray(element.nodeName, SKIP_ELEMENTS) == -1) {
+        var classes = element.hasAttribute("class") ? element.getAttribute("class").split(/\s+/) : {};
+        if (jQuery.inArray(element.nodeName, SKIP_ELEMENTS) == -1 && jQuery.inArray("pressgangMenu", classes) == -1) {
             for (var child= element.firstChild; child!==null; child= child.nextSibling) {
-                if (child.nodeType===3)
-                    texts.push(child);
-                else if (child.nodeType===1)
+                if (child.nodeType===3) {
+                    // Ignore text nodes that are just whitespace or new lines
+                    if (!whitespaceRE.test(child.nodeValue))
+                        texts.push(child);
+                } else if (child.nodeType===1) {
                     collectTextNodes(child, texts);
+                }
             }
         }
     }
@@ -3037,10 +3285,15 @@ function addDictionaryPopovers(customWordsDict) {
         if (index < texts.length) {
             for (var textIndex = index, textCount = texts.length; textIndex < textCount && textIndex < index + batchsize; ++textIndex) {
                 var textNode = texts[textIndex];
-                var fixedText = textNode.textContent;
+                var initialText = encodeXml(jQuery(textNode).text());
+                var fixedText = initialText;
 
                 // mark up the dictionary matches
                 for (var customWordIndex = 0, customWordCount = customWordsKeyset.length; customWordIndex < customWordCount; ++customWordIndex) {
+                    // Check to see if the custom word is in the text
+                    var customWord = customWordsKeyset[customWordIndex];
+                    if (fixedText.indexOf(customWord) == -1) continue;
+
                     var replacementMarkers = {};
 
                     // Go through and replace all previously matches text with markers
@@ -3057,7 +3310,6 @@ function addDictionaryPopovers(customWordsDict) {
                         replacementMarkers[replacementString] = spanMatch[0];
                     }
 
-                    var customWord = customWordsKeyset[customWordIndex];
                     var customWordDetails = customWordsDict[customWord];
                     var borderStyle = "";
                     if (customWordDetails.tagId == VALID_WORD_EXTENDED_PROPERTY_TAG_ID) {
@@ -3078,7 +3330,7 @@ function addDictionaryPopovers(customWordsDict) {
                 }
 
                 // If the content has changed, ie a dictionary match was found, then update the text node
-                if (textNode.textContent !== fixedText) {
+                if (initialText !== fixedText) {
                     jQuery(textNode).replaceWith(fixedText);
                 }
             }
