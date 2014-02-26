@@ -449,7 +449,7 @@ function createWebDAVPopover(topicId, parent) {
 
     popover.popoverContent.innerHTML = '';
     $(popover.popoverContent).append($("<h3>WebDAV URLs</h3>"));
-    $(popover.popoverContent).append($("<ul><li>http://" + WEBDAV_SERVER + fullPath + "</li><li>webdav://" + WEBDAV_SERVER + fullPath + "</li></ul>"))
+    $(popover.popoverContent).append($("<ul><li>http://" + WEBDAV_SERVER + fullPath + "</li><li><a href='webdav://" + WEBDAV_SERVER + fullPath + "'>webdav://" + WEBDAV_SERVER + fullPath + "</a></li></ul>"))
     $(popover.popoverContent).append($("<h3>Editing With Cadaver (copy and paste into a terminal):</h3>"));
     $(popover.popoverContent).append($("<p>cadaver http://" + WEBDAV_SERVER + path + "<br/>edit " + topicId + ".xml<br/>exit</p>"));
     $(popover.popoverContent).append($("<p><a href='/16778'>Further Reading</a></p>"));
