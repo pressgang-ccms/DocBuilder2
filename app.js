@@ -142,13 +142,17 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 			<div class=\"container\">\n\
 				<div class=\"langBar\">Language:\n\
 					<select id=\"lang\" class=\"langSelect\" onchange=\"changeLang(this)\">\n\
-						<option selected value=\"\">English</option>\n\
-						<option value=\"zh-Hans\">Chinese</option>\n\
-						<option value=\"fr\">French</option>\n\
-						<option value=\"de\">German</option>\n\
-						<option value=\"ja\">Japanese</option>\n\
-						<option value=\"pt-BR\">Portuguese</option>\n\
-						<option value=\"es\">Spanish</option>\n\
+                                                <option selected value=\"\">English</option>\n\
+                                                <option value=\"zh-Hans\">Chinese (Simplified)</option>\n\
+                                                <option value=\"zh-TW\">Chinese (Taiwan)</option>\n\
+                                                <option value=\"fr\">French</option>\n\
+                                                <option value=\"de\">German</option>\n\
+                                                <option value=\"it\">Italian</option>\n\
+                                                <option value=\"ja\">Japanese</option>\n\
+                                                <option value=\"ko\">Korean</option>\n\
+                                                <option value=\"pt-BR\">Portuguese</option>\n\
+                                                <option value=\"ru\">Russian</option>\n\
+                                                <option value=\"es\">Spanish</option>\n\
 					</select>\n\
 				</div>\n\
 				<div class=\"content\">\n\
@@ -405,7 +409,7 @@ function processSpecs(updatedSpecs) {
                     var scriptFiles = "\
                                 <script type='application/javascript'>\n\
                                     var BASE_SERVER = '" + deployment.BASE_SERVER + "';\n\
-                                    var SPEC_ID = " + id + ";\n\
+                                    var SPEC_ID = " + specId + ";\n\
                                 </script>\n\
                                 <script type='application/javascript' src='/javascript/jquery-2.0.3.min.js'></script>\n\
                                 <script type='application/javascript' src='/javascript/moment.min.js'></script>\n\

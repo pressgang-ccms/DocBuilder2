@@ -5,3 +5,7 @@ function logToConsole(message) {
 function isDocbuilderWindow() {
     return window.location.host == "docbuilder.usersys.redhat.com" || window.location.host == "docbuilder.ecs.eng.bne.redhat.com";
 };
+
+function isDocStageWindow() {
+    return window.location.host == "documentation-devel.engineering.redhat.com";
+}

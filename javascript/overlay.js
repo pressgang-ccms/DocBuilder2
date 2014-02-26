@@ -309,6 +309,10 @@ var buttons = {};
  */
 var doubleWordButtons = {};
 
+/**
+ * A regular expression that can be used to detect if a string is entirely whitespace.
+ */
+var whitespaceRE = /^\s*$/;
 
 /*
 	When the page is loaded, start looking for the links that indicate the topics.
@@ -2795,7 +2799,7 @@ function checkSpellingErrors(topic) {
                 }
 
                 // remove all urls
-                var urlRe = /\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/i;
+                var urlRe = /\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?Â«Â»â€œâ€â€˜â€™]))/i;
                 var urlMatch = null;
                 while ((urlMatch = text.match(urlRe)) != null) {
                     var urlLength = urlMatch[0].length;
@@ -3258,12 +3262,16 @@ function addDictionaryPopovers(customWordsDict) {
     });
 
     function collectTextNodes(element, texts) {
-        if (jQuery.inArray(element.nodeName, SKIP_ELEMENTS) == -1) {
+        var classes = element.hasAttribute("class") ? element.getAttribute("class").split(/\s+/) : {};
+        if (jQuery.inArray(element.nodeName, SKIP_ELEMENTS) == -1 && jQuery.inArray("pressgangMenu", classes) == -1) {
             for (var child= element.firstChild; child!==null; child= child.nextSibling) {
-                if (child.nodeType===3)
-                    texts.push(child);
-                else if (child.nodeType===1)
+                if (child.nodeType===3) {
+                    // Ignore text nodes that are just whitespace or new lines
+                    if (!whitespaceRE.test(child.nodeValue))
+                        texts.push(child);
+                } else if (child.nodeType===1) {
                     collectTextNodes(child, texts);
+                }
             }
         }
     }
@@ -3277,10 +3285,15 @@ function addDictionaryPopovers(customWordsDict) {
         if (index < texts.length) {
             for (var textIndex = index, textCount = texts.length; textIndex < textCount && textIndex < index + batchsize; ++textIndex) {
                 var textNode = texts[textIndex];
-                var fixedText = textNode.textContent;
+                var initialText = encodeXml(jQuery(textNode).text());
+                var fixedText = initialText;
 
                 // mark up the dictionary matches
                 for (var customWordIndex = 0, customWordCount = customWordsKeyset.length; customWordIndex < customWordCount; ++customWordIndex) {
+                    // Check to see if the custom word is in the text
+                    var customWord = customWordsKeyset[customWordIndex];
+                    if (fixedText.indexOf(customWord) == -1) continue;
+
                     var replacementMarkers = {};
 
                     // Go through and replace all previously matches text with markers
@@ -3297,7 +3310,6 @@ function addDictionaryPopovers(customWordsDict) {
                         replacementMarkers[replacementString] = spanMatch[0];
                     }
 
-                    var customWord = customWordsKeyset[customWordIndex];
                     var customWordDetails = customWordsDict[customWord];
                     var borderStyle = "";
                     if (customWordDetails.tagId == VALID_WORD_EXTENDED_PROPERTY_TAG_ID) {
@@ -3318,7 +3330,7 @@ function addDictionaryPopovers(customWordsDict) {
                 }
 
                 // If the content has changed, ie a dictionary match was found, then update the text node
-                if (textNode.textContent !== fixedText) {
+                if (initialText !== fixedText) {
                     jQuery(textNode).replaceWith(fixedText);
                 }
             }
