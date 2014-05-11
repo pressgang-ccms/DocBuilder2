@@ -32,7 +32,7 @@ var SKIP_ELEMENTS = ["A", "SCRIPT", "PRE"];
  * The server hostname and port
  * @type {string}
  */
-var BASE_SERVER =  "topika.ecs.eng.bne.redhat.com:8080";
+var BASE_SERVER =  "skynet.usersys.redhat.com:8080";
 /**
  * The server that hosts the UI we want to connect to.
  * @type {string}
