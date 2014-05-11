@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a464b10-21b0-4a7e-869c-58879dfe744e" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.8.0.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaBugzillaSearchIntegration_v3.8.1.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.5.9.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaDictionary_v1.6.0.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaKeywordExtraction_v2.2.8.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaKeywordExtraction_v2.2.9.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.7.9.js" afterPath="$PROJECT_DIR$/presszilla/PressZillaProductPagesIntegration_v3.8.0.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PressZilla.user.js" afterPath="$PROJECT_DIR$/PressZilla.user.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions-1.1.js" afterPath="$PROJECT_DIR$/functions-1.1.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript/overlay.js" afterPath="$PROJECT_DIR$/javascript/overlay.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DocBuilder2.iws" />
@@ -195,8 +189,8 @@
       <file leaf-file-name="PressZilla.user.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48214287" vertical-offset="0" max-vertical-offset="560">
-              <caret line="18" column="102" selection-start-line="18" selection-start-column="102" selection-end-line="18" selection-end-column="102" />
+            <state vertical-scroll-proportion="0.53571427" vertical-offset="0" max-vertical-offset="560">
+              <caret line="20" column="21" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -820,7 +814,7 @@
       <workItem from="1399780379081" duration="149000" />
       <workItem from="1399780550399" duration="13000" />
       <workItem from="1399792796296" duration="663000" />
-      <workItem from="1399838756672" duration="1269000" />
+      <workItem from="1399838756672" duration="1382000" />
     </task>
     <task id="LOCAL-00001" summary="Initial import.&#10;Will query the server and return spec IDs that need to be built">
       <created>1378604206266</created>
@@ -3346,11 +3340,15 @@
       <created>1399839166328</created>
       <updated>1399839166328</updated>
     </task>
-    <option name="localTasksCounter" value="632" />
+    <task id="LOCAL-00632" summary="Updated presszilla">
+      <created>1399840121906</created>
+      <updated>1399840121907</updated>
+    </task>
+    <option name="localTasksCounter" value="633" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6289000" />
+    <option name="totallyTimeSpent" value="6402000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="-10" width="1922" height="1092" extended-state="6" />
@@ -3404,7 +3402,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Add badge for Bugzilla Bugs" />
     <MESSAGE value="Added help overlay" />
     <MESSAGE value="Working on automatically mapping product and versions to product pages ids" />
     <MESSAGE value="Working on spell checking menu" />
@@ -3429,7 +3426,8 @@
     <MESSAGE value="Working on adding support for docs devel&#10;" />
     <MESSAGE value="Added some new languages" />
     <MESSAGE value="Removed links to backup instance" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed links to backup instance" />
+    <MESSAGE value="Updated presszilla" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated presszilla" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -3945,8 +3943,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PressZilla.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48214287" vertical-offset="0" max-vertical-offset="560">
-          <caret line="18" column="102" selection-start-line="18" selection-start-column="102" selection-end-line="18" selection-end-column="102" />
+        <state vertical-scroll-proportion="0.53571427" vertical-offset="0" max-vertical-offset="560">
+          <caret line="20" column="21" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
           <folding />
         </state>
       </provider>
