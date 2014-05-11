@@ -160,8 +160,6 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 						<img height=\"" + deployment.LOGO_HEIGHT + "\" src=\"" + deployment.LOGO + "\" width=\"" + deployment.LOGO_WIDTH + "\">\n\
 					</div>\n\
 					<div style=\"margin-top:1em\">\n\
-						<p><a href=\"http://docbuilder.ecs.eng.bne.redhat.com/\">DocBuilder Next</a> has the latest updates, but will sometimes introduce breaking changes.</p>\n\
-						<p><a href=\"http://docbuilder.lab.eng.pnq.redhat.com/\">DocBuilder</a> is the stable release, and can be used as a fallback for DocBuilder Next.</p>\n\
 						<p>DocBuilder is a service that automatically rebuilds content specifications as they are created or edited.</p>\n\
 						<p>Each content spec has three links: a link to the compiled book itself, a link to the build log, and a link to the publican log.</p>\n\
 						<p>If a book could not be built, first check the build log. This log contains information that may indicate syntax errors in the content specification. You can also view this log to see when the document was last built.</p>\n\
