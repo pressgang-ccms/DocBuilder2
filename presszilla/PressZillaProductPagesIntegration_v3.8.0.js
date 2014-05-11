@@ -408,7 +408,7 @@
         var specId = unsafeWindow.getSpecIdFromURL();
 
         // 6 is the comment node type
-        var specProductUrl = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/contentspec/get/json+text/" + specId;
+        var specProductUrl = "http://skynet.usersys.redhat.com:8080/pressgang-ccms/rest/1/contentspec/get/json+text/" + specId;
 
         // see http://stackoverflow.com/questions/11007605/gm-xmlhttprequest-why-is-it-never-firing-the-onload-in-firefox
         // and http://wiki.greasespot.net/0.7.20080121.0_compatibility
@@ -423,7 +423,7 @@
                     var spec = JSON.parse(specResponse.responseText);
 
                     // 6 is the comment node type
-                    var stringConstant = "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms/rest/1/stringconstant/get/json/74";
+                    var stringConstant = "http://skynet.usersys.redhat.com:8080/pressgang-ccms/rest/1/stringconstant/get/json/74";
 
                     GM_xmlhttpRequest({
                         method: 'GET',
