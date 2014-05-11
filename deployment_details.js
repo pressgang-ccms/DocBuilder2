@@ -24,7 +24,7 @@ module.exports = {
      * The REST server hostname and port
      * @type {string}
      */
-    BASE_SERVER:  "topika.ecs.eng.bne.redhat.com:8080",
+    BASE_SERVER:  "virt-ecs-01.lab.eng.bne.redhat.com:8080",
     /**
      * The UI instance to point to
      */
@@ -44,7 +44,7 @@ module.exports = {
 	/**
 	 * Where the links to edit the books should go. Replace ${ID} with the spec ID
 	 */
-	EDIT_LINK: "http://topika.ecs.eng.bne.redhat.com:8080/pressgang-ccms-ui-next/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=${ID}",
+	EDIT_LINK: "http://virt-ecs-01.lab.eng.bne.redhat.com:8080/pressgang-ccms-ui-next/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=${ID}",
     /**
      * The file that holds the lat time a complete rebuild was completed.
      * @type {string}
