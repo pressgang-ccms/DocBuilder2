@@ -29,6 +29,13 @@ var exec = require('child_process').exec;
  * @type {string}
  */
 var REST_SERVER = "http://" + deployment.BASE_SERVER + "/pressgang-ccms/rest";
+
+/**
+ * The REST server that the DocBuilder will connect to.
+ * @type {string}
+ */
+var FIXED_UI_URL = "http://" + deployment.BASE_SERVER + "/" + deployment.UI_URL + "#ContentSpecFilteredResultsAndContentSpecView";
+
 /**
  * The format of the date to be supplied to the REST query.
  * @type {string}
@@ -136,7 +143,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 			<link rel=\"stylesheet\" href=\"index.css\"/>\n\
 			<script src=\"http://yui.yahooapis.com/3.10.0/build/yui/yui-min.js\"></script>\n\
 			<script src=\"http://code.jquery.com/jquery-2.0.3.min.js\"></script>\n\
-			<script src=\"functions-1.2.js\" ></script>\n\
+			<script src=\"functions-1.6.js\" ></script>\n\
 		</head>\n\
 		<body onload=\"setLangSelectLanguage()\">\n\
 			<div class=\"container\">\n\
@@ -345,8 +352,14 @@ function buildBooks(updatedSpecs, allSpecsArray) {
                     }
                 }
 
-                var freezeLabel = isFrozen ? "Unfreeze" : "Freeze";
                 var obsoleteLabel = isObsolete ? "Unobsolete" : "Obsolete";
+
+                var freezeElement;
+                if (isFrozen) {
+                    freezeElement = "'<div>Frozen</div>'";
+                } else {
+                    freezeElement = "'<button onclick=\"javascript:freezeSpec(\\'" + FIXED_UI_URL + "\\', " + specId + ")\">Freeze</button>'";
+                }
 
 				indexHtml += "{\n\
 					idRaw: " + specId + ",\n\
@@ -362,7 +375,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 					publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>',\n\
 					tags: [" + fixedSpecDetails.tags.toString() + "],\n\
                     status: '<div style=\"width: 32px; height: 32px; background-image: " + image + "; background-size: cover\"/>',\n\
-                    freeze: '<button onclick=\"javascript:freezeSpec(" + isFrozen + ", \\'" + REST_SERVER + "\\', " + specId + ")\">" + freezeLabel + "</button>',\n\
+                    freeze: freezeElement,\n\
                     obsolete: '<button onclick=\"javascript:obsoleteSpec(" + isObsolete + ", \\'" + REST_SERVER + "\\', " + specId + ")\">" + obsoleteLabel + "</button>'\n\
 				},\n";
 
