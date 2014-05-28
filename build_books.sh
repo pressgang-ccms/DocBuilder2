@@ -23,7 +23,7 @@ function backupAndCleanHTMLDir()
         fi
 
         mkdir -p /var/www/html/backup/${CLEAN_DIR}
-        cp -r /var/www/html/${CLEAN_DIR} /var/www/html/backup/${CLEAN_DIR}
+        cp -r /var/www/html/${CLEAN_DIR}/* /var/www/html/backup/${CLEAN_DIR}/
         rm -rf /var/www/html/${CLEAN_DIR}
     fi
 
@@ -81,13 +81,14 @@ do
 
         CSP_STATUS=$?
 
-        backupAndCleanHTMLDir ${BUILD_LANG}/${CSPID}
-        mkdir -p /var/www/html/${BUILD_LANG}/${CSPID}
-        cp build.log /var/www/html/${BUILD_LANG}/${CSPID}
-
         # If the csp build failed then continue to the next item
         if [ $CSP_STATUS != 0 ]
         then
+            # Backup the old HTML directory
+            backupAndCleanHTMLDir ${BUILD_LANG}/${CSPID}
+            mkdir -p /var/www/html/${BUILD_LANG}/${CSPID}
+            cp build.log /var/www/html/${BUILD_LANG}/${CSPID}
+
             continue
         fi
 
@@ -116,6 +117,12 @@ do
 
                 PUBLICAN_STATUS=$?
 
+                # Backup the old CSPID HTML directory
+                backupAndCleanHTMLDir ${BUILD_LANG}/${CSPID}
+                mkdir -p /var/www/html/${BUILD_LANG}/${CSPID}
+                cp build.log /var/www/html/${BUILD_LANG}/${CSPID}
+
+                # Copy the build contents to the root CSPID HTML directory
                 cp -R tmp/${PUBLICAN_LANG}/html-single/* /var/www/html/${BUILD_LANG}/${CSPID}
                 cp -R tmp/${PUBLICAN_LANG}/pdf/* /var/www/html/${BUILD_LANG}/${CSPID}
                 cp publican.log /var/www/html/${BUILD_LANG}/${CSPID}
@@ -165,7 +172,5 @@ do
             break
 
         done
-
-        cp build.log /var/www/html/${BUILD_LANG}/${CSPID}
     popd
 done
