@@ -64,7 +64,7 @@ function setSelectedLang(langSelect, pageLang) {
  * @param id The spec id
  */
 function freezeSpec(uiUrl, id) {
-    window.open(uiUrl + "id=" + id + ";action=freeze;", "_blank");
+    window.open(uiUrl + ";id=" + id + ";action=freeze;", "_blank");
 }
 
 /**
