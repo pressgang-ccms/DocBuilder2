@@ -120,7 +120,7 @@ do
                 # Backup the old CSPID HTML directory
                 backupAndCleanHTMLDir ${BUILD_LANG}/${CSPID}
                 mkdir -p /var/www/html/${BUILD_LANG}/${CSPID}
-                cp build.log /var/www/html/${BUILD_LANG}/${CSPID}
+                cp ../build.log /var/www/html/${BUILD_LANG}/${CSPID}
 
                 # Copy the build contents to the root CSPID HTML directory
                 cp -R tmp/${PUBLICAN_LANG}/html-single/* /var/www/html/${BUILD_LANG}/${CSPID}
