@@ -243,7 +243,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 						// build the array that holds the details of the books \n\
 						var data = [\n";
 
-	finishProcessing = function() {
+	var finishProcessing = function() {
 		indexHtml += " ];\n\
 					rebuildTimeout = null;\n\
 					productFilter.value = localStorage[\"productFilter\"] || \"\"; \n\
@@ -301,7 +301,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 		processSpecs(updatedSpecs);
 	}
 
-	processSpecDetails = function(processIndex) {
+	var processSpecDetails = function(processIndex) {
 		if (processIndex > allSpecsArray.length) {
 			console.log("Error: processIndex > allSpecsArray.length");
 			return;
@@ -510,40 +510,83 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
 
 	// If we have some last run info, use that to limit the search
 	topicQuery += "startEditDate=" + encodeURIComponent(encodeURIComponent(lastRun.format(DATE_FORMAT)));
-	topicQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs_OTM%22%7D%7D%5D%7D%5D%7D%0A%0A";
+    topicQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%7D%5D%7D%0A%0A";
 
 	//console.log("Getting modified topics from URL " + topicQuery);
 	console.log("Finding modified topics");
 
-	$.getJSON(topicQuery,
-		function(data) {
-			if (data.items) {
+    var contentSpecsForModifiedTopics = function(lastRun, updatedSpecs, allSpecsArray, modifiedTopics) {
+        // Get the csnodes for the topics to see if the are frozen
+        var csNodeQuery = REST_SERVER + "/1/contentspecnodes/get/json/query;";
 
-				console.log("Found " + data.items.length + " modified topics.");
+        // Get the topic ids
+        var topicIds = []
+        for (var topicIndex = 0, topicCount = modifiedTopics.length; topicIndex < topicCount; ++topicIndex) {
+            var topic = modifiedTopics[topicIndex].item;
+            topicIds.push(topic.id);
+        }
 
-				for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
-					var topic = data.items[topicIndex].item;
-					if (topic.contentSpecs_OTM) {
-						for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
-							var spec = topic.contentSpecs_OTM.items[specIndex].item;
-							updatedSpecs.add(spec.id);
-						}
-					} else {
-						console.log("topic.contentSpecs_OTM was not expected to be null");
-					}
-				}
-			} else {
-				console.log("data.items was not expected to be null");
-			}
+        // Build up the query
+        csNodeQuery += "csNodeEntityIds=" + topicIds.join(",");
+        csNodeQuery += ";csNodeInfoTopicIds=" + topicIds.join(",");
+        csNodeQuery += ";logic=Or"
+        csNodeQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpec%22%7D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22infoTopicNode%22%7D%7D%5D%7D%5D%7D";
 
-			topicsProcessed = true;
-			routeAfterRESTCalls(updatedSpecs, allSpecsArray);
-		}).error(function(jqXHR, textStatus, errorThrown) {
-			console.log("Call to " + topicQuery + " failed!");
-			console.log(errorThrown);
-			topicRESTCallFailed = true;
-			routeAfterRESTCalls();
-		});
+        $.getJSON(csNodeQuery,
+            function(data) {
+                if (data.items) {
+                    for (var csNodeIndex = 0, topicCount = data.items.length; csNodeIndex < topicCount; ++csNodeIndex) {
+                        var csNode = data.items[csNodeIndex].item;
+                        if (csNode.contentSpec) {
+                            if (csNode.infoTopicNode && csNode.infoTopicNode.topicRevision == null) {
+                                // An info topic node has been modified
+                                updatedSpecs.add(csNode.contentSpec.id);
+                            } else if (csNode.entityRevision == null) {
+                                // A topic node has been modified
+                                updatedSpecs.add(csNode.contentSpec.id);
+                            }
+                        } else {
+                            console.log("csNode.contentSpec was not expected to be null");
+                        }
+                    }
+                } else {
+                    console.log("data.items was not expected to be null");
+                }
+
+                topicsProcessed = true;
+                routeAfterRESTCalls(updatedSpecs, allSpecsArray);
+            }).error(function(jqXHR, textStatus, errorThrown) {
+                console.log("Call to " + csNodeQuery + " failed!");
+                console.log(errorThrown);
+                topicRESTCallFailed = true;
+                routeAfterRESTCalls();
+            });
+    }
+
+    $.getJSON(topicQuery,
+        function(data) {
+            if (data.items) {
+                console.log("Found " + data.items.length + " modified topics.");
+
+                if (data.items.length > 0) {
+                    contentSpecsForModifiedTopics(lastRun, updatedSpecs, allSpecsArray, data.items);
+                } else {
+                    // Nothing to process so continue as per normal
+                    topicsProcessed = true;
+                    routeAfterRESTCalls(updatedSpecs, allSpecsArray);
+                }
+            } else {
+                console.log("data.items was not expected to be null");
+
+                topicsProcessed = true;
+                routeAfterRESTCalls(updatedSpecs, allSpecsArray);
+            }
+        }).error(function(jqXHR, textStatus, errorThrown) {
+            console.log("Call to " + topicQuery + " failed!");
+            console.log(errorThrown);
+            topicRESTCallFailed = true;
+            routeAfterRESTCalls();
+    });
 }
 
 /**
@@ -639,50 +682,49 @@ function processPendingSpecUpdates() {
  */
 function getSpecs(lastRun, updatedSpecs, allSpecsArray) {
 
-	var specQuery = REST_SERVER + "/1/contentspecs/get/json/query;?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%7D%5D%7D";
+    var specQuery = REST_SERVER + "/1/contentspecs/get/json/query;?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%7D%5D%7D";
 
-	//console.log("Getting specs from URL " + specQuery);
-	console.log("Finding content specs");
+    //console.log("Getting specs from URL " + specQuery);
+    console.log("Finding content specs");
 
-	$.getJSON(specQuery,
-		function(data) {
-			if (data.items) {
+    $.getJSON(specQuery,
+        function(data) {
+            if (data.items) {
 
-				console.log("Found " + data.items.length + " content specs");
+                console.log("Found " + data.items.length + " content specs");
 
-				for (var specIndex = 0, specCount = data.items.length; specIndex < specCount; ++specIndex) {
-				//for (var specIndex = 0, specCount = 1; specIndex < specCount; ++specIndex) {
-					var spec = data.items[specIndex].item;
+                for (var specIndex = 0, specCount = data.items.length; specIndex < specCount; ++specIndex) {
+                    var spec = data.items[specIndex].item;
 
-					/*
-						We haven't processed this spec yet
-					 */
-					if (!specDetailsCache[spec.id]) {
-						addSpecToListOfPendingUpdates(spec.id);
-					}
+                    /*
+                        We haven't processed this spec yet
+                     */
+                    if (!specDetailsCache[spec.id]) {
+                        addSpecToListOfPendingUpdates(spec.id);
+                    }
 
-					allSpecsArray.push(spec.id);
+                    allSpecsArray.push(spec.id);
 
-					var lastEdited = moment(spec.lastModified);
-					if (!lastRun || lastEdited.isAfter(lastRun)) {
-						updatedSpecs.add(spec.id);
-						addSpecToListOfPendingUpdates(spec.id);
-					}
-				}
+                    var lastEdited = moment(spec.lastModified);
+                    if (!lastRun || lastEdited.isAfter(lastRun)) {
+                        updatedSpecs.add(spec.id);
+                        addSpecToListOfPendingUpdates(spec.id);
+                    }
+                }
 
-				console.log("Found " + updatedSpecs.length + " modified content specs");
-			} else {
-				console.log("data.items was not expected to be null");
-			}
+                console.log("Found " + updatedSpecs.length + " modified content specs");
+            } else {
+                console.log("data.items was not expected to be null");
+            }
 
-			specsProcessed = true;
-			routeAfterRESTCalls(updatedSpecs, allSpecsArray);
-		}).error(function(jqXHR, textStatus, errorThrown) {
-			console.log("Call to " + specQuery + " failed!");
-			console.log(errorThrown);
-			contentSpecRESTCallFailed = true;
-			routeAfterRESTCalls();
-		});
+            specsProcessed = true;
+            routeAfterRESTCalls(updatedSpecs, allSpecsArray);
+        }).error(function(jqXHR, textStatus, errorThrown) {
+            console.log("Call to " + specQuery + " failed!");
+            console.log(errorThrown);
+            contentSpecRESTCallFailed = true;
+            routeAfterRESTCalls();
+        });
 }
 
 /**
@@ -699,19 +741,19 @@ function getSpecs(lastRun, updatedSpecs, allSpecsArray) {
  */
 function routeAfterRESTCalls(updatedSpecs, allSpecsArray) {
 
-	if (specsProcessed && topicsProcessed) {
-		// both REST calls succeeded
-		buildBooks(updatedSpecs, allSpecsArray);
-	} else if (contentSpecRESTCallFailed && topicRESTCallFailed) {
-		// both REST calls failed
-		restartAfterFailure();
-	} else if ((specsProcessed && topicRESTCallFailed) ||
-			   (topicsProcessed && contentSpecRESTCallFailed)) {
-		// One rest call succeeded while the other failed
-		restartAfterFailure();
-	}
+    if (specsProcessed && topicsProcessed) {
+        // both REST calls succeeded
+        buildBooks(updatedSpecs, allSpecsArray);
+    } else if (contentSpecRESTCallFailed && topicRESTCallFailed) {
+        // both REST calls failed
+        restartAfterFailure();
+    } else if ((specsProcessed && topicRESTCallFailed) ||
+               (topicsProcessed && contentSpecRESTCallFailed)) {
+        // One rest call succeeded while the other failed
+        restartAfterFailure();
+    }
 
-	// otherwise one REST call is still to succeed or fail, so do nothing
+    // otherwise one REST call is still to succeed or fail, so do nothing
 }
 
 /**
