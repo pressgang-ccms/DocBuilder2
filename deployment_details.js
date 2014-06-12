@@ -1,26 +1,26 @@
 /*
-    This file contains deployment specific info, like what server to contact for REST queries. When deploying
-    DocBuilder, the contents of this file is all you will have to change.
+ This file contains deployment specific info, like what server to contact for REST queries. When deploying
+ DocBuilder, the contents of this file is all you will have to change.
 
-    This file is currently configured for DocBuilder Next. This means the logo and links to the UI all reference
-    Next.
+ This file is currently configured for DocBuilder Next. This means the logo and links to the UI all reference
+ Next.
 
-    The stable release of DocBuilder should change the logo and links to the UI to not reference next.
-*/
+ The stable release of DocBuilder should change the logo and links to the UI to not reference next.
+ */
 module.exports = {
-	/**
-	 * The image that is used at the top of the screen
-	 */
-	LOGO: "pg-next.png",
-	/**
-	 * The logo width
-	 */
-	LOGO_WIDTH: 879,
-	/**
-	 * The logo height
-	 */
-	LOGO_HEIGHT: 87,
-	/**
+    /**
+     * The image that is used at the top of the screen
+     */
+    LOGO: "pg-next.png",
+    /**
+     * The logo width
+     */
+    LOGO_WIDTH: 879,
+    /**
+     * The logo height
+     */
+    LOGO_HEIGHT: 87,
+    /**
      * The REST server hostname and port
      * @type {string}
      */
@@ -33,18 +33,18 @@ module.exports = {
      * The DocBuilder server
      */
     DOCBUILDER_SERVER: "docbuilder.usersys.redhat.com",
-	/**
-	 * The marker in the OPEN_LINK string that is to be replaced by the spec ID
-	 */
-	OPEN_LINK_ID_REPLACE: "${ID}",
-	/**
-	 * Where the links to open the books should go. Replace ${ID} with the spec ID
-	 */
-	OPEN_LINK: "http://docbuilder.usersys.redhat.com/${ID}", //http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;${ID}
-	/**
-	 * Where the links to edit the books should go. Replace ${ID} with the spec ID
-	 */
-	EDIT_LINK: "http://virt-ecs-01.lab.eng.bne.redhat.com:8080/pressgang-ccms-ui-next/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=${ID}",
+    /**
+     * The marker in the OPEN_LINK string that is to be replaced by the spec ID
+     */
+    OPEN_LINK_ID_REPLACE: "${ID}",
+    /**
+     * Where the links to open the books should go. Replace ${ID} with the spec ID
+     */
+    OPEN_LINK: "http://docbuilder.usersys.redhat.com/${ID}", //http://skynet.usersys.redhat.com:8080/pressgang-ccms-ui/#DocBuilderView;${ID}
+    /**
+     * Where the links to edit the books should go. Replace ${ID} with the spec ID
+     */
+    EDIT_LINK: "http://virt-ecs-01.lab.eng.bne.redhat.com:8080/pressgang-ccms-ui-next/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=${ID}",
     /**
      * The file that holds the lat time a complete rebuild was completed.
      * @type {string}
