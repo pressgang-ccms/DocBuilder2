@@ -143,7 +143,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 			<link rel=\"stylesheet\" href=\"index.css\"/>\n\
 			<script src=\"http://yui.yahooapis.com/3.10.0/build/yui/yui-min.js\"></script>\n\
 			<script src=\"http://code.jquery.com/jquery-2.0.3.min.js\"></script>\n\
-			<script src=\"functions-1.6.js\" ></script>\n\
+			<script src=\"functions-1.8.js\" ></script>\n\
 		</head>\n\
 		<body onload=\"setLangSelectLanguage()\">\n\
 			<div class=\"container\">\n\
