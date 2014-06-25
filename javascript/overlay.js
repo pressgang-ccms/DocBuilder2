@@ -2050,7 +2050,7 @@ function buildMenu() {
 						<li data-pressgangtopic="00000" style="background-color: white"><a id="duplicatedTopics" href="javascript:hideAllMenus(); duplicatedTopics.show(); localStorage.setItem(\'lastMenu\', \'duplicatedTopics\');">Duplicated Topics<span id="duplicatedTopicsBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a id="spellingErrors" href="javascript:hideAllMenus(); spellingErrors.show(); localStorage.setItem(\'lastMenu\', \'spellingErrors\');">Spelling Errors</a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a id="doubledWordsErrors" href="javascript:hideAllMenus(); doubledWords.show(); localStorage.setItem(\'lastMenu\', \'doubledWords\');">Doubled Words</a></li>\
-                        <li data-pressgangtopic="00000" style="background-color: white"><a id="badLinks" href="javascript:hideAllMenus(); badLinks.show(); localStorage.setItem(\'lastMenu\', \'badLinks\');">Bad Links<span id="badLinksBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
+                        <li data-pressgangtopic="00000" style="background-color: white"><a id="badLinks" href="javascript:hideAllMenus(); badLinks.show(); localStorage.setItem(\'lastMenu\', \'badLinks\');">Bad Links<span id="badLinksBadge" class="badge pull-right">x</span></a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a href="' + BUG_LINK + '&cf_build_id=Content%20Spec%20ID:%20' + SPEC_ID + '">Report a bug</a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a href="http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=' + SPEC_ID + '">Edit this spec</a></li>\
 					</ul>\
@@ -2066,6 +2066,7 @@ function buildMenu() {
 				<div class="panel-body ">\
 		            <ul id="badLinksItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a id="badLinksBugzillaBugsPlaceholder" href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension</a></li>\
 					</ul>\
 				</div>\
 			</div>\
