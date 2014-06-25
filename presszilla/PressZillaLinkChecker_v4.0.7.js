@@ -20,6 +20,7 @@
             Update the menu to remove messages about requiring the user script
          */
         jQuery("#badLinksBugzillaBugsPlaceholder").remove();
+        jQuery('#badLinksBadge').remove();
         jQuery('#badLinks').append($('<span id="badLinksBadge" class="badge pull-right">0</span>'))
 
         function logURLNotLoading(link, href, links, index){
