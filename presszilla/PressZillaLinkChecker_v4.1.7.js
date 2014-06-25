@@ -1,5 +1,6 @@
 (function(){
     if (isDocbuilderWindow()) {
+    //if (true) { // <- used when debugging locally
         /**
          * A list of links not to check for 404s
          * @type {Array}
@@ -15,6 +16,21 @@
          * @type {Array}
          */
         var processedLinks = [];
+
+        function clearPresszillaLinksAndWarnings() {
+            jQuery("#badLinksBugzillaBugsPlaceholder").remove();
+            jQuery('#badLinksBadge').remove();
+            jQuery('#badLinks').append($('<span id="badLinksBadge" class="badge pull-right">0</span>'));
+        }
+
+        /*
+         remove any warnings about the user script being required
+         */
+        jQuery(window).bind("menu_created", function(event){
+            clearPresszillaLinksAndWarnings();
+        });
+
+        clearPresszillaLinksAndWarnings();
 
         function logURLNotLoading(link, href, links, index){
             console.log(href + " was not loaded successfully");

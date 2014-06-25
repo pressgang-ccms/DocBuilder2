@@ -36,6 +36,12 @@
  * @type {string}
  */
 var PROCESSING_MESSAGE = "Thinking...";
+
+/**
+ * The message to add to a badge when it can not be populated because the userscript is missing
+ * @type {string}
+ */
+var MISSING_SCRIPT = "!";
 /**
  * Time to delay the closing of a popover window.
  * @type {number}
@@ -1349,7 +1355,16 @@ function secondPass(myTopicsFound, mySecondPassTimeout, myWindowLoaded) {
 
 		secondPassCalled = true;
 
-        getInfoFromREST();
+        async.waterfall([
+            getInfoFromREST,
+            getRevisionInfoFromREST,
+            getDuplicatedTopics,
+            getTopicDetailsInBatches,
+            getTopicNodes
+        ], function (err, result) {
+            // result now equals 'done'
+        });
+
         getDictionary();
 
         var specId = getSpecIdFromURL();
@@ -1393,50 +1408,55 @@ function getTopReusedTopics(specId) {
  * Find instances where a topic has been used at a higher revision in another book
  * @param specId
  * @param topics
- * @param index
- * @param count
+ * @param async.js callback
  */
-function getTopicNodes(specId, topics, index, count) {
-    if (index < topics.length) {
-        var topic = topics[index];
-        var topicNodesUrl = SERVER + "/contentspecnodes/get/json/query;csNodeEntityId=" + topic.id + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpec%22%7D%7D%5D%7D%5D%7D%0A%0A";
-        jQuery.getJSON(topicNodesUrl, function(topicNodeData) {
-            var newerTopicRevisions = [];
-            for (var topicNodeIndex = 0, topicNodeCount = topicNodeData.items.length; topicNodeIndex < topicNodeCount; ++topicNodeIndex) {
-                var topicNode = topicNodeData.items[topicNodeIndex].item;
-                if (topicNode.contentSpec.id != specId) {
-                    if (topicNode.entityRevision && topicNode.entityRevision > topic.rev) {
-                        newerTopicRevisions.push({spec: topicNode.contentSpec.id, rev: topicNode.entityRevision});
+function getTopicNodes(specId, topicNodes, callback) {
+    var count = 0;
+
+    async.eachSeries(
+        topicNodes.items,
+        function(topicNodeContainer, callback) {
+            var topicNodesUrl = SERVER + "/contentspecnodes/get/json/query;csNodeEntityId=" + topicNodeContainer.item.entityId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpec%22%7D%7D%5D%7D%5D%7D%0A%0A";
+            jQuery.getJSON(topicNodesUrl, function(topicNodeData) {
+                var newerTopicRevisions = [];
+                for (var topicNodeIndex = 0, topicNodeCount = topicNodeData.items.length; topicNodeIndex < topicNodeCount; ++topicNodeIndex) {
+                    var topicNode = topicNodeData.items[topicNodeIndex].item;
+                    if (topicNode.contentSpec.id != specId) {
+                        if (topicNode.entityRevision && topicNode.entityRevision > topic.rev) {
+                            newerTopicRevisions.push({spec: topicNode.contentSpec.id, rev: topicNode.entityRevision});
+                        }
                     }
                 }
-            }
 
-            if (newerTopicRevisions.length != 0) {
-                var button = '<div class="btn-group" style="margin-bottom: 8px;">\
+                if (newerTopicRevisions.length != 0) {
+                    var button = '<div class="btn-group" style="margin-bottom: 8px;">\
                     <button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topic.id + '].scrollIntoView()">Topic: ' + topic.id + ' Rev: ' + topic.rev + '</button>\
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
                         <span class="caret"></span>\
                     </button>\
                     <ul class="dropdown-menu" role="menu">';
 
-                for (var newerTopicRevisionIndex = 0, newerTopicRevisionCount = newerTopicRevisions.length; newerTopicRevisionIndex < newerTopicRevisionCount; ++newerTopicRevisionIndex) {
-                    button += '<li><a href="http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#TopicHistoryView;' + topic.id + ';' + topic.rev + ';' + newerTopicRevisions[newerTopicRevisionIndex].rev + '">Spec: ' + newerTopicRevisions[newerTopicRevisionIndex].spec + " Rev: " + newerTopicRevisions[newerTopicRevisionIndex].rev + '</a></li>';
-                }
+                    for (var newerTopicRevisionIndex = 0, newerTopicRevisionCount = newerTopicRevisions.length; newerTopicRevisionIndex < newerTopicRevisionCount; ++newerTopicRevisionIndex) {
+                        button += '<li><a href="http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#TopicHistoryView;' + topic.id + ';' + topic.rev + ';' + newerTopicRevisions[newerTopicRevisionIndex].rev + '">Spec: ' + newerTopicRevisions[newerTopicRevisionIndex].spec + " Rev: " + newerTopicRevisions[newerTopicRevisionIndex].rev + '</a></li>';
+                    }
 
-                button += '</ul>\
+                    button += '</ul>\
                     </div>';
 
-                $(button).appendTo($("#topicsUpdatedInOtherSpecsItems"));
+                    $(button).appendTo($("#topicsUpdatedInOtherSpecsItems"));
 
-                ++count;
-            }
+                    ++count;
+                }
 
-            getTopicNodes(specId, topics, ++index, count);
-        });
-    } else {
-        jQuery("#topicsUpdatedInOtherSpecsBadge").remove();
-        jQuery('#topicsUpdatedInOtherSpecs').append($('<span id="topicsUpdatedInOtherSpecsBadge" class="badge pull-right">' + count + '</span>'));
-    }
+                callback();
+            });
+        },
+        function(err) {
+            jQuery("#topicsUpdatedInOtherSpecsBadge").remove();
+            jQuery('#topicsUpdatedInOtherSpecs').append($('<span id="topicsUpdatedInOtherSpecsBadge" class="badge pull-right">' + count + '</span>'));
+            callback(null);
+        }
+    );
 }
 
 function getModifiedTopics(specId) {
@@ -2045,12 +2065,12 @@ function buildMenu() {
 						<li data-pressgangtopic="24794" style="background-color: white"><a href="javascript:hideAllMenus(); topicsAddedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsAddedSince\');">Topics Added In</a></li>\
 						<li data-pressgangtopic="24792" style="background-color: white"><a href="javascript:hideAllMenus(); topicsRemovedSince.show(); localStorage.setItem(\'lastMenu\', \'topicsRemovedSince\');">Topics Removed In</a></li>\
 						<li data-pressgangtopic="24800" style="background-color: white"><a href="javascript:hideAllMenus(); licenses.show(); localStorage.setItem(\'lastMenu\', \'licenses\');">Licenses</a></li>\
-						<li data-pressgangtopic="24787" style="background-color: white"><a id="bugzillaBugs" href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">Bugzilla Bugs</a></li>\
+						<li data-pressgangtopic="24787" style="background-color: white"><a id="bugzillaBugs" href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">Bugzilla Bugs<span id="bugzillaBugsBadge" class="badge alert-badge pull-right">' + MISSING_SCRIPT + '</span></a></li>\
 						<li data-pressgangtopic="24789" style="background-color: white"><a id="topicsUpdatedInOtherSpecs" href="javascript:hideAllMenus(); topicsUpdatedInOtherSpecs.show(); localStorage.setItem(\'lastMenu\', \'topicsUpdatedInOtherSpecs\');">Updated Topics<span id="topicsUpdatedInOtherSpecsBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a id="duplicatedTopics" href="javascript:hideAllMenus(); duplicatedTopics.show(); localStorage.setItem(\'lastMenu\', \'duplicatedTopics\');">Duplicated Topics<span id="duplicatedTopicsBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a id="spellingErrors" href="javascript:hideAllMenus(); spellingErrors.show(); localStorage.setItem(\'lastMenu\', \'spellingErrors\');">Spelling Errors</a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a id="doubledWordsErrors" href="javascript:hideAllMenus(); doubledWords.show(); localStorage.setItem(\'lastMenu\', \'doubledWords\');">Doubled Words</a></li>\
-                        <li data-pressgangtopic="00000" style="background-color: white"><a id="badLinks" href="javascript:hideAllMenus(); badLinks.show(); localStorage.setItem(\'lastMenu\', \'badLinks\');">Bad Links<span id="badLinksBadge" class="badge pull-right">' + PROCESSING_MESSAGE + '</span></a></li>\
+                        <li data-pressgangtopic="00000" style="background-color: white"><a id="badLinks" href="javascript:hideAllMenus(); badLinks.show(); localStorage.setItem(\'lastMenu\', \'badLinks\');">Bad Links<span id="badLinksBadge" class="badge alert-badge pull-right">' + MISSING_SCRIPT + '</span></a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a href="' + BUG_LINK + '&cf_build_id=Content%20Spec%20ID:%20' + SPEC_ID + '">Report a bug</a></li>\
 						<li data-pressgangtopic="00000" style="background-color: white"><a href="http://' + BASE_SERVER + '/pressgang-ccms-ui-next/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=' + SPEC_ID + '">Edit this spec</a></li>\
 					</ul>\
@@ -2066,6 +2086,7 @@ function buildMenu() {
 				<div class="panel-body ">\
 		            <ul id="badLinksItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a id="badLinksBugzillaBugsPlaceholder" class="alert-badge" href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension. Click here to install.</a></li>\
 					</ul>\
 				</div>\
 			</div>\
@@ -2427,6 +2448,7 @@ function buildMenu() {
 				<div id="bugzillaBugsPanel" class="panel-body ">\
 		            <ul id="bugzillaBugsItems" class="nav nav-pills nav-stacked">\
 						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
+						<li><a id="bugzillaBugsBugzillaBugsPlaceholder" class="alert-badge"  href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension. Click here to install.</a></li>\
 						<li><a id="newBugzillaBugs" href="javascript:hideAllMenus(); newBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'newBugzillaBugs\');">New</a></li>\
 						<li><a id="assignedBugzillaBugs" href="javascript:hideAllMenus(); assignedBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'assignedBugzillaBugs\');">Assigned</a></li>\
 						<li><a id="postBugzillaBugs" href="javascript:hideAllMenus(); postBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'postBugzillaBugs\');">Post</a></li>\
@@ -2442,125 +2464,7 @@ function buildMenu() {
     $(document.body).append(bugzillaBugs);
     sideMenus.push(bugzillaBugs);
 
-    newBugzillaBugs = $('\
-		<div data-pressgangtopic="24787" class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">' + help + 'New Bugzilla Bugs</div>\
-				<div class="panel-body ">\
-		            <ul id="newBugzillaBugsItems" class="nav nav-pills nav-stacked">\
-						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">&lt;- Bugzilla Bugs</a></li>\
-						<li><a id="newBugzillaBugsPlaceholder" href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension</a></li>\
-					</ul>\
-				</div>\
-			</div>\
-		</div>');
-    $(document.body).append(newBugzillaBugs);
-    sideMenus.push(newBugzillaBugs);
 
-    assignedBugzillaBugs = $('\
-		<div data-pressgangtopic="24787" class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">' + help + 'Assigned Bugzilla Bugs</div>\
-				<div class="panel-body ">\
-		            <ul id="assignedBugzillaBugsItems" class="nav nav-pills nav-stacked">\
-						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">&lt;- Bugzilla Bugs</a></li>\
-						<li><a id="assignedBugzillaBugsPlaceholder" href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension</a></li>\
-					</ul>\
-				</div>\
-			</div>\
-		</div>');
-    $(document.body).append(assignedBugzillaBugs);
-    sideMenus.push(assignedBugzillaBugs);
-
-    postBugzillaBugs = $('\
-		<div data-pressgangtopic="24787" class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">' + help + 'Post Bugzilla Bugs</div>\
-				<div class="panel-body ">\
-		            <ul id="postBugzillaBugsItems" class="nav nav-pills nav-stacked">\
-						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">&lt;- Bugzilla Bugs</a></li>\
-						<li><a id="postBugzillaBugsPlaceholder" href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension</a></li>\
-					</ul>\
-				</div>\
-			</div>\
-		</div>');
-    $(document.body).append(postBugzillaBugs);
-    sideMenus.push(postBugzillaBugs);
-
-    modifiedBugzillaBugs = $('\
-		<div data-pressgangtopic="24787" class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">' + help + 'Modified Bugzilla Bugs</div>\
-				<div class="panel-body ">\
-		            <ul id="modifiedBugzillaBugsItems" class="nav nav-pills nav-stacked">\
-						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">&lt;- Bugzilla Bugs</a></li>\
-						<li><a id="modifiedBugzillaBugsPlaceholder" href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension</a></li>\
-					</ul>\
-				</div>\
-			</div>\
-		</div>');
-    $(document.body).append(modifiedBugzillaBugs);
-    sideMenus.push(modifiedBugzillaBugs);
-
-    onqaBugzillaBugs = $('\
-		<div data-pressgangtopic="24787" class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">' + help + 'On QA Bugzilla Bugs</div>\
-				<div class="panel-body ">\
-		            <ul id="onqaBugzillaBugsItems" class="nav nav-pills nav-stacked">\
-						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">&lt;- Bugzilla Bugs</a></li>\
-						<li><a id="onqaBugzillaBugsPlaceholder" href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension</a></li>\
-					</ul>\
-				</div>\
-			</div>\
-		</div>');
-    $(document.body).append(onqaBugzillaBugs);
-    sideMenus.push(onqaBugzillaBugs);
-
-    verifiedBugzillaBugs = $('\
-		<div class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">' + help + 'Verified Bugzilla Bugs</div>\
-				<div class="panel-body ">\
-		            <ul id="verifiedBugzillaBugsItems" class="nav nav-pills nav-stacked">\
-						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">&lt;- Bugzilla Bugs</a></li>\
-						<li><a id="verifiedBugzillaBugsPlaceholder" href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension</a></li>\
-					</ul>\
-				</div>\
-			</div>\
-		</div>');
-    $(document.body).append(verifiedBugzillaBugs);
-    sideMenus.push(verifiedBugzillaBugs);
-
-    closedBugzillaBugs = $('\
-		<div data-pressgangtopic="24787" class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">' + help + 'Closed Bugzilla Bugs</div>\
-				<div class="panel-body ">\
-		            <ul id="closedBugzillaBugsItems" class="nav nav-pills nav-stacked">\
-						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">&lt;- Bugzilla Bugs</a></li>\
-						<li><a id="closedBugzillaBugsPlaceholder" href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension</a></li>\
-					</ul>\
-				</div>\
-			</div>\
-		</div>');
-    $(document.body).append(closedBugzillaBugs);
-    sideMenus.push(closedBugzillaBugs);
-
-    releasePendingBugzillaBugs = $('\
-		<div data-pressgangtopic="24787" class="panel panel-default pressgangMenu">\
-			<div class="panel-heading">' + help + 'Release Pending Bugzilla Bugs</div>\
-				<div class="panel-body ">\
-		            <ul id="releasePendingBugzillaBugsItems" class="nav nav-pills nav-stacked">\
-						<li><a href="javascript:hideAllMenus(); mainMenu.show(); localStorage.setItem(\'lastMenu\', \'mainMenu\');">&lt;- Main Menu</a></li>\
-						<li><a href="javascript:hideAllMenus(); bugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'bugzillaBugs\');">&lt;- Bugzilla Bugs</a></li>\
-						<li><a id="releasePendingBugzillaBugsPlaceholder" href="/PressZilla.user.js">This menu requires the PressZilla GreaseMonkey Extension</a></li>\
-					</ul>\
-				</div>\
-			</div>\
-		</div>');
-    $(document.body).append(releasePendingBugzillaBugs);
-    sideMenus.push(releasePendingBugzillaBugs);
 
 	hideAllMenus();
 
@@ -2677,7 +2581,10 @@ function buildMenu() {
 		hideMenu();
 	}
 
-
+    var evt = document.createEvent( 'Event');
+    evt.initEvent('menu_created', false, false);
+    eventDetails =  {source: 'docbuilder'};
+    window.dispatchEvent (evt);
 }
 
 /**
@@ -2693,410 +2600,347 @@ function countKeys(obj) {
 	return size;
 };
 
-function checkSpellingErrors(topic) {
+function checkSpellingErrors(topic, condition, callback) {
     if (topic) {
-        topicsToCheckForSpelling.push(topic);
+        topicsToCheckForSpelling.push({topic: topic, condition: condition});
     }
 
     // it is possible we are trying to spell check topics before the dictionary is loaded.
     // in this case we just append to topicsToCheckForSpelling and grab them next time.
     if (dictionary != null) {
-        while (topicsToCheckForSpelling.length != 0) {
-
-            var thisTopic = topicsToCheckForSpelling.pop();
-
-            try {
-                // find any injection comments and replace them with a literal. These will be removed
-                // before spellchecking, and set to text that is skipped for double word checking.
-                // but having the comment replaced means that there is a break in a double word.
-                var fixedXML = thisTopic.xml.replace(/<\!--\s*Inject\s*:.*?-->/g, "<literal></literal>");
-
-                /*
-                 A number of docbook elements define a logical break between words that is lost
-                 when the elements are removed. So we just add a literal after these to prevent
-                 the double word logic from picking them up. Also, because we ignore literals
-                 in the spell checking, these new elements have no impact.
-                 */
-                var addDoubleWordBreaks = [
-                    "title",
-                    "entry",
-                    "indexterm",
-                    "primary",
-                    "secondary",
-                    "guimenu",
-                    "guimenuitem",
-                    "listitem",
-                    "ulink"
-                ];
-
-                for (var elementIndex = 0, elementCount = addDoubleWordBreaks.length; elementIndex < elementCount; ++elementIndex) {
-                    fixedXML = fixedXML.replace(new RegExp("<\/" + addDoubleWordBreaks[elementIndex] + ">", "g"), "</" + addDoubleWordBreaks[elementIndex] + "><literal></literal>");
+        async.whilst(
+            function() {return topicsToCheckForSpelling.length != 0},
+            function(callback) {
+                function getThisTopic(callback) {
+                    callback(null, topicsToCheckForSpelling.pop());
                 }
 
-                var xmlDoc = jQuery(jQuery.parseXML(fixedXML));
+                function preProcessXML(thisTopic, callback) {
+                    // find any injection comments and replace them with a literal. These will be removed
+                    // before spellchecking, and set to text that is skipped for double word checking.
+                    // but having the comment replaced means that there is a break in a double word.
+                    var fixedXML = thisTopic.topic.xml.replace(/<\!--\s*Inject\s*:.*?-->/g, "<literal></literal>");
 
-                // These docbook elements will commonly contain words that are not found in the dictionary.
-                var doNotSpellCheck = [
-                    "parameter",
-                    "screen",
-                    "programlisting",
-                    "command",
-                    "literal",
-                    "package",
-                    "systemitem",
-                    "application",
-                    "guibutton",
-                    "guilabel",
-                    "filename",
-                    "replaceable",
-                    "code",
-                    "option",
-                    "classname",
-                    "interfacename",
-                    "synopsis",
-                    "classsynopsis",
-                    "classsynopsisinfo",
-                    "constructorsynopsis",
-                    "destructorsynopsis",
-                    "methodsynopsis",
-                    "fieldsynopsis",
-                    "cmdsynopsis",
-                    "funcsynopsis",
-                    "methodname",
-                    "exceptionname",
-                    "term",
-                    "uri",
-                    "keycap",
-                    "keysym",
-                    "symbol"
-                ];
+                    /*
+                     A number of docbook elements define a logical break between words that is lost
+                     when the elements are removed. So we just add a literal after these to prevent
+                     the double word logic from picking them up. Also, because we ignore literals
+                     in the spell checking, these new elements have no impact.
+                     */
+                    var addDoubleWordBreaks = [
+                        "title",
+                        "entry",
+                        "indexterm",
+                        "primary",
+                        "secondary",
+                        "guimenu",
+                        "guimenuitem",
+                        "listitem",
+                        "ulink",
+                        "firstname",
+                        "surname"
+                    ];
 
-                // remove the contents of these elements
-                for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
-                    jQuery(doNotSpellCheck[elementIndex], xmlDoc).text(" | ");
-                }
-
-                // We split the string up now to look for doubled words
-                var doubledWords = xmlDoc.text().split(/\s+/);
-
-                // remove these elements
-                for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
-                    jQuery(doNotSpellCheck[elementIndex], xmlDoc).remove();
-                }
-
-                var text = xmlDoc.text();
-
-                // remove all xml/html entities
-                var entityRe = /&.*?;/;
-                var entityMatch = null;
-                while ((entityMatch = text.match(entityRe)) != null) {
-                    var entityLength = entityMatch[0].length;
-                    var replacementString = "";
-                    for (var i = 0; i < entityLength; ++i) {
-                        replacementString += " ";
+                    for (var elementIndex = 0, elementCount = addDoubleWordBreaks.length; elementIndex < elementCount; ++elementIndex) {
+                        fixedXML = fixedXML.replace(new RegExp("<\/" + addDoubleWordBreaks[elementIndex] + ">", "g"), "</" + addDoubleWordBreaks[elementIndex] + "><literal></literal>");
                     }
-                    text = text.replace(entityRe, replacementString);
+
+                    callback(null, thisTopic, fixedXML);
                 }
 
-                // remove all urls
-                var urlRe = /\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?Â«Â»â€œâ€â€˜â€™]))/i;
-                var urlMatch = null;
-                while ((urlMatch = text.match(urlRe)) != null) {
-                    var urlLength = urlMatch[0].length;
-                    var replacementString = "";
-                    for (var i = 0; i < urlLength; ++i) {
-                        replacementString += " ";
+                function convertXml(thisTopic, xml, callback) {
+                    callback(null, thisTopic, jQuery(jQuery.parseXML(xml)));
+                }
+
+                function stripConditionalElements(thisTopic, xmlDoc, callback) {
+
+                    var specCondition = new RegExp(thisTopic.condition);
+
+                    function testNode(node, callback) {
+
+                        function testChildren() {
+                            async.eachSeries(
+                                node.children(),
+                                function (childNode, eachCallback) {
+                                    testNode(jQuery(childNode), function () {
+                                        eachCallback();
+                                    });
+                                }, function (err) {
+                                    callback();
+                                }
+                            );
+                        }
+
+                        if (node.attr("condition")) {
+                            var nodeConditionAttribute = node.attr("condition");
+                            var nodeConditions = nodeConditionAttribute.split(/;|:|,/);
+
+                            var include = false;
+                            for (var conditionIndex = 0, conditionCount = nodeConditions.length; conditionIndex < conditionCount; ++conditionIndex) {
+                                var nodeCondition = nodeConditions[conditionIndex];
+                                if (specCondition.test(nodeCondition)) {
+                                    include = true;
+                                    break;
+                                }
+                            }
+
+                            if (!include) {
+                                node.remove();
+                                callback();
+                            } else {
+                                testChildren();
+                            }
+                        } else {
+                            testChildren();
+                        }
                     }
-                    text = text.replace(urlRe, replacementString);
+
+                    testNode(xmlDoc, function() {callback(null, thisTopic, xmlDoc)});
                 }
 
-                // replace any character that doesn't make up a word with a space, and then split on space
-                text = text.replace(/[^a-zA-Z0-9'\\-]/g, ' ');
+                function checkSpelling(thisTopic, xmlDoc, callback) {
+                    // These docbook elements will commonly contain words that are not found in the dictionary.
+                    var doNotSpellCheck = [
+                        "parameter",
+                        "screen",
+                        "programlisting",
+                        "command",
+                        "literal",
+                        "package",
+                        "systemitem",
+                        "application",
+                        "guibutton",
+                        "guilabel",
+                        "filename",
+                        "replaceable",
+                        "code",
+                        "option",
+                        "classname",
+                        "interfacename",
+                        "synopsis",
+                        "classsynopsis",
+                        "classsynopsisinfo",
+                        "constructorsynopsis",
+                        "destructorsynopsis",
+                        "methodsynopsis",
+                        "fieldsynopsis",
+                        "cmdsynopsis",
+                        "funcsynopsis",
+                        "methodname",
+                        "exceptionname",
+                        "term",
+                        "uri",
+                        "keycap",
+                        "keysym",
+                        "symbol"
+                    ];
 
-                // remove all stand alone characters
-                var dashRe = /\s+[^\sA-Za-z0-9]\s+/;
-                var dashMatch = null;
-                while ((dashMatch = text.match(dashRe)) != null) {
-                    var dashLength = dashMatch[0].length;
-                    var replacementString = "";
-                    for (var i = 0; i < dashLength; ++i) {
-                        replacementString += " ";
+                    // remove the contents of these elements
+                    for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
+                        jQuery(doNotSpellCheck[elementIndex], xmlDoc).text(" | ");
                     }
-                    text = text.replace(dashRe, replacementString);
-                }
 
-                // remove anything that does not contain a letter
-                var numberRe = /\b[^A-Za-z\s]+\b/;
-                var numberMatch = null;
-                while ((numberMatch = text.match(numberRe)) != null) {
-                    var numberLength = numberMatch[0].length;
-                    var replacementString = "";
-                    for (var i = 0; i < numberLength; ++i) {
-                        replacementString += " ";
+                    // We split the string up now to look for doubled words
+                    var doubledWords = xmlDoc.text().split(/\s+/);
+
+                    // remove these elements
+                    for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
+                        jQuery(doNotSpellCheck[elementIndex], xmlDoc).remove();
                     }
-                    text = text.replace(numberRe, replacementString);
-                }
 
-                // remove the quotes around words
-                var quoteRe = /'(.*?)'/;
-                var quoteMatch = null;
-                while ((quoteMatch = text.match(quoteRe)) != null) {
-                    var numberLength = quoteMatch[0].length;
-                    var replacementString = " " + quoteMatch[1] + " ";
-                    text = text.replace(quoteRe, replacementString);
-                }
+                    var text = xmlDoc.text();
 
-                var words = text.split(/\s+/);
+                    // remove all xml/html entities
+                    var entityRe = /&.*?;/;
+                    var entityMatch = null;
+                    while ((entityMatch = text.match(entityRe)) != null) {
+                        var entityLength = entityMatch[0].length;
+                        var replacementString = "";
+                        for (var i = 0; i < entityLength; ++i) {
+                            replacementString += " ";
+                        }
+                        text = text.replace(entityRe, replacementString);
+                    }
 
-                function checkWord(words, topic, wordIndex) {
-                    if (wordIndex < words.length) {
-                        var word = words[wordIndex];
-                        if (!dictionary.check(word)) {
+                    // remove all urls
+                    var urlRe = /\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?Â«Â»â€œâ€â€˜â€™]))/i;
+                    var urlMatch = null;
+                    while ((urlMatch = text.match(urlRe)) != null) {
+                        var urlLength = urlMatch[0].length;
+                        var replacementString = "";
+                        for (var i = 0; i < urlLength; ++i) {
+                            replacementString += " ";
+                        }
+                        text = text.replace(urlRe, replacementString);
+                    }
 
-                            ++spellingErrorsCount;
+                    // replace any character that doesn't make up a word with a space, and then split on space
+                    text = text.replace(/[^a-zA-Z0-9'\\-]/g, ' ');
 
-                            if (!buttons[word]) {
+                    // remove all stand alone characters
+                    var dashRe = /\s+[^\sA-Za-z0-9]\s+/;
+                    var dashMatch = null;
+                    while ((dashMatch = text.match(dashRe)) != null) {
+                        var dashLength = dashMatch[0].length;
+                        var replacementString = "";
+                        for (var i = 0; i < dashLength; ++i) {
+                            replacementString += " ";
+                        }
+                        text = text.replace(dashRe, replacementString);
+                    }
 
-                                var wordId = "spellingError" + word.replace(/[^A-Za-z0-9]/g, "");
+                    // remove anything that does not contain a letter
+                    var numberRe = /\b[^A-Za-z\s]+\b/;
+                    var numberMatch = null;
+                    while ((numberMatch = text.match(numberRe)) != null) {
+                        var numberLength = numberMatch[0].length;
+                        var replacementString = "";
+                        for (var i = 0; i < numberLength; ++i) {
+                            replacementString += " ";
+                        }
+                        text = text.replace(numberRe, replacementString);
+                    }
 
-                                var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
-                                var button = jQuery('<button id="' + wordId + '" type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
+                    // remove the quotes around words
+                    var quoteRe = /'(.*?)'/;
+                    var quoteMatch = null;
+                    while ((quoteMatch = text.match(quoteRe)) != null) {
+                        var numberLength = quoteMatch[0].length;
+                        var replacementString = " " + quoteMatch[1] + " ";
+                        text = text.replace(quoteRe, replacementString);
+                    }
+
+                    var words = text.split(/\s+/);
+
+                    async.eachSeries(
+                        words,
+                        function (word, callback) {
+                            if (!dictionary.check(word)) {
+
+                                ++spellingErrorsCount;
+
+                                if (!buttons[word]) {
+
+                                    var wordId = "spellingError" + word.replace(/[^A-Za-z0-9]/g, "");
+
+                                    var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
+                                    var button = jQuery('<button id="' + wordId + '" type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
                                      <span class="caret"></span>\
                                  </button>');
-                                var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>');
-                                if (window.bootbox) {
-                                    var addToDictionary = jQuery("<li><a href='javascript:addToDictionary(true, \"" + word + "\", \"" + wordId + "\")'>Add to dictionary</a></li>");
-                                    buttonList.append(addToDictionary);
-                                }
-                                jQuery(button).appendTo(buttonParent);
-                                jQuery(buttonList).appendTo(buttonParent);
-                                jQuery(buttonParent).appendTo($("#spellingErrorsItems"));
-
-                                buttons[word] = {list: buttonList, topics: []};
-                            }
-
-                            if (jQuery.inArray(topic.id, buttons[word].topics) == -1) {
-                                buttons[word].topics.push(topic.id);
-                                var link = jQuery('<li><a href="javascript:topicSections[' + thisTopic.id + '].scrollIntoView()">' + thisTopic.id + '</a></li>');
-                                link.appendTo(buttons[word].list);
-                            }
-                        }
-
-                        checkWord(words, topic, ++wordIndex);
-                    }
-                }
-
-                checkWord(words, topic, 0);
-
-                function checkDoubledWord(doubledWords, topic, wordIndex) {
-                    if (wordIndex < doubledWords.length - 1) {
-                        var word = doubledWords[wordIndex];
-
-                        if (word.match(/^[^A-Za-z]*$/) == null) {
-
-                            var nextWord = doubledWords[wordIndex + 1];
-                            if (word == nextWord) {
-
-                                ++doubleWordErrors;
-
-                                if (!doubleWordButtons[word]) {
-                                    var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
-                                    var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
-                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
-                                         <span class="caret"></span>\
-                                     </button>');
                                     var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>');
+                                    if (window.bootbox) {
+                                        var addToDictionary = jQuery("<li><a href='javascript:addToDictionary(true, \"" + word + "\", \"" + wordId + "\")'>Add to dictionary</a></li>");
+                                        buttonList.append(addToDictionary);
+                                    }
                                     jQuery(button).appendTo(buttonParent);
                                     jQuery(buttonList).appendTo(buttonParent);
-                                    jQuery(buttonParent).appendTo($("#doubledWordsErrorsItems"));
+                                    jQuery(buttonParent).appendTo($("#spellingErrorsItems"));
 
-                                    doubleWordButtons[word] = {list: buttonList, topics: []};
+                                    buttons[word] = {list: buttonList, topics: []};
                                 }
 
-                                if (jQuery.inArray(topic.id, doubleWordButtons[word].topics) == -1) {
-                                    doubleWordButtons[word].topics.push(topic.id);
-                                    var link = jQuery('<li><a href="javascript:topicSections[' + thisTopic.id + '].scrollIntoView()">' + thisTopic.id + '</a></li>');
-                                    link.appendTo(doubleWordButtons[word].list);
+                                if (jQuery.inArray(thisTopic.topic.id, buttons[word].topics) == -1) {
+                                    buttons[word].topics.push(thisTopic.topic.id);
+                                    var link = jQuery('<li><a href="javascript:topicSections[' + thisTopic.topic.id + '].scrollIntoView()">' + thisTopic.topic.id + '</a></li>');
+                                    link.appendTo(buttons[word].list);
                                 }
                             }
-                        }
 
-                        checkDoubledWord(doubledWords, topic, ++wordIndex);
-                    }
+                            callback();
+                        },
+                        function (err) {
+                            /*
+                             Generate an array of word pairs
+                             */
+                            async.reduce(doubledWords, [], function(memo, item, callback){
+                                if (memo.length !== 0) {
+                                    memo[memo.length-1].push(item);
+                                }
+                                memo.push([item]);
+                                callback(null, memo);
+                            }, function(err, results) {
+                                async.eachSeries(
+                                    results.slice(0, results.length - 1),       // The last item in the array is an array of the last word. We get rid of this trailing array because it is not an array of two words.
+                                    function (result, callback) {
+                                        var word = result[0];
+                                        var nextWord = result[1];
+
+                                        if (word.match(/^[^A-Za-z]*$/) == null &&
+                                            word === nextWord) {
+
+                                            ++doubleWordErrors;
+
+                                            if (!doubleWordButtons[word]) {
+                                                var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
+                                                var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
+                                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
+                                                 <span class="caret"></span>\
+                                             </button>');
+                                                var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>');
+                                                jQuery(button).appendTo(buttonParent);
+                                                jQuery(buttonList).appendTo(buttonParent);
+                                                jQuery(buttonParent).appendTo($("#doubledWordsErrorsItems"));
+
+                                                doubleWordButtons[word] = {list: buttonList, topics: []};
+                                            }
+
+                                            if (jQuery.inArray(topic.id, doubleWordButtons[word].topics) == -1) {
+                                                doubleWordButtons[word].topics.push(topic.id);
+                                                var link = jQuery('<li><a href="javascript:topicSections[' + thisTopic.topic.id + '].scrollIntoView()">' + thisTopic.topic.id + '</a></li>');
+                                                link.appendTo(doubleWordButtons[word].list);
+                                            }
+                                        }
+
+                                        callback();
+                                    },
+                                    function (err) {
+                                        callback(null);
+                                    }
+                                );
+                            });
+                        }
+                    );
                 }
 
-                checkDoubledWord(doubledWords, topic, 0);
-
-            } catch (e) {
-
+                async.waterfall(
+                    [
+                        getThisTopic,
+                        preProcessXML,
+                        convertXml,
+                        stripConditionalElements,
+                        checkSpelling
+                    ],
+                    function (err, result) {
+                        callback();
+                    }
+                )
+            },
+            function(err) {
+                if (callback) {
+                    callback();
+                }
             }
-        }
+        )
     }
 }
-
-
 
 /**
  * The side menus require various information about topics and specs. This function is where
  * we pull down this information.
  *
  * Since browsers limit the number of connections to a server, even between tabs, we want to
- * avoid queuing up too many requsts.
+ * avoid queuing up too many requests.
  */
-function getInfoFromREST() {
+function getInfoFromREST(callback) {
 
     // first we need to know all the topics in the spec, and what revision (if any) is used.
     var specId = getSpecIdFromURL();
     if (specId) {
-        var topicsUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=0,9,10;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
+        var topicsUrl = SERVER + "/contentspecnodes/get/json/query;csNodeType=0,9,10;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22inheritedCondition%22%7D%7D%5D%7D%5D%7D";
         jQuery.getJSON(topicsUrl, function(topicNodes) {
-            getRevisionInfoFromREST(specId, topicNodes, 0);
+            callback(null, specId, topicNodes);
         });
-    }
-}
-
-function getTopicDetailsInBatches(specId, topicNodes, index) {
-    if (index < topicNodes.items.length) {
-
-        jQuery("#spellingErrorsBadge").remove();
-        jQuery("#doubledWordsErrorsBadge").remove();
-        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Pass 2 ' + (index / topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
-        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Pass 2 ' + (index / topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
-
-        // the list of topic ids to send tp the query url
-        var topicIdList = "";
-
-        for (var topicIndex = index; topicIndex < index + TOPIC_BATCH_SIZE && topicIndex < topicNodes.items.length; ++topicIndex) {
-            var topicNode = topicNodes.items[topicIndex].item;
-
-            if (topicIdList.length != 0) {
-                topicIdList += ",";
-            }
-            topicIdList += topicNode.entityId;
-        }
-
-        // for each topic we need the latest revision, and the specific revision included in the spec (if the revision is defined)
-        var topicUrl = BACKGROUND_QUERY_PREFIX + topicIdList + BACKGROUND_QUERY_POSTFIX;
-        jQuery.getJSON(topicUrl, function(expandedTopics) {
-
-            for (var topicIndex = 0, topicCount = expandedTopics.items.length; topicIndex < topicCount; ++topicIndex) {
-
-                var topicNode = topicNodes.items[topicIndex].item;
-                var topic = expandedTopics.items[topicIndex].item;
-
-                if (!topicNode.entityRevision) {
-                    checkSpellingErrors(topic);
-                }
-
-                if (!topicLatestRevisions[topic.id]){
-                    topicLatestRevisions[topic.id] = topic.revision;
-                }
-
-                if (!topicNames[topic.id]) {
-                    topicNames[topic.id] = topic.title;
-                }
-
-                // set the description
-                if (descriptionCache[topic.id]) {
-                    descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
-                }
-
-                // set the revisions
-                if (historyCache[topic.id]) {
-                    historyCache[topic.id].data = [];
-                    for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
-                        var revision = topic.revisions.items[revisionIndex].item;
-                        historyCache[topic.id].data.push({
-                            revision: revision.revision,
-                            message: revision.logDetails.message,
-                            lastModified: revision.lastModified});
-                    }
-
-                    updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
-                    updateHistoryIcon(topic.id, topic.title);
-                }
-
-                // set the tags
-                if (tagsCache[topic.id]) {
-                    tagsCache[topic.id].data = [];
-                    for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
-                        var tag = topic.tags.items[tagIndex].item;
-                        tagsCache[topic.id].data.push({
-                            name: tag.name,
-                            id: tag.id
-                        });
-                    }
-
-                    updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
-                }
-
-                // set the urls
-                if (urlCache[topic.id]) {
-                    urlCache[topic.id].data = [];
-
-                    var match = null;
-                    while (match = COMMENT_RE.exec(topic.xml)) {
-                        var comment = match[1];
-
-                        var match2 = null;
-                        while (match2 = URL_RE.exec(comment)) {
-                            var url = match2[0];
-                            urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
-                        }
-                    }
-
-                    for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
-                        var url = topic.sourceUrls_OTM.items[urlsIndex].item;
-                        urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
-                    }
-
-                    updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
-                }
-
-                // set the specs
-                if (specCache[topic.id]) {
-                    specCache[topic.id].data = [];
-                    var specs = {};
-                    for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
-                        var spec = topic.contentSpecs_OTM.items[specIndex].item;
-                        if (!specs[spec.id]) {
-                            var specDetails = {id: spec.id, title: "", product: "", version: ""};
-                            for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
-                                var child = spec.children_OTM.items[specChildrenIndex].item;
-                                if (child.title == "Product") {
-                                    specDetails.product = child.additionalText;
-                                } else if (child.title == "Version") {
-                                    specDetails.version = child.additionalText;
-                                } if (child.title == "Title") {
-                                    specDetails.title = child.additionalText;
-                                }
-                            }
-                            specs[spec.id] = specDetails;
-                        }
-                    }
-
-                    for (spec in specs) {
-                        specCache[topic.id].data.push(specs[spec]);
-                    }
-
-                    updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
-                }
-            }
-
-            getTopicDetailsInBatches(specId, topicNodes, index + TOPIC_BATCH_SIZE);
-        });
-    } else {
-        jQuery("#spellingErrorsBadge").remove();
-        jQuery("#doubledWordsErrorsBadge").remove();
-        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + '</span>'));
-        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + '</span>'));
-
-        console.log("Retrieved all topic data");
-
-        buildTopicEditedInChart();
-
-        getTopicNodes(specId, topicNodes, 0, 0);
     }
 }
 
@@ -3104,89 +2948,312 @@ function getTopicDetailsInBatches(specId, topicNodes, index) {
  * Once all the information from the latest versions of the topics is found, we go through and
  * get the details on the topic revisions
  */
-function getRevisionInfoFromREST(specId, topicNodes, index) {
-     if (index <  topicNodes.items.length) {
+function getRevisionInfoFromREST(specId, topicNodes, callback) {
 
-        jQuery("#spellingErrorsBadge").remove();
-        jQuery("#doubledWordsErrorsBadge").remove();
-        jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Step 1 ' + (index /  topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
-        jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Step 1 ' + (index /  topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
+    var index = 0;
 
-        var topicNode = topicNodes.items[index].item;
-        var topicID = topicNode.entityId;
-        var topicRevision = topicNode.entityRevision;
+    async.eachSeries(
+        topicNodes.items,
+        function(topicNodeContainer, callback){
+            jQuery("#spellingErrorsBadge").remove();
+            jQuery("#doubledWordsErrorsBadge").remove();
+            jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Step 1 ' + (index /  topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
+            jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Step 1 ' + (index /  topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
 
-        if (topicRevision) {
-            var topicRevisionUrl = SERVER + "/topic/get/json/" + topicID + "/r/" + topicRevision;
-            jQuery.getJSON(topicRevisionUrl, function(data) {
-                checkSpellingErrors(data);
-                getRevisionInfoFromREST(specId, topicNodes, ++index);
-            });
-        } else {
-            getRevisionInfoFromREST(specId, topicNodes, ++index);
+            ++index;
+
+            var topicNode = topicNodeContainer.item;
+            var topicID = topicNode.entityId;
+            var topicRevision = topicNode.entityRevision;
+
+            if (topicRevision) {
+                var topicRevisionUrl = SERVER + "/topic/get/json/" + topicID + "/r/" + topicRevision;
+                jQuery.getJSON(topicRevisionUrl, function(data) {
+                    checkSpellingErrors(data, topicNode.inheritedCondition, function() {
+                        callback();
+                    });
+                });
+            } else {
+                callback();
+            }
+        },
+        function(err) {
+            jQuery("#spellingErrorsBadge").remove();
+            jQuery("#doubledWordsErrorsBadge").remove();
+            jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Pass 2 0%)</span>'));
+            jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Pass 2 0%)</span>'));
+
+            callback(null, specId, topicNodes);
         }
-    } else {
-         jQuery("#spellingErrorsBadge").remove();
-         jQuery("#doubledWordsErrorsBadge").remove();
-         jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Pass 2 0%)</span>'));
-         jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Pass 2 0%)</span>'));
-
-
-         getDuplicatedTopics(specId, topicNodes, 0);
-    }
+    );
 }
 
-function getDuplicatedTopics(specId, topicNodes, index) {
-    if (index <  topicNodes.items.length) {
+function getTopicDetailsInBatches(specId, topicNodes, callback) {
 
-        jQuery("#duplicatedTopicsBadge").remove();
-        jQuery('#duplicatedTopics').append($('<span id="duplicatedTopicsBadge" class="badge pull-right">' + duplicatedTopicsCount + " (" +(index / topicNodes.items.length * 100.0).toFixed(2) + '%)</span>'));
+    function getTopicDetailsInBatchesInternal(index) {
+        if (index < topicNodes.items.length) {
 
-        var topicNode = topicNodes.items[index].item;
-        var topicID = topicNode.entityId;
-        var similarTopicsUrl = SERVER + "/topics/get/json/query;minHash=" + topicID + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
-        jQuery.getJSON(similarTopicsUrl, function(data){
+            // the list of topic ids to send tp the query url
+            var topicIdList = "";
 
-            if (dupTopicsCache[topicID]) {
-                dupTopicsCache[topicID].data = [];
+            for (var topicIndex = index; topicIndex < index + TOPIC_BATCH_SIZE && topicIndex < topicNodes.items.length; ++topicIndex) {
+                var topicNode = topicNodes.items[topicIndex].item;
 
-                data.items.sort(function(a, b){
-                    if (a.item.revision < b.item.revision) {
-                        return 1;
-                    }
-                    if (a.item.revision == b.item.revision) {
-                        return 0;
-                    }
-                    return -1;
-                });
-
-                for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
-                    dupTopicsCache[topicID].data.push(data.items[topicIndex].item);
+                if (topicIdList.length != 0) {
+                    topicIdList += ",";
                 }
-
-                /*
-                    Add the menu items
-                 */
-                var myDuplicatedTopicCount = dupTopicsCache[topicID].data.length;
-
-                if (myDuplicatedTopicCount != 0) {
-                    ++duplicatedTopicsCount;
-                    var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
-                    var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topicID + '].scrollIntoView()">Topic: ' + topicID + '</button>');
-                    button.appendTo(buttonParent);
-                    buttonParent.appendTo($("#duplicatedTopicsItems"));
-                }
-
-                updateCount(topicID + "duplicateIcon", dupTopicsCache[topicID].data.length);
+                topicIdList += topicNode.entityId;
             }
-            getDuplicatedTopics(specId, topicNodes, ++index);
-        });
-    } else {
-        jQuery("#duplicatedTopicsBadge").remove();
-        jQuery('#duplicatedTopics').append($('<span id="duplicatedTopicsBadge" class="badge pull-right">' + duplicatedTopicsCount + '</span>'));
 
-        getTopicDetailsInBatches(specId, topicNodes, 0);
+            // for each topic we need the latest revision, and the specific revision included in the spec (if the revision is defined)
+            var topicUrl = BACKGROUND_QUERY_PREFIX + topicIdList + BACKGROUND_QUERY_POSTFIX;
+            jQuery.getJSON(topicUrl, function(expandedTopics) {
+
+                async.eachSeries(
+                    expandedTopics.items,
+                    function(topicContainer, callback) {
+                        var topic = topicContainer.item;
+
+                        function saveLatestRevision(callback) {
+                            if (!topicLatestRevisions[topic.id]) {
+                                topicLatestRevisions[topic.id] = topic.revision;
+                            }
+
+                            callback(null);
+                        }
+
+                        function saveTopicTitle(callback) {
+                            if (!topicNames[topic.id]) {
+                                topicNames[topic.id] = topic.title;
+                            }
+
+                            callback(null);
+                        }
+
+                        function saveDescription(callback) {
+                            if (descriptionCache[topic.id]) {
+                                descriptionCache[topic.id].data = topic.description && topic.description.trim().length != 0 ? topic.description : "[No Description]";
+                            }
+
+                            callback(null);
+                        }
+
+                        function saveRevisions(callback) {
+                            if (historyCache[topic.id]) {
+                                historyCache[topic.id].data = [];
+                                for (var revisionIndex = 0, revisionCount = topic.revisions.items.length; revisionIndex < revisionCount; ++revisionIndex) {
+                                    var revision = topic.revisions.items[revisionIndex].item;
+                                    historyCache[topic.id].data.push({
+                                        revision: revision.revision,
+                                        message: revision.logDetails.message,
+                                        lastModified: revision.lastModified});
+                                }
+
+                                updateCount(topic.id + "historyIcon", historyCache[topic.id].data.length);
+                                updateHistoryIcon(topic.id, topic.title);
+
+
+                            }
+
+                            callback(null);
+                        }
+
+                        function saveTags(callback) {
+                            if (tagsCache[topic.id]) {
+                                tagsCache[topic.id].data = [];
+                                for (var tagIndex = 0, tagCount = topic.tags.items.length; tagIndex < tagCount; ++tagIndex) {
+                                    var tag = topic.tags.items[tagIndex].item;
+                                    tagsCache[topic.id].data.push({
+                                        name: tag.name,
+                                        id: tag.id
+                                    });
+                                }
+
+                                updateCount(topic.id + "tagsIcon", tagsCache[topic.id].data.length);
+                            }
+
+                            callback(null);
+                        }
+
+                        function saveURLs(callback) {
+                            if (urlCache[topic.id]) {
+                                urlCache[topic.id].data = [];
+
+                                var match = null;
+                                while (match = COMMENT_RE.exec(topic.xml)) {
+                                    var comment = match[1];
+
+                                    var match2 = null;
+                                    while (match2 = URL_RE.exec(comment)) {
+                                        var url = match2[0];
+                                        urlCache[topic.id].data.push({url: url, title: "[Comment] " + url});
+                                    }
+                                }
+
+                                for (var urlsIndex = 0, urlsCount = topic.sourceUrls_OTM.items.length; urlsIndex < urlsCount; ++urlsIndex) {
+                                    var url = topic.sourceUrls_OTM.items[urlsIndex].item;
+                                    urlCache[topic.id].data.push({url: url.url, title: url.title == null || url.title.length == 0 ? url.url : url.title});
+                                }
+
+                                updateCount(topic.id + "urlsIcon", urlCache[topic.id].data.length);
+                            }
+
+                            callback(null);
+                        }
+
+                        function saveSpecs(callback) {
+                            if (specCache[topic.id]) {
+                                specCache[topic.id].data = [];
+                                var specs = {};
+                                for (var specIndex = 0, specCount = topic.contentSpecs_OTM.items.length; specIndex < specCount; ++specIndex) {
+                                    var spec = topic.contentSpecs_OTM.items[specIndex].item;
+                                    if (!specs[spec.id]) {
+                                        var specDetails = {id: spec.id, title: "", product: "", version: ""};
+                                        for (var specChildrenIndex = 0, specChildrenCount = spec.children_OTM.items.length; specChildrenIndex < specChildrenCount; ++specChildrenIndex) {
+                                            var child = spec.children_OTM.items[specChildrenIndex].item;
+                                            if (child.title == "Product") {
+                                                specDetails.product = child.additionalText;
+                                            } else if (child.title == "Version") {
+                                                specDetails.version = child.additionalText;
+                                            }
+                                            if (child.title == "Title") {
+                                                specDetails.title = child.additionalText;
+                                            }
+                                        }
+                                        specs[spec.id] = specDetails;
+                                    }
+                                }
+
+                                for (spec in specs) {
+                                    specCache[topic.id].data.push(specs[spec]);
+                                }
+
+                                updateCount(topic.id + "bookIcon", specCache[topic.id].data.length);
+                            }
+
+                            callback(null);
+                        }
+
+
+                        function checkSpelling(callback) {
+
+                            async.detect(
+                                topicNodes.items,
+                                function(topicNode, callback) {
+                                    callback(topicNode.item.entityId === topic.id);
+                                },
+                                function(result) {
+                                    if (result !== undefined && !result.item.entityRevision) {
+                                        checkSpellingErrors(topic, result.item.inheritedCondition, function() {callback(null)});
+                                    } else {
+                                        callback(null);
+                                    }
+                                }
+                            );
+                        }
+
+                        async.waterfall([
+                                saveLatestRevision,
+                                saveTopicTitle,
+                                saveDescription,
+                                saveRevisions,
+                                saveTags,
+                                saveURLs,
+                                saveSpecs,
+                                checkSpelling
+                            ],
+                            function (err) {
+                                jQuery("#spellingErrorsBadge").remove();
+                                jQuery("#doubledWordsErrorsBadge").remove();
+                                jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + ' (Pass 2 ' + (index / topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
+                                jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + ' (Pass 2 ' + (index / topicNodes.items.length * 100).toFixed(2) + '%)</span>'));
+
+                                callback();
+                            }
+                        );
+                    },
+                    function(err) {
+                        getTopicDetailsInBatchesInternal(index + TOPIC_BATCH_SIZE);
+                    }
+                );
+            });
+        } else {
+            console.log("Retrieved all topic data");
+
+            jQuery("#spellingErrorsBadge").remove();
+            jQuery("#doubledWordsErrorsBadge").remove();
+            jQuery('#spellingErrors').append($('<span id="spellingErrorsBadge" class="badge pull-right">' + spellingErrorsCount + '</span>'));
+            jQuery('#doubledWordsErrors').append($('<span id="doubledWordsErrorsBadge" class="badge pull-right">' + doubleWordErrors + '</span>'));
+
+            buildTopicEditedInChart();
+
+            callback(null, specId, topicNodes);
+        }
     }
+
+    getTopicDetailsInBatchesInternal(0);
+}
+
+function getDuplicatedTopics(specId, topicNodes, callback) {
+
+    var index = 0;
+
+    async.eachSeries(
+        topicNodes.items,
+        function(topicNodeContainer, callback) {
+            jQuery("#duplicatedTopicsBadge").remove();
+            jQuery('#duplicatedTopics').append($('<span id="duplicatedTopicsBadge" class="badge pull-right">' + duplicatedTopicsCount + " (" +(index / topicNodes.items.length * 100.0).toFixed(2) + '%)</span>'));
+
+            ++index;
+
+            var topicNode = topicNodeContainer.item;
+            var topicID = topicNode.entityId;
+            var similarTopicsUrl = SERVER + "/topics/get/json/query;minHash=" + topicID + "%3A0.6?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%7D%5D%7D";
+            jQuery.getJSON(similarTopicsUrl, function(data){
+
+                if (dupTopicsCache[topicID]) {
+                    dupTopicsCache[topicID].data = [];
+
+                    data.items.sort(function(a, b){
+                        if (a.item.revision < b.item.revision) {
+                            return 1;
+                        }
+                        if (a.item.revision == b.item.revision) {
+                            return 0;
+                        }
+                        return -1;
+                    });
+
+                    for (var topicIndex = 0, topicCount = data.items.length; topicIndex < topicCount; ++topicIndex) {
+                        dupTopicsCache[topicID].data.push(data.items[topicIndex].item);
+                    }
+
+                    /*
+                     Add the menu items
+                     */
+                    var myDuplicatedTopicCount = dupTopicsCache[topicID].data.length;
+
+                    if (myDuplicatedTopicCount != 0) {
+                        ++duplicatedTopicsCount;
+                        var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
+                        var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:topicSections[' + topicID + '].scrollIntoView()">Topic: ' + topicID + '</button>');
+                        button.appendTo(buttonParent);
+                        buttonParent.appendTo($("#duplicatedTopicsItems"));
+                    }
+
+                    updateCount(topicID + "duplicateIcon", dupTopicsCache[topicID].data.length);
+                }
+                callback();
+            });
+        },
+        function(err) {
+            jQuery("#duplicatedTopicsBadge").remove();
+            jQuery('#duplicatedTopics').append($('<span id="duplicatedTopicsBadge" class="badge pull-right">' + duplicatedTopicsCount + '</span>'));
+            callback(null, specId, topicNodes);
+        }
+    );
+
+
 }
 
 function getDictionary() {
@@ -3216,7 +3283,6 @@ function getDictionary() {
                             }
 
                             customWords += property.value;
-
                         }
                     }
                 }
@@ -3230,6 +3296,10 @@ function getDictionary() {
                     dictionary = new Typo("en_US", affData, dicData + "\n" + customWords);
 
                     if (topicsToCheckForSpelling.length != 0) {
+                        /*
+                            Kick off the spell checking process if we were waiting on the dictionaries to
+                            be loaded.
+                         */
                         checkSpellingErrors();
                     }
                 })

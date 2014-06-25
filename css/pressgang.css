@@ -18,3 +18,23 @@
     width: 300px;
     overflow-y: auto;
 }
+
+.alert-badge {
+    background-color: #d9534f !important;
+    color: #fff !important;
+}
+
+/*
+    These CSS overrides fix conflicts between BootStrap and Publican styles.
+*/
+
+/* https://bugzilla.redhat.com/show_bug.cgi?id=1054510 */
+pre {
+    word-break: inherit !important;
+}
+
+/* https://bugzilla.redhat.com/show_bug.cgi?id=1012763 */
+code {
+    color: inherit !important;
+    background-color: inherit !important;
+}

@@ -4,8 +4,31 @@
 
 (function() {
     if (isDocbuilderWindow()) {
+    //if (true) { // <- used when debugging locally
         var cache = {};
         var foundBugs = false;
+
+        function clearPresszillaLinksAndWarnings() {
+            jQuery('#newBugzillaBugsPlaceholder').remove();
+            jQuery('#assignedBugzillaBugsPlaceholder').remove();
+            jQuery('#modifiedBugzillaBugsPlaceholder').remove();
+            jQuery('#postBugzillaBugsPlaceholder').remove();
+            jQuery('#onqaBugzillaBugsPlaceholder').remove();
+            jQuery('#verifiedBugzillaBugsPlaceholder').remove();
+            jQuery('#releasePendingBugzillaBugsPlaceholder').remove();
+            jQuery('#closedBugzillaBugsPlaceholder').remove();
+            jQuery('#bugzillaBugsBugzillaBugsPlaceholder').remove();
+            jQuery('#bugzillaBugsBadge').remove();
+        }
+
+        /*
+            remove any warnings about the user script being required
+         */
+        jQuery(window).bind("menu_created", function(event){
+            clearPresszillaLinksAndWarnings();
+        });
+
+        clearPresszillaLinksAndWarnings();
 
         function handleFailure(message) {
 
@@ -82,14 +105,7 @@
 
                                     foundBugs = true;
 
-                                    jQuery('#newBugzillaBugsPlaceholder').remove();
-                                    jQuery('#assignedBugzillaBugsPlaceholder').remove();
-                                    jQuery('#modifiedBugzillaBugsPlaceholder').remove();
-                                    jQuery('#postBugzillaBugsPlaceholder').remove();
-                                    jQuery('#onqaBugzillaBugsPlaceholder').remove();
-                                    jQuery('#verifiedBugzillaBugsPlaceholder').remove();
-                                    jQuery('#releasePendingBugzillaBugsPlaceholder').remove();
-                                    jQuery('#closedBugzillaBugsPlaceholder').remove();
+
 
                                     var responseJson = JSON.parse(response.responseText);
                                     var bugs = responseJson.result.bugs;
