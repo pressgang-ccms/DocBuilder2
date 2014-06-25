@@ -18,3 +18,14 @@
     width: 300px;
     overflow-y: auto;
 }
+
+/* https://bugzilla.redhat.com/show_bug.cgi?id=1054510 */
+pre {
+    word-break: inherit;
+}
+
+/* https://bugzilla.redhat.com/show_bug.cgi?id=1012763 */
+.code {
+    color: inherit;
+    background-color: inherit;
+}
