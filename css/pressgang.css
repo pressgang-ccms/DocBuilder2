@@ -21,11 +21,11 @@
 
 /* https://bugzilla.redhat.com/show_bug.cgi?id=1054510 */
 pre {
-    word-break: inherit;
+    word-break: inherit !important;
 }
 
 /* https://bugzilla.redhat.com/show_bug.cgi?id=1012763 */
 .code {
-    color: inherit;
-    background-color: inherit;
+    color: inherit !important;
+    background-color: inherit !important;
 }
