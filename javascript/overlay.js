@@ -2608,14 +2608,15 @@ function checkSpellingErrors(topic, condition, callback) {
     // it is possible we are trying to spell check topics before the dictionary is loaded.
     // in this case we just append to topicsToCheckForSpelling and grab them next time.
     if (dictionary != null) {
-        async.whilst(
-            function() {return topicsToCheckForSpelling.length != 0},
-            function(callback) {
-                function getThisTopic(callback) {
-                    callback(null, topicsToCheckForSpelling.pop());
-                }
 
-                function preProcessXML(thisTopic, callback) {
+        var thisTopicsToCheckForSpelling = topicsToCheckForSpelling;
+        topicsToCheckForSpelling = [];
+
+        async.eachSeries(
+            thisTopicsToCheckForSpelling,
+            function(thisTopic, callback) {
+
+                function preProcessXML(callback) {
                     // find any injection comments and replace them with a literal. These will be removed
                     // before spellchecking, and set to text that is skipped for double word checking.
                     // but having the comment replaced means that there is a break in a double word.
@@ -2648,18 +2649,18 @@ function checkSpellingErrors(topic, condition, callback) {
 
                     fixedXML = fixedXML.replace(/&.*?;/g, " ");
 
-                    callback(null, thisTopic, fixedXML);
+                    callback(null, fixedXML);
                 }
 
-                function convertXml(thisTopic, xml, callback) {
+                function convertXml(xml, callback) {
                     try {
-                        callback(null, thisTopic, jQuery(jQuery.parseXML(xml)));
+                        callback(null, jQuery(jQuery.parseXML(xml)));
                     } catch (e) {
                         callback(e);
                     }
                 }
 
-                function stripConditionalElements(thisTopic, xmlDoc, callback) {
+                function stripConditionalElements(xmlDoc, callback) {
 
                     var specCondition = new RegExp(thisTopic.condition);
 
@@ -2702,10 +2703,10 @@ function checkSpellingErrors(topic, condition, callback) {
                         }
                     }
 
-                    testNode(xmlDoc, function() {callback(null, thisTopic, xmlDoc)});
+                    testNode(xmlDoc, function() {callback(null, xmlDoc)});
                 }
 
-                function checkSpelling(thisTopic, xmlDoc, callback) {
+                function checkSpelling(xmlDoc, callback) {
                     // These docbook elements will commonly contain words that are not found in the dictionary.
                     var doNotSpellCheck = [
                         "parameter",
@@ -2814,100 +2815,77 @@ function checkSpellingErrors(topic, condition, callback) {
 
                     var words = text.split(/\s+/);
 
-                    async.eachSeries(
-                        words,
-                        function (word, callback) {
-                            if (!dictionary.check(word)) {
+                    for (var wordIndex = 0; wordIndex < words; ++wordIndex) {
+                        var word = words[wordIndex];
+                        if (!dictionary.check(word)) {
 
-                                ++spellingErrorsCount;
+                            ++spellingErrorsCount;
 
-                                if (!buttons[word]) {
+                            if (!buttons[word]) {
 
-                                    var wordId = "spellingError" + word.replace(/[^A-Za-z0-9]/g, "");
+                                var wordId = "spellingError" + word.replace(/[^A-Za-z0-9]/g, "");
 
-                                    var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
-                                    var button = jQuery('<button id="' + wordId + '" type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
+                                var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
+                                var button = jQuery('<button id="' + wordId + '" type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
                                      <span class="caret"></span>\
                                  </button>');
-                                    var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>');
-                                    if (window.bootbox) {
-                                        var addToDictionary = jQuery("<li><a href='javascript:addToDictionary(true, \"" + word + "\", \"" + wordId + "\")'>Add to dictionary</a></li>");
-                                        buttonList.append(addToDictionary);
-                                    }
-                                    jQuery(button).appendTo(buttonParent);
-                                    jQuery(buttonList).appendTo(buttonParent);
-                                    jQuery(buttonParent).appendTo($("#spellingErrorsItems"));
-
-                                    buttons[word] = {list: buttonList, topics: []};
+                                var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>');
+                                if (window.bootbox) {
+                                    var addToDictionary = jQuery("<li><a href='javascript:addToDictionary(true, \"" + word + "\", \"" + wordId + "\")'>Add to dictionary</a></li>");
+                                    buttonList.append(addToDictionary);
                                 }
+                                jQuery(button).appendTo(buttonParent);
+                                jQuery(buttonList).appendTo(buttonParent);
+                                jQuery(buttonParent).appendTo($("#spellingErrorsItems"));
 
-                                if (jQuery.inArray(thisTopic.topic.id, buttons[word].topics) == -1) {
-                                    buttons[word].topics.push(thisTopic.topic.id);
-                                    var link = jQuery('<li><a href="javascript:topicSections[' + thisTopic.topic.id + '].scrollIntoView()">' + thisTopic.topic.id + '</a></li>');
-                                    link.appendTo(buttons[word].list);
-                                }
+                                buttons[word] = {list: buttonList, topics: []};
                             }
 
-                            callback();
-                        },
-                        function (err) {
-                            /*
-                             Generate an array of word pairs
-                             */
-                            async.reduce(doubledWords, [], function(memo, item, callback){
-                                if (memo.length !== 0) {
-                                    memo[memo.length-1].push(item);
-                                }
-                                memo.push([item]);
-                                callback(null, memo);
-                            }, function(err, results) {
-                                async.eachSeries(
-                                    results.slice(0, results.length - 1),       // The last item in the array is an array of the last word. We get rid of this trailing array because it is not an array of two words.
-                                    function (result, callback) {
-                                        var word = result[0];
-                                        var nextWord = result[1];
-
-                                        if (word.match(/^[^A-Za-z]*$/) == null &&
-                                            word === nextWord) {
-
-                                            ++doubleWordErrors;
-
-                                            if (!doubleWordButtons[word]) {
-                                                var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
-                                                var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
-                                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
-                                                 <span class="caret"></span>\
-                                             </button>');
-                                                var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>');
-                                                jQuery(button).appendTo(buttonParent);
-                                                jQuery(buttonList).appendTo(buttonParent);
-                                                jQuery(buttonParent).appendTo($("#doubledWordsErrorsItems"));
-
-                                                doubleWordButtons[word] = {list: buttonList, topics: []};
-                                            }
-
-                                            if (jQuery.inArray(topic.id, doubleWordButtons[word].topics) == -1) {
-                                                doubleWordButtons[word].topics.push(topic.id);
-                                                var link = jQuery('<li><a href="javascript:topicSections[' + thisTopic.topic.id + '].scrollIntoView()">' + thisTopic.topic.id + '</a></li>');
-                                                link.appendTo(doubleWordButtons[word].list);
-                                            }
-                                        }
-
-                                        callback();
-                                    },
-                                    function (err) {
-                                        callback(null);
-                                    }
-                                );
-                            });
+                            if (jQuery.inArray(thisTopic.topic.id, buttons[word].topics) == -1) {
+                                buttons[word].topics.push(thisTopic.topic.id);
+                                var link = jQuery('<li><a href="javascript:topicSections[' + thisTopic.topic.id + '].scrollIntoView()">' + thisTopic.topic.id + '</a></li>');
+                                link.appendTo(buttons[word].list);
+                            }
                         }
-                    );
+                    }
+
+                    for (var doubleWordIndex = 0; doubleWordIndex < doubledWords.length - 1; ++doubleWordIndex) {
+                        var word = doubledWords[doubleWordIndex];
+                        var nextWord = doubledWords[doubleWordIndex + 1];
+
+                        if (word.match(/^[^A-Za-z]*$/) == null &&
+                            word === nextWord) {
+
+                            ++doubleWordErrors;
+
+                            if (!doubleWordButtons[word]) {
+                                var buttonParent = jQuery('<div class="btn-group" style="margin-bottom: 8px;"></div>');
+                                var button = jQuery('<button type="button" class="btn btn-default" style="width:230px; white-space: normal;" onclick="javascript:void">' + word + '</button>\
+                                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="position: absolute; top:0; bottom: 0">\
+                                             <span class="caret"></span>\
+                                         </button>');
+                                var buttonList = jQuery('<ul class="dropdown-menu" role="menu"></ul>');
+                                jQuery(button).appendTo(buttonParent);
+                                jQuery(buttonList).appendTo(buttonParent);
+                                jQuery(buttonParent).appendTo($("#doubledWordsErrorsItems"));
+
+                                doubleWordButtons[word] = {list: buttonList, topics: []};
+                            }
+
+                            if (jQuery.inArray(topic.id, doubleWordButtons[word].topics) == -1) {
+                                doubleWordButtons[word].topics.push(topic.id);
+                                var link = jQuery('<li><a href="javascript:topicSections[' + thisTopic.topic.id + '].scrollIntoView()">' + thisTopic.topic.id + '</a></li>');
+                                link.appendTo(doubleWordButtons[word].list);
+                            }
+                        }
+                    }
+
+                    callback(null);
                 }
 
                 async.waterfall(
                     [
-                        getThisTopic,
                         preProcessXML,
                         convertXml,
                         stripConditionalElements,
