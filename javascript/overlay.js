@@ -2652,7 +2652,11 @@ function checkSpellingErrors(topic, condition, callback) {
                 }
 
                 function convertXml(thisTopic, xml, callback) {
-                    callback(null, thisTopic, jQuery(jQuery.parseXML(xml)));
+                    try {
+                        callback(null, thisTopic, jQuery(jQuery.parseXML(xml)));
+                    } catch (e) {
+                        callback(e);
+                    }
                 }
 
                 function stripConditionalElements(thisTopic, xmlDoc, callback) {
