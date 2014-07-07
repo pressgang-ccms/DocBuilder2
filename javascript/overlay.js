@@ -2815,7 +2815,7 @@ function checkSpellingErrors(topic, condition, callback) {
 
                     var words = text.split(/\s+/);
 
-                    for (var wordIndex = 0; wordIndex < words; ++wordIndex) {
+                    for (var wordIndex = 0; wordIndex < words.length; ++wordIndex) {
                         var word = words[wordIndex];
                         if (!dictionary.check(word)) {
 
