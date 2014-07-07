@@ -2646,6 +2646,8 @@ function checkSpellingErrors(topic, condition, callback) {
                         fixedXML = fixedXML.replace(new RegExp("<\/" + addDoubleWordBreaks[elementIndex] + ">", "g"), "</" + addDoubleWordBreaks[elementIndex] + "><literal></literal>");
                     }
 
+                    fixedXML = fixedXML.replace(/&.*?;/g, " ");
+
                     callback(null, thisTopic, fixedXML);
                 }
 
