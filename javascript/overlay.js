@@ -2638,7 +2638,8 @@ function checkSpellingErrors(topic, condition, callback) {
                         "listitem",
                         "ulink",
                         "firstname",
-                        "surname"
+                        "surname",
+                        "revnumber"
                     ];
 
                     for (var elementIndex = 0, elementCount = addDoubleWordBreaks.length; elementIndex < elementCount; ++elementIndex) {
@@ -2742,11 +2743,6 @@ function checkSpellingErrors(topic, condition, callback) {
 
                     // We split the string up now to look for doubled words
                     var doubledWords = xmlDoc.text().split(/\s+/);
-
-                    // remove these elements
-                    for (var elementIndex = 0, elementCount = doNotSpellCheck.length; elementIndex < elementCount; ++elementIndex) {
-                        jQuery(doNotSpellCheck[elementIndex], xmlDoc).remove();
-                    }
 
                     var text = xmlDoc.text();
 
