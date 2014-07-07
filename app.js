@@ -53,7 +53,7 @@ var PUBLICAN_BOOK_ZIPS_COMPLETE=deployment.APACHE_HTML_DIR + PUBLICAN_BOOK_ZIPS;
  * The script used to build the book
  * @type {string}
  */
-var BUILD_BOOK_SCRIPT = "/home/pressgang/DocBuilder2/build_original_books.sh";
+var BUILD_BOOK_SCRIPT = __dirname + "/build_original_books.sh";
 /**
  * The amount of time to wait, in milliseconds, before querying the server when no
  * updates were found.
