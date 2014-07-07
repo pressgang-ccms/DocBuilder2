@@ -2924,8 +2924,6 @@ function checkSpellingErrors(topic, condition, callback) {
                 }
             }
         )
-    } if (callback) {
-        callback();
     } else {
         if (callback) {
             callback();
@@ -3145,7 +3143,7 @@ function getTopicDetailsInBatches(specId, topicNodes, callback) {
 
                         function checkSpelling(callback) {
 
-                            async.detect(
+                            async.detectSeries(
                                 topicNodes.items,
                                 function(topicNode, callback) {
                                     callback(topicNode.item.entityId === topic.id);
