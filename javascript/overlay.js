@@ -2922,6 +2922,12 @@ function checkSpellingErrors(topic, condition, callback) {
                 }
             }
         )
+    } if (callback) {
+        callback();
+    } else {
+        if (callback) {
+            callback();
+        }
     }
 }
 
