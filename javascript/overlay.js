@@ -1422,7 +1422,7 @@ function getTopicNodes(specId, topicNodes, callback) {
                 for (var topicNodeIndex = 0, topicNodeCount = topicNodeData.items.length; topicNodeIndex < topicNodeCount; ++topicNodeIndex) {
                     var topicNode = topicNodeData.items[topicNodeIndex].item;
                     if (topicNode.contentSpec.id != specId) {
-                        if (topicNode.entityRevision && topicNode.entityRevision > topic.rev) {
+                        if (topicNode.entityRevision && topicNode.entityRevision > topicNodeContainer.item.rev) {
                             newerTopicRevisions.push({spec: topicNode.contentSpec.id, rev: topicNode.entityRevision});
                         }
                     }
