@@ -154,7 +154,7 @@ var TOPIC_BATCH_SIZE = 20;
  * Report a bug url.
  * @type {string}
  */
-var BUG_LINK = "https://bugzilla.redhat.com/enter_bug.cgi?alias=&assigned_to=pressgang-ccms-dev%40redhat.com&bug_status=NEW&component=DocBook-builder&product=PressGang%20CCMS&version=1.7";
+var BUG_LINK = "https://bugzilla.redhat.com/enter_bug.cgi?alias=&assigned_to=pressgang-ccms-dev%40redhat.com&bug_status=NEW&component=DocBook-builder&product=PressGang%20CCMS&version=1.8";
 /**
  * List of element to skip when looking for text nodes
  * @type {Array}
