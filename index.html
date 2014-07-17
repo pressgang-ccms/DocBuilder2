@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <link href="lib/patternfly/css/patternfly.css" rel="stylesheet" media="screen, print">
+    <link href="lib/silviomoreto-bootstrap-select/bootstrap-select.min.css" rel="stylesheet" media="screen, print">
+    <link href="lib/docbuilder/css/docbuilder.css" rel="stylesheet">
+    <script src="lib/moment/moment-with-langs.js"></script>
+    <script src="lib/underscore/underscore-min.js"></script>
+    <script src="lib/jquery/jquery-2.1.1.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.js"></script>
+    <script src="lib/silviomoreto-bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="lib/patternfly/js/patternfly.min.js"></script>
+    <script src="lib/URI/URI.js"></script>
+    <script src="lib/docbuilder/javascript/listbooks.js"></script>
+    <meta charset="UTF-8">
+    <title>PressGang CCMS DocBuilder</title>
+    <script>
+        /*
+         Load language specific data and initialise combo box
+         */
+        jQuery(function () {
+            if (urlParams[LOCALE_URL_PARAM_KEY]) {
+                jQuery.getScript(urlParams[LOCALE_URL_PARAM_KEY] + "/data.js").fail(function() {jQuery(function() {filterData()});});
+            } else {
+                jQuery.getScript("data.js").fail(function() {jQuery(function() {filterData()});});;
+            }
+            setSelectedLang();
+            jQuery('.selectpicker').selectpicker();
+        });
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-pf" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">
+            PressGang CCMS DocBuilder
+        </a>
+    </div>
+    <ul class="nav navbar-nav navbar-utility">
+        <li id="rebuildTime" style="display:none">
+            <a id="rebuildTimeValue" href="#">Status</a>
+        </li>
+        <li>
+            <select id="locales" class="selectpicker" onchange="changeLang(this)" style="display: none;">
+                <option selected value="">English</option>
+                <option value="zh-Hans">Chinese (Simplified)</option>
+                <option value="zh-TW">Chinese (Taiwan)</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="it">Italian</option>
+                <option value="ja">Japanese</option>
+                <option value="ko">Korean</option>
+                <option value="pt-BR">Portuguese</option>
+                <option value="ru">Russian</option>
+                <option value="es">Spanish</option>
+            </select>
+        </li>
+    </ul>
+</nav>
+<div id="mainContainer" class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div>
+                <div class="text-center">
+                    <h1 class="collapse-title">
+                        <a id="filterTitle" data-toggle="collapse" data-target="#filter">Filter</a>
+                    </h1>
+                </div>
+
+                <div id="filter" class="panel-collapse">
+
+                    <div class="row">
+                        <label class="col-md-2 control-label" for="idFilter">Content Spec ID</label>
+
+                        <div class="col-md-4">
+                            <input id="idFilter" type="text" class="form-control input-md"
+                                   onkeyup="javascript:save_filter()">
+                        </div>
+
+                        <label class="col-md-2 control-label" for="productFilter">Product</label>
+
+                        <div class="col-md-4">
+                            <input id="productFilter" type="text" class="form-control input-md"
+                                   onkeyup="javascript:save_filter()">
+                        </div>
+                    </div>
+
+                    <div class="row voffset1">
+                        <label class="col-md-2 control-label" for="versionFilter">Version</label>
+
+                        <div class="col-md-4">
+                            <input id="versionFilter" type="text" class="form-control input-md"
+                                   onkeyup="javascript:save_filter()">
+                        </div>
+
+                        <label class="col-md-2 control-label" for="titleFilter">Title</label>
+
+                        <div class="col-md-4">
+                            <input id="titleFilter" type="text" class="form-control input-md"
+                                   onkeyup="javascript:save_filter()">
+                        </div>
+                    </div>
+
+                    <div class="row voffset1">
+                        <label class="col-md-2 control-label" for="topicIDFilter">Topic IDs</label>
+
+                        <div class="col-md-4">
+                            <input id="topicIDFilter" type="text" class="form-control input-md"
+                                   onkeyup="javascript:save_filter()">
+                        </div>
+
+                        <label class="col-md-2 control-label" for="sortBy">Sort By</label>
+
+                        <div class="col-md-4">
+                            <select id="sortBy" class="selectpicker" onchange="javascript:save_filter()">
+                                <option value="Title">Title</option>
+                                <option value="ID">ID</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="frozenAndObsoleteOptions" class="row voffset1" style="display:none">
+                        <label class="col-md-2 control-label" for="specFrozenFilter">Show Frozen</label>
+
+                        <div class="col-md-4">
+                            <input id="specFrozenFilter" type="checkbox" onchange="javascript:save_filter()">
+                        </div>
+
+                        <label class="col-md-2 control-label" for="specObsoleteFilter">Show Obsolete</label>
+
+                        <div class="col-md-4">
+                            <input id="specObsoleteFilter" type="checkbox" onchange="javascript:save_filter()">
+                        </div>
+                    </div>
+
+                    <div class="row text-center voffset1">
+                        <button id="clearFilter" class="btn btn-default" type="button"
+                                onclick="javascript:reset_filter(); return false;">Clear Filter
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <script>
+            jQuery("#filter").on('shown.bs.collapse', function() { localStorage['showfilter'] = true });
+            jQuery("#filter").on('hidden.bs.collapse', function() { localStorage['showfilter'] = false });
+
+            try {
+                jQuery("#filterTitle").addClass(getCollapseTitleStateClass(localStorage['showfilter']));
+                jQuery("#filter").addClass(getCollapseStateClass(localStorage['showfilter']));
+            } catch (e) {
+                // something other than a bool saved in localstorage
+            }
+        </script>
+    </div>
+    <div class="row panel-group">
+        <div class="col-lg-5 col-lg-offset-1">
+            <div class="row" id="booklistleft">
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="row" id="booklistright">
+            </div>
+        </div>
+    </div>
+    <div class="text-center" style="display:none" id="noBooks">
+        <h1>No books match the filter</h1>
+    </div>
+    <div class="text-center" style="display:none" id="noBooksAtAll">
+        <h1>There are no books available</h1>
+    </div>
+
+</div>
+</body>
+</html>

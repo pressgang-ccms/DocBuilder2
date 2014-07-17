@@ -72,6 +72,12 @@ var FROZEN_TAG = 669;
 var OBSOLETE_TAG = 652;
 
 /**
+ * A placeholder to be used when the details of the spec have not yet been downloaded
+ * @type {string}
+ */
+var TO_BE_SYNCED_LABEL = "To Be Synced";
+
+/**
  * true when the modified topics have been processed.
  * @type {boolean}
  */
@@ -92,10 +98,10 @@ var childCount = 0;
  */
 var thisBuildTime = null;
 /**
- * The index.html file build up with each run.
- * @type {string}
+ * The javascript file containing the info on specs
+ * @type {null}
  */
-var indexHtml = null;
+var data = null;
 /**
  * Keeps a copy of the version, title and product for each spec, and
  * updates the info as the specs are updated.
@@ -137,166 +143,19 @@ var topicRESTCallFailed = false;
  */
 function buildBooks(updatedSpecs, allSpecsArray) {
 
-	indexHtml = "<html>\n\
-		<head>\n\
-			<title>Docbuilder Index</title>\n\
-			<link rel=\"stylesheet\" href=\"index.css\"/>\n\
-			<script src=\"http://yui.yahooapis.com/3.10.0/build/yui/yui-min.js\"></script>\n\
-			<script src=\"http://code.jquery.com/jquery-2.0.3.min.js\"></script>\n\
-			<script src=\"functions-1.8.js\" ></script>\n\
-		</head>\n\
-		<body onload=\"setLangSelectLanguage()\">\n\
-			<div class=\"container\">\n\
-				<div class=\"langBar\">Language:\n\
-					<select id=\"lang\" class=\"langSelect\" onchange=\"changeLang(this)\">\n\
-                                                <option selected value=\"\">English</option>\n\
-                                                <option value=\"zh-Hans\">Chinese (Simplified)</option>\n\
-                                                <option value=\"zh-TW\">Chinese (Taiwan)</option>\n\
-                                                <option value=\"fr\">French</option>\n\
-                                                <option value=\"de\">German</option>\n\
-                                                <option value=\"it\">Italian</option>\n\
-                                                <option value=\"ja\">Japanese</option>\n\
-                                                <option value=\"ko\">Korean</option>\n\
-                                                <option value=\"pt-BR\">Portuguese</option>\n\
-                                                <option value=\"ru\">Russian</option>\n\
-                                                <option value=\"es\">Spanish</option>\n\
-					</select>\n\
-				</div>\n\
-				<div class=\"content\">\n\
-					<div>\n\
-						<img height=\"" + deployment.LOGO_HEIGHT + "\" src=\"" + deployment.LOGO + "\" width=\"" + deployment.LOGO_WIDTH + "\">\n\
-					</div>\n\
-					<div style=\"margin-top:1em\">\n\
-						<p>DocBuilder is a service that automatically rebuilds content specifications as they are created or edited.</p>\n\
-						<p>Each content spec has three links: a link to the compiled book itself, a link to the build log, and a link to the publican log.</p>\n\
-						<p>If a book could not be built, first check the build log. This log contains information that may indicate syntax errors in the content specification. You can also view this log to see when the document was last built.</p>\n\
-						<p>If the build log has no errors, check the publican log. This may indicate some syntax errors in the XML.</p>\n\
-						<p>The topics in each document include a \"Edit this topic\" link, which will take you to the topic in the CCMS.</p>\n\
-						<p>To view the latest changes to a document, simply refresh the page.</p><p>Estimated Rebuild Time: " + (diff == null ? "Unknown" : (diff/60).toFixed(1)) + " minutes</p>\n\
-					</div>\n\
-					<div></div>\n\
-					<div>\n\
-						<table>\n\
-							<tr>\n\
-								<td>\n\
-									ID Filter\n\
-								</td>\n\
-								<td>\n\
-									<input type=\"text\" id=\"idFilter\" onkeyup=\"save_filter()\">\n\
-								</td>\n\
-								<td>\n\
-									Product Filter\n\
-								</td>\n\
-								<td>\n\
-									<input type=\"text\" id=\"productFilter\" onkeyup=\"save_filter()\">\n\
-								</td>\n\
-								<td rowspan=\"2\">\n\
-									<button onclick=\"reset_filter()\">Reset</button>\n\
-								</td>\n\
-							</tr>\n\
-							<tr>\n\
-								<td>\n\
-									Version Filter\n\
-								</td>\n\
-								<td>\n\
-									<input type=\"text\" id=\"versionFilter\" onkeyup=\"save_filter()\">\n\
-								</td>\n\
-								<td>\n\
-									Title Filter\n\
-								</td>\n\
-								<td>\n\
-									<input type=\"text\" id=\"titleFilter\" onkeyup=\"save_filter()\">\n\
-								</td>\n\
-							</tr>\n\
-							<tr>\n\
-								<td>\n\
-									Topic ID Filter\n\
-								</td>\n\
-								<td>\n\
-									<input type=\"text\" id=\"topicIDFilter\" onkeyup=\"save_filter()\">\n\
-								</td>\n\
-								<td>\n\
-								    Show Obsolete Specs\n\
-								</td>\n\
-								<td>\n\
-								    <input type=\"checkbox\" id=\"specObsoleteFilter\" onchange=\"save_filter()\">\n\
-								</td>\n\
-							</tr>\n\
-							<tr>\n\
-								<td>\n\
-									Show Frozen Specs\n\
-								</td>\n\
-								<td>\n\
-                                    <input type=\"checkbox\" id=\"specFrozenFilter\" onchange=\"save_filter()\">\n\
-								</td>\n\
-								<td>\n\
-								</td>\n\
-								<td>\n\
-								</td>\n\
-							</tr>\n\
-						</table> \n\
-						</div>\n\
-						<div></div>\n\
-					</div>\n\
-					</div>\n\
-					<script>\n\
-						// build the array that holds the details of the books \n\
-						var data = [\n";
+    data = "var buildTime = " + diff + ";\n\
+        var OPEN_LINK_ID_REPLACE = '" + deployment.OPEN_LINK_ID_REPLACE + "';\n\
+        var OPEN_LINK_LOCALE_REPLACE = '" + deployment.OPEN_LINK_LOCALE_REPLACE + "';\n\
+        var TO_BE_SYNCED_LABEL = '" + TO_BE_SYNCED_LABEL + "';\n\
+        var EDIT_LINK = '" + deployment.EDIT_LINK + "';\n\
+        var BASE_SERVER = '" + deployment.BASE_SERVER + "';\n\
+        var OPEN_LINK = '" + deployment.OPEN_LINK + "';\n\
+        var UI_URL = '" + deployment.UI_URL + "';\n\
+        var data = [";
 
 	var finishProcessing = function() {
-		indexHtml += " ];\n\
-					rebuildTimeout = null;\n\
-					productFilter.value = localStorage[\"productFilter\"] || \"\"; \n\
-					titleFilter.value = localStorage[\"titleFilter\"] || \"\"; \n\
-					versionFilter.value = localStorage[\"versionFilter\"] || \"\"; \n\
-					idFilter.value = localStorage[\"idFilter\"] || \"\"; \n\
-					topicIDFilter.value = localStorage[\"topicIDFilter\"] || \"\"; \n\
-					specObsoleteFilter.checked = localStorage[\"specObsoleteFilter\"] && localStorage[\"specObsoleteFilter\"].length != 0 \n\
-                        ? (localStorage[\"specObsoleteFilter\"].toLowerCase() == true.toString().toLowerCase() ? true : false) : false; \n\
-                    specFrozenFilter.checked = localStorage[\"specFrozenFilter\"] && localStorage[\"specFrozenFilter\"].length != 0 \n\
-                        ? (localStorage[\"specFrozenFilter\"].toLowerCase() == true.toString().toLowerCase() ? true : false) : false; \n\
-					save_filter = function() {\n\
-						localStorage[\"productFilter\"] = productFilter.value;\n\
-						localStorage[\"titleFilter\"] = titleFilter.value;\n\
-						localStorage[\"versionFilter\"] = versionFilter.value;\n\
-						localStorage[\"idFilter\"] = idFilter.value;\n\
-						localStorage[\"topicIDFilter\"] = topicIDFilter.value;\n\
-						localStorage[\"specObsoleteFilter\"] = specObsoleteFilter.checked.toString();\n\
-						localStorage[\"specFrozenFilter\"] = specFrozenFilter.checked.toString();\n\
-						if (rebuildTimeout) {\n\
-							window.clearTimeout(rebuildTimeout);\n\
-							rebuildTimeout = null;\n\
-						}\n\
-						rebuildTimeout = setTimeout(function(){\n\
-							build_table(data);\n\
-							rebuildTimeout = null;\n\
-						},1000);\n\
-					}\n\
-					reset_filter = function() {\n\
-						localStorage[\"productFilter\"] = \"\";\n\
-						localStorage[\"titleFilter\"] = \"\";\n\
-						localStorage[\"versionFilter\"] = \"\";\n\
-						localStorage[\"idFilter\"] = \"\";\n\
-						localStorage[\"topicIDFilter\"] = \"\";\n\
-						localStorage[\"specObsoleteFilter\"] = \"\";\n\
-						localStorage[\"specFrozenFilter\"] = \"\";\n\
-						productFilter.value = \"\";\n\
-						titleFilter.value = \"\";\n\
-						versionFilter.value = \"\";\n\
-						idFilter.value = \"\";\n\
-						topicIDFilter.value = \"\";\n\
-						specObsoleteFilter.checked = false;\n\
-						specFrozenFilter.checked = false;\n\
-						if (rebuildTimeout) {\n\
-							window.clearTimeout(rebuildTimeout);\n\
-							rebuildTimeout = null;\n\
-						}\n\
-						build_table(data);\n\
-					}\n\
-					build_table(data);\n\
-				</script>\n\
-			</body>\n\
-		</html>";
+        data += "];\n\
+            jQuery(function() {filterData(data)});";
 
 		processSpecs(updatedSpecs);
 	}
@@ -325,9 +184,9 @@ function buildBooks(updatedSpecs, allSpecsArray) {
 				}
 				:
 				{
-					title: "To Be Synced",
-					version: "To Be Synced",
-					product: "To Be Synced",
+					title: TO_BE_SYNCED_LABEL,
+					version: TO_BE_SYNCED_LABEL,
+					product: TO_BE_SYNCED_LABEL,
                     tags: []
 				};
 
@@ -361,7 +220,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
                     freezeElement = "'<button onclick=\"javascript:freezeSpec(\\'" + FIXED_UI_URL + "\\', " + specId + ")\">Freeze</button>'";
                 }
 
-				indexHtml += "{\n\
+                data += "{\n\
 					idRaw: " + specId + ",\n\
 					id: '<a href=\"" + deployment.EDIT_LINK.replace(deployment.OPEN_LINK_ID_REPLACE, specId) + "\" target=\"_top\">" + specId + "</a>',\n\
 					versionRaw: '" + fixedSpecDetails.version + "',\n\
@@ -422,25 +281,25 @@ function processSpecs(updatedSpecs) {
                                     var BASE_SERVER = '" + deployment.BASE_SERVER + "';\n\
                                     var SPEC_ID = " + id + ";\n\
                                 </script>\n\
-                                <script type='application/javascript' src='/javascript/jquery-2.0.3.min.js'></script>\n\
-                                <script type='application/javascript' src='/javascript/moment.min.js'></script>\n\
-                                <script type='application/javascript' src='/javascript/bootstrap.min.js'></script>\n\
-                                <script type='application/javascript' src='/javascript/bootbox.min.js'></script>\n\
-                                <script type='application/javascript' src='/javascript/raphael-min.js'></script>\n\
-                                <script type='application/javascript' src='/javascript/pie.js'></script>\n\
-                                <script type='application/javascript' src='/javascript/typo_proto.js'></script>\n\
-                                <script type='application/javascript' src='/javascript/typo.js'></script>\n\
-                                <script type='application/javascript' src='/javascript/async.js'></script>\n\
-                                <script type='application/javascript' src='/javascript/overlay.js'></script>\n\
-                                <script type='application/javascript' src='/javascript/pressgang_websites.js'></script>\n\
+                                <script type='application/javascript' src='/lib/jquery/jquery-2.1.1.min.js'></script>\n\
+                                <script type='application/javascript' src='/lib/moment/moment-with-langs.js'></script>\n\
+                                <script type='application/javascript' src='/lib/bootstrap/js/bootstrap.min.js'></script>\n\
+                                <script type='application/javascript' src='/lib/bootbox/bootbox.min.js'></script>\n\
+                                <script type='application/javascript' src='/lib/raphael/raphael-min.js'></script>\n\
+                                <script type='application/javascript' src='/lib/raphael/pie.js'></script>\n\
+                                <script type='application/javascript' src='/lib/typo/typo_proto.js'></script>\n\
+                                <script type='application/javascript' src='/lib/typo/typo.js'></script>\n\
+                                <script type='application/javascript' src='/lib/async/async.js'></script>\n\
+                                <script type='application/javascript' src='/lib/docbuilder-overlay/javascript/overlay.js'></script>\n\
+                                <script type='application/javascript' src='/lib/docbuilder-overlay/javascript/pressgang_websites.js'></script>\n\
                                 <script type='application/javascript' src='http://docbuilder.usersys.redhat.com/13968/html/files/pressgang_website.js' async></script>\n\
                                 </body>\n\
 								</html>";
 
 					var styleFiles = "<head>\n\
-						<link href='/css/pressgang.css' rel='stylesheet'>\n\
-						<link href='/css/style.css' rel='stylesheet'>\n\
-                        <link href='/css/bootstrap.min.css' rel='stylesheet'>\n";
+						<link href='/lib/docbuilder-overlay/css/pressgang.css' rel='stylesheet'>\n\
+						<link href='/lib/docbuilder-overlay/css/style.css' rel='stylesheet'>\n\
+                        <link href='/lib/bootstrap/css/bootstrap.min.css' rel='stylesheet'>\n";
 
                     // Append the custom javascript files to the index.html
                     try {
@@ -765,7 +624,6 @@ function restartAfterFailure() {
 	var runTimeSeconds = moment().unix() - thisBuildTime.unix();
 	var delay = (DELAY_WHEN_NO_UPDATES / 1000) - runTimeSeconds;
 
-    indexHtml = null;
     thisBuildTime = null;
 
 	if (delay <= 0) {
@@ -787,18 +645,18 @@ function restartAfterFailure() {
 function getListOfSpecsToBuild() {
 	var lastRun = null;
 
-	if (indexHtml != null) {
-		/*
-		 	Save the index.html file
-		 */
-		try {
-			fs.writeFileSync(deployment.INDEX_HTML, indexHtml);
-		} catch (ex) {
-			console.log("Could not save " + deployment.INDEX_HTML);
-		}
+    if (data != null) {
+        /*
+         Save the index.html file
+         */
+        try {
+            fs.writeFileSync(deployment.DATA_JS, data);
+        } catch (ex) {
+            console.log("Could not save " + deployment.DATA_JS);
+        }
 
-		indexHtml = null;
-	}
+        data = null;
+    }
 
 	if (thisBuildTime != null) {
 		lastRun = thisBuildTime;

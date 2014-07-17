@@ -1,0 +1,67 @@
+.voffset  { margin-top: 2px; }
+.voffset1 { margin-top: 5px; }
+.voffset2 { margin-top: 10px; }
+.voffset3 { margin-top: 15px; }
+.voffset4 { margin-top: 30px; }
+.voffset5 { margin-top: 40px; }
+.voffset6 { margin-top: 60px; }
+.voffset7 { margin-top: 80px; }
+.voffset8 { margin-top: 100px; }
+.voffset9 { margin-top: 150px; }
+
+.bookTitle {
+    display: inline-block;
+}
+
+.bookStatus {
+    margin-left: 10px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.bookMenu {
+    vertical-align: text-bottom;
+}
+
+.navbar-brand {
+    background: url(../images/pressgang_icon_32px.png) no-repeat 20px 50%;
+    padding-left: 60px !important;
+}
+
+.panel-group .book-list-title {
+    font-weight: 500;
+    line-height: 1;
+    cursor: pointer;
+}
+.collapse-title > a {
+    color: #4d5258;
+    font-weight: 600;
+}
+.collapse-title > a:before {
+    content: "\f107";
+    font-family: "FontAwesome";
+    margin-right: 5px;
+    vertical-align: 0;
+}
+.collapse-title > a:focus {
+    outline: none;
+    text-decoration: none;
+}
+.collapse-title > a:hover {
+    text-decoration: none;
+}
+.collapse-title > a.collapsed:before {
+    content: "\f105";
+    margin-left: 4px;
+    margin-right: 7px;
+}
+
+.navbar-pf .navbar-utility > li > .bootstrap-select {
+    margin: 5px 10px;
+}
+
+.navbar-pf .navbar-utility > li > a
+{
+    height: 36px;
+    padding-top: 12px;
+}

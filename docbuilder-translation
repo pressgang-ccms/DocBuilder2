@@ -12,8 +12,8 @@
 DOCBUILDER_DATA_DIR=/home/pressgang/.docbuilder
 # The script to call to actually build the books
 BOOK_BUILD_SCRIPT=/home/pressgang/DocBuilder2/build_books.sh
-# The index file that is built up with each locale
-INDEX_TMP_FILE=/tmp/index-translation.html
+# The javascript file that is built up with each locale
+JS_TMP_FILE=/tmp/data.js
 # Locale build information directory
 LANG_DATA_DIR=/home/pressgang/translations/
 # Languages to build in
@@ -48,82 +48,14 @@ do
   echo "Starting to build ${BUILD_LANG} books."
 
 	# Dump the HTML header boilderplate	
-	echo "<html>
-    <head>
-        <title>Docbuilder ${BUILD_LANG} Index</title>
-        <link rel=\"stylesheet\" href=\"../index.css\"/>
-        <script src=\"http://yui.yahooapis.com/3.10.0/build/yui/yui-min.js\"></script>
-        <script src=\"../functions-1.8.js\" ></script>
-    </head>
-    <body onload=\"setLangSelectLanguage()\">
-        <div class=\"container\">
-            <div class=\"langBar\">Language:
-                <select id=\"lang\" class=\"langSelect\" onchange=\"changeLang(this)\">
-                    <option selected value=\"\">English</option>
-                    <option value=\"zh-Hans\">Chinese (Simplified)</option>
-                    <option value=\"zh-TW\">Chinese (Taiwan)</option>
-                    <option value=\"fr\">French</option>
-                    <option value=\"de\">German</option>
-                    <option value=\"it\">Italian</option>
-                    <option value=\"ja\">Japanese</option>
-                    <option value=\"ko\">Korean</option>
-                    <option value=\"pt-BR\">Portuguese</option>
-                    <option value=\"ru\">Russian</option>
-                    <option value=\"es\">Spanish</option>
-                </select>
-            </div>
-            <div class=\"content\">
-                <div>
-                    <img height=\"87\" src=\"../pg.png\" width=\"879\">
-                </div>
-                <div style=\"margin-top:1em\">
-                    <p>DocBuilder is a service that automatically rebuilds content specifications as they are created or edited.</p>
-                    <p>Each content spec has three links: a link to the compiled book itself, a link to the build log, and a link to the publican log.</p>
-                    <p>If a book could not be built, first check the build log. This log contains information that may indicate syntax errors in the content specification. You can also view this log to see when the document was last built.</p>
-                    <p>If the build log has no errors, check the publican log. This may indicate some syntax errors in the XML.</p><p>The topics in each document include a \"Edit this topic\" link, which will take you to the topic in Zanata.</p>
-                    <p>To view the latest changes to a document, simply refresh the page.</p>
-                </div>
-                <div></div>
-                <div>
-                    <table>
-                        <tr>
-                            <td>
-                                ID Filter
-                            </td>
-                            <td>
-                                <input type=\"text\" id=\"idFilter\" onkeyup=\"save_filter()\">
-                            </td>
-                            <td>
-                                Product Filter
-                            </td>
-                            <td>
-                                <input type=\"text\" id=\"productFilter\" onkeyup=\"save_filter()\">
-                            </td>
-                            <td rowspan=\"2\">
-                                <button onclick=\"reset_filter()\">Reset</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Version Filter
-                            </td>
-                            <td>
-                                <input type=\"text\" id=\"versionFilter\" onkeyup=\"save_filter()\">
-                            </td>
-                            <td>
-                                Title Filter
-                            </td>
-                            <td>
-                                <input type=\"text\" id=\"titleFilter\" onkeyup=\"save_filter()\">
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div></div>
-            </div>
-        </div>
-        <script>
-            var data = [" > ${INDEX_TMP_FILE}
+    echo "var TO_BE_SYNCED_LABEL = 'To Be Synced'; " > ${JS_TMP_FILE}
+    echo "var OPEN_LINK_ID_REPLACE = '\${ID}';" >> ${JS_TMP_FILE}
+    echo "var OPEN_LINK_LOCALE_REPLACE = '\${LOCALE}';" >> ${JS_TMP_FILE}
+    echo "var OPEN_LINK = 'http://docbuilder.usersys.redhat.com/\${LOCALE}/\${ID}';" >> ${JS_TMP_FILE}
+    echo "var UI_URL = 'pressgang-ccms-ui-next';" >> ${JS_TMP_FILE}
+    echo "var EDIT_LINK = 'http://virt-ecs-01.lab.eng.bne.redhat.com:8080/pressgang-ccms-ui-next/#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=\${ID}';" >> ${JS_TMP_FILE}
+    echo "var BASE_SERVER = 'virt-ecs-01.lab.eng.bne.redhat.com:8080';" >> ${JS_TMP_FILE}
+	echo "var data = [" >> ${JS_TMP_FILE}
 
   # Read in each line of the build language file to get the Content Spec IDs to build
   while read CS_ID
@@ -190,7 +122,7 @@ do
 	  LAST_COMPILE=$(head -n 1 ${CS_FILENAME})
 	
 	  # Add an entry to the index page
-	  echo "{ idRaw: ${CS_ID}, id: '<a href=\"${CS_ID}\" target=\"_top\">${CS_ID}</a>', versionRaw: '${VERSION}', version: '<a href=\"${CS_ID}\"  target=\"_top\">${VERSION}</a>', productRaw: '${PRODUCT}', product: '<a href=\"${CS_ID}\" target=\"_top\">${PRODUCT}</a>', titleRaw: '${TITLE}', title: '<a href=\"${CS_ID}\"  target=\"_top\">${TITLE}</a>', pdfLink: '<a href=\"${CS_ID}/${ESCAPED_PRODUCT}-${VERSION}-${ESCAPED_TITLE}-${PUBLICAN_LANG}.pdf\">PDF</a>', buildlog: '<a href=\"${CS_ID}/build.log\"><button>Build Log</button></a>' , publicanlog: '<a href=\"${CS_ID}/publican.log\"><button>Publican Log</button></a>', lastcompile: '${LAST_COMPILE}'}," >> ${INDEX_TMP_FILE}
+	  echo "{ idRaw: ${CS_ID}, id: '<a href=\"${CS_ID}\" target=\"_top\">${CS_ID}</a>', versionRaw: '${VERSION}', version: '<a href=\"${CS_ID}\"  target=\"_top\">${VERSION}</a>', productRaw: '${PRODUCT}', product: '<a href=\"${CS_ID}\" target=\"_top\">${PRODUCT}</a>', titleRaw: '${TITLE}', title: '<a href=\"${CS_ID}\"  target=\"_top\">${TITLE}</a>', pdfLink: '<a href=\"${CS_ID}/${ESCAPED_PRODUCT}-${VERSION}-${ESCAPED_TITLE}-${PUBLICAN_LANG}.pdf\">View PDF</a>', buildlog: '<a href=\"${CS_ID}/build.log\"><button>Build Log</button></a>' , publicanlog: '<a href=\"${CS_ID}/publican.log\"><button>Publican Log</button></a>', lastcompile: '${LAST_COMPILE}'}," >> ${JS_TMP_FILE}
 	
 	  # Build the book
 	  echo Recompiling ${CS_ID}
@@ -202,54 +134,7 @@ do
   done < $BUILD_LANG_FILE
 	
   # Finish the index page, and copy to the www dir
-  echo " ];
-            rebuildTimeout = null;
-
-            productFilter.value = localStorage[\"productFilter\"] || \"\";
-            titleFilter.value = localStorage[\"titleFilter\"] || \"\";
-            versionFilter.value = localStorage[\"versionFilter\"] || \"\";
-            idFilter.value = localStorage[\"idFilter\"] || \"\";
-
-            save_filter = function() {
-                localStorage[\"productFilter\"] = productFilter.value;
-                localStorage[\"titleFilter\"] = titleFilter.value;
-                localStorage[\"versionFilter\"] = versionFilter.value;
-                localStorage[\"idFilter\"] = idFilter.value;
-
-                if (rebuildTimeout) {
-                    window.clearTimeout(rebuildTimeout);
-                    rebuildTimeout = null;
-                }
-
-                rebuildTimeout = setTimeout(function(){
-                    build_table_with_pdfs(data);
-                    rebuildTimeout = null;
-                    },1000);
-            }
-
-            reset_filter = function() {
-                localStorage[\"productFilter\"] = \"\";
-                localStorage[\"titleFilter\"] = \"\";
-                localStorage[\"versionFilter\"] = \"\";
-                localStorage[\"idFilter\"] = \"\";
-
-                productFilter.value = \"\";
-                titleFilter.value = \"\";
-                versionFilter.value = \"\";
-                idFilter.value = \"\";
-
-                if (rebuildTimeout) {
-                    window.clearTimeout(rebuildTimeout);
-                    rebuildTimeout = null;
-                }
-
-                build_table_with_pdfs(data);
-            }
-
-            build_table_with_pdfs(data)
-        </script>
-    </body>
-</html>" >> ${INDEX_TMP_FILE}
+  echo " ]; jQuery(function() {filterData(data)});" >> ${JS_TMP_FILE}
 
   # Create the html language directory if it does not exist
   if [ ! -d /var/www/html/${BUILD_LANG} ]
@@ -258,9 +143,9 @@ do
 	  mkdir -p /var/www/html/${BUILD_LANG}
   fi
 
-  rm -f /var/www/html/${BUILD_LANG}/index.html.old
-  mv /var/www/html/${BUILD_LANG}/index.html /var/www/html/${BUILD_LANG}/index.html.old
-  cp  ${INDEX_TMP_FILE} /var/www/html/${BUILD_LANG}/index.html
+  rm -f /var/www/html/${BUILD_LANG}/data.js.old
+  mv /var/www/html/${BUILD_LANG}/data.js /var/www/html/${BUILD_LANG}/data.js.old
+  cp  ${JS_TMP_FILE} /var/www/html/${BUILD_LANG}/data.js
 done
 
 # Sleep until the builds have finished

@@ -9,18 +9,6 @@
  */
 module.exports = {
     /**
-     * The image that is used at the top of the screen
-     */
-    LOGO: "pg-next.png",
-    /**
-     * The logo width
-     */
-    LOGO_WIDTH: 879,
-    /**
-     * The logo height
-     */
-    LOGO_HEIGHT: 87,
-    /**
      * The REST server hostname and port
      * @type {string}
      */
@@ -37,6 +25,10 @@ module.exports = {
      * The marker in the OPEN_LINK string that is to be replaced by the spec ID
      */
     OPEN_LINK_ID_REPLACE: "${ID}",
+    /**
+     * The marker in the OPEN_LINK string that is to be replaced by the spec ID
+     */
+    OPEN_LINK_LOCALE_REPLACE: "${LOCALE}",
     /**
      * Where the links to open the books should go. Replace ${ID} with the spec ID
      */
@@ -56,10 +48,10 @@ module.exports = {
      */
     APACHE_HTML_DIR: "/var/www/html",
     /**
-     * The index file for the DocBuilder
+     * The data javascript file for the DocBuilder
      * @type {string}
      */
-    INDEX_HTML: "/var/www/html/index.html",
+    DATA_JS: "/var/www/html/data.js",
     /**
      * The maximum number of child processes to run at any given time.
      * @type {number}
