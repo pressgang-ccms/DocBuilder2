@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#  Copyright 2011-2014 Red Hat
+#  Copyright 2011-2014 Red Hat, Inc
 #
 #  This file is part of PressGang CCMS.
 #
