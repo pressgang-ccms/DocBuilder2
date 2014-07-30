@@ -23,6 +23,7 @@
     <link href="lib/patternfly/css/patternfly.css" rel="stylesheet" media="screen, print">
     <link href="lib/silviomoreto-bootstrap-select/bootstrap-select.min.css" rel="stylesheet" media="screen, print">
     <link href="lib/docbuilder/css/docbuilder.css" rel="stylesheet">
+    <script src="config.js"></script>
     <script src="lib/moment/moment-with-langs.js"></script>
     <script src="lib/underscore/underscore-min.js"></script>
     <script src="lib/jquery/jquery-2.1.1.min.js"></script>
@@ -39,12 +40,13 @@
          */
         jQuery(function () {
             if (urlParams[LOCALE_URL_PARAM_KEY]) {
-                jQuery.getScript(urlParams[LOCALE_URL_PARAM_KEY] + "/data.js").fail(function() {jQuery(function() {filterData()});});
+                jQuery.getScript(urlParams[LOCALE_URL_PARAM_KEY] + "/data.js").done(function() {filterData(data);}).fail(function() {filterData();});
             } else {
-                jQuery.getScript("data.js").fail(function() {jQuery(function() {filterData()});});;
+                jQuery.getScript("data.js").done(function() {filterData(data);}).fail(function() {filterData();});
             }
             setSelectedLang();
             jQuery('.selectpicker').selectpicker();
+            initFilter();
         });
     </script>
 </head>

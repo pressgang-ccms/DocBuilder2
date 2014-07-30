@@ -18,14 +18,14 @@
  */
 
 
-var deployment = require("./deployment_details.js");
+var deployment = require("./src/config.js");
 var $ = require("jquery");
 
 /**
  * The REST server that the DocBuilder will connect to.
  * @type {string}
  */
-var REST_SERVER = "http://" + deployment.BASE_SERVER + "/pressgang-ccms/rest";
+var REST_SERVER = deployment.REST_SERVER + "/pressgang-ccms/rest";
 
 /**
  * The id of the extended property that defines valid dictionary words

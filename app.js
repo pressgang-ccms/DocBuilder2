@@ -1,82 +1,58 @@
-var deployment = require("./deployment_details.js");
+/*
+ * Copyright 2011-2014 Red Hat, Inc.
+ *
+ * This file is part of PressGang CCMS.
+ *
+ * PressGang CCMS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PressGang CCMS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with PressGang CCMS. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+var constants = require('./src/constants.js');
+var config = require("./src/config.js");
+var buildUtils = require('./src/utils.js');
+
 var fs = require('fs');
 var set = require('collections/sorted-set.js');
 var iterator = require("collections/iterator");
-var $ = require("jquery");
+var jQuery = require("jquery");
 var moment = require('moment');
 var exec = require('child_process').exec;
+var util = require('util');
 
 /*
-	This application is designed to be asynchronous. It performs the following steps:
-	1.  Get all the topics and specs that have been modified since the supplied date. This involves two asynchronous
-		REST calls.
-	2. 	Rebuild each spec (through an external script, but this may be merged into this code in future). We will launch
- 		MAX_PROCESSES asynchronous scripts to run csprocessor/publican to build the spec.
-	3. 	Save the index.html page and start again.
-
-	In the background we are also pulling down the details of specs that are new or modified
-	since the last run (so for the first run all specs will be new). This may mean that the
-	index.html page has some "To be synced" info for the title, product and version, but the benefit
-	is that we are not waiting for this info before rebuilding the new specs.
-
-	And once the first run through is done, it is unlikely that the product, version or title will change,
-	so there is little downside to having this information being slightly out of sync.
+ * This application is designed to be asynchronous. It performs the following steps:
+ * 1. Get all the topics and specs that have been modified since the supplied date. This involves two asynchronous
+ *    REST calls.
+ * 2. Rebuild each spec (through an external script, but this may be merged into this code in future). We will launch
+ *    MAX_PROCESSES asynchronous scripts to run csprocessor/publican to build the spec.
+ * 3. Save the index.html page and start again.
+ *
+ * In the background we are also pulling down the details of specs that are new or modified
+ * since the last run (so for the first run all specs will be new). This may mean that the
+ * index.html page has some "To be synced" info for the title, product and version, but the benefit
+ * is that we are not waiting for this info before rebuilding the new specs.
+ *
+ * And once the first run through is done, it is unlikely that the product, version or title will change,
+ * so there is little downside to having this information being slightly out of sync.
  */
 
 
 /**
- * The REST server that the DocBuilder will connect to.
- * @type {string}
+ * This value holds the pre loaded server entity configuration
+ *
+ * @type {object}
  */
-var REST_SERVER = "http://" + deployment.BASE_SERVER + "/pressgang-ccms/rest";
-
-/**
- * The REST server that the DocBuilder will connect to.
- * @type {string}
- */
-var FIXED_UI_URL = "http://" + deployment.BASE_SERVER + "/" + deployment.UI_URL + "#ContentSpecFilteredResultsAndContentSpecView";
-
-/**
- * The format of the date to be supplied to the REST query.
- * @type {string}
- */
-var DATE_FORMAT = "YYYY-MM-DDTHH:mm:ss.000Z";
-/**
- * The directory that holds the Publican ZIP files
- */
-var PUBLICAN_BOOK_ZIPS= "/books";
-/**
- *	The complete directory that holds the Publican ZIP files
- */
-var PUBLICAN_BOOK_ZIPS_COMPLETE=deployment.APACHE_HTML_DIR + PUBLICAN_BOOK_ZIPS;
-/**
- * The script used to build the book
- * @type {string}
- */
-var BUILD_BOOK_SCRIPT = __dirname + "/build_original_books.sh";
-/**
- * The amount of time to wait, in milliseconds, before querying the server when no
- * updates were found.
- * @type {number}
- */
-var DELAY_WHEN_NO_UPDATES = 60000;
-/**
- * The frozen tag id
- * @type {number}
- */
-var FROZEN_TAG = 669;
-/**
- * The obsolete tag id
- * @type {number}
- */
-var OBSOLETE_TAG = 652;
-
-/**
- * A placeholder to be used when the details of the spec have not yet been downloaded
- * @type {string}
- */
-var TO_BE_SYNCED_LABEL = "To Be Synced";
-
+var serverEntities;
 /**
  * true when the modified topics have been processed.
  * @type {boolean}
@@ -99,7 +75,7 @@ var childCount = 0;
 var thisBuildTime = null;
 /**
  * The javascript file containing the info on specs
- * @type {null}
+ * @type {string}
  */
 var data = null;
 /**
@@ -110,7 +86,7 @@ var data = null;
 var specDetailsCache = {};
 /**
  * Keeps a list of the specs whose details have to be updated.
- * @type {Array}
+ * @type {SortedSet}
  */
 var pendingSpecCacheUpdates = new set([]);
 /**
@@ -135,115 +111,62 @@ var contentSpecRESTCallFailed = false;
 var topicRESTCallFailed = false;
 
 
-
 /**
  * Called when the modified topics and specs have been found. Once both
  * functions have called this function, the process of actually building the
  * books will start.
  */
 function buildBooks(updatedSpecs, allSpecsArray) {
+    // Build the initial data.js file
+    data = buildUtils.buildBaseDataJs(diff);
 
-    data = "var buildTime = " + diff + ";\n\
-        var OPEN_LINK_ID_REPLACE = '" + deployment.OPEN_LINK_ID_REPLACE + "';\n\
-        var OPEN_LINK_LOCALE_REPLACE = '" + deployment.OPEN_LINK_LOCALE_REPLACE + "';\n\
-        var TO_BE_SYNCED_LABEL = '" + TO_BE_SYNCED_LABEL + "';\n\
-        var EDIT_LINK = '" + deployment.EDIT_LINK + "';\n\
-        var BASE_SERVER = '" + deployment.BASE_SERVER + "';\n\
-        var OPEN_LINK = '" + deployment.OPEN_LINK + "';\n\
-        var UI_URL = '" + deployment.UI_URL + "';\n\
-        var data = [";
+    var finishProcessing = function() {
+        data += "];";
 
-	var finishProcessing = function() {
-        data += "];\n\
-            jQuery(function() {filterData(data)});";
+        processSpecs(updatedSpecs);
+    }
 
-		processSpecs(updatedSpecs);
-	}
+    var processSpecDetails = function(processIndex) {
+        if (processIndex > allSpecsArray.length) {
+            util.error("Error: processIndex > allSpecsArray.length");
+            return;
+        }
 
-	var processSpecDetails = function(processIndex) {
-		if (processIndex > allSpecsArray.length) {
-			console.log("Error: processIndex > allSpecsArray.length");
-			return;
-		}
+        if (processIndex == allSpecsArray.length) {
+            finishProcessing();
+        } else {
+            var specId = allSpecsArray[processIndex];
 
-		if (processIndex == allSpecsArray.length) {
-			finishProcessing();
-		} else {
-			var specId = allSpecsArray[processIndex];
+            buildUtils.getLatestFile(constants.PUBLICAN_BOOK_ZIPS_COMPLETE, specId + ".*?\\.zip", function(error, date, filename) {
+                var zipFileName = filename == null ? "" : filename;
 
-			getLatestFile(PUBLICAN_BOOK_ZIPS_COMPLETE, specId + ".*?\\.zip", function(error, latest, latestFile) {
-
-				var latestFileFixed = latestFile == null ? "" :encodeURIComponent(latestFile);
-
-				var fixedSpecDetails = specDetailsCache[specId] ?
-				{
-					title: specDetailsCache[specId].title ? specDetailsCache[specId].title.replace(/'/g, "\\'") : "",
-					version: specDetailsCache[specId].version ? specDetailsCache[specId].version.replace(/'/g, "\\'") : "",
-					product: specDetailsCache[specId].product ? specDetailsCache[specId].product.replace(/'/g, "\\'") : "",
+                var fixedSpecDetails = specDetailsCache[specId] ?
+                {
+                    title: specDetailsCache[specId].title ? specDetailsCache[specId].title.replace(/'/g, "\\'") : "",
+                    version: specDetailsCache[specId].version ? specDetailsCache[specId].version.replace(/'/g, "\\'") : "",
+                    product: specDetailsCache[specId].product ? specDetailsCache[specId].product.replace(/'/g, "\\'") : "",
                     tags: specDetailsCache[specId].tags ? specDetailsCache[specId].tags : []
-				}
-				:
-				{
-					title: TO_BE_SYNCED_LABEL,
-					version: TO_BE_SYNCED_LABEL,
-					product: TO_BE_SYNCED_LABEL,
-                    tags: []
-				};
+                } : constants.DEFAULT_SPEC_DETAILS;
 
-                // select an image based on the presence of the index.html file
-                var image = fs.existsSync(deployment.APACHE_HTML_DIR + "/" + specId + "/index.html") ? 'url(/images/tick.png)' : 'url(/images/cross.png)';
-
-                var isFrozen = false;
-
-                for (var tagIndex = 0, tagCount = fixedSpecDetails.tags.length; tagIndex < tagCount; ++tagIndex ) {
-                    if (fixedSpecDetails.tags[tagIndex] == FROZEN_TAG) {
-                        isFrozen = true;
-                        break;
-                    }
+                /*
+                 We can use the file name of the publican zip file to determine when this book was last built. We do
+                 need to clean up the time stamp though so moment.js will recognise it.
+                 */
+                var lastCompileTime = null;
+                var lastBuildMatch = /\d+ ((\d{4}\-\d{2}\-\d{2}T)( )?(\d{1,2})(:\d{1,2}:\d{2}\.\d{3}\+\d{4})).zip/.exec(zipFileName);
+                if (lastBuildMatch) {
+                    lastCompileTime = lastBuildMatch[1];
                 }
 
-                var isObsolete = false;
+                // Build and add the entry for data,js
+                data += buildUtils.buildSpecDataJsEntry(specId, fixedSpecDetails, zipFileName, lastCompileTime);
 
-                for (var tagIndex = 0, tagCount = fixedSpecDetails.tags.length; tagIndex < tagCount; ++tagIndex ) {
-                    if (fixedSpecDetails.tags[tagIndex] == OBSOLETE_TAG) {
-                        isObsolete = true;
-                        break;
-                    }
-                }
+                processSpecDetails(++processIndex);
+            });
+        }
+    }
 
-                var obsoleteLabel = isObsolete ? "Unobsolete" : "Obsolete";
-
-                var freezeElement;
-                if (isFrozen) {
-                    freezeElement = "'<div>Frozen</div>'";
-                } else {
-                    freezeElement = "'<button onclick=\"javascript:freezeSpec(\\'" + FIXED_UI_URL + "\\', " + specId + ")\">Freeze</button>'";
-                }
-
-                data += "{\n\
-					idRaw: " + specId + ",\n\
-					id: '<a href=\"" + deployment.EDIT_LINK.replace(deployment.OPEN_LINK_ID_REPLACE, specId) + "\" target=\"_top\">" + specId + "</a>',\n\
-					versionRaw: '" + fixedSpecDetails.version + "',\n\
-					version: '<a href=\"" + deployment.OPEN_LINK.replace(deployment.OPEN_LINK_ID_REPLACE, specId) + "\" target=\"_top\">" + fixedSpecDetails.version + "</a>',\n\
-					productRaw: '" + fixedSpecDetails.product + "',\n\
-					product: '<a href=\"" + deployment.OPEN_LINK.replace(deployment.OPEN_LINK_ID_REPLACE, specId) + "\" target=\"_top\">" + fixedSpecDetails.product + "</a>',\n\
-					titleRaw: '" + fixedSpecDetails.title + "', title: '<a href=\"" + deployment.OPEN_LINK.replace(deployment.OPEN_LINK_ID_REPLACE, specId) + "\"  target=\"_top\">" + fixedSpecDetails.title + "</a>',\n\
-					remarks: '<a href=\"" + specId + "/remarks\"><button>With Remarks</button></a>',\n\
-					buildlog: '<a href=\"" + specId + "/build.log\"><button>Build Log</button></a>',\n\
-					publicanbook: '<a href=\"" + PUBLICAN_BOOK_ZIPS + "/" + latestFileFixed + "\"><button>Publican ZIP</button></a>',\n\
-					publicanlog: '<a href=\"" + specId + "/publican.log\"><button>Publican Log</button></a>',\n\
-					tags: [" + fixedSpecDetails.tags.toString() + "],\n\
-                    status: '<div style=\"width: 32px; height: 32px; background-image: " + image + "; background-size: cover\"/>',\n\
-                    freeze: " + freezeElement + ",\n\
-                    obsolete: '<button onclick=\"javascript:obsoleteSpec(" + isObsolete + ", \\'" + REST_SERVER + "\\', " + specId + ")\">" + obsoleteLabel + "</button>'\n\
-				},\n";
-
-				processSpecDetails(++processIndex);
-			});
-		}
-	}
-
-	processSpecDetails(0);
+    processSpecDetails(0);
 }
 
 /**
@@ -252,35 +175,32 @@ function buildBooks(updatedSpecs, allSpecsArray) {
  * @param updatedSpecs
  */
 function processSpecs(updatedSpecs) {
-	if (updatedSpecs.length == 0) {
-		/*
-			There were no specs to build, so start again after a short delay.
-		 */
-		console.log("Delaying for " + DELAY_WHEN_NO_UPDATES / 1000 + " seconds");
-		setTimeout((function() {
-			getListOfSpecsToBuild();
-		}), DELAY_WHEN_NO_UPDATES);
-	} else {
-		for (var processIndex = 0, processCount = updatedSpecs.length < (deployment.MAX_PROCESSES - childCount) ? updatedSpecs.length : (deployment.MAX_PROCESSES - childCount); processIndex < processCount; ++processIndex) {
-			var specId = updatedSpecs.pop();
-			++childCount;
+    if (updatedSpecs.length == 0) {
+        // There were no specs to build, so start again after a short delay
+        util.log("Delaying for " + config.DELAY_WHEN_NO_UPDATES + " seconds");
+        setTimeout((function() {
+            getListOfSpecsToBuild();
+        }), config.DELAY_WHEN_NO_UPDATES * 1000);
+    } else {
+        var processCount = updatedSpecs.length < (config.MAX_PROCESSES - childCount) ? updatedSpecs.length : (config.MAX_PROCESSES - childCount);
+        for (var processIndex = 0; processIndex < processCount; ++processIndex) {
+            var specId = updatedSpecs.pop();
+            ++childCount;
 
-			console.log("Starting build of modified book " + specId + " (" + updatedSpecs.length + " specs remain)");
+            util.log("Starting build of modified book " + specId + " (" + updatedSpecs.length + " specs remain)");
 
-			exec(BUILD_BOOK_SCRIPT + " " + specId + " " + specId, function(id) {
-				return function(error, stdout, stderr) {
-					--childCount;
+            exec(config.BUILD_BOOK_SCRIPT + " " + specId + " " + specId, function(id) {
+                return function(error, stdout, stderr) {
+                    --childCount;
 
-					console.log("Finished build of modified book " + id);
+                    util.log("Finished build of modified book " + id);
 
-                    /*
-                        Add the style, scripts and constants required to build the side menu
-                     */
+                    // Add the style, scripts and constants required to build the side menu
                     var scriptFiles = "\
                                 <script type='application/javascript'>\n\
-                                    var BASE_SERVER = '" + deployment.BASE_SERVER + "';\n\
                                     var SPEC_ID = " + id + ";\n\
                                 </script>\n\
+                                <script type='application/javascript' src='/config.js'></script>\n\
                                 <script type='application/javascript' src='/lib/jquery/jquery-2.1.1.min.js'></script>\n\
                                 <script type='application/javascript' src='/lib/moment/moment-with-langs.js'></script>\n\
                                 <script type='application/javascript' src='/lib/bootstrap/js/bootstrap.min.js'></script>\n\
@@ -292,61 +212,60 @@ function processSpecs(updatedSpecs) {
                                 <script type='application/javascript' src='/lib/async/async.js'></script>\n\
                                 <script type='application/javascript' src='/lib/docbuilder-overlay/javascript/overlay.js'></script>\n\
                                 <script type='application/javascript' src='/lib/docbuilder-overlay/javascript/pressgang_websites.js'></script>\n\
-                                <script type='application/javascript' src='http://docbuilder.usersys.redhat.com/13968/html/files/pressgang_website.js' async></script>\n\
+                                <script type='application/javascript' src='" + config.PRESSGANG_WEBSITE_JS_URL + "' async></script>\n\
                                 </body>\n\
-								</html>";
+                                </html>";
 
-					var styleFiles = "<head>\n\
-						<link href='/lib/docbuilder-overlay/css/pressgang.css' rel='stylesheet'>\n\
-						<link href='/lib/docbuilder-overlay/css/style.css' rel='stylesheet'>\n\
+                    var styleFiles = "<head>\n\
+                        <link href='/lib/docbuilder-overlay/css/pressgang.css' rel='stylesheet'>\n\
+                        <link href='/lib/docbuilder-overlay/css/style.css' rel='stylesheet'>\n\
                         <link href='/lib/bootstrap/css/bootstrap.min.css' rel='stylesheet'>\n";
 
                     // Append the custom javascript files to the index.html
                     try {
-                        var contents = fs.readFileSync(deployment.APACHE_HTML_DIR + "/" + id + "/index.html").toString();
+                        var contents = fs.readFileSync(config.HTML_DIR + "/" + id + "/index.html").toString();
                         contents = contents.replace("<head>", styleFiles);
-						contents = contents.replace("</body></html>", scriptFiles);
-                        fs.writeFileSync(deployment.APACHE_HTML_DIR + "/" + id + "/index.html", contents);
+                        contents = contents.replace("</body></html>", scriptFiles);
+                        fs.writeFileSync(config.HTML_DIR + "/" + id + "/index.html", contents);
                     } catch (ex) {
-                        console.log("Could not edit and save main HTML file");
+                        util.error("Could not edit and save main HTML file");
                     }
 
                     try {
-                        var contents = fs.readFileSync(deployment.APACHE_HTML_DIR + "/" + id + "/remarks/index.html").toString();
-						contents = contents.replace("<head>", styleFiles);
-						contents = contents.replace("</body></html>", scriptFiles);
-                        fs.writeFileSync(deployment.APACHE_HTML_DIR + "/" + id + "/remarks/index.html", contents);
+                        var contents = fs.readFileSync(config.HTML_DIR + "/" + id + "/remarks/index.html").toString();
+                        contents = contents.replace("<head>", styleFiles);
+                        contents = contents.replace("</body></html>", scriptFiles);
+                        fs.writeFileSync(config.HTML_DIR + "/" + id + "/remarks/index.html", contents);
                     } catch (ex) {
-                        console.log("Could not edit and save remarks HTML file");
+                        util.error("Could not edit and save remarks HTML file");
                     }
 
-					if (childCount < deployment.MAX_PROCESSES) {
+                    if (childCount < config.MAX_PROCESSES) {
 
-						if (updatedSpecs.length != 0) {
-							/*
-							 	If there are still specs to be processed, then process them
-							 */
-							processSpecs(updatedSpecs);
-						} else if (childCount == 0) {
-							var runTimeSeconds = moment().unix() - thisBuildTime.unix();
-							var delay = (DELAY_WHEN_NO_UPDATES / 1000) - runTimeSeconds;
+                        if (updatedSpecs.length != 0) {
+                            /*
+                                If there are still specs to be processed, then process them
+                             */
+                            processSpecs(updatedSpecs);
+                        } else if (childCount == 0) {
+                            var runTimeSeconds = moment().unix() - thisBuildTime.unix();
+                            var delay = config.DELAY_WHEN_NO_UPDATES - runTimeSeconds;
 
-							if (delay <= 0) {
-								getListOfSpecsToBuild();
-							} else {
+                            if (delay <= 0) {
+                                getListOfSpecsToBuild();
+                            } else {
+                                util.log("Delaying for " + delay + " seconds");
 
-								console.log("Delaying for " + delay + " seconds");
-
-								setTimeout((function() {
-									getListOfSpecsToBuild();
-								}), delay * 1000);
-							}
-						}
-					}
-				};
-			}(specId));
-		}
-	}
+                                setTimeout((function() {
+                                    getListOfSpecsToBuild();
+                                }), delay * 1000);
+                            }
+                        }
+                    }
+                };
+            }(specId));
+        }
+    }
 }
 
 /**
@@ -355,29 +274,29 @@ function processSpecs(updatedSpecs) {
  */
 function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
 
-	/**
-	 * If there is no lastRun then we know that all specs have to be rebuilt. This is accounted
-	 * for in the getSpecs() function. There is no need to get all the topics, so we just
-	 * call buildBooks() directly and exit.
-	 */
-	if (!lastRun) {
-		topicsProcessed = true;
-		routeAfterRESTCalls(updatedSpecs, allSpecsArray);
-		return;
-	}
+    /**
+     * If there is no lastRun then we know that all specs have to be rebuilt. This is accounted
+     * for in the getSpecs() function. There is no need to get all the topics, so we just
+     * call buildBooks() directly and exit.
+     */
+    if (!lastRun) {
+        topicsProcessed = true;
+        routeAfterRESTCalls(updatedSpecs, allSpecsArray);
+        return;
+    }
 
-	var topicQuery = REST_SERVER + "/1/topics/get/json/query;";
+    var topicQuery = config.REST_SERVER + "/1/topics/get/json/query;";
 
-	// If we have some last run info, use that to limit the search
-	topicQuery += "startEditDate=" + encodeURIComponent(encodeURIComponent(lastRun.format(DATE_FORMAT)));
+    // If we have some last run info, use that to limit the search
+    topicQuery += "startEditDate=" + encodeURIComponent(encodeURIComponent(lastRun.format(constants.DATE_FORMAT)));
     topicQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%7D%5D%7D%0A%0A";
 
-	//console.log("Getting modified topics from URL " + topicQuery);
-	console.log("Finding modified topics");
+    //util.log("Getting modified topics from URL " + topicQuery);
+    util.log("Finding modified topics");
 
     var contentSpecsForModifiedTopics = function(lastRun, updatedSpecs, allSpecsArray, modifiedTopics) {
         // Get the csnodes for the topics to see if the are frozen
-        var csNodeQuery = REST_SERVER + "/1/contentspecnodes/get/json/query;";
+        var csNodeQuery = config.REST_SERVER + "/1/contentspecnodes/get/json/query;";
 
         // Get the topic ids
         var topicIds = []
@@ -392,7 +311,7 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
         csNodeQuery += ";logic=Or"
         csNodeQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpec%22%7D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22infoTopicNode%22%7D%7D%5D%7D%5D%7D";
 
-        $.getJSON(csNodeQuery,
+        jQuery.getJSON(csNodeQuery,
             function(data) {
                 if (data.items) {
                     for (var csNodeIndex = 0, topicCount = data.items.length; csNodeIndex < topicCount; ++csNodeIndex) {
@@ -406,27 +325,27 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
                                 updatedSpecs.add(csNode.contentSpec.id);
                             }
                         } else {
-                            console.log("csNode.contentSpec was not expected to be null");
+                            util.log("csNode.contentSpec was not expected to be null");
                         }
                     }
                 } else {
-                    console.log("data.items was not expected to be null");
+                    util.log("data.items was not expected to be null");
                 }
 
                 topicsProcessed = true;
                 routeAfterRESTCalls(updatedSpecs, allSpecsArray);
             }).error(function(jqXHR, textStatus, errorThrown) {
-                console.log("Call to " + csNodeQuery + " failed!");
-                console.log(errorThrown);
+                util.error("Call to " + csNodeQuery + " failed!");
+                util.error(errorThrown);
                 topicRESTCallFailed = true;
                 routeAfterRESTCalls();
             });
     }
 
-    $.getJSON(topicQuery,
+    jQuery.getJSON(topicQuery,
         function(data) {
             if (data.items) {
-                console.log("Found " + data.items.length + " modified topics.");
+                util.log("Found " + data.items.length + " modified topics.");
 
                 if (data.items.length > 0) {
                     contentSpecsForModifiedTopics(lastRun, updatedSpecs, allSpecsArray, data.items);
@@ -436,14 +355,14 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
                     routeAfterRESTCalls(updatedSpecs, allSpecsArray);
                 }
             } else {
-                console.log("data.items was not expected to be null");
+                util.log("data.items was not expected to be null");
 
                 topicsProcessed = true;
                 routeAfterRESTCalls(updatedSpecs, allSpecsArray);
             }
         }).error(function(jqXHR, textStatus, errorThrown) {
-            console.log("Call to " + topicQuery + " failed!");
-            console.log(errorThrown);
+            util.error("Call to " + topicQuery + " failed!");
+            util.error(errorThrown);
             topicRESTCallFailed = true;
             routeAfterRESTCalls();
     });
@@ -455,28 +374,28 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
  * @param id The id of the spec whose details need to be refreshed
  */
 function addSpecToListOfPendingUpdates(id) {
-	pendingSpecCacheUpdates.add(id);
-	if (!processingPendingCacheUpdates) {
-		processPendingSpecUpdates();
-	}
+    pendingSpecCacheUpdates.add(id);
+    if (!processingPendingCacheUpdates) {
+        processPendingSpecUpdates();
+    }
 }
 
 /**
  * This function will be called recursively until the details for the specs are updated.
  */
 function processPendingSpecUpdates() {
-	processingPendingCacheUpdates = true;
+    processingPendingCacheUpdates = true;
 
-	if (pendingSpecCacheUpdates.length != 0) {
-		var specId = pendingSpecCacheUpdates.pop();
+    if (pendingSpecCacheUpdates.length != 0) {
+        var specId = pendingSpecCacheUpdates.pop();
 
-		var specDetailsQuery = REST_SERVER + "/1/contentspecnodes/get/json/query;csNodeType=7;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
+        var specDetailsQuery = config.REST_SERVER + "/1/contentspecnodes/get/json/query;csNodeType=7;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
 
-		if (!specDetailsCache[specId]) {
-			specDetailsCache[specId] = {};
-		}
+        if (!specDetailsCache[specId]) {
+            specDetailsCache[specId] = {};
+        }
 
-		console.log("Filling spec cache. " + pendingSpecCacheUpdates.length + " calls to be made.");
+        util.log("Filling spec cache. " + pendingSpecCacheUpdates.length + " calls to be made.");
 
         var nodesQueryFinished = false;
         var tagsQueryFinished = false;
@@ -487,32 +406,32 @@ function processPendingSpecUpdates() {
             }
         }
 
-		$.getJSON(specDetailsQuery,
-			function(data) {
-				if (data.items) {
-				 	for (var i = 0, count = data.items.length; i < count; ++i) {
-						var item = data.items[i].item;
+        jQuery.getJSON(specDetailsQuery,
+            function(data) {
+                if (data.items) {
+                    for (var i = 0, count = data.items.length; i < count; ++i) {
+                        var item = data.items[i].item;
 
-						if (item.title == "Title") {
-							specDetailsCache[specId].title = item.additionalText;
-						} else if (item.title == "Version") {
-							specDetailsCache[specId].version = item.additionalText;
-						} else if (item.title == "Product") {
-							specDetailsCache[specId].product = item.additionalText;
-						}
-					}
-				}
+                        if (item.title == "Title") {
+                            specDetailsCache[specId].title = item.additionalText;
+                        } else if (item.title == "Version") {
+                            specDetailsCache[specId].version = item.additionalText;
+                        } else if (item.title == "Product") {
+                            specDetailsCache[specId].product = item.additionalText;
+                        }
+                    }
+                }
                 nodesQueryFinished = true;
                 finished();
-			}).error(function(jqXHR, textStatus, errorThrown) {
-				console.log("Call to " + specDetailsQuery + " failed!");
+            }).error(function(jqXHR, textStatus, errorThrown) {
+                util.error("Call to " + specDetailsQuery + " failed!");
                 nodesQueryFinished = true;
                 finished();
-			});
+            });
 
-        var specTagQuery = REST_SERVER + "/1/contentspec/get/json/" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D";
+        var specTagQuery = config.REST_SERVER + "/1/contentspec/get/json/" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D";
 
-        $.getJSON(specTagQuery,
+        jQuery.getJSON(specTagQuery,
             function(data) {
                 if (data.tags) {
 
@@ -526,14 +445,14 @@ function processPendingSpecUpdates() {
                 tagsQueryFinished = true;
                 finished();
             }).error(function(jqXHR, textStatus, errorThrown) {
-                console.log("Call to " + tagsQueryFinished + " failed!");
+                util.error("Call to " + tagsQueryFinished + " failed!");
                 tagsQueryFinished = true;
                 finished();
             });
 
-	} else {
-		processingPendingCacheUpdates = false;
-	}
+    } else {
+        processingPendingCacheUpdates = false;
+    }
 }
 
 /**
@@ -542,23 +461,21 @@ function processPendingSpecUpdates() {
  */
 function getSpecs(lastRun, updatedSpecs, allSpecsArray) {
 
-    var specQuery = REST_SERVER + "/1/contentspecs/get/json/query;?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%7D%5D%7D";
+    var specQuery = config.REST_SERVER + "/1/contentspecs/get/json/query;?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%7D%5D%7D";
 
-    //console.log("Getting specs from URL " + specQuery);
-    console.log("Finding content specs");
+    //util.log("Getting specs from URL " + specQuery);
+    util.log("Finding content specs");
 
-    $.getJSON(specQuery,
+    jQuery.getJSON(specQuery,
         function(data) {
             if (data.items) {
 
-                console.log("Found " + data.items.length + " content specs");
+                util.log("Found " + data.items.length + " content specs");
 
                 for (var specIndex = 0, specCount = data.items.length; specIndex < specCount; ++specIndex) {
                     var spec = data.items[specIndex].item;
 
-                    /*
-                        We haven't processed this spec yet
-                     */
+                    // We haven't processed this spec yet
                     if (!specDetailsCache[spec.id]) {
                         addSpecToListOfPendingUpdates(spec.id);
                     }
@@ -572,16 +489,16 @@ function getSpecs(lastRun, updatedSpecs, allSpecsArray) {
                     }
                 }
 
-                console.log("Found " + updatedSpecs.length + " modified content specs");
+                util.log("Found " + updatedSpecs.length + " modified content specs");
             } else {
-                console.log("data.items was not expected to be null");
+                util.error("data.items was not expected to be null");
             }
 
             specsProcessed = true;
             routeAfterRESTCalls(updatedSpecs, allSpecsArray);
         }).error(function(jqXHR, textStatus, errorThrown) {
-            console.log("Call to " + specQuery + " failed!");
-            console.log(errorThrown);
+            util.error("Call to " + specQuery + " failed!");
+            util.error(errorThrown);
             contentSpecRESTCallFailed = true;
             routeAfterRESTCalls();
         });
@@ -621,21 +538,21 @@ function routeAfterRESTCalls(updatedSpecs, allSpecsArray) {
  * will start again as if this was the first run.
  */
 function restartAfterFailure() {
-	var runTimeSeconds = moment().unix() - thisBuildTime.unix();
-	var delay = (DELAY_WHEN_NO_UPDATES / 1000) - runTimeSeconds;
+    var runTimeSeconds = moment().unix() - thisBuildTime.unix();
+    var delay = config.DELAY_WHEN_NO_UPDATES - runTimeSeconds;
 
     thisBuildTime = null;
 
-	if (delay <= 0) {
-		getListOfSpecsToBuild();
-	} else {
+    if (delay <= 0) {
+        getListOfSpecsToBuild();
+    } else {
 
-		console.log("Delaying for " + delay + " seconds");
+        util.log("Delaying for " + delay + " seconds");
 
-		setTimeout((function() {
-			getListOfSpecsToBuild();
-		}), delay * 1000);
-	}
+        setTimeout((function() {
+            getListOfSpecsToBuild();
+        }), delay * 1000);
+    }
 }
 
 /**
@@ -643,130 +560,66 @@ function restartAfterFailure() {
  * finds the modified specs and topics.
  */
 function getListOfSpecsToBuild() {
-	var lastRun = null;
+    var lastRun = null;
 
     if (data != null) {
-        /*
-         Save the index.html file
-         */
+        var dataJsFile = config.HTML_DIR + "/data.js";
+
+        // Save the data.js file
         try {
-            fs.writeFileSync(deployment.DATA_JS, data);
+            fs.writeFileSync(dataJsFile, data);
         } catch (ex) {
-            console.log("Could not save " + deployment.DATA_JS);
+            util.error("Could not save " + dataJsFile);
         }
 
         data = null;
     }
 
-	if (thisBuildTime != null) {
-		lastRun = thisBuildTime;
+    if (thisBuildTime != null) {
+        lastRun = thisBuildTime;
+        diff = moment().unix() - thisBuildTime.unix();
 
-		try {
-			fs.writeFileSync(deployment.LAST_RUN_FILE, lastRun.format(DATE_FORMAT));
-		} catch (ex) {
-			console.log("Could not save " + deployment.LAST_RUN_FILE);
-		}
+        // Save the last build time to file
+        buildUtils.writeLastBuildTime(lastRun, constants.LAST_RUN_FILE);
+    } else {
+        // See if the last run file exists
+        lastRun = buildUtils.getLastBuildTime(constants.LAST_RUN_FILE);
+    }
 
-		diff = moment().unix() - thisBuildTime.unix();
-	} else {
-		// See if the last run file exists
-		try {
-			var stats = fs.lstatSync(deployment.LAST_RUN_FILE);
-			if (stats.isFile()) {
-				lastRun = moment(fs.readFileSync(deployment.LAST_RUN_FILE).toString().replace(/\n/g, ""));
-			}
-		} catch (ex) {
-			// the file or directory doesn't exist. leave lastRun as null.
-		}
-	}
+    // Reset the variables for this run.
+    topicsProcessed = false;
+    specsProcessed = false;
+    contentSpecRESTCallFailed = false;
+    topicRESTCallFailed = false;
+    var updatedSpecs = new set([]);
+    var allSpecs = [];
 
-	/*
-		Reset the variables for this run.
-	 */
-	topicsProcessed = false;
-	specsProcessed = false;
-	contentSpecRESTCallFailed = false;
-	topicRESTCallFailed = false;
-	var updatedSpecs = new set([]);
-	var allSpecs = [];
+    // Make a note of when we started this run.
+    thisBuildTime = moment();
 
-	/*
-		Make a note of when we started this run.
-	 */
-	thisBuildTime = moment();
-
-	getModifiedTopics(lastRun, updatedSpecs, allSpecs);
-	getSpecs(lastRun, updatedSpecs, allSpecs);
+    getModifiedTopics(lastRun, updatedSpecs, allSpecs);
+    getSpecs(lastRun, updatedSpecs, allSpecs);
 }
 
 /**
- * Calls the done function with the filename and last modified date of the file that was most recently modified
- * @param dir The directory to search
- * @param filter The format that the file names have to match to be considered
- * @param done a function to call when the latest file is found
+ * Initialises the application and starts processing builds
  */
-function getLatestFile (dir, filter, done) {
-	try {
-        fs.readdir(dir, function (error, list) {
-            if (error) {
-                return done(error);
-            }
+function initAndGo() {
+    var settingsUrl = config.REST_SERVER + "/1/settings/get/json";
+    jQuery.getJSON(settingsUrl,
+        function(data) {
+            // Save the server entities, so we can use it later.
+            serverEntities = data.entities;
 
-            var i = 0;
+            // Write the sites configuration
+            buildUtils.writeSiteConfig(serverEntities);
 
-            (function next (latest, latestFile, allFiles) {
-                var file = list[i++];
-                var fullFile = dir + '/' + file;
-
-                if (!file) {
-                    /*
-                        Clear out any old files
-                     */
-
-                    var latestFilePath = dir + '/' + latestFile;
-
-                    for (var allFilesIndex = 0, allFilesCount = allFiles.length; allFilesIndex < allFilesCount; ++allFilesIndex) {
-                        var bookFile = allFiles[allFilesIndex];
-                        if (bookFile.path != latestFilePath &&
-                            bookFile.modified.isBefore(moment().subtract(1, 'd'))) {
-                            fs.unlinkSync(bookFile.path);
-                        }
-                    }
-
-                    return done(null, latest, latestFile);
-                }
-
-                if (file.toString().match(filter)) {
-                    fs.stat(fullFile, function (error, stat) {
-                        if (error) {
-                            next(latest, latestFile, allFiles);
-                        } else {
-                            if (stat && stat.isDirectory()) {
-                                walk(file, function (error) {
-                                    next(latest, latestFile, allFiles);
-                                });
-                            } else {
-                                var lastModified = moment(stat.mtime);
-                                allFiles.push({path: fullFile, modified: lastModified});
-
-                                if (!latest || lastModified.isAfter(latest)) {
-                                    latest = lastModified;
-                                    latestFile = file;
-                                }
-
-                                next(latest, latestFile, allFiles);
-                            }
-                        }
-                    });
-                } else {
-                    next(latest, latestFile, allFiles);
-                }
-            })(null, null, []);
+            // Get the list of books to build and start building
+            getListOfSpecsToBuild();
+        }).error(function(jqXHR, textStatus, errorThrown) {
+            util.error("Call to " + settingsUrl + " failed!");
         });
-    } catch (ex) {
-        return done(ex);
-    }
-};
+}
 
-getListOfSpecsToBuild();
+initAndGo();
 
