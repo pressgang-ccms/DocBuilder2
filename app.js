@@ -389,7 +389,7 @@ function processPendingSpecUpdates() {
     if (pendingSpecCacheUpdates.length != 0) {
         var specId = pendingSpecCacheUpdates.pop();
 
-        var specDetailsQuery = config.REST_SERVER + "/1/contentspecnodes/get/json/query;csNodeType=7;contentSpecIds=" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%7D%5D%7D";
+        var specDetailsQuery = config.REST_SERVER + "/1/contentspec/get/json+text/" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D";
 
         if (!specDetailsCache[specId]) {
             specDetailsCache[specId] = {};
@@ -397,44 +397,14 @@ function processPendingSpecUpdates() {
 
         util.log("Filling spec cache. " + pendingSpecCacheUpdates.length + " calls to be made.");
 
-        var nodesQueryFinished = false;
-        var tagsQueryFinished = false;
-
-        var finished = function() {
-            if (nodesQueryFinished && tagsQueryFinished) {
-                processPendingSpecUpdates();
-            }
-        }
-
         jQuery.getJSON(specDetailsQuery,
             function(data) {
-                if (data.items) {
-                    for (var i = 0, count = data.items.length; i < count; ++i) {
-                        var item = data.items[i].item;
+                // Set the base data
+                specDetailsCache[specId].title = data.title;
+                specDetailsCache[specId].product = data.product;
+                specDetailsCache[specId].version = data.version;
 
-                        if (item.title == "Title") {
-                            specDetailsCache[specId].title = item.additionalText;
-                        } else if (item.title == "Version") {
-                            specDetailsCache[specId].version = item.additionalText;
-                        } else if (item.title == "Product") {
-                            specDetailsCache[specId].product = item.additionalText;
-                        }
-                    }
-                }
-                nodesQueryFinished = true;
-                finished();
-            }).error(function(jqXHR, textStatus, errorThrown) {
-                util.error("Call to " + specDetailsQuery + " failed!");
-                nodesQueryFinished = true;
-                finished();
-            });
-
-        var specTagQuery = config.REST_SERVER + "/1/contentspec/get/json/" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D";
-
-        jQuery.getJSON(specTagQuery,
-            function(data) {
                 if (data.tags) {
-
                     specDetailsCache[specId].tags = [];
 
                     for (var i = 0, count = data.tags.items.length; i < count; ++i) {
@@ -442,12 +412,11 @@ function processPendingSpecUpdates() {
                         specDetailsCache[specId].tags.push(tag.id);
                     }
                 }
-                tagsQueryFinished = true;
-                finished();
+
+                processPendingSpecUpdates();
             }).error(function(jqXHR, textStatus, errorThrown) {
-                util.error("Call to " + tagsQueryFinished + " failed!");
-                tagsQueryFinished = true;
-                finished();
+                util.error("Call to " + specDetailsQuery + " failed!");
+                processPendingSpecUpdates();
             });
 
     } else {
