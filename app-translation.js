@@ -142,20 +142,24 @@ function processSpecs(data, localeIndex, specs, locale, publicanLocale) {
 
                             util.log("Finished build of book " + locale + "-" + id);
 
-                            // Get the ZIP filename
-                            buildUtils.getLatestFile(constants.PUBLICAN_BOOK_ZIPS_COMPLETE + "/" + locale, locale + "-" + id + ".*?\\.zip", function(error, date, filename) {
+                            // Get the current time
+                            var time = moment();
+
+                            // Save the last build time for the spec
+                            buildUtils.writeLastBuildTime(time, config.DATA_DIR + locale + "/" + id);
+
+                            // Delete any old zip files
+                            var publicanZIPDir = constants.PUBLICAN_BOOK_ZIPS_COMPLETE + "/" + locale;
+                            buildUtils.deleteAllFilesOlderThanADay(publicanZIPDir, locale + "-" + id + ".*?.zip", function() {});
+
+                            // Get the latest ZIP filename
+                            buildUtils.getLatestFile(publicanZIPDir, locale + "-" + id + ".*?\\.zip", function(error, date, filename) {
                                 var zipFileName = filename == null ? "" : filename;
 
                                 // Get the pdf filename
                                 buildUtils.getLatestFile(config.HTML_DIR + "/" + locale + "/" + id + "/", ".*?\\.pdf", function(error, date, filename) {
-                                    // Get the current time
-                                    var time = moment();
-
                                     // Build and add the entry for data,js
                                     data += buildUtils.buildSpecDataJsEntry(specId, specDetails, zipFileName, time.format(constants.DATE_FORMAT), locale, filename);
-
-                                    // Save the last build time for the spec
-                                    buildUtils.writeLastBuildTime(time, config.DATA_DIR + locale + "/" + id);
 
                                     if (childCount < config.MAX_PROCESSES) {
                                         if (specs.length != 0) {

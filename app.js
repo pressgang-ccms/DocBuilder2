@@ -240,6 +240,9 @@ function processSpecs(updatedSpecs) {
                         util.error("Could not edit and save remarks HTML file");
                     }
 
+                    // Delete any old zip files
+                    buildUtils.deleteAllFilesOlderThanADay(constants.PUBLICAN_BOOK_ZIPS_COMPLETE, id + ".*?.zip", function() {});
+
                     if (childCount < config.MAX_PROCESSES) {
 
                         if (updatedSpecs.length != 0) {

@@ -29,9 +29,9 @@ var util = require('util');
 
 /**
  * Calls the done function with the filename and last modified date of the file that was most recently modified
- * @param dir The directory to search
+ * @param dir    The directory to search
  * @param filter The format that the file names have to match to be considered
- * @param done a function to call when the latest file is found
+ * @param done   A function to call when the latest file is found
  */
 exports.getLatestFile = function(dir, filter, done) {
     try {
@@ -40,59 +40,99 @@ exports.getLatestFile = function(dir, filter, done) {
                 return done(error);
             }
 
-            var i = 0;
-
-            (function next (latest, latestFile, allFiles) {
-                var file = list[i++];
-                var fullFile = dir + '/' + file;
-
-                if (!file) {
-                    /*
-                     Clear out any old files
-                     */
-                    var latestFilePath = dir + '/' + latestFile;
-
-                    for (var allFilesIndex = 0, allFilesCount = allFiles.length; allFilesIndex < allFilesCount; ++allFilesIndex) {
-                        var bookFile = allFiles[allFilesIndex];
-                        if (bookFile.path != latestFilePath &&
-                            bookFile.modified.isBefore(moment().subtract(1, 'd'))) {
-                            fs.unlinkSync(bookFile.path);
-                        }
-                    }
-
-                    return done(null, latest, latestFile);
-                }
-
-                if (file.toString().match(filter)) {
-                    fs.stat(fullFile, function (error, stat) {
-                        if (error) {
-                            next(latest, latestFile, allFiles);
-                        } else {
-                            if (stat && stat.isDirectory()) {
-                                // We are only looking for files, so move onto the next file
-                                next(latest, latestFile, allFiles);
-                            } else {
-                                var lastModified = moment(stat.mtime);
-                                allFiles.push({path: fullFile, modified: lastModified});
-
-                                if (!latest || lastModified.isAfter(latest)) {
-                                    latest = lastModified;
-                                    latestFile = file;
-                                }
-
-                                next(latest, latestFile, allFiles);
-                            }
-                        }
-                    });
-                } else {
-                    next(latest, latestFile, allFiles);
-                }
-            })(null, null, []);
+            // Collect the files that match the filter
+            _next(dir, filter, 0, list,  null, null, [], function(latest, latestFile, allMatchingFiles) {
+                return done(null, latest, latestFile);
+            });
         });
     } catch (ex) {
         return done(ex);
     }
 };
+
+/**
+ * Deletes all files that are older than a day and then calls the done function
+ *
+ * @param dir    The directory to search
+ * @param filter The format that the file names have to match to be considered
+ * @param done   A function to call when all files older than a day have been deleted
+ */
+exports.deleteAllFilesOlderThanADay = function(dir, filter, done) {
+    try {
+        fs.readdir(dir, function (error, list) {
+            if (error) {
+                return done(error);
+            }
+
+            // Collect the files that match the filter
+            _next(dir, filter, 0, list,  null, null, [], function(latest, latestFile, allMatchingFiles) {
+                /*
+                 Clear out any old files
+                 */
+                var latestFilePath = dir + '/' + latestFile;
+
+                for (var allFilesIndex = 0, allFilesCount = allMatchingFiles.length; allFilesIndex < allFilesCount; ++allFilesIndex) {
+                    var bookFile = allMatchingFiles[allFilesIndex];
+                    if (bookFile.path != latestFilePath &&
+                        // Check that it hasn't been modified in the last day
+                        bookFile.modified.isBefore(moment().subtract(1, 'd'))) {
+                        fs.unlink(bookFile.path);
+                    }
+                }
+
+                return done(null);
+            });
+        });
+    } catch (ex) {
+        return done(ex);
+    }
+}
+
+/**
+ * A function that iterates over a file list to find all files that match a filter, as well as which of those files was the latest
+ *
+ * @param dir              The directory we are searching in.
+ * @param filter           The filename filter.
+ * @param index            The current index to look at in the fileList.
+ * @param fileList         The list of files in the directory.
+ * @param latest           The latest modified files timestamp.
+ * @param latestFile       The latest modified filename.
+ * @param allMatchingFiles All files that matched the filter.
+ * @param done
+ */
+function _next(dir, filter, index, fileList, latest, latestFile, allMatchingFiles, done) {
+    var file = fileList[index++];
+    var fullFile = dir + '/' + file;
+
+    if (!file) {
+        return done(latest, latestFile, allMatchingFiles);
+    }
+
+    if (file.toString().match(filter)) {
+        fs.stat(fullFile, function (error, stat) {
+            if (error) {
+                _next(dir, filter, index, fileList, latest, latestFile, allMatchingFiles, done);
+            } else {
+                if (stat && stat.isDirectory()) {
+                    // We are only looking for files, so move onto the next file
+                    _next(dir, filter, index, fileList, latest, latestFile, allMatchingFiles, done);
+                } else {
+                    var lastModified = moment(stat.mtime);
+                    allMatchingFiles.push({path: fullFile, modified: lastModified});
+
+                    if (!latest || lastModified.isAfter(latest)) {
+                        latest = lastModified;
+                        latestFile = file;
+                    }
+
+                    _next(dir, filter, index, fileList, latest, latestFile, allMatchingFiles, done);
+                }
+            }
+        });
+    } else {
+        _next(dir, filter, index, fileList, latest, latestFile, allMatchingFiles, done);
+    }
+}
 
 /**
  * Get the last build time for a content spec, by reading from a file.
