@@ -69,9 +69,8 @@ exports.getLatestFile = function(dir, filter, done) {
                             next(latest, latestFile, allFiles);
                         } else {
                             if (stat && stat.isDirectory()) {
-                                walk(file, function (error) {
-                                    next(latest, latestFile, allFiles);
-                                });
+                                // We are only looking for files, so move onto the next file
+                                next(latest, latestFile, allFiles);
                             } else {
                                 var lastModified = moment(stat.mtime);
                                 allFiles.push({path: fullFile, modified: lastModified});
@@ -181,15 +180,21 @@ var data = [\n";
 /**
  * Creates an entry that can be added to data.js for a content spec.
  *
+ * @param lang            The content specs language if it is a translation.
  * @param specId          The content spec id.
  * @param specDetails     The content spec details.
  * @param zipFileName     The builds zip file name.
  * @param lastCompileTime The last time that the book was compiled.
  * @returns {string}
  */
-exports.buildSpecDataJsEntry = function (specId, specDetails, zipFileName, lastCompileTime) {
+exports.buildSpecDataJsEntry = function (specId, specDetails, zipFileName, lastCompileTime, lang, pdfFileName) {
     // Check if the build was successful
-    var status = fs.existsSync(config.HTML_DIR + "/" + specId + "/index.html") ? "success" : "failure";
+    var status;
+    if (lang) {
+        status = fs.existsSync(config.HTML_DIR + "/" + lang + "/" + specId + "/index.html") ? "success" : "failure";
+    } else {
+        status = fs.existsSync(config.HTML_DIR + "/" + specId + "/index.html") ? "success" : "failure";
+    }
 
     // Fixed the last compile time
     var fixedLastCompileTime = null;
@@ -197,46 +202,23 @@ exports.buildSpecDataJsEntry = function (specId, specDetails, zipFileName, lastC
         fixedLastCompileTime = "'" + lastCompileTime + "'";
     }
 
-    return "    {\n\
+    var entry = "    {\n\
         idRaw: " + specId + ",\n\
         versionRaw: '" + specDetails.version + "',\n\
         productRaw: '" + specDetails.product + "',\n\
         titleRaw: '" + specDetails.title + "',\n\
-        publicanbook: '" + constants.PUBLICAN_BOOK_ZIPS + "/" + encodeURIComponent(zipFileName) + "',\n\
-        tags: [" + specDetails.tags.toString() + "],\n\
         status: '" + status + "',\n\
-        lastcompile: " + fixedLastCompileTime + "\n\
-    },\n";
-}
+        lastcompile: " + fixedLastCompileTime + ",\n";
 
-
-/**
- * Creates an entry that can be added to a translation data.js for a content spec.
- *
- * @param lang            The translated content specs language.
- * @param specId          The content spec id.
- * @param specDetails     The content spec details.
- * @param pdfFileName     The builds PDF file name.
- * @param lastCompileTime The last time that the book was compiled.
- * @returns {string}
- */
-exports.buildTranslatedSpecDataJsEntry = function (lang, specId, specDetails, pdfFileName, lastCompileTime) {
-    // Check if the build was successful
-    var status = fs.existsSync(config.HTML_DIR + "/" + lang + "/" + specId + "/index.html") ? "success" : "failure";
-
-    // Fixed the last compile time
-    var fixedLastCompileTime = null;
-    if (lastCompileTime) {
-        fixedLastCompileTime = "'" + lastCompileTime + "'";
+    if (lang) {
+        entry += "        publicanbook: '" + constants.PUBLICAN_BOOK_ZIPS + "/" + lang + "/" + encodeURIComponent(zipFileName) + "',\n\
+        pdfFileName: '" + pdfFileName + "'\n";
+    } else {
+        entry += "        tags: [" + specDetails.tags.toString() + "],\n\
+        publicanbook: '" + constants.PUBLICAN_BOOK_ZIPS + "/" + encodeURIComponent(zipFileName) + "'\n"
     }
 
-    return "    {\n\
-        idRaw: " + specId + ",\n\
-        versionRaw: '" + specDetails.version + "',\n\
-        productRaw: '" + specDetails.product + "',\n\
-        titleRaw: '" + specDetails.title + "',\n\
-        pdfFileName: '" + pdfFileName + "\"',\n\
-        lastcompile: " + fixedLastCompileTime + ",\n\
-        status: '" + status + "'\n\
-    },\n";
+    entry += "    },\n";
+
+    return entry;
 }

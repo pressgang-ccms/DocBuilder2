@@ -169,17 +169,17 @@ do
                     cp -R tmp/${PUBLICAN_LANG}/html-single/* /var/www/html/${BUILD_LANG}/${CSPID}/remarks
                     cp publican.log /var/www/html/${BUILD_LANG}/${CSPID}/remarks
 
-#                    # Build the publican zip file without editor links
-#                    DATE_MARKER=$(date '+%Y-%m-%dT%k:%M:%S.000%z')
-#                    BOOK_FILE_NAME="${PUBLICAN_BOOK_ZIPS_COMPLETE}/${BUILD_LANG}/${CSPID} ${DATE_MARKER}.zip"
-#
-#                    if [ -f "${BOOK_FILE_NAME}" ]
-#                    then
-#                       rm -rf "${BOOK_FILE_NAME}"
-#                    fi
-#
-#                    echo "csprocessor build --lang ${BUILD_LANG} --target-lang ${PUBLICAN_LANG} --hide-errors --output "${BOOK_FILE_NAME}" ${CSPID} >> build.log"
-#                    csprocessor build --lang ${BUILD_LANG} --target-lang ${PUBLICAN_LANG} --hide-errors --output "${BOOK_FILE_NAME}" ${CSPID} >> build.log
+                    # Build the publican zip file without editor links
+                    DATE_MARKER=$(date '+%Y-%m-%dT%k:%M:%S.000%z')
+                    BOOK_FILE_NAME="${PUBLICAN_BOOK_ZIPS_COMPLETE}/${BUILD_LANG}/${BUILD_LANG}-${CSPID} ${DATE_MARKER}.zip"
+
+                    if [ -f "${BOOK_FILE_NAME}" ]
+                    then
+                       rm -rf "${BOOK_FILE_NAME}"
+                    fi
+
+                    echo "csprocessor build --lang ${BUILD_LANG} --target-lang ${PUBLICAN_LANG} --hide-errors --output "${BOOK_FILE_NAME}" ${CSPID} >> build.log"
+                    csprocessor build --lang ${BUILD_LANG} --target-lang ${PUBLICAN_LANG} --hide-errors --output "${BOOK_FILE_NAME}" ${CSPID} >> build.log
 
                 fi
 

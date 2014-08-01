@@ -142,29 +142,34 @@ function processSpecs(data, localeIndex, specs, locale, publicanLocale) {
 
                             util.log("Finished build of book " + locale + "-" + id);
 
-                            // Get the pdf filename
-                            buildUtils.getLatestFile(config.HTML_DIR + "/" + locale + "/" + id + "/", ".*?\\.pdf", function(error, date, filename) {
-                                // Get the current time
-                                var time = moment();
+                            // Get the ZIP filename
+                            buildUtils.getLatestFile(constants.PUBLICAN_BOOK_ZIPS_COMPLETE + "/" + locale, locale + "-" + id + ".*?\\.zip", function(error, date, filename) {
+                                var zipFileName = filename == null ? "" : filename;
 
-                                // Build and add the entry for data,js
-                                data += buildUtils.buildTranslatedSpecDataJsEntry(locale, specId, specDetails, filename, time.format(constants.DATE_FORMAT));
+                                // Get the pdf filename
+                                buildUtils.getLatestFile(config.HTML_DIR + "/" + locale + "/" + id + "/", ".*?\\.pdf", function(error, date, filename) {
+                                    // Get the current time
+                                    var time = moment();
 
-                                // Save the last build time for the spec
-                                buildUtils.writeLastBuildTime(time, config.DATA_DIR + locale + "/" + id);
+                                    // Build and add the entry for data,js
+                                    data += buildUtils.buildSpecDataJsEntry(specId, specDetails, zipFileName, time.format(constants.DATE_FORMAT), locale, filename);
 
-                                if (childCount < config.MAX_PROCESSES) {
-                                    if (specs.length != 0) {
-                                        // If there are still specs to be processed, then process them
-                                        processSpecs(data, localeIndex, specs, locale, publicanLocale);
-                                    } else if (childCount == 0) {
-                                        // Finish the processing
-                                        finishProcessingForLocale(locale, data);
+                                    // Save the last build time for the spec
+                                    buildUtils.writeLastBuildTime(time, config.DATA_DIR + locale + "/" + id);
 
-                                        // Build the books for the next locale
-                                        buildBooksForLocale(++localeIndex);
+                                    if (childCount < config.MAX_PROCESSES) {
+                                        if (specs.length != 0) {
+                                            // If there are still specs to be processed, then process them
+                                            processSpecs(data, localeIndex, specs, locale, publicanLocale);
+                                        } else if (childCount == 0) {
+                                            // Finish the processing
+                                            finishProcessingForLocale(locale, data);
+
+                                            // Build the books for the next locale
+                                            buildBooksForLocale(++localeIndex);
+                                        }
                                     }
-                                }
+                                });
                             });
                         });
                 }
