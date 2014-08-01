@@ -125,7 +125,7 @@ function processSpecs(data, localeIndex, specs, locale, publicanLocale) {
         util.log("Starting build of book " + locale + "-" + specId + " (" + specs.length + " specs remain)");
 
         // Download the spec details from the server
-        var contentSpecQuery = config.REST_SERVER + "/1/contentspec/get/json+text/" + specId;
+        var contentSpecQuery = config.REST_SERVER + "1/contentspec/get/json+text/" + specId;
         jQuery.getJSON(contentSpecQuery,
             function(id) {
                 return function(contentSpec) {
@@ -216,7 +216,13 @@ function buildBooksForLocale(localeIndex) {
  * Initialises the application and starts processing builds
  */
 function initAndGo() {
-    var settingsUrl = config.REST_SERVER + "/1/settings/get/json";
+    // Validate that the config contains the bare minimum
+    buildUtils.validateConfig(config);
+
+    // Fix up the config
+    buildUtils.fixAndApplyDefaultsToConfig(config);
+
+    var settingsUrl = config.REST_SERVER + "1/settings/get/json";
     jQuery.getJSON(settingsUrl,
         function(data) {
             // Save the server entities, so we can use it later.

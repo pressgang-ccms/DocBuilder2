@@ -22,7 +22,7 @@
 
 echo config.js will be copied to /tmp. Copy it back if you had custom settings that were overwritten by GIT
 
-cp config.js /tmp
+cp src/config.js /tmp
 
 git fetch --all
 git reset --hard origin/devel

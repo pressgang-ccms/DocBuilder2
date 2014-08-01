@@ -27,12 +27,12 @@ module.exports = {
      * The REST server url
      * @type {string}
      */
-    REST_SERVER:  "http://localhost:8080/pressgang-ccms/rest",
+    REST_SERVER:  "http://localhost:8080/pressgang-ccms/rest/",
     /**
      * The UI instance to point to
      * @type {string}
      */
-    UI_URL: "http://localhost:8080/pressgang-ccms-ui",
+    UI_URL: "http://localhost:8080/pressgang-ccms-ui/",
     /**
      * Where the links to open the books should go.
      * @type {string}

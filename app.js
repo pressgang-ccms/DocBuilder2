@@ -288,7 +288,7 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
         return;
     }
 
-    var topicQuery = config.REST_SERVER + "/1/topics/get/json/query;";
+    var topicQuery = config.REST_SERVER + "1/topics/get/json/query;";
 
     // If we have some last run info, use that to limit the search
     topicQuery += "startEditDate=" + encodeURIComponent(encodeURIComponent(lastRun.format(constants.DATE_FORMAT)));
@@ -299,7 +299,7 @@ function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
 
     var contentSpecsForModifiedTopics = function(lastRun, updatedSpecs, allSpecsArray, modifiedTopics) {
         // Get the csnodes for the topics to see if the are frozen
-        var csNodeQuery = config.REST_SERVER + "/1/contentspecnodes/get/json/query;";
+        var csNodeQuery = config.REST_SERVER + "1/contentspecnodes/get/json/query;";
 
         // Get the topic ids
         var topicIds = []
@@ -392,7 +392,7 @@ function processPendingSpecUpdates() {
     if (pendingSpecCacheUpdates.length != 0) {
         var specId = pendingSpecCacheUpdates.pop();
 
-        var specDetailsQuery = config.REST_SERVER + "/1/contentspec/get/json+text/" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D";
+        var specDetailsQuery = config.REST_SERVER + "1/contentspec/get/json+text/" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D";
 
         if (!specDetailsCache[specId]) {
             specDetailsCache[specId] = {};
@@ -433,7 +433,7 @@ function processPendingSpecUpdates() {
  */
 function getSpecs(lastRun, updatedSpecs, allSpecsArray) {
 
-    var specQuery = config.REST_SERVER + "/1/contentspecs/get/json/query;?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%7D%5D%7D";
+    var specQuery = config.REST_SERVER + "1/contentspecs/get/json/query;?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%7D%5D%7D";
 
     //util.log("Getting specs from URL " + specQuery);
     util.log("Finding content specs");
@@ -577,7 +577,13 @@ function getListOfSpecsToBuild() {
  * Initialises the application and starts processing builds
  */
 function initAndGo() {
-    var settingsUrl = config.REST_SERVER + "/1/settings/get/json";
+    // Validate that the config contains the bare minimum
+    buildUtils.validateConfig(config);
+
+    // Fix up the config
+    buildUtils.fixAndApplyDefaultsToConfig(config);
+
+    var settingsUrl = config.REST_SERVER + "1/settings/get/json";
     jQuery.getJSON(settingsUrl,
         function(data) {
             // Save the server entities, so we can use it later.

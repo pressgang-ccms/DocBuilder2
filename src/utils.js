@@ -26,6 +26,16 @@ var fs = require('fs');
 var jQuery = require("jquery");
 var moment = require('moment');
 var util = require('util');
+var url = require('url');
+var os = require('os');
+
+function endsWith(str, suffix){
+    return str.slice(-suffix.length) == suffix;
+};
+
+function startsWith(str, prefix){
+    return str.slice(0, prefix.length) == prefix;
+};
 
 /**
  * Calls the done function with the filename and last modified date of the file that was most recently modified
@@ -261,4 +271,91 @@ exports.buildSpecDataJsEntry = function (specId, specDetails, zipFileName, lastC
     entry += "    },\n";
 
     return entry;
+}
+
+/**
+ * Checks to make sure we have the bar minimum values
+ *
+ * @param config
+ */
+exports.validateConfig = function(config) {
+    // Validate that we have a REST_SERVER property
+    if (typeof config.REST_SERVER === 'undefined' || config.REST_SERVER == null || config.REST_SERVER.trim().length == 0) {
+        throw Error("The REST_SERVER configuration property hasn't been set.");
+    }
+
+    // Validate that we have a data dir
+    if (typeof config.DATA_DIR === 'undefined' || config.DATA_DIR == null || config.DATA_DIR.trim().length == 0) {
+        throw Error("The DATA_DIR configuration property hasn't been set.");
+    }
+
+    // Validate that we have a html dir
+    if (typeof config.HTML_DIR === 'undefined' || config.HTML_DIR == null || config.HTML_DIR.trim().length == 0) {
+        throw Error("The HTML_DIR configuration property hasn't been set.");
+    }
+}
+
+/**
+ * Fixes any partial URLs (ie missing a protocol, or trailing forward slash in the following configuration properties:
+ *
+ * REST_SERVER
+ * UI_URL
+ *
+ * and also applies default values for the following values
+ *
+ * UI_URL (applied from the REST_SERVER variable)
+ * EDIT_LINK (UI_URL + #ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=${ID})
+ * MAX_PROCESSES (number of cpus)
+ * MAX_TRANSLATION_PROCESSES (number of cpus)
+ * DELAY_WHEN_NO_UPDATES (60 secs)
+ *
+ * @param config
+ */
+exports.fixAndApplyDefaultsToConfig = function(config) {
+    var numCPUs = os.cpus().length;
+
+    // Fix the REST_SERVER url
+    config.REST_SERVER = fixBaseUrl(config.REST_SERVER);
+
+    // Make sure we have a UI_URL
+    if (typeof config.UI_URL === 'undefined' || config.UI_URL == null || config.UI_URL.length == 0) {
+        config.UI_URL = config.REST_SERVER.replace("pressgang-ccms/rest", "pressgang-ccms-ui");
+    } else {
+        config.UI_URL = fixBaseUrl(config.UI_URL);
+    }
+
+    // Make sure we have a EDIT_LINK
+    if (typeof config.EDIT_LINK === 'undefined' || config.EDIT_LINK == null || config.EDIT_LINK.length == 0) {
+        config.EDIT_LINK = config.UI_URL + "#ContentSpecFilteredResultsAndContentSpecView;query;contentSpecIds=${ID}";
+    }
+
+    // Set the max processes to the number of cpus, if it's not defined
+    if (typeof config.MAX_PROCESSES === 'undefined' || config.MAX_PROCESSES == null) {
+        config.MAX_PROCESSES = numCPUs;
+    }
+    if (typeof config.MAX_TRANSLATION_PROCESSES === 'undefined' || config.MAX_TRANSLATION_PROCESSES == null) {
+        config.MAX_TRANSLATION_PROCESSES = numCPUs;
+    }
+
+    // Set the default delay time
+    if (typeof config.DELAY_WHEN_NO_UPDATES === 'undefined' || config.DELAY_WHEN_NO_UPDATES == null) {
+        config.DELAY_WHEN_NO_UPDATES = 60;
+    }
+}
+
+function fixBaseUrl(urlString) {
+    if (urlString == null || urlString.length == 0) return urlString;
+    var fixedUrl = url.parse(urlString);
+
+    // Make sure we have a protocol
+    if (!fixedUrl.protocol) {
+        fixedUrl.protocol = "http";
+    }
+
+    // Make sure the path name ends with a slash
+    if (!endsWith(fixedUrl.pathname, "/")) {
+        fixedUrl.pathname += "/";
+    }
+
+    return url.format(fixedUrl);
 }
