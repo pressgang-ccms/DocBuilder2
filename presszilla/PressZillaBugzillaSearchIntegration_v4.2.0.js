@@ -37,7 +37,7 @@
         if (unsafeWindow.getSpecIdFromURL) {
 
             var specId = unsafeWindow.getSpecIdFromURL();
-            var specProductUrl = "http://skynet.usersys.redhat.com:8080/pressgang-ccms/rest/1/contentspecnodes/get/json/query;csNodeType=7;contentSpecIds=" + specId + "?expand=" + encodeURIComponent("{\"branches\":[{\"trunk\":{\"name\": \"nodes\"}}]}");
+            var specProductUrl = getRESTServerUrl() + "1/contentspecnodes/get/json/query;csNodeType=7;contentSpecIds=" + specId + "?expand=" + encodeURIComponent("{\"branches\":[{\"trunk\":{\"name\": \"nodes\"}}]}");
             var bugzillaBaseUrl = "https://bugzilla.redhat.com/"
             var bugzillaApiUrl = bugzillaBaseUrl + "jsonrpc.cgi";
 

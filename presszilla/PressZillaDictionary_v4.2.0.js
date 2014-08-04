@@ -29,16 +29,6 @@ var SKIP_IDS = ["tinymce"];
  */
 var SKIP_ELEMENTS = ["A", "SCRIPT", "PRE"];
 /**
- * The server hostname and port
- * @type {string}
- */
-var BASE_SERVER =  "skynet.usersys.redhat.com:8080";
-/**
- * The server that hosts the UI we want to connect to.
- * @type {string}
- */
-var SERVER = "http://" + BASE_SERVER + "/pressgang-ccms/rest/1";
-/**
  * Set to true once the page has been processed
  * @type {boolean}
  */
@@ -57,7 +47,7 @@ if (isDocbuilderWindow()) {
         var texts = [];
         collectTextNodes(document.body, texts);
 
-        var customDicUrl = SERVER + "/topics/get/json/query;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + INVALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID + "=true;logic=Or?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
+        var customDicUrl = getRESTServerUrl() + "1/topics/get/json/query;propertyTagExists" + VALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + INVALID_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + DISCOURAGED_WORD_EXTENDED_PROPERTY_TAG_ID + "=true;propertyTagExists" + DISCOURAGED_PHRASE_EXTENDED_PROPERTY_TAG_ID + "=true;logic=Or?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%22topics%22%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A+%22properties%22%7D%7D%5D%7D%5D%7D";
 
         console.log("opening " + customDicUrl);
 

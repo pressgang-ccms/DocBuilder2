@@ -9,3 +9,7 @@ function isDocbuilderWindow() {
 function isDocStageWindow() {
     return window.location.host == "documentation-devel.engineering.redhat.com";
 }
+
+function getRESTServerUrl() {
+    return unsafeWindow.REST_SERVER ? unsafeWindow.REST_SERVER : "http://skynet.usersys.redhat.com/pressgang-ccms/rest/";
+}
