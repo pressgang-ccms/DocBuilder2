@@ -200,19 +200,9 @@ function processSpecs(updatedSpecs) {
                                 <script type='application/javascript'>\n\
                                     var SPEC_ID = " + id + ";\n\
                                 </script>\n\
-                                <script type='application/javascript' src='/config.js'></script>\n\
-                                <script type='application/javascript' src='/lib/jquery/jquery-2.1.1.min.js'></script>\n\
-                                <script type='application/javascript' src='/lib/moment/moment-with-langs.js'></script>\n\
-                                <script type='application/javascript' src='/lib/bootstrap/js/bootstrap.min.js'></script>\n\
-                                <script type='application/javascript' src='/lib/bootbox/bootbox.min.js'></script>\n\
-                                <script type='application/javascript' src='/lib/raphael/raphael-min.js'></script>\n\
-                                <script type='application/javascript' src='/lib/raphael/pie.js'></script>\n\
-                                <script type='application/javascript' src='/lib/typo/typo_proto.js'></script>\n\
-                                <script type='application/javascript' src='/lib/typo/typo.js'></script>\n\
-                                <script type='application/javascript' src='/lib/async/async.js'></script>\n\
-                                <script type='application/javascript' src='/lib/docbuilder-overlay/javascript/overlay.js'></script>\n\
                                 <script type='application/javascript' src='/lib/docbuilder-overlay/javascript/pressgang_websites.js'></script>\n\
                                 <script type='application/javascript' src='" + config.PRESSGANG_WEBSITE_JS_URL + "' async></script>\n\
+                                <script type='application/javascript' data-main='/lib/docbuilder-overlay/javascript/main.js' src='/lib/require/require.min.js'></script>\n\
                                 </body>\n\
                                 </html>";
 
