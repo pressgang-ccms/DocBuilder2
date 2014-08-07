@@ -51,8 +51,6 @@
 
             var specId = unsafeWindow.getSpecIdFromURL();
             var specProductUrl = getRESTServerUrl() + "1/contentspecnodes/get/json/query;csNodeType=7;contentSpecIds=" + specId + "?expand=" + encodeURIComponent("{\"branches\":[{\"trunk\":{\"name\": \"nodes\"}}]}");
-            var bugzillaBaseUrl = "https://bugzilla.redhat.com/"
-            var bugzillaApiUrl = bugzillaBaseUrl + "jsonrpc.cgi";
 
             setTimeout(function() {
                 GM_xmlhttpRequest({
@@ -66,6 +64,7 @@
                         logToConsole("Got spec nodes");
 
                         var nodes = JSON.parse(specNodesResponse.responseText);
+                        var bugzillaBaseUrl = "https://bugzilla.redhat.com/";
                         var bzProduct = "";
                         var bzComponent = "";
                         var bzVersion = "";
@@ -77,8 +76,12 @@
                                 bzComponent = node.additionalText;
                             }  else if (node.title == "BZVersion") {
                                 bzVersion = node.additionalText;
+                            } else if (node.title == "BZServer") {
+                                bugzillaBaseUrl = node.additionalText;
                             }
                         }
+
+                        var bugzillaApiUrl = bugzillaBaseUrl + "jsonrpc.cgi";
 
                         if (bzProduct == "") {
                             logToConsole("No Bugzilla details specified in spec");
