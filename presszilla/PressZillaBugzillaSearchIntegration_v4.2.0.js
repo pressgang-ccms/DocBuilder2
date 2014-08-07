@@ -19,6 +19,19 @@
             jQuery('#closedBugzillaBugsPlaceholder').remove();
             jQuery('#bugzillaBugsBugzillaBugsPlaceholder').remove();
             jQuery('#bugzillaBugsBadge').remove();
+
+            // Add the core menu items
+            var bugElements = jQuery('<ul>\
+                        <li><a id="newBugzillaBugs" href="javascript:hideAllMenus(); newBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'newBugzillaBugs\');">New</a></li>\
+						<li><a id="assignedBugzillaBugs" href="javascript:hideAllMenus(); assignedBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'assignedBugzillaBugs\');">Assigned</a></li>\
+						<li><a id="postBugzillaBugs" href="javascript:hideAllMenus(); postBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'postBugzillaBugs\');">Post</a></li>\
+						<li><a id="modifiedBugzillaBugs" href="javascript:hideAllMenus(); modifiedBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'modifiedBugzillaBugs\');">Modified</a></li>\
+						<li><a id="onqaBugzillaBugs" href="javascript:hideAllMenus(); onqaBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'onqaBugzillaBugs\');">On QA</a></li>\
+						<li><a id="verifiedBugzillaBugs" href="javascript:hideAllMenus(); verifiedBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'verifiedBugzillaBugs\');">Verified</a></li>\
+						<li><a id="releasePendingBugzillaBugs" href="javascript:hideAllMenus(); releasePendingBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'releasePendingBugzillaBugs\');">Release Pending</a></li>\
+						<li><a id="closedBugzillaBugs" href="javascript:hideAllMenus(); closedBugzillaBugs.show(); localStorage.setItem(\'lastMenu\', \'closedBugzillaBugs\');">Closed</a></li>\
+                </ul>');
+            bugElements.children().appendTo('#bugzillaBugsItems');
         }
 
         /*
@@ -235,7 +248,7 @@
                                             var bug = bugs[bugIndex];
 
                                             if (bug.status == "NEW" || bug.status == "ASSIGNED") {
-                                                icon.css('backgroundImage', "url(/images/bug-red.png)");
+                                                icon.css('backgroundImage', "url(/lib/docbuilder-overlay/images/bug-red.png)");
                                                 foundIcon = true;
                                                 break;
                                             }
@@ -246,7 +259,7 @@
                                                 var bug = bugs[bugIndex];
 
                                                 if (bug.status == "MODIFIED" || bug.status == "ON_QA") {
-                                                    icon.css('backgroundImage', "url(/images/bug-orange.png)");
+                                                    icon.css('backgroundImage', "url(/lib/docbuilder-overlay/images/bug-orange.png)");
                                                     foundIcon = true;
                                                     break;
                                                 }
@@ -258,7 +271,7 @@
                                                 var bug = bugs[bugIndex];
 
                                                 if (bug.status == "VERIFIED") {
-                                                    icon.css('backgroundImage', "url(/images/bug-green.png)");
+                                                    icon.css('backgroundImage', "url(/lib/docbuilder-overlay/images/bug-green.png)");
                                                     foundIcon = true;
                                                     break;
                                                 }
@@ -266,7 +279,7 @@
                                         }
 
                                         if (!foundIcon) {
-                                            icon.css('backgroundImage', "url(/images/bug-blue.png)");
+                                            icon.css('backgroundImage', "url(/lib/docbuilder-overlay/images/bug-blue.png)");
                                         }
                                     }
 
@@ -381,13 +394,13 @@
                         var icon = "";
 
                         if (bug.status == "NEW" || bug.status == "ASSIGNED") {
-                            icon = 'url(/images/bug-red.png)';
+                            icon = 'url(/lib/docbuilder-overlay/images/bug-red.png)';
                         } else if (bug.status == "MODIFIED" || bug.status == "ON_QA") {
-                            icon = 'url(/images/bug-orange.png)';
+                            icon = 'url(/lib/docbuilder-overlay/images/bug-orange.png)';
                         } else if (bug.status == "VERIFIED") {
-                            icon = 'url(/images/bug-green.png)';
+                            icon = 'url(/lib/docbuilder-overlay/images/bug-green.png)';
                         }  else {
-                            icon = 'url(/images/bug-blue.png)';
+                            icon = 'url(/lib/docbuilder-overlay/images/bug-blue.png)';
                         }
 
                         content.append(jQuery('<div><a href="' + bugzillaBaseUrl + "show_bug.cgi?id=" + bug.id + '"><div style="width: 16px; height: 16px; margin-right: 8px; background-image: ' + icon + '; background-size: contain; float: left"></div>[' + bug.id + ' - ' + bug.status + '] ' + bug.summary + '</a></div>'));

@@ -17,7 +17,7 @@
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js
 // @require     http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaBugzillaSearchIntegration_v4.2.0.js
 // @require		http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaPnTIntegration_v2.7.4.js
-// @require		http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaLinkChecker_v4.1.7.js
+// @require		http://docbuilder.ecs.eng.bne.redhat.com/presszilla/PressZillaLinkChecker_v4.2.0.js
 // @version     4.2.0
 // @grant       GM_xmlhttpRequest
 // @grant       unsafeWindow

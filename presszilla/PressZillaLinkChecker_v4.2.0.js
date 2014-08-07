@@ -18,7 +18,7 @@
         var processedLinks = [];
 
         function clearPresszillaLinksAndWarnings() {
-            jQuery("#badLinksBugzillaBugsPlaceholder").remove();
+            jQuery("#badLinksPlaceholder").remove();
             jQuery('#badLinksBadge').remove();
             jQuery('#badLinks').append($('<span id="badLinksBadge" class="badge pull-right">0</span>'));
         }
