@@ -228,7 +228,7 @@ function processSpecs(updatedSpecs) {
                         contents = contents.replace("</body></html>", scriptFiles);
                         fs.writeFileSync(config.HTML_DIR + "/" + id + "/index.html", contents);
                     } catch (ex) {
-                        util.error("Could not edit and save main HTML file");
+                        util.error("Could not edit and save main HTML file for " + id);
                     }
 
                     try {
@@ -237,7 +237,7 @@ function processSpecs(updatedSpecs) {
                         contents = contents.replace("</body></html>", scriptFiles);
                         fs.writeFileSync(config.HTML_DIR + "/" + id + "/remarks/index.html", contents);
                     } catch (ex) {
-                        util.error("Could not edit and save remarks HTML file");
+                        util.error("Could not edit and save remarks HTML file for " + id);
                     }
 
                     // Delete any old zip files
