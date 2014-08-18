@@ -136,7 +136,7 @@ function processSpecs(data, specs, locale, publicanLocale, doneCallback) {
                                 // Get the pdf filename
                                 buildUtils.getLatestFile(config.HTML_DIR + "/" + locale + "/" + id + "/", ".*?\\.pdf", function(error, date, filename) {
                                     // Build and add the entry for data,js
-                                    data += buildUtils.buildSpecDataJsEntry(specId, specDetails, zipFileName, time.format(constants.DATE_FORMAT), locale, filename);
+                                    data += buildUtils.buildSpecDataJsEntry(id, specDetails, zipFileName, time.format(constants.DATE_FORMAT), locale, filename);
 
                                     if (childCount < config.MAX_PROCESSES) {
                                         processNextSpec(data, specs, locale, publicanLocale, doneCallback);
