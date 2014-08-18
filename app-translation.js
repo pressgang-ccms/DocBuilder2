@@ -31,23 +31,6 @@ var moment = require('moment');
 var exec = require('child_process').exec;
 var util = require('util');
 
-// NOTE this is a temporary variable and will eventually be moved to load the details from the server
-var LOCALES = [
-    {"lang": "ja", "publicanLang": "ja-JP"},
-    {"lang": "fr", "publicanLang": "de-DE"},
-    {"lang": "pt-BR", "publicanLang": "pt-BR"},
-    {"lang": "de", "publicanLang": "de-DE"},
-    {"lang": "es", "publicanLang": "es-ES"},
-    {"lang": "zh-Hans", "publicanLang": "zh-CN"},
-    {"lang": "it", "publicanLang": "it-IT"},
-    {"lang": "ko", "publicanLang": "ko-KR"},
-    {"lang": "ru", "publicanLang": "ru-RU"},
-    {"lang": "zh-TW", "publicanLang": "zh-TW"}
-];
-
-// NOTE this is a temporary variable and will eventually be moved to load the details from the server
-var TRANSLATION_DIR = "/home/pressgang/translations/";
-
 /**
  * This value holds the pre loaded server entity configuration
  *
@@ -92,23 +75,17 @@ function finishProcessingForLocale(locale, data) {
     }
 }
 
-function getSpecsFromFile(filename) {
-    var specs = [];
-    try {
-        var fileContent = fs.readFileSync(filename).toString();
+function processNextSpec(data, specs, locale, publicanLocale, doneCallback) {
+    if (specs.length != 0) {
+        // If there are still specs to be processed, then process them
+        processSpecs(data, specs, locale, publicanLocale, doneCallback);
+    } else if (childCount == 0) {
+        // Finish the processing
+        finishProcessingForLocale(locale, data);
 
-        var lines = fileContent.split(/\r?\n/g);
-        for (var count = 0; count < lines.length; count++) {
-            var line = lines[count].trim();
-            if (line.match(/^\d+$/)) {
-                specs.push(line);
-            }
-        }
-    } catch (ex) {
-        util.error("Failed to read specs from " + filename);
+        // Build the books for the next locale
+        doneCallback();
     }
-
-    return specs;
 }
 
 /**
@@ -116,7 +93,7 @@ function getSpecsFromFile(filename) {
  * starting another process until all the specs have been built.
  * @param specs
  */
-function processSpecs(data, localeIndex, specs, locale, publicanLocale) {
+function processSpecs(data, specs, locale, publicanLocale, doneCallback) {
     var processCount = specs.length < (config.MAX_TRANSLATION_PROCESSES - childCount) ? specs.length : (config.MAX_TRANSLATION_PROCESSES - childCount);
     for (var processIndex = 0; processIndex < processCount; ++processIndex) {
         var specId = specs.pop();
@@ -162,16 +139,7 @@ function processSpecs(data, localeIndex, specs, locale, publicanLocale) {
                                     data += buildUtils.buildSpecDataJsEntry(specId, specDetails, zipFileName, time.format(constants.DATE_FORMAT), locale, filename);
 
                                     if (childCount < config.MAX_PROCESSES) {
-                                        if (specs.length != 0) {
-                                            // If there are still specs to be processed, then process them
-                                            processSpecs(data, localeIndex, specs, locale, publicanLocale);
-                                        } else if (childCount == 0) {
-                                            // Finish the processing
-                                            finishProcessingForLocale(locale, data);
-
-                                            // Build the books for the next locale
-                                            buildBooksForLocale(++localeIndex);
-                                        }
+                                        processNextSpec(data, specs, locale, publicanLocale, doneCallback);
                                     }
                                 });
                             });
@@ -180,6 +148,9 @@ function processSpecs(data, localeIndex, specs, locale, publicanLocale) {
             }(specId)).error(function(jqXHR, textStatus, errorThrown) {
                 util.error("Call to " + contentSpecQuery + " failed!");
                 util.error(errorThrown);
+
+                // Move onto the next spec
+                processNextSpec(data, specs, locale, publicanLocale, doneCallback);
             });
     }
 }
@@ -188,13 +159,27 @@ function processSpecs(data, localeIndex, specs, locale, publicanLocale) {
  * Build all the translation books for a specific locale and exit when locales have been processed.
  *
  * @param localeIndex
+ * @param locales
+ * @param localeToSpecMap
  */
-function buildBooksForLocale(localeIndex) {
-    if (localeIndex < LOCALES.length) {
-        var localeInfo = LOCALES[localeIndex];
-        var locale = localeInfo.lang;
-        var publicanLocale = localeInfo.publicanLang;
-        var specs = getSpecsFromFile(TRANSLATION_DIR + locale + ".txt");
+function buildBooks(localeIndex, locales, localeToSpecMap) {
+    if (localeIndex < locales.length) {
+        var localeId = locales[localeIndex][0];
+        var localeInfo = locales[localeIndex][1];
+        var locale = localeInfo.value;
+        var publicanLocale = localeInfo.buildValue;
+
+        // Make sure the lang data dir exists
+        var localeDataDir = config.DATA_DIR + locale;
+        try {
+            if (!fs.existsSync(localeDataDir)) {
+                fs.mkdirSync(localeDataDir);
+            }
+        } catch (ex) {
+            util.error("Could not create directory " + localeDataDir);
+        }
+
+        var specs = localeToSpecMap[localeId];
         util.log("Found " + specs.length + " content specs for " + locale);
 
         // If there are no specs move onto the next locale
@@ -202,14 +187,91 @@ function buildBooksForLocale(localeIndex) {
             util.log("Starting to build " + locale + " books");
 
             var data = buildUtils.buildBaseDataJs();
-            processSpecs(data, localeIndex, specs, locale, publicanLocale);
+            processSpecs(data, specs, locale, publicanLocale, function() {
+                buildBooks(++localeIndex, locales, localeToSpecMap);
+            });
         } else {
-            buildBooksForLocale(++localeIndex);
+            buildBooks(++localeIndex, locales, localeToSpecMap);
         }
     } else {
         // The build has finished, so exit
         process.exit(0);
     }
+}
+
+function sortByLocalValue(a, b) {
+    a = a[1];
+    b = b[1];
+
+    if (!a.value && b.value) {
+        return -1;
+    }
+
+    if (a.value && !b.value) {
+        return 0;
+    }
+
+    if (a.value.toLowerCase() < b.value.toLowerCase()) {
+        return -1;
+    }
+
+    if (a.value.toLowerCase() > b.value.toLowerCase()) {
+        return 1;
+    }
+
+    return 0;
+}
+
+/**
+ * Downloads a list of content specs that need to be built and starts building them.
+ */
+function getContentSpecsToBuild() {
+    var query = config.REST_SERVER + "1/contentspecs/get/json/query;translationEnabled=true?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpecs%22%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%22translationDetails%22%7D%2C%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22locales%22%7D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22translationServer%22%7D%7D%5D%7D%5D%7D%5D%7D";
+
+    jQuery.getJSON(query,
+        function(data) {
+            var contentSpecs = data.items;
+            var localeToContentSpec = {};
+            var locales = {};
+
+            // Print a message about how specs need to be built
+            util.log("Found " + contentSpecs.length + " content specs");
+
+            // Iterate over the specs and extract the locales to build in
+            for (var i = 0; i < contentSpecs.length; i++) {
+                var contentSpec = contentSpecs[i].item;
+                var translationDetails = contentSpec.translationDetails;
+
+                if (translationDetails && translationDetails.locales) {
+                    var localeItems = translationDetails.locales.items;
+
+                    for (var j = 0; j < localeItems.length; j++) {
+                        var locale = localeItems[j].item;
+
+                        // Add the content spec entry for the locale
+                        if (!(locale.id in locales)) {
+                            locales[locale.id] = locale;
+                            localeToContentSpec[locale.id] = [];
+                        }
+                        localeToContentSpec[locale.id].push(contentSpec.id);
+                    }
+                } else {
+                    util.error("contentSpec.translationDetails.locales was not expected to be null");
+                }
+            }
+
+            // Build the locale list and sort it
+            var fixedLocales = [];
+            for (var key in locales) {
+                fixedLocales.push([key, locales[key]]);
+            }
+            fixedLocales.sort(sortByLocalValue);
+
+            // Start building
+            buildBooks(0, fixedLocales, localeToContentSpec);
+        }).error(function(jqXHR, textStatus, errorThrown) {
+            util.error("Call to " + query + " failed!");
+        });
 }
 
 /**
@@ -232,7 +294,7 @@ function initAndGo() {
             buildUtils.writeSiteConfig(serverEntities);
 
             // Get the list of books to build and start building
-            buildBooksForLocale(0);
+            getContentSpecsToBuild();
         }).error(function(jqXHR, textStatus, errorThrown) {
             util.error("Call to " + settingsUrl + " failed!");
         });
