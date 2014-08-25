@@ -54,8 +54,10 @@ var childCount = 0;
 function finishProcessingForLocale(locale, data) {
     util.log("Finished building " + locale + " books");
 
-    if (data != null) {
-        data += "];";
+    if (data != null && data.length > 0) {
+        var dataJs = buildUtils.buildBaseDataJs();
+        dataJs += data.join();
+        dataJs += "];";
 
         var localeDir = config.HTML_DIR + "/" + locale;
         var dataJsFile = localeDir + "/data.js";
@@ -67,7 +69,7 @@ function finishProcessingForLocale(locale, data) {
             }
 
             // Save the data.js file
-            fs.writeFileSync(dataJsFile, data);
+            fs.writeFileSync(dataJsFile, dataJs);
         } catch (ex) {
             util.error("Could not save " + dataJsFile);
             util.error(ex);
@@ -136,7 +138,7 @@ function processSpecs(data, specs, locale, publicanLocale, doneCallback) {
                                 // Get the pdf filename
                                 buildUtils.getLatestFile(config.HTML_DIR + "/" + locale + "/" + id + "/", ".*?\\.pdf", function(error, date, filename) {
                                     // Build and add the entry for data,js
-                                    data += buildUtils.buildSpecDataJsEntry(id, specDetails, zipFileName, time.format(constants.DATE_FORMAT), locale, filename);
+                                    data.push(buildUtils.buildSpecDataJsEntry(id, specDetails, zipFileName, time.format(constants.DATE_FORMAT), locale, filename));
 
                                     if (childCount < config.MAX_PROCESSES) {
                                         processNextSpec(data, specs, locale, publicanLocale, doneCallback);
@@ -186,7 +188,7 @@ function buildBooks(localeIndex, locales, localeToSpecMap) {
         if (specs.length > 0) {
             util.log("Starting to build " + locale + " books");
 
-            var data = buildUtils.buildBaseDataJs();
+            var data = [];
             processSpecs(data, specs, locale, publicanLocale, function() {
                 buildBooks(++localeIndex, locales, localeToSpecMap);
             });
