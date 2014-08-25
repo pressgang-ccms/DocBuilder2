@@ -153,7 +153,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
                  need to clean up the time stamp though so moment.js will recognise it.
                  */
                 var lastCompileTime = null;
-                var lastBuildMatch = /\d+ ((\d{4}\-\d{2}\-\d{2}T)( )?(\d{1,2})(:\d{1,2}:\d{2}\.\d{3}\+\d{4})).zip/.exec(zipFileName);
+                var lastBuildMatch = /\d+ ((\d{4}\-\d{2}\-\d{2}T)( )?(\d{1,2})(:\d{1,2}:\d{2}\.\d{3}[\+\-]\d{4})).zip/.exec(zipFileName);
                 if (lastBuildMatch) {
                     lastCompileTime = lastBuildMatch[1];
                 }
