@@ -38,13 +38,12 @@ CSS_TEMPLATE="    <link href='/lib/docbuilder-overlay/css/pressgang.css' rel='st
     <link href='/lib/bootstrap/css/bootstrap.min.css' rel='stylesheet'>\n"
 
 JS_TEMPLATE="    <script type='application/javascript' src='/config.js'></script>\n\
-    <script type='application/javascript' src='/lib/jquery/jquery-2.1.1.min.js'></script>\n\
-    <script type='application/javascript' src='/lib/moment/moment-with-langs.js'></script>\n\
+    <script type='application/javascript' src='/lib/jquery/jquery.min.js'></script>\n\
+    <script type='application/javascript' src='/lib/moment/moment-with-locales.min.js'></script>\n\
     <script type='application/javascript' src='/lib/bootstrap/js/bootstrap.min.js'></script>\n\
-    <script type='application/javascript' src='/lib/bootbox/bootbox.min.js'></script>\n\
+    <script type='application/javascript' src='/lib/bootbox/bootbox.js'></script>\n\
     <script type='application/javascript' src='/lib/raphael/raphael-min.js'></script>\n\
-    <script type='application/javascript' src='/lib/raphael/pie.js'></script>\n\
-    <script type='application/javascript' src='/lib/typo/typo_proto.js'></script>\n\
+    <script type='application/javascript' src='/lib/raphael/g.pie-min.js'></script>\n\
     <script type='application/javascript' src='/lib/typo/typo.js'></script>\n\
     <script type='application/javascript' src='/lib/async/async.js'></script>\n\
     <script type='application/javascript' src='/lib/docbuilder-overlay/javascript/overlay.js'></script>\n\

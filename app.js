@@ -112,6 +112,110 @@ var topicRESTCallFailed = false;
 
 
 /**
+ * Start MAX_PROCESSES (or updatedSpecs.length if that is less) processes, with each recursive call
+ * starting another process until all the specs have been built.
+ * @param updatedSpecs
+ */
+function processSpecs(updatedSpecs) {
+    var makeBuildCompleteFunction = function(id) {
+        return function(error, stdout, stderr) {
+            --childCount;
+
+            util.log("Finished build of modified book " + id);
+
+            // Add the style, scripts and constants required to build the side menu
+            var scriptFiles = "\
+                                <script type='application/javascript'>\n\
+                                    var SPEC_ID = " + id + ";\n\
+                                </script>\n\
+                                <script type='application/javascript' src='/config.js'></script>\n\
+                                <script type='application/javascript' src='/lib/jquery/jquery.min.js'></script>\n\
+                                <script type='application/javascript' src='/lib/moment/moment-with-locales.min.js'></script>\n\
+                                <script type='application/javascript' src='/lib/bootstrap/js/bootstrap.min.js'></script>\n\
+                                <script type='application/javascript' src='/lib/bootbox/bootbox.js'></script>\n\
+                                <script type='application/javascript' src='/lib/raphael/raphael-min.js'></script>\n\
+                                <script type='application/javascript' src='/lib/raphael/g.pie-min.js'></script>\n\
+                                <script type='application/javascript' src='/lib/typo/typo.js'></script>\n\
+                                <script type='application/javascript' src='/lib/async/async.js'></script>\n\
+                                <script type='application/javascript' src='/lib/docbuilder-overlay/javascript/overlay.js'></script>\n\
+                                <script type='application/javascript' src='/lib/docbuilder-overlay/javascript/pressgang_websites.js'></script>\n\
+                                <script type='application/javascript' src='" + config.PRESSGANG_WEBSITE_JS_URL + "' async></script>\n\
+                                </body>\n\
+                                </html>";
+
+            var styleFiles = "<head>\n\
+                        <link href='/lib/docbuilder-overlay/css/pressgang.css' rel='stylesheet'>\n\
+                        <link href='/lib/docbuilder-overlay/css/style.css' rel='stylesheet'>\n\
+                        <link href='/lib/bootstrap/css/bootstrap.min.css' rel='stylesheet'>\n";
+
+            // Append the custom javascript files to the index.html
+            var contents;
+            try {
+                contents = fs.readFileSync(config.HTML_DIR + "/" + id + "/index.html").toString();
+                contents = contents.replace("<head>", styleFiles);
+                contents = contents.replace("</body></html>", scriptFiles);
+                fs.writeFileSync(config.HTML_DIR + "/" + id + "/index.html", contents);
+            } catch (ex) {
+                util.error("Could not edit and save main HTML file for " + id);
+            }
+
+            try {
+                contents = fs.readFileSync(config.HTML_DIR + "/" + id + "/remarks/index.html").toString();
+                contents = contents.replace("<head>", styleFiles);
+                contents = contents.replace("</body></html>", scriptFiles);
+                fs.writeFileSync(config.HTML_DIR + "/" + id + "/remarks/index.html", contents);
+            } catch (ex) {
+                util.error("Could not edit and save remarks HTML file for " + id);
+            }
+
+            // Delete any old zip files
+            buildUtils.deleteAllFilesOlderThanADay(constants.PUBLICAN_BOOK_ZIPS_COMPLETE, id + ".*?.zip", function() {});
+
+            if (childCount < config.MAX_PROCESSES) {
+
+                if (updatedSpecs.length !== 0) {
+                    /*
+                     If there are still specs to be processed, then process them
+                     */
+                    processSpecs(updatedSpecs);
+                } else if (childCount === 0) {
+                    var runTimeSeconds = moment().unix() - thisBuildTime.unix();
+                    var delay = config.DELAY_WHEN_NO_UPDATES - runTimeSeconds;
+
+                    if (delay <= 0) {
+                        getListOfSpecsToBuild();
+                    } else {
+                        util.log("Delaying for " + delay + " seconds");
+
+                        setTimeout((function() {
+                            getListOfSpecsToBuild();
+                        }), delay * 1000);
+                    }
+                }
+            }
+        };
+    };
+
+    if (updatedSpecs.length === 0) {
+        // There were no specs to build, so start again after a short delay
+        util.log("Delaying for " + config.DELAY_WHEN_NO_UPDATES + " seconds");
+        setTimeout((function() {
+            getListOfSpecsToBuild();
+        }), config.DELAY_WHEN_NO_UPDATES * 1000);
+    } else {
+        var processCount = updatedSpecs.length < (config.MAX_PROCESSES - childCount) ? updatedSpecs.length : (config.MAX_PROCESSES - childCount);
+        for (var processIndex = 0; processIndex < processCount; ++processIndex) {
+            var specId = updatedSpecs.pop();
+            ++childCount;
+
+            util.log("Starting build of modified book " + specId + " (" + updatedSpecs.length + " specs remain)");
+
+            exec(config.BUILD_BOOK_SCRIPT + " " + specId + " " + specId, makeBuildCompleteFunction(specId));
+        }
+    }
+}
+
+/**
  * Called when the modified topics and specs have been found. Once both
  * functions have called this function, the process of actually building the
  * books will start.
@@ -124,7 +228,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
         data += "];";
 
         processSpecs(updatedSpecs);
-    }
+    };
 
     var processSpecDetails = function(processIndex) {
         if (processIndex > allSpecsArray.length) {
@@ -138,7 +242,7 @@ function buildBooks(updatedSpecs, allSpecsArray) {
             var specId = allSpecsArray[processIndex];
 
             buildUtils.getLatestFile(constants.PUBLICAN_BOOK_ZIPS_COMPLETE, specId + ".*?\\.zip", function(error, date, filename) {
-                var zipFileName = filename == null ? "" : filename;
+                var zipFileName = filename === null ? "" : filename;
 
                 var fixedSpecDetails = specDetailsCache[specId] ?
                 {
@@ -164,223 +268,60 @@ function buildBooks(updatedSpecs, allSpecsArray) {
                 processSpecDetails(++processIndex);
             });
         }
-    }
+    };
 
     processSpecDetails(0);
 }
 
 /**
- * Start MAX_PROCESSES (or updatedSpecs.length if that is less) processes, with each recursive call
- * starting another process until all the specs have been built.
- * @param updatedSpecs
+ * If there was a failure with a rest call, this function will be called, which
+ * will start again as if this was the first run.
  */
-function processSpecs(updatedSpecs) {
-    if (updatedSpecs.length == 0) {
-        // There were no specs to build, so start again after a short delay
-        util.log("Delaying for " + config.DELAY_WHEN_NO_UPDATES + " seconds");
+function restartAfterFailure() {
+    var runTimeSeconds = moment().unix() - thisBuildTime.unix();
+    var delay = config.DELAY_WHEN_NO_UPDATES - runTimeSeconds;
+
+    thisBuildTime = null;
+
+    if (delay <= 0) {
+        getListOfSpecsToBuild();
+    } else {
+
+        util.log("Delaying for " + delay + " seconds");
+
         setTimeout((function() {
             getListOfSpecsToBuild();
-        }), config.DELAY_WHEN_NO_UPDATES * 1000);
-    } else {
-        var processCount = updatedSpecs.length < (config.MAX_PROCESSES - childCount) ? updatedSpecs.length : (config.MAX_PROCESSES - childCount);
-        for (var processIndex = 0; processIndex < processCount; ++processIndex) {
-            var specId = updatedSpecs.pop();
-            ++childCount;
-
-            util.log("Starting build of modified book " + specId + " (" + updatedSpecs.length + " specs remain)");
-
-            exec(config.BUILD_BOOK_SCRIPT + " " + specId + " " + specId, function(id) {
-                return function(error, stdout, stderr) {
-                    --childCount;
-
-                    util.log("Finished build of modified book " + id);
-
-                    // Add the style, scripts and constants required to build the side menu
-                    var scriptFiles = "\
-                                <script type='application/javascript'>\n\
-                                    var SPEC_ID = " + id + ";\n\
-                                </script>\n\
-                                <script type='application/javascript' src='/config.js'></script>\n\
-                                <script type='application/javascript' src='/lib/jquery/jquery-2.1.1.min.js'></script>\n\
-                                <script type='application/javascript' src='/lib/moment/moment-with-langs.js'></script>\n\
-                                <script type='application/javascript' src='/lib/bootstrap/js/bootstrap.min.js'></script>\n\
-                                <script type='application/javascript' src='/lib/bootbox/bootbox.min.js'></script>\n\
-                                <script type='application/javascript' src='/lib/raphael/raphael-min.js'></script>\n\
-                                <script type='application/javascript' src='/lib/raphael/pie.js'></script>\n\
-                                <script type='application/javascript' src='/lib/typo/typo_proto.js'></script>\n\
-                                <script type='application/javascript' src='/lib/typo/typo.js'></script>\n\
-                                <script type='application/javascript' src='/lib/async/async.js'></script>\n\
-                                <script type='application/javascript' src='/lib/docbuilder-overlay/javascript/overlay.js'></script>\n\
-                                <script type='application/javascript' src='/lib/docbuilder-overlay/javascript/pressgang_websites.js'></script>\n\
-                                <script type='application/javascript' src='" + config.PRESSGANG_WEBSITE_JS_URL + "' async></script>\n\
-                                </body>\n\
-                                </html>";
-
-                    var styleFiles = "<head>\n\
-                        <link href='/lib/docbuilder-overlay/css/pressgang.css' rel='stylesheet'>\n\
-                        <link href='/lib/docbuilder-overlay/css/style.css' rel='stylesheet'>\n\
-                        <link href='/lib/bootstrap/css/bootstrap.min.css' rel='stylesheet'>\n";
-
-                    // Append the custom javascript files to the index.html
-                    try {
-                        var contents = fs.readFileSync(config.HTML_DIR + "/" + id + "/index.html").toString();
-                        contents = contents.replace("<head>", styleFiles);
-                        contents = contents.replace("</body></html>", scriptFiles);
-                        fs.writeFileSync(config.HTML_DIR + "/" + id + "/index.html", contents);
-                    } catch (ex) {
-                        util.error("Could not edit and save main HTML file for " + id);
-                    }
-
-                    try {
-                        var contents = fs.readFileSync(config.HTML_DIR + "/" + id + "/remarks/index.html").toString();
-                        contents = contents.replace("<head>", styleFiles);
-                        contents = contents.replace("</body></html>", scriptFiles);
-                        fs.writeFileSync(config.HTML_DIR + "/" + id + "/remarks/index.html", contents);
-                    } catch (ex) {
-                        util.error("Could not edit and save remarks HTML file for " + id);
-                    }
-
-                    // Delete any old zip files
-                    buildUtils.deleteAllFilesOlderThanADay(constants.PUBLICAN_BOOK_ZIPS_COMPLETE, id + ".*?.zip", function() {});
-
-                    if (childCount < config.MAX_PROCESSES) {
-
-                        if (updatedSpecs.length != 0) {
-                            /*
-                                If there are still specs to be processed, then process them
-                             */
-                            processSpecs(updatedSpecs);
-                        } else if (childCount == 0) {
-                            var runTimeSeconds = moment().unix() - thisBuildTime.unix();
-                            var delay = config.DELAY_WHEN_NO_UPDATES - runTimeSeconds;
-
-                            if (delay <= 0) {
-                                getListOfSpecsToBuild();
-                            } else {
-                                util.log("Delaying for " + delay + " seconds");
-
-                                setTimeout((function() {
-                                    getListOfSpecsToBuild();
-                                }), delay * 1000);
-                            }
-                        }
-                    }
-                };
-            }(specId));
-        }
+        }), delay * 1000);
     }
 }
 
 /**
- * Query the server for all topics that have been modified since the specified time
- * @param lastRun The time DocBuilder was last run
+ * Two REST calls need to compete before we can move on. There are 4 possible outcomes of these 2 REST calls:
+ * 1. both succeed
+ * 2. both fail
+ * 3. the spec call succeeds while the topic call fails
+ * 4. the topic call succeeds while the spec call fails
+ *
+ * If both calls succeed, we want to process the changed specs. If one or more of the calls fail, we want to
+ * restart after a short delay.
+ *
+ * If one REST call has not completed when this function is called, no decision is made.
  */
-function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
+function routeAfterRESTCalls(updatedSpecs, allSpecsArray) {
 
-    /**
-     * If there is no lastRun then we know that all specs have to be rebuilt. This is accounted
-     * for in the getSpecs() function. There is no need to get all the topics, so we just
-     * call buildBooks() directly and exit.
-     */
-    if (!lastRun) {
-        topicsProcessed = true;
-        routeAfterRESTCalls(updatedSpecs, allSpecsArray);
-        return;
+    if (specsProcessed && topicsProcessed) {
+        // both REST calls succeeded
+        buildBooks(updatedSpecs, allSpecsArray);
+    } else if (contentSpecRESTCallFailed && topicRESTCallFailed) {
+        // both REST calls failed
+        restartAfterFailure();
+    } else if ((specsProcessed && topicRESTCallFailed) ||
+        (topicsProcessed && contentSpecRESTCallFailed)) {
+        // One rest call succeeded while the other failed
+        restartAfterFailure();
     }
 
-    var topicQuery = config.REST_SERVER + "1/topics/get/json/query;";
-
-    // If we have some last run info, use that to limit the search
-    topicQuery += "startEditDate=" + encodeURIComponent(encodeURIComponent(lastRun.format(constants.DATE_FORMAT)));
-    topicQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%7D%5D%7D%0A%0A";
-
-    //util.log("Getting modified topics from URL " + topicQuery);
-    util.log("Finding modified topics");
-
-    var contentSpecsForModifiedTopics = function(lastRun, updatedSpecs, allSpecsArray, modifiedTopics) {
-        // Get the csnodes for the topics to see if the are frozen
-        var csNodeQuery = config.REST_SERVER + "1/contentspecnodes/get/json/query;";
-
-        // Get the topic ids
-        var topicIds = []
-        for (var topicIndex = 0, topicCount = modifiedTopics.length; topicIndex < topicCount; ++topicIndex) {
-            var topic = modifiedTopics[topicIndex].item;
-            topicIds.push(topic.id);
-        }
-
-        // Build up the query
-        csNodeQuery += "csNodeEntityIds=" + topicIds.join(",");
-        csNodeQuery += ";csNodeInfoTopicIds=" + topicIds.join(",");
-        csNodeQuery += ";logic=Or"
-        csNodeQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpec%22%7D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22infoTopicNode%22%7D%7D%5D%7D%5D%7D";
-
-        jQuery.getJSON(csNodeQuery,
-            function(data) {
-                if (data.items) {
-                    for (var csNodeIndex = 0, topicCount = data.items.length; csNodeIndex < topicCount; ++csNodeIndex) {
-                        var csNode = data.items[csNodeIndex].item;
-                        if (csNode.contentSpec) {
-                            if (csNode.infoTopicNode && csNode.infoTopicNode.topicRevision == null) {
-                                // An info topic node has been modified
-                                updatedSpecs.add(csNode.contentSpec.id);
-                            } else if (csNode.entityRevision == null) {
-                                // A topic node has been modified
-                                updatedSpecs.add(csNode.contentSpec.id);
-                            }
-                        } else {
-                            util.log("csNode.contentSpec was not expected to be null");
-                        }
-                    }
-                } else {
-                    util.log("data.items was not expected to be null");
-                }
-
-                topicsProcessed = true;
-                routeAfterRESTCalls(updatedSpecs, allSpecsArray);
-            }).error(function(jqXHR, textStatus, errorThrown) {
-                util.error("Call to " + csNodeQuery + " failed!");
-                util.error(errorThrown);
-                topicRESTCallFailed = true;
-                routeAfterRESTCalls();
-            });
-    }
-
-    jQuery.getJSON(topicQuery,
-        function(data) {
-            if (data.items) {
-                util.log("Found " + data.items.length + " modified topics.");
-
-                if (data.items.length > 0) {
-                    contentSpecsForModifiedTopics(lastRun, updatedSpecs, allSpecsArray, data.items);
-                } else {
-                    // Nothing to process so continue as per normal
-                    topicsProcessed = true;
-                    routeAfterRESTCalls(updatedSpecs, allSpecsArray);
-                }
-            } else {
-                util.log("data.items was not expected to be null");
-
-                topicsProcessed = true;
-                routeAfterRESTCalls(updatedSpecs, allSpecsArray);
-            }
-        }).error(function(jqXHR, textStatus, errorThrown) {
-            util.error("Call to " + topicQuery + " failed!");
-            util.error(errorThrown);
-            topicRESTCallFailed = true;
-            routeAfterRESTCalls();
-    });
-}
-
-/**
- * Add the spec ID to the list of specs that we need to pull down the latest
- * product, title and version info for.
- * @param id The id of the spec whose details need to be refreshed
- */
-function addSpecToListOfPendingUpdates(id) {
-    pendingSpecCacheUpdates.add(id);
-    if (!processingPendingCacheUpdates) {
-        processPendingSpecUpdates();
-    }
+    // otherwise one REST call is still to succeed or fail, so do nothing
 }
 
 /**
@@ -389,7 +330,7 @@ function addSpecToListOfPendingUpdates(id) {
 function processPendingSpecUpdates() {
     processingPendingCacheUpdates = true;
 
-    if (pendingSpecCacheUpdates.length != 0) {
+    if (pendingSpecCacheUpdates.length !== 0) {
         var specId = pendingSpecCacheUpdates.pop();
 
         var specDetailsQuery = config.REST_SERVER + "1/contentspec/get/json+text/" + specId + "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22tags%22%7D%7D%5D%7D";
@@ -425,6 +366,118 @@ function processPendingSpecUpdates() {
     } else {
         processingPendingCacheUpdates = false;
     }
+}
+
+/**
+ * Add the spec ID to the list of specs that we need to pull down the latest
+ * product, title and version info for.
+ * @param id The id of the spec whose details need to be refreshed
+ */
+function addSpecToListOfPendingUpdates(id) {
+    pendingSpecCacheUpdates.add(id);
+    if (!processingPendingCacheUpdates) {
+        processPendingSpecUpdates();
+    }
+}
+
+/**
+ * Query the server for all topics that have been modified since the specified time
+ * @param lastRun The time DocBuilder was last run
+ */
+function getModifiedTopics(lastRun, updatedSpecs, allSpecsArray) {
+
+    /**
+     * If there is no lastRun then we know that all specs have to be rebuilt. This is accounted
+     * for in the getSpecs() function. There is no need to get all the topics, so we just
+     * call buildBooks() directly and exit.
+     */
+    if (!lastRun) {
+        topicsProcessed = true;
+        routeAfterRESTCalls(updatedSpecs, allSpecsArray);
+        return;
+    }
+
+    var topicQuery = config.REST_SERVER + "1/topics/get/json/query;";
+
+    // If we have some last run info, use that to limit the search
+    topicQuery += "startEditDate=" + encodeURIComponent(encodeURIComponent(lastRun.format(constants.DATE_FORMAT)));
+    topicQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22topics%22%7D%7D%5D%7D%0A%0A";
+
+    //util.log("Getting modified topics from URL " + topicQuery);
+    util.log("Finding modified topics");
+
+    var contentSpecsForModifiedTopics = function(lastRun, updatedSpecs, allSpecsArray, modifiedTopics) {
+        // Get the csnodes for the topics to see if the are frozen
+        var csNodeQuery = config.REST_SERVER + "1/contentspecnodes/get/json/query;";
+
+        // Get the topic ids
+        var topicIds = [];
+        for (var topicIndex = 0, topicCount = modifiedTopics.length; topicIndex < topicCount; ++topicIndex) {
+            var topic = modifiedTopics[topicIndex].item;
+            topicIds.push(topic.id);
+        }
+
+        // Build up the query
+        csNodeQuery += "csNodeEntityIds=" + topicIds.join(",");
+        csNodeQuery += ";csNodeInfoTopicIds=" + topicIds.join(",");
+        csNodeQuery += ";logic=Or";
+        csNodeQuery += "?expand=%7B%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22nodes%22%7D%2C%20%22branches%22%3A%5B%7B%22trunk%22%3A%7B%22name%22%3A%20%22contentSpec%22%7D%7D%2C%7B%22trunk%22%3A%7B%22name%22%3A%20%22infoTopicNode%22%7D%7D%5D%7D%5D%7D";
+
+        jQuery.getJSON(csNodeQuery,
+            function(data) {
+                if (data.items) {
+                    for (var csNodeIndex = 0, topicCount = data.items.length; csNodeIndex < topicCount; ++csNodeIndex) {
+                        var csNode = data.items[csNodeIndex].item;
+                        if (csNode.contentSpec) {
+                            if (csNode.infoTopicNode && csNode.infoTopicNode.topicRevision === null) {
+                                // An info topic node has been modified
+                                updatedSpecs.add(csNode.contentSpec.id);
+                            } else if (csNode.entityRevision === null) {
+                                // A topic node has been modified
+                                updatedSpecs.add(csNode.contentSpec.id);
+                            }
+                        } else {
+                            util.log("csNode.contentSpec was not expected to be null");
+                        }
+                    }
+                } else {
+                    util.log("data.items was not expected to be null");
+                }
+
+                topicsProcessed = true;
+                routeAfterRESTCalls(updatedSpecs, allSpecsArray);
+            }).error(function(jqXHR, textStatus, errorThrown) {
+                util.error("Call to " + csNodeQuery + " failed!");
+                util.error(errorThrown);
+                topicRESTCallFailed = true;
+                routeAfterRESTCalls();
+            });
+    };
+
+    jQuery.getJSON(topicQuery,
+        function(data) {
+            if (data.items) {
+                util.log("Found " + data.items.length + " modified topics.");
+
+                if (data.items.length > 0) {
+                    contentSpecsForModifiedTopics(lastRun, updatedSpecs, allSpecsArray, data.items);
+                } else {
+                    // Nothing to process so continue as per normal
+                    topicsProcessed = true;
+                    routeAfterRESTCalls(updatedSpecs, allSpecsArray);
+                }
+            } else {
+                util.log("data.items was not expected to be null");
+
+                topicsProcessed = true;
+                routeAfterRESTCalls(updatedSpecs, allSpecsArray);
+            }
+        }).error(function(jqXHR, textStatus, errorThrown) {
+            util.error("Call to " + topicQuery + " failed!");
+            util.error(errorThrown);
+            topicRESTCallFailed = true;
+            routeAfterRESTCalls();
+        });
 }
 
 /**
@@ -477,64 +530,13 @@ function getSpecs(lastRun, updatedSpecs, allSpecsArray) {
 }
 
 /**
- * Two REST calls need to compete before we can move on. There are 4 possible outcomes of these 2 REST calls:
- * 1. both succeed
- * 2. both fail
- * 3. the spec call succeeds while the topic call fails
- * 4. the topic call succeeds while the spec call fails
- *
- * If both calls succeed, we want to process the changed specs. If one or more of the calls fail, we want to
- * restart after a short delay.
- *
- * If one REST call has not completed when this function is called, no decision is made.
- */
-function routeAfterRESTCalls(updatedSpecs, allSpecsArray) {
-
-    if (specsProcessed && topicsProcessed) {
-        // both REST calls succeeded
-        buildBooks(updatedSpecs, allSpecsArray);
-    } else if (contentSpecRESTCallFailed && topicRESTCallFailed) {
-        // both REST calls failed
-        restartAfterFailure();
-    } else if ((specsProcessed && topicRESTCallFailed) ||
-               (topicsProcessed && contentSpecRESTCallFailed)) {
-        // One rest call succeeded while the other failed
-        restartAfterFailure();
-    }
-
-    // otherwise one REST call is still to succeed or fail, so do nothing
-}
-
-/**
- * If there was a failure with a rest call, this function will be called, which
- * will start again as if this was the first run.
- */
-function restartAfterFailure() {
-    var runTimeSeconds = moment().unix() - thisBuildTime.unix();
-    var delay = config.DELAY_WHEN_NO_UPDATES - runTimeSeconds;
-
-    thisBuildTime = null;
-
-    if (delay <= 0) {
-        getListOfSpecsToBuild();
-    } else {
-
-        util.log("Delaying for " + delay + " seconds");
-
-        setTimeout((function() {
-            getListOfSpecsToBuild();
-        }), delay * 1000);
-    }
-}
-
-/**
  * Reads a file that holds the time DocBuilder last did a build, and then
  * finds the modified specs and topics.
  */
 function getListOfSpecsToBuild() {
     var lastRun = null;
 
-    if (data != null) {
+    if (data !== null) {
         var dataJsFile = config.HTML_DIR + "/data.js";
 
         // Save the data.js file
@@ -547,7 +549,7 @@ function getListOfSpecsToBuild() {
         data = null;
     }
 
-    if (thisBuildTime != null) {
+    if (thisBuildTime !== null) {
         lastRun = thisBuildTime;
         diff = moment().unix() - thisBuildTime.unix();
 
@@ -600,4 +602,3 @@ function initAndGo() {
 }
 
 initAndGo();
-

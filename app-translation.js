@@ -54,7 +54,7 @@ var childCount = 0;
 function finishProcessingForLocale(locale, data) {
     util.log("Finished building " + locale + " books");
 
-    if (data != null && data.length > 0) {
+    if (data !== null && data.length > 0) {
         var dataJs = buildUtils.buildBaseDataJs();
         dataJs += data.join();
         dataJs += "];";
@@ -78,10 +78,10 @@ function finishProcessingForLocale(locale, data) {
 }
 
 function processNextSpec(data, specs, locale, publicanLocale, doneCallback) {
-    if (specs.length != 0) {
+    if (specs.length !== 0) {
         // If there are still specs to be processed, then process them
         processSpecs(data, specs, locale, publicanLocale, doneCallback);
-    } else if (childCount == 0) {
+    } else if (childCount === 0) {
         // Finish the processing
         finishProcessingForLocale(locale, data);
 
@@ -96,6 +96,57 @@ function processNextSpec(data, specs, locale, publicanLocale, doneCallback) {
  * @param specs
  */
 function processSpecs(data, specs, locale, publicanLocale, doneCallback) {
+    var makeBuildFunction = function(id) {
+        return function(contentSpec) {
+            var specDetails = {
+                title: contentSpec.title,
+                product: contentSpec.product,
+                version: contentSpec.version
+            };
+
+            // Run the external build script
+            exec(config.BUILD_TRANSLATED_BOOK_SCRIPT + " " + locale + id + " " + locale + "=" + publicanLocale + "=" + id,
+                function(error, stdout, stderr) {
+                    --childCount;
+
+                    util.log("Finished build of book " + locale + "-" + id);
+
+                    // Get the current time
+                    var time = moment();
+
+                    // Save the last build time for the spec
+                    buildUtils.writeLastBuildTime(time, config.DATA_DIR + locale + "/" + id);
+
+                    // Delete any old zip files
+                    var publicanZIPDir = constants.PUBLICAN_BOOK_ZIPS_COMPLETE + "/" + locale;
+                    buildUtils.deleteAllFilesOlderThanADay(publicanZIPDir, locale + "-" + id + ".*?.zip", function() {});
+
+                    // Get the latest ZIP filename
+                    buildUtils.getLatestFile(publicanZIPDir, locale + "-" + id + ".*?\\.zip", function(error, date, filename) {
+                        var zipFileName = filename === null ? "" : filename;
+
+                        // Get the pdf filename
+                        buildUtils.getLatestFile(config.HTML_DIR + "/" + locale + "/" + id + "/", ".*?\\.pdf", function(error, date, filename) {
+                            // Build and add the entry for data,js
+                            data.push(buildUtils.buildSpecDataJsEntry(id, specDetails, zipFileName, time.format(constants.DATE_FORMAT), locale, filename));
+
+                            if (childCount < config.MAX_PROCESSES) {
+                                processNextSpec(data, specs, locale, publicanLocale, doneCallback);
+                            }
+                        });
+                    });
+                });
+        };
+    };
+
+    var handleError = function(jqXHR, textStatus, errorThrown) {
+        util.error("Call to " + contentSpecQuery + " failed!");
+        util.error(errorThrown);
+
+        // Move onto the next spec
+        processNextSpec(data, specs, locale, publicanLocale, doneCallback);
+    };
+
     var processCount = specs.length < (config.MAX_TRANSLATION_PROCESSES - childCount) ? specs.length : (config.MAX_TRANSLATION_PROCESSES - childCount);
     for (var processIndex = 0; processIndex < processCount; ++processIndex) {
         var specId = specs.pop();
@@ -105,55 +156,7 @@ function processSpecs(data, specs, locale, publicanLocale, doneCallback) {
 
         // Download the spec details from the server
         var contentSpecQuery = config.REST_SERVER + "1/contentspec/get/json+text/" + specId;
-        jQuery.getJSON(contentSpecQuery,
-            function(id) {
-                return function(contentSpec) {
-                    var specDetails = {
-                        title: contentSpec.title,
-                        product: contentSpec.product,
-                        version: contentSpec.version
-                    };
-
-                    // Run the external build script
-                    exec(config.BUILD_TRANSLATED_BOOK_SCRIPT + " " + locale + id + " " + locale + "=" + publicanLocale + "=" + id,
-                        function(error, stdout, stderr) {
-                            --childCount;
-
-                            util.log("Finished build of book " + locale + "-" + id);
-
-                            // Get the current time
-                            var time = moment();
-
-                            // Save the last build time for the spec
-                            buildUtils.writeLastBuildTime(time, config.DATA_DIR + locale + "/" + id);
-
-                            // Delete any old zip files
-                            var publicanZIPDir = constants.PUBLICAN_BOOK_ZIPS_COMPLETE + "/" + locale;
-                            buildUtils.deleteAllFilesOlderThanADay(publicanZIPDir, locale + "-" + id + ".*?.zip", function() {});
-
-                            // Get the latest ZIP filename
-                            buildUtils.getLatestFile(publicanZIPDir, locale + "-" + id + ".*?\\.zip", function(error, date, filename) {
-                                var zipFileName = filename == null ? "" : filename;
-
-                                // Get the pdf filename
-                                buildUtils.getLatestFile(config.HTML_DIR + "/" + locale + "/" + id + "/", ".*?\\.pdf", function(error, date, filename) {
-                                    // Build and add the entry for data,js
-                                    data.push(buildUtils.buildSpecDataJsEntry(id, specDetails, zipFileName, time.format(constants.DATE_FORMAT), locale, filename));
-
-                                    if (childCount < config.MAX_PROCESSES) {
-                                        processNextSpec(data, specs, locale, publicanLocale, doneCallback);
-                                    }
-                                });
-                            });
-                        });
-                }
-            }(specId)).error(function(jqXHR, textStatus, errorThrown) {
-                util.error("Call to " + contentSpecQuery + " failed!");
-                util.error(errorThrown);
-
-                // Move onto the next spec
-                processNextSpec(data, specs, locale, publicanLocale, doneCallback);
-            });
+        jQuery.getJSON(contentSpecQuery, makeBuildFunction(specId)).error(handleError);
     }
 }
 
