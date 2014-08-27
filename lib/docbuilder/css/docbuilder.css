@@ -48,14 +48,10 @@
     padding-left: 60px !important;
 }
 
-.panel-group .book-list-title {
-    font-weight: 500;
-    line-height: 1;
-    cursor: pointer;
-}
 .collapse-title > a {
     color: #4d5258;
     font-weight: 600;
+    cursor: pointer;
 }
 .collapse-title > a:before {
     content: "\f107";
