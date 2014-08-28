@@ -4,23 +4,23 @@
 // @description PressGang BugZilla customization
 // @author      Matthew Casperson
 // @include     https://bugzilla.redhat.com/*
-// @include     http://docbuilder.usersys.redhat.com/*
-// @include     https://docbuilder.usersys.redhat.com/*
+// @include     http://docbuilder.example.com/*
+// @include     https://docbuilder.example.com/*
 // @require     http://code.jquery.com/jquery-2.0.3.min.js
-// @require     http://docbuilder.usersys.redhat.com/presszilla/PressZillaCommonUtils_v4.2.0.js
-// @require     http://docbuilder.usersys.redhat.com/presszilla/PressZillaKeywordExtraction_v4.2.0.js
-// @require     http://docbuilder.usersys.redhat.com/presszilla/PressZillaBugzillaIntegration_v3.8.3.js
-// @require     http://docbuilder.usersys.redhat.com/presszilla/PressZillaSolutionsIntegration_v2.7.1.js
-// @require     http://docbuilder.usersys.redhat.com/presszilla/PressZillaMojoIntegration_v2.6.8.js
-// @require     http://docbuilder.usersys.redhat.com/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js
-// @require     http://docbuilder.usersys.redhat.com/presszilla/PressZillaBugzillaSearchIntegration_v4.2.0.js
-// @require     http://docbuilder.usersys.redhat.com/presszilla/PressZillaPnTIntegration_v2.7.4.js
-// @require     http://docbuilder.usersys.redhat.com/presszilla/PressZillaLinkChecker_v4.2.0.js
+// @require     http://docbuilder.example.com/presszilla/PressZillaCommonUtils_v4.2.0.js
+// @require     http://docbuilder.example.com/presszilla/PressZillaKeywordExtraction_v4.2.0.js
+// @require     http://docbuilder.example.com/presszilla/PressZillaBugzillaIntegration_v3.8.3.js
+// @require     http://docbuilder.example.com/presszilla/PressZillaSolutionsIntegration_v2.7.1.js
+// @require     http://docbuilder.example.com/presszilla/PressZillaMojoIntegration_v2.6.8.js
+// @require     http://docbuilder.example.com/presszilla/PressZillaJbossOrgIntegration_v2.6.8.js
+// @require     http://docbuilder.example.com/presszilla/PressZillaBugzillaSearchIntegration_v4.2.0.js
+// @require     http://docbuilder.example.com/presszilla/PressZillaPnTIntegration_v2.7.4.js
+// @require     http://docbuilder.example.com/presszilla/PressZillaLinkChecker_v4.2.0.js
 // @version     4.2.0
 // @grant       GM_xmlhttpRequest
 // @grant       unsafeWindow
-// @downloadURL https://docbuilder.usersys.redhat.com/PressZilla.user.js
-// @updateURL   https://docbuilder.usersys.redhat.com/PressZilla.user.js
-// @homepageURL https://docbuilder.usersys.redhat.com
+// @downloadURL https://docbuilder.example.com/PressZilla.user.js
+// @updateURL   https://docbuilder.example.com/PressZilla.user.js
+// @homepageURL https://docbuilder.example.com/
 // ==/UserScript==
 
