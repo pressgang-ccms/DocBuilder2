@@ -129,8 +129,8 @@ do
                 echo -e "\nshow_remarks: 1" >> publican-remarks.cfg
 
                 # Do the original publican build
-                echo "publican build --formats=html-single,pdf,html --langs=${PUBLICAN_LANG} &> publican.log"
-                publican build --formats=html-single,pdf,html --langs=${PUBLICAN_LANG} &> publican.log
+                echo "publican build --formats=html-single,html --langs=${PUBLICAN_LANG} &> publican.log"
+                publican build --formats=html-single,html --langs=${PUBLICAN_LANG} &> publican.log
 
                 PUBLICAN_STATUS=$?
 
@@ -141,7 +141,6 @@ do
 
                 # Copy the build contents to the root CSPID HTML directory
                 cp -R tmp/${PUBLICAN_LANG}/html-single/* /var/www/html/${BUILD_LANG}/${CSPID}
-                cp -R tmp/${PUBLICAN_LANG}/pdf/* /var/www/html/${BUILD_LANG}/${CSPID}
                 cp publican.log /var/www/html/${BUILD_LANG}/${CSPID}
 
                 # Copy the html to its own directory

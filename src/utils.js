@@ -237,7 +237,7 @@ var data = [\n";
  * @param lastCompileTime The last time that the book was compiled.
  * @returns {string}
  */
-exports.buildSpecDataJsEntry = function (specId, specDetails, zipFileName, lastCompileTime, lang, pdfFileName) {
+exports.buildSpecDataJsEntry = function (specId, specDetails, zipFileName, lastCompileTime, lang) {
     // Check if the build was successful
     var status;
     if (lang) {
@@ -261,8 +261,7 @@ exports.buildSpecDataJsEntry = function (specId, specDetails, zipFileName, lastC
         lastcompile: " + fixedLastCompileTime + ",\n";
 
     if (lang) {
-        entry += "        publicanbook: '" + constants.PUBLICAN_BOOK_ZIPS + "/" + lang + "/" + encodeURIComponent(zipFileName) + "',\n\
-        pdfFileName: '" + pdfFileName + "'\n";
+        entry += "        publicanbook: '" + constants.PUBLICAN_BOOK_ZIPS + "/" + lang + "/" + encodeURIComponent(zipFileName) + "'\n";
     } else {
         entry += "        tags: [" + specDetails.tags.toString() + "],\n\
         publicanbook: '" + constants.PUBLICAN_BOOK_ZIPS + "/" + encodeURIComponent(zipFileName) + "'\n"

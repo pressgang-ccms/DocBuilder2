@@ -135,15 +135,12 @@ function processSpecs(data, specs, locale, publicanLocale, doneCallback) {
                             buildUtils.getLatestFile(publicanZIPDir, locale + "-" + id + ".*?\\.zip", function(error, date, filename) {
                                 var zipFileName = filename == null ? "" : filename;
 
-                                // Get the pdf filename
-                                buildUtils.getLatestFile(config.HTML_DIR + "/" + locale + "/" + id + "/", ".*?\\.pdf", function(error, date, filename) {
-                                    // Build and add the entry for data,js
-                                    data.push(buildUtils.buildSpecDataJsEntry(id, specDetails, zipFileName, time.format(constants.DATE_FORMAT), locale, filename));
+                                // Build and add the entry for data,js
+                                data.push(buildUtils.buildSpecDataJsEntry(id, specDetails, zipFileName, time.format(constants.DATE_FORMAT), locale));
 
-                                    if (childCount < config.MAX_PROCESSES) {
-                                        processNextSpec(data, specs, locale, publicanLocale, doneCallback);
-                                    }
-                                });
+                                if (childCount < config.MAX_PROCESSES) {
+                                    processNextSpec(data, specs, locale, publicanLocale, doneCallback);
+                                }
                             });
                         });
                 }
@@ -211,6 +208,13 @@ function sortByLocalValue(a, b) {
 
     if (a.value && !b.value) {
         return 0;
+    }
+
+    // Make sure Japaneses comes first, as it has the most consumers
+    if (a.value === "ja" || a.value === "ja-JP") {
+        return -1;
+    } else if (b.value === "ja" || b.value === "ja-JP") {
+        return 1;
     }
 
     if (a.value.toLowerCase() < b.value.toLowerCase()) {
